@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.env
+
+# Node
+node_modules/
+
+# Model artifacts (large files)
+trained_models/*.pkl
+backend/ml/trained_models/*.pkl
+
+# EMG service data files
+emg-service/*.bin
+emg-service/*.md
+emg-service/.claude
+emg-service/history.json
+emg-service/data/*.bin
+
+# Old physio reference (temp, delete after Group E)
+backend/_old_physio_reference/__pycache__/
+backend/_old_physio_reference/.git/
+backend/_old_physio_reference/.claude/
+backend/_old_physio_reference/graphify-out/
+backend/_old_physio_reference/*.md
+backend/_old_physio_reference/.gitignore
+backend/_old_physio_reference/.graphifyignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

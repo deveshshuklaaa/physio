@@ -1,0 +1,9 @@
+.claude/
+.git/
+backend/__pycache__
+backend/venv
+/home/billa-dakait/Desktop/final_project/emg-service/venv
+/home/billa-dakait/Desktop/final_project/emg-service/.claude
+/home/billa-dakait/Desktop/final_project/emg-service/CLAUDE.md
+notes/
+/home/billa-dakait/Desktop/final_project/backend/_old_physio_reference/audio/

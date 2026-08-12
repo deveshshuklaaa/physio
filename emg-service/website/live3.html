@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>EMG Monitor Pro - Clinical Kinetic</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for clinical density */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #0d1518; }
+        ::-webkit-scrollbar-thumb { background: #3a4a43; border-radius: 2px; }
+
+        .signal-glow {
+            filter: drop-shadow(0 0 6px rgba(0, 255, 194, 0.6));
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.98); }
+        }
+        .alert-pulse { animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+        /* Toast notification styling */
+        #toast {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#001f24",
+                        "surface-container-highest": "#2e3639",
+                        "inverse-surface": "#dbe4e8",
+                        "background": "#0d1518",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-container": "#c9090f",
+                        "on-tertiary-fixed-variant": "#930005",
+                        "error-container": "#93000a",
+                        "primary-fixed-dim": "#00e1ab",
+                        "secondary-fixed": "#9cf0ff",
+                        "on-tertiary-fixed": "#410001",
+                        "on-tertiary": "#690003",
+                        "surface-tint": "#00e1ab",
+                        "on-primary-fixed-variant": "#00513c",
+                        "on-secondary": "#00363d",
+                        "surface-bright": "#323a3e",
+                        "on-primary-fixed": "#002116",
+                        "surface-container-high": "#232b2e",
+                        "surface-container-low": "#151d20",
+                        "primary": "#fbfffa",
+                        "primary-container": "#00ffc2",
+                        "secondary-fixed-dim": "#00daf3",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#00616d",
+                        "secondary-container": "#00e3fd",
+                        "surface": "#0d1518",
+                        "on-background": "#dbe4e8",
+                        "secondary": "#bdf4ff",
+                        "inverse-on-surface": "#2a3235",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#2e3639",
+                        "outline-variant": "#3a4a43",
+                        "on-surface": "#dbe4e8",
+                        "on-primary-container": "#007255",
+                        "on-primary": "#003828",
+                        "primary-fixed": "#36ffc4",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "outline": "#83958c",
+                        "surface-container-lowest": "#070f12",
+                        "surface-container": "#192124",
+                        "surface-dim": "#0d1518",
+                        "tertiary-fixed-dim": "#ffb4aa",
+                        "tertiary": "#fffeff",
+                        "on-surface-variant": "#b9cbc1",
+                        "inverse-primary": "#006c50",
+                        "tertiary-container": "#ffd9d4",
+                        "tertiary-fixed": "#ffdad5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "4px",
+                        "lg": "4px",
+                        "xl": "8px",
+                        "full": "12px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "32px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-mobile": "16px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "data-sm": ["JetBrains Mono"],
+                        "body-base": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "data-lg": ["JetBrains Mono"],
+                        "headline-md-mobile": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "data-sm": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "data-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.05em", "fontWeight": "500"}],
+                        "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-base overflow-hidden select-none">
+<!-- Notification Toast -->
+<div class="fixed top-20 left-1/2 -translate-x-1/2 z-[100] bg-primary-container text-on-primary-container px-4 py-2 rounded-full shadow-lg flex items-center gap-2 opacity-0 pointer-events-none scale-90" id="toast">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span class="font-label-caps text-[10px]">DATA POINT SAVED</span>
+</div>
+<!-- Top AppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-low border-b border-outline-variant flex items-center justify-between px-margin-mobile h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-fixed-dim" data-icon="settings_input_component">settings_input_component</span>
+<h1 class="font-headline-md-mobile text-headline-md-mobile font-bold text-primary-container tracking-tighter uppercase">Clinical Kinetic Pro</h1>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container-highest rounded-full border border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_8px_rgba(0,255,194,0.6)]"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">CONNECTED: NANO_V3</span>
+</div>
+</header>
+<!-- Main Viewport -->
+<main class="pt-16 pb-20 h-screen flex flex-col overflow-hidden">
+<!-- Live Signal Chart Area -->
+<section class="flex-1 min-h-[353px] relative bg-surface-container-lowest overflow-hidden border-b border-outline-variant">
+<!-- Grid Overlay -->
+<div class="absolute inset-0 pointer-events-none opacity-20" style="background-image: radial-gradient(#3a4a43 1px, transparent 1px), linear-gradient(to right, #3a4a43 1px, transparent 1px), linear-gradient(to bottom, #3a4a43 1px, transparent 1px); background-size: 40px 40px;">
+</div>
+<!-- Floating Labels -->
+<div class="absolute top-4 left-margin-mobile z-10 flex flex-col gap-2">
+<div class="flex items-center gap-2 bg-background/80 backdrop-blur-xl px-2 py-1 rounded border border-outline-variant">
+<span class="font-label-caps text-label-caps text-primary-fixed-dim">INPUT: CH1</span>
+<span class="font-label-caps text-label-caps bg-primary-container text-on-primary-container px-1.5 rounded" id="live-badge">LIVE</span>
+</div>
+</div>
+<div class="absolute top-4 right-margin-mobile z-10 text-right">
+<div class="font-data-sm text-data-sm text-on-surface-variant opacity-60">PEAK-PEAK</div>
+<div class="font-data-lg text-data-lg text-primary-fixed-dim tabular-nums" id="instant-voltage">0.00mV</div>
+</div>
+<!-- Canvas for Scrolling Signal -->
+<canvas class="w-full h-full" id="emgCanvas"></canvas>
+<!-- Fade to Edge -->
+<div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-surface-container-lowest to-transparent pointer-events-none"></div>
+</section>
+<!-- Metrics Section -->
+<section class="bg-surface p-margin-mobile grid grid-cols-2 gap-4 overflow-y-auto">
+<!-- Data Cards -->
+<div class="bg-surface-container p-4 rounded-lg border border-outline-variant hover:border-primary-container/30 transition-all">
+<header class="font-label-caps text-label-caps text-on-surface-variant mb-1">RMS AMPLITUDE</header>
+<div class="font-data-lg text-data-lg text-on-surface" id="rms-value">0.0</div>
+<div class="h-1.5 w-full bg-surface-container-highest mt-3 rounded-full overflow-hidden">
+<div class="h-full bg-primary-container transition-all duration-150" id="rms-bar" style="width: 0%"></div>
+</div>
+</div>
+<div class="bg-surface-container p-4 rounded-lg border border-outline-variant hover:border-primary-container/30 transition-all">
+<header class="font-label-caps text-label-caps text-on-surface-variant mb-1">PEAK FREQ</header>
+<div class="font-data-lg text-data-lg text-on-surface">84.2 <span class="text-xs text-on-surface-variant">Hz</span></div>
+<div class="flex gap-1 mt-3">
+<div class="h-4 w-2 bg-primary-container opacity-40"></div>
+<div class="h-4 w-2 bg-primary-container opacity-60"></div>
+<div class="h-4 w-2 bg-primary-container"></div>
+<div class="h-4 w-2 bg-primary-container opacity-20"></div>
+</div>
+</div>
+</section>
+<!-- Gain Multiplier (Consolidated with Metrics) -->
+<div class="col-span-2 bg-surface-container p-4 rounded-lg border border-outline-variant">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant">ANALOG GAIN MULTIPLIER</span>
+<span class="font-data-sm text-data-sm text-primary-fixed-dim" id="gain-label">x250</span>
+</div>
+<input class="w-full h-1 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary-container" id="gain-slider" max="1000" min="10" type="range" value="250"/>
+</div>
+<!-- Warning Banner -->
+<div class="col-span-2 flex items-center gap-3 bg-error-container/10 border border-error-container/30 p-3 rounded alert-pulse">
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+<span class="font-label-caps text-label-caps text-error">MUSCLE FATIGUE THRESHOLD DETECTED</span>
+</div>
+</main>
+<!-- Bottom Navigation Controls -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 bg-surface-container-high border-t border-outline-variant shadow-lg px-margin-mobile pb-safe">
+<!-- Pause / Resume -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed active:scale-95 transition-all duration-150" id="btn-pause">
+<span class="material-symbols-outlined text-[28px]" data-icon="pause_circle">pause_circle</span>
+<span class="font-label-caps text-[10px] mt-1">Pause</span>
+</button>
+<!-- History -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed active:scale-95 transition-all duration-150" id="btn-history">
+<span class="material-symbols-outlined text-[28px]" data-icon="history">history</span>
+<span class="font-label-caps text-[10px] mt-1">History</span>
+</button>
+<!-- Export -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed active:scale-95 transition-all duration-150" id="btn-export">
+<span class="material-symbols-outlined text-[28px]" data-icon="file_download">file_download</span>
+<span class="font-label-caps text-[10px] mt-1">Export</span>
+</button>
+</nav>
+<script>
+        const canvas = document.getElementById('emgCanvas');
+        const ctx = canvas.getContext('2d');
+        const pauseBtn = document.getElementById('btn-pause');
+        const historyBtn = document.getElementById('btn-history');
+        const gainSlider = document.getElementById('gain-slider');
+        const gainLabel = document.getElementById('gain-label');
+        const voltageDisplay = document.getElementById('instant-voltage');
+        const liveBadge = document.getElementById('live-badge');
+        const rmsValueText = document.getElementById('rms-value');
+        const rmsBar = document.getElementById('rms-bar');
+        const toast = document.getElementById('toast');
+
+        let isPaused = false;
+        let gain = 250;
+        let dataBuffer = [];
+        const maxBufferLength = 800; // Total points to store for scrolling
+        let frameCount = 0;
+        const sampleQueue = []; // incoming samples from SSE
+
+        // Initialize Canvas Size
+        function resize() {
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = canvas.offsetWidth * dpr;
+            canvas.height = canvas.offsetHeight * dpr;
+            ctx.scale(dpr, dpr);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function draw() {
+            const w = canvas.width / (window.devicePixelRatio || 1);
+            const h = canvas.height / (window.devicePixelRatio || 1);
+            const midY = h / 2;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Draw Signal
+            ctx.beginPath();
+            ctx.strokeStyle = '#00ffc2';
+            ctx.lineWidth = 1.8;
+            ctx.lineJoin = 'round';
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(0, 255, 194, 0.5)';
+
+            const step = w / Math.max(dataBuffer.length - 1, 1);
+
+            for (let i = 0; i < dataBuffer.length; i++) {
+                const x = i * step;
+                // Amplification based on gain slider
+                const y = midY - (dataBuffer[i] * gain * (h / 600));
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.shadowBlur = 0; // Reset shadow for other drawing ops
+        }
+
+        function updateUI(latestVal) {
+            frameCount++;
+            if (frameCount % 6 === 0) { // Throttle UI updates
+                const voltage = (Math.abs(latestVal) * 1.5).toFixed(2);
+                voltageDisplay.innerText = `${voltage}mV`;
+
+                // RMS calc simulation
+                const rms = (Math.abs(latestVal) * gain * 0.5).toFixed(1);
+                rmsValueText.innerText = rms;
+                rmsBar.style.width = `${Math.min(100, rms / 3)}%`;
+            }
+        }
+
+        // Controls
+        pauseBtn.addEventListener('click', () => {
+            isPaused = !isPaused;
+            const icon = pauseBtn.querySelector('.material-symbols-outlined');
+            const text = pauseBtn.querySelector('span:last-child');
+
+            if (isPaused) {
+                icon.innerText = 'play_circle';
+                text.innerText = 'Resume';
+                liveBadge.className = 'font-label-caps text-label-caps bg-surface-container-highest text-on-surface-variant px-1.5 rounded';
+                liveBadge.innerText = 'PAUSED';
+            } else {
+                icon.innerText = 'pause_circle';
+                text.innerText = 'Pause';
+                liveBadge.className = 'font-label-caps text-label-caps bg-primary-container text-on-primary-container px-1.5 rounded';
+                liveBadge.innerText = 'LIVE';
+            }
+        });
+
+        historyBtn.addEventListener('click', async () => {
+            try {
+                const response = await fetch('/api/snapshot', { method: 'POST' });
+                if (!response.ok) throw new Error('Snapshot failed');
+                const data = await response.json();
+                // Show toast
+                toast.classList.remove('opacity-0', 'pointer-events-none', 'scale-90');
+                toast.classList.add('opacity-100', 'scale-100');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'pointer-events-none', 'scale-90');
+                    toast.classList.remove('opacity-100', 'scale-100');
+                }, 2000);
+                // Optionally navigate to history page after a short delay
+                setTimeout(() => {
+                    window.location.href = 'history.html';
+                }, 1500);
+            } catch (err) {
+                console.error('Snapshot error:', err);
+                // Show error toast
+                toast.innerHTML = '<span class="material-symbols-outlined text-[18px]">error</span><span class="font-label-caps text-[10px]">SAVE FAILED</span>';
+                toast.classList.remove('opacity-0', 'pointer-events-none', 'scale-90');
+                toast.classList.add('opacity-100', 'scale-100');
+                setTimeout(() => {
+                    toast.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span><span class="font-label-caps text-[10px]">DATA POINT SAVED</span>';
+                    toast.classList.add('opacity-0', 'pointer-events-none', 'scale-90');
+                    toast.classList.remove('opacity-100', 'scale-100');
+                }, 2000);
+            }
+        });
+
+        gainSlider.addEventListener('input', (e) => {
+            gain = e.target.value;
+            gainLabel.innerText = `x${gain}`;
+        });
+
+        // Set up EventSource for live serial data
+        const eventSource = new EventSource('/api/stream');
+        eventSource.onmessage = function(event) {
+            const line = event.data;
+            const parts = line.split(',');
+            if (parts.length >= 2) {
+                const signal = parseInt(parts[0], 10);
+                const envelop = parseInt(parts[1], 10);
+                // Push signal to queue for processing
+                sampleQueue.push(signal);
+                // Optionally, we could also store envelope if needed for other metrics
+            }
+        };
+        eventSource.onerror = function(err) {
+            console.error('SSE error:', err);
+        };
+
+        function animate() {
+            if (!isPaused) {
+                // Process all available samples
+                while (sampleQueue.length > 0) {
+                    const signal = sampleQueue.shift();
+                    dataBuffer.push(signal);
+                    if (dataBuffer.length > maxBufferLength) {
+                        dataBuffer.shift();
+                    }
+                }
+                if (dataBuffer.length > 0) {
+                    draw();
+                    // Update UI using the most recent sample
+                    const latest = dataBuffer[dataBuffer.length - 1];
+                    updateUI(latest);
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // Start animation
+        animate();
+    </script>
+</body></html>

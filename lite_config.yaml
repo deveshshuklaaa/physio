@@ -1,0 +1,10 @@
+model_list:
+  - model_name: nemotron-3-ultra-550b-a55b
+    litellm_params:
+      model: nemotron-3-ultra-550b-a55b
+      api_key: os.environ/NVIDIA_API_KEY
+      api_base: https://integrate.api.nvidia.com/v1
+
+litellm_settings:
+  drop_params: true
+  master_key: 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
