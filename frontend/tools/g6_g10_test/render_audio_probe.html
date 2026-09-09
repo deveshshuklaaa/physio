@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>G7/G8 probe</title></head>
+<body>
+<!--
+  render_audio_probe.html — the deterministic half of the G6/G7/G8/G10 suite.
+
+  G7 (skeleton colour) and G8 (audio cue debounce) depend on an ALERT being
+  active. A real camera cannot be made to produce a specific alert on demand,
+  so these two are driven from synthetic landmark points against the REAL
+  Canvas2D context and the REAL <audio> element — not stub objects. The
+  camera-dependent half (G6/G10) runs against src/pages/live_session.html.
+-->
+<canvas id="c" width="200" height="200"></canvas>
+<script type="module">
+import { drawSkeleton, COLOR } from "../../src/render/skeleton.js";
+import { AudioCuePlayer, AUDIO_MAP } from "../../src/lib/audio_cues.js";
+
+const results = {};
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Count pixels matching an rgb() string, with a small tolerance for AA.
+function countColor(ctx, cssRgb) {
+  const [r, g, b] = cssRgb.match(/\d+/g).map(Number);
+  const d = ctx.getImageData(0, 0, 200, 200).data;
+  let n = 0;
+  for (let i = 0; i < d.length; i += 4) {
+    if (Math.abs(d[i] - r) <= 12 && Math.abs(d[i + 1] - g) <= 12 && Math.abs(d[i + 2] - b) <= 12 && d[i + 3] > 200) n++;
+  }
+  return n;
+}
+
+async function main() {
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  const pts = {
+    left_hip: [60, 60], left_knee: [60, 110], left_ankle: [60, 160],
+    right_hip: [140, 60], right_knee: [140, 110], right_ankle: [140, 160],
+  };
+
+  // ---- G7: the skeleton actually paints, and the colour rule is visible in
+  // real pixels (docs/03_legacy.md D2: ANY alert -> the WHOLE skeleton red).
+  ctx.clearRect(0, 0, 200, 200);
+  drawSkeleton(ctx, pts, []);
+  results.g7_green_pixels_no_alert = countColor(ctx, COLOR.green);
+  results.g7_red_pixels_no_alert = countColor(ctx, COLOR.red);
+
+  ctx.clearRect(0, 0, 200, 200);
+  drawSkeleton(ctx, pts, ["Knees caving in — push knees out"]);
+  results.g7_red_pixels_with_alert = countColor(ctx, COLOR.red);
+  results.g7_green_pixels_with_alert = countColor(ctx, COLOR.green);
+
+  // A joint centre must be painted at the landmark's exact pixel coordinate —
+  // proves the geometry is real, not just "some colour reached the canvas".
+  const px = ctx.getImageData(60, 110, 1, 1).data;
+  results.g7_joint_pixel_at_left_knee = [px[0], px[1], px[2]];
+
+  // ---- G8: real HTMLAudioElement, real mp3 off disk, real 4s debounce.
+  const alert = "Knees caving in — push knees out";
+  const seen = [];
+  const player = new AudioCuePlayer({ logger: { warn: (e, f) => seen.push(f.filename) } });
+
+  player.play(alert);
+  await sleep(400);
+  const el = document.querySelector("audio") || player._audioEls.get(AUDIO_MAP[alert]);
+  results.g8_element_created = !!el;
+  results.g8_src_resolves_to_asset = el ? el.src.endsWith("/assets/audio/caving.mp3") : null;
+  // A cue that never actually decodes is the exact failure voice.py hid.
+  results.g8_readyState = el ? el.readyState : null;
+  results.g8_error_code = el && el.error ? el.error.code : null;
+  results.g8_played_time = el ? el.currentTime : null;
+  results.g8_paused_after_play = el ? el.paused : null;
+
+  // Second call inside the 4s window must NOT restart playback.
+  const tBefore = el ? el.currentTime : 0;
+  player.play(alert);
+  await sleep(150);
+  results.g8_time_did_not_reset_within_cooldown = el ? el.currentTime >= tBefore : null;
+
+  // A DIFFERENT alert is not debounced by the first one's timer.
+  player.play("Not deep enough");
+  await sleep(300);
+  const el2 = player._audioEls.get(AUDIO_MAP["Not deep enough"]);
+  results.g8_second_distinct_cue_played = !!el2 && el2.currentTime > 0;
+
+  // After the cooldown the same alert plays again.
+  await sleep(4000);
+  if (el) el.currentTime = 0;
+  player.play(alert);
+  await sleep(400);
+  results.g8_replays_after_cooldown = el ? el.currentTime > 0 : null;
+
+  // An unmapped alert is a silent no-op, never an invented mapping.
+  results.g8_unmapped_alert_is_noop = (() => {
+    const before = player._audioEls.size;
+    player.play("some alert nobody mapped");
+    return player._audioEls.size === before;
+  })();
+
+  results.g8_missing_assets_warned = seen;
+  window.__RESULT__ = results;
+}
+
+main().catch((e) => { window.__ERROR__ = String(e && e.stack || e); });
+</script>
+</body>
+</html>

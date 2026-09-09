@@ -1,5 +1,14 @@
 .claude/
 .git/
+.gitignore
+*.md
+*yaml
+*.zip
+
+venv/
+
+graaphify-out/
+gitKeys.txt
 backend/__pycache__
 backend/venv
 /home/billa-dakait/Desktop/final_project/emg-service/venv

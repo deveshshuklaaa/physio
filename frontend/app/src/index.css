@@ -1,0 +1,44 @@
+@import "tailwindcss";
+@import "./vendor/fonts/fonts.css";
+
+/* Design tokens from the Stitch design system (project 6313080646788766730).
+   The three status colours are FUNCTIONAL, not decorative -- they are the
+   app's feedback vocabulary, ported from the legacy OpenCV renderer so live
+   and post-session feedback stay consistent:
+
+     --ok      green  posture within threshold
+     --error   red    a posture rule is flagged. PATIENT POSTURE ONLY.
+     --warn    amber  quality/system warning, never a patient error
+
+   Never use --error for a system or connection problem. Telling a patient
+   they moved incorrectly when tracking actually failed is a worse failure
+   than saying nothing. */
+@theme {
+  --color-ok: #00b37e;
+  --color-error: #ff3b30;
+  --color-warn: #ffb020;
+
+  --color-surface: #0a0a0a;
+  --color-surface-1: #121212;
+  --color-surface-2: #1a1a1a;
+  --color-line: #2a2a2a;
+  --color-ink: #ededed;
+  --color-ink-dim: #a1a1a1;
+
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  html, body, #root { height: 100%; }
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    /* Minimum 18px body text: the patient reads this from 2-3 metres. */
+    font-size: 18px;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Tabular figures so counters do not jitter as digits change. */
+  .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+}

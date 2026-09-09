@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head>
+<body>
+<script type="module">
+import { IsolatedRecorder } from "/src/lib/recorder.js";
+
+window.__RESULT__ = null;
+window.__ERROR__ = null;
+
+// Simulates a pose worker running independently. We deliberately make it
+// throw repeatedly ("die") partway through the session, while recording
+// continues on a totally separate object (IsolatedRecorder) with no
+// reference to this "worker" at all — that's the isolation being tested.
+class FakePoseWorker {
+  constructor() { this.alive = true; this.tickCount = 0; this._timer = setInterval(() => this._tick(), 100); }
+  _tick() {
+    this.tickCount++;
+    if (this.tickCount === 8) {
+      // "die": throw inside the worker's own tick, uncaught, and stop ticking.
+      clearInterval(this._timer);
+      this.alive = false;
+      throw new Error("simulated pose worker crash");
+    }
+  }
+}
+
+async function run() {
+  const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+  const recorder = new IsolatedRecorder(stream, { timesliceMs: 250 });
+  recorder.start();
+  const startedAt = performance.now();
+
+  const worker = new FakePoseWorker();
+
+  // Let it run ~1.6s so the worker dies (at ~800ms) partway through, while
+  // recording keeps going for another ~800ms afterward.
+  await new Promise((r) => setTimeout(r, 1600));
+
+  const chunkCountBeforeStop = recorder._chunks.length;
+  const blob = await recorder.stop();
+  const stoppedAt = performance.now();
+
+  const buf = await blob.arrayBuffer();
+  const bytes = new Uint8Array(buf);
+  let b64 = "";
+  const CHUNK = 0x8000;
+  for (let i = 0; i < bytes.length; i += CHUNK) {
+    b64 += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+  }
+  b64 = btoa(b64);
+
+  window.__RESULT__ = {
+    workerAliveAtStop: worker.alive, // must be false: worker died before we stopped recording
+    chunkCountBeforeStop,
+    blobSize: blob.size,
+    blobType: blob.type,
+    elapsedMs: stoppedAt - startedAt,
+    b64,
+  };
+}
+
+run().catch((e) => { window.__ERROR__ = String(e && e.stack || e); });
+</script>
+</body></html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rehab Assessment Engine - Live Session</title>
+<!-- Fonts -->
+<link href="../vendor/fonts/fonts.css" rel="stylesheet"/>
+<!-- Material Symbols (vendored, was Google Fonts CDN; subset to the 4 glyphs this page uses) -->
+<link href="../vendor/fonts/material-symbols.css" rel="stylesheet"/>
+<!-- Tailwind CSS (vendored play-CDN build, was https://cdn.tailwindcss.com) -->
+<script src="../vendor/tailwind/tailwind.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#00b37e',
+                        'error': '#ff3b30',
+                        'warning': '#ffb020',
+                        'on-error': '#ffffff',
+                        'surface': '#18181b',
+                        'on-surface': '#ffffff',
+                        'on-surface-variant': '#a1a1aa',
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter", "sans-serif"],
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-black text-on-surface font-body h-screen w-screen overflow-hidden flex flex-col items-center justify-center antialiased">
+<!-- DEV OVERLAY (Hidden by default, shown for developer) -->
+<div class="fixed top-4 right-4 bg-black/80 backdrop-blur-md rounded-lg p-4 border border-surface text-on-surface-variant font-mono text-xs z-[100] shadow-2xl flex flex-col gap-1 w-48" id="dev-overlay">
+<div class="text-primary font-bold mb-1 border-b border-surface pb-1">System Diagnostics</div>
+<div class="flex justify-between"><span>capture fps</span><span class="text-on-surface" id="ov-capture-fps">--</span></div>
+<div class="flex justify-between"><span>inference fps</span><span class="text-on-surface" id="ov-inference-fps">--</span></div>
+<div class="flex justify-between"><span>dropped</span><span class="text-warning" id="ov-dropped">--</span></div>
+<div class="flex justify-between"><span>latency</span><span class="text-on-surface" id="ov-latency">--</span></div>
+<div class="flex justify-between"><span>ws queue</span><span class="text-on-surface" id="ov-ws-queue">--</span></div>
+<div class="mt-2 text-[10px] text-on-surface-variant/50 pt-2 border-t border-surface">Press 'D' to toggle</div>
+</div>
+<!-- MAIN HERO CANVAS (16:9 Viewport) -->
+<main class="relative w-full max-w-7xl aspect-video bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl flex-shrink-0">
+<!-- Live camera: hidden <video> is the raw getUserMedia sink; the canvas is
+     the render target (mirrored frame + skeleton), painted by
+     lib/session_orchestrator.js. The Stitch mockup's simulated SVG skeleton
+     was removed — this is the real thing now. -->
+<video id="cam-video" class="hidden" playsinline muted autoplay></video>
+<canvas id="stage-canvas" class="absolute inset-0 w-full h-full object-cover"></canvas>
+<!-- TOP LEFT: Exercise Name Pill -->
+<div class="absolute top-8 left-8 bg-black/60 backdrop-blur-md rounded-full px-8 py-3 flex items-center border border-white/10">
+<span class="font-headline text-3xl font-bold tracking-tight text-white">Squat</span>
+</div>
+<!-- TOP RIGHT: Status Chips -->
+<div class="absolute top-8 right-8 flex gap-4">
+<!-- REC Chip -->
+<div class="bg-black/60 backdrop-blur-md rounded-full px-5 py-2 flex items-center gap-3 border border-white/10">
+<div class="w-3 h-3 rounded-full bg-error animate-pulse"></div>
+<span class="material-symbols-outlined text-on-surface text-[20px]">videocam</span>
+<span class="font-mono text-lg font-bold text-white">REC</span>
+</div>
+<!-- EMG Chip -->
+<div class="bg-black/60 backdrop-blur-md rounded-full px-5 py-2 flex items-center gap-3 border border-white/10">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="font-mono text-lg font-bold text-white">EMG</span>
+</div>
+</div>
+<!-- BOTTOM LEFT: Rep Counters (total + correct).
+     Positioned at bottom-32/z-40 (not bottom-8/no-z-index) so the giant
+     digits clear the corrective-feedback banner (absolute bottom-0, z-30,
+     shown/hidden dynamically) instead of being clipped/covered by it, and
+     font-size uses clamp() instead of a fixed 140px so it can never exceed
+     the aspect-video container's overflow-hidden bounds on shorter viewports.
+     Required ids (contract with the JS agent): #rep-total, #rep-correct,
+     set directly on the numeral spans so JS can assign .textContent. -->
+<div class="absolute bottom-32 left-8 z-40 flex items-end gap-8 drop-shadow-2xl">
+<div class="flex flex-col items-start bg-black/40 backdrop-blur-sm rounded-2xl px-6 py-3">
+<span class="font-mono font-bold leading-none text-white tabular-nums" style="font-size: clamp(48px, 9vw, 96px); text-shadow: 0 4px 24px rgba(0,0,0,0.5);" id="rep-total">0</span>
+<span class="font-headline text-lg font-bold tracking-widest text-on-surface-variant uppercase">Reps</span>
+</div>
+<div class="flex flex-col items-start bg-black/40 backdrop-blur-sm rounded-2xl px-6 py-3">
+<span class="font-mono font-bold leading-none text-primary tabular-nums" style="font-size: clamp(48px, 9vw, 96px); text-shadow: 0 4px 24px rgba(0, 179, 126, 0.4);" id="rep-correct">0</span>
+<span class="font-headline text-lg font-bold tracking-widest text-on-surface-variant uppercase">Correct</span>
+</div>
+</div>
+<!-- CENTER BOTTOM: Corrective Feedback Banner -->
+<!-- Only appears when rule is flagged (Simulated active state) -->
+<div class="absolute bottom-0 left-0 w-full bg-error/20 backdrop-blur-xl border-t-2 border-error/80 py-6 flex items-center justify-center gap-6 shadow-[0_-10px_40px_rgba(255,59,48,0.2)] z-30" id="feedback-banner" style="display:none">
+<span class="material-symbols-outlined text-error fill" id="feedback-icon" style="font-size: 56px;">warning</span>
+<span class="font-headline text-[42px] font-bold text-on-error tracking-tight whitespace-nowrap" id="feedback-text">Knees caving in — push knees out</span>
+</div>
+<!-- BOTTOM RIGHT: EMG Waveform Mini-Card -->
+<div class="absolute top-24 right-8 w-56 bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/10 shadow-xl z-40" id="emg-card">
+<div class="flex justify-between items-center mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">sensors</span>
+<span class="font-mono text-sm text-on-surface-variant">EMG Activity</span>
+</div>
+<span class="font-mono text-xl font-bold text-primary">84%</span>
+</div>
+<!-- Waveform removed with the rest of the mockup simulation: the real EMG
+     series arrives as {type:"emg"} on the session WebSocket (Phase H). -->
+<div class="h-16 w-full" id="emg-chart"></div>
+</div>
+</main>
+<!-- BOTTOM NAVIGATION (End Session Anchor) -->
+<!-- Mapped directly from JSON: {"name": "BottomNavBar", "item_count": 1, "labels": ["End Session"], "icons": ["close"], ... "style_active_navigation": "flex flex-col items-center justify-center bg-error dark:bg-error text-on-error rounded-full px-8 py-3 mb-6", "style_shell_layout": "fixed bottom-0 left-0 w-full z-50 flex justify-center items-center pb-8"} -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-center items-center pb-8 bg-transparent flat no shadows flex-col">
+<!-- Active element mapping: Only one item, so it's active -->
+<button class="flex flex-row items-center justify-center bg-zinc-900/80 border border-white/20 text-on-surface-variant rounded-full px-12 py-4 mb-6 hover:bg-zinc-800 hover:text-white active:scale-95 duration-150 shadow-xl gap-3" id="end-session-btn">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[32px]">close</span>
+<span class="font-headline text-2xl font-bold">End Session</span>
+</div>
+</button>
+</nav>
+<!-- Simple JS to toggle Dev Overlay -->
+<script>
+        document.addEventListener('keydown', function(event) {
+            if (event.key.toLowerCase() === 'd') {
+                const devOverlay = document.getElementById('dev-overlay');
+                if (devOverlay.style.display === 'none') {
+                    devOverlay.style.display = 'flex';
+                } else {
+                    devOverlay.style.display = 'none';
+                }
+            }
+        });
+    </script>
+<!-- Live session boot: start the real capture -> worker -> canvas loop. -->
+<script type="module">
+        import { startLiveSession } from "../lib/session_orchestrator.js";
+
+        const params = new URLSearchParams(location.search);
+        const sessionId = params.get("session_id") || `local-${Date.now()}`;
+        const exercise = params.get("exercise") || "squat";
+        const API = params.get("api") || "http://127.0.0.1:8000";
+
+        // Exercise config comes from GET /exercises. No backend exists yet
+        // (Phase H), so fall back to the checked-in squat config rather than
+        // inventing thresholds here.
+        // ponytail: dev fallback, delete once /exercises is live.
+        async function loadConfig() {
+            try {
+                const list = await (await fetch(`${API}/exercises`)).json();
+                const found = (Array.isArray(list) ? list : list.exercises || [])
+                    .find((e) => e.name === exercise);
+                if (found) return found;
+            } catch (e) {
+                console.warn("[live_session] GET /exercises unavailable, using local squat config", e);
+            }
+            return await (await fetch("../../tools/g5_worker_test/squat_config.json")).json();
+        }
+
+        (async () => {
+            const cfg = await loadConfig();
+            document.querySelector("main span.font-headline").textContent =
+                cfg.display_name || cfg.name;
+            window.__liveSession = await startLiveSession({
+                videoEl: document.getElementById("cam-video"),
+                canvasEl: document.getElementById("stage-canvas"),
+                exerciseConfig: cfg,
+                sessionId,
+                wsUrl: `${API.replace(/^http/, "ws")}/ws/session/${sessionId}`,
+            });
+            // #end-session-btn teardown is wired by the orchestrator itself.
+            // Navigation to the report page waits for that page to exist.
+        })().catch((e) => {
+            console.error("[live_session] failed to start", e);
+            const banner = document.getElementById("feedback-banner");
+            const text = document.getElementById("feedback-text");
+            if (banner) banner.style.display = "";
+            if (text) text.textContent = `Session failed to start: ${e && e.message || e}`;
+        });
+    </script>
+</body></html>

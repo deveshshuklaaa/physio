@@ -1,0 +1,26 @@
+services:
+  emg-service:
+    build:
+      context: ./emg-service
+    ports:
+      - "5000:5000"
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      # K2 -- compose hostname, not localhost. localhost inside this
+      # container is the backend itself.
+      EMG_SERVICE_URL: "http://emg-service:5000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - emg-service
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8081:3000"
+    depends_on:
+      - backend

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head>
+<body>
+<script type="module">
+window.__RESULT__ = null;
+window.__ERROR__ = null;
+
+async function run() {
+  const exerciseConfig = await (await fetch("/../backend/app/config/exercises.json")).json()
+    .catch(() => null);
+  // Fallback: fetch relative to server root (frontend/ is web root, backend/ is a sibling
+  // dir NOT served) -- so instead read the file the test harness copies in below.
+  const cfgResp = await fetch("/tools/g5_worker_test/squat_config.json");
+  const cfg = await cfgResp.json();
+
+  const worker = new Worker("/src/workers/pose_worker.js"); // classic — see pose_worker.js header
+  const events = [];
+  const latencies = [];
+  const sentTimes = []; // worker doesn't echo custom fields back; correlate by FIFO order (single in-flight frame at a time)
+  let readyAt = null;
+  let framesSent = 0;
+  const FRAME_COUNT = 15;
+
+  worker.onmessage = (ev) => {
+    const msg = ev.data;
+    events.push(msg.type);
+    if (msg.type === "ready") {
+      readyAt = performance.now();
+      sendFrames();
+    } else if (msg.type === "result" || msg.type === "no_pose" || msg.type === "dropped") {
+      const sentAt = sentTimes.shift();
+      if (sentAt != null) latencies.push(performance.now() - sentAt);
+      if (framesSent < FRAME_COUNT) {
+        sendOneFrame();
+      } else {
+        finish();
+      }
+    } else if (msg.type === "error") {
+      window.__ERROR__ = "worker error: " + msg.message;
+    }
+  };
+  worker.onerror = (ev) => { window.__ERROR__ = "worker onerror: " + ev.message; };
+
+  const canvas = document.createElement("canvas");
+  canvas.width = 320; canvas.height = 240;
+  const cctx = canvas.getContext("2d");
+
+  async function sendOneFrame() {
+    framesSent++;
+    // Draw a simple synthetic scene (no real person -> expect "no_pose", which
+    // is fine: this test proves the worker WIRING (init/detect/message-passing)
+    // and measures inference latency, not detection accuracy on a fake image.
+    cctx.fillStyle = `hsl(${framesSent * 20}, 60%, 50%)`;
+    cctx.fillRect(0, 0, 320, 240);
+    const bitmap = await createImageBitmap(canvas);
+    sentTimes.push(performance.now());
+    worker.postMessage({ type: "frame", bitmap, ts: Date.now(), w: 320, h: 240 }, [bitmap]);
+  }
+
+  function sendFrames() { sendOneFrame(); }
+
+  function finish() {
+    window.__RESULT__ = {
+      events,
+      latencies,
+      avgLatencyMs: latencies.reduce((a, b) => a + b, 0) / (latencies.length || 1),
+      maxLatencyMs: Math.max(...latencies, 0),
+      initToReadyMs: readyAt,
+    };
+  }
+
+  setTimeout(() => {
+    if (!window.__RESULT__ && !window.__ERROR__) {
+      window.__ERROR__ = "timeout waiting for " + FRAME_COUNT + " frame results; events so far: " + JSON.stringify(events);
+    }
+  }, 15000);
+
+  worker.postMessage({ type: "init", exerciseConfig: cfg, sessionId: "g5-test" });
+}
+
+run().catch((e) => { window.__ERROR__ = String(e && e.stack || e); });
+</script>
+</body></html>

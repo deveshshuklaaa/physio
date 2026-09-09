@@ -8,6 +8,7 @@ h11==0.16.0
 httpcore==1.0.9
 httpx==0.28.1
 idna==3.18
+python-multipart==0.0.32
 pydantic==2.13.4
 pydantic_core==2.46.4
 starlette==1.4.1
@@ -15,3 +16,14 @@ typing-inspection==0.4.2
 typing_extensions==4.16.0
 uvicorn==0.52.1
 websockets==17.0.1
+
+# ML runtime deps (backend/ml/** imports these) — see docs/06_ml_pipeline.md §14
+pandas==3.0.5
+numpy==2.5.1
+scikit-learn==1.9.0
+xgboost==3.4.1
+joblib==1.5.3
+pyarrow==25.0.1
+opencv-python-headless==5.0.0.93
+mediapipe==1.0.0
+tqdm==4.70.0

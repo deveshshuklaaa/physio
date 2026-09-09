@@ -1,0 +1,527 @@
+{
+  "_comment": "Phase F pure-data exercise registry. See docs/08_exercise_config.md for the full schema, evidence for `type`, and the fill-in-the-blanks threshold table for the owner. Every `value: null` field below is an unfilled clinical placeholder \u2014 do NOT treat null as 0 or skip it in a real comparison.",
+  "exercises": [
+    {
+      "name": "heel_slide",
+      "display_name": "Heel Slide",
+      "type": "dynamic",
+      "primary_branch": "pose",
+      "valid_views": [
+        "SIDE"
+      ],
+      "joints": [
+        {
+          "display_name": "Knee (L)",
+          "landmark_a": "left_hip",
+          "landmark_b": "left_knee",
+          "landmark_c": "left_ankle",
+          "use_3d": true,
+          "check_in_views": [
+            "SIDE"
+          ],
+          "is_rep_driver": true
+        },
+        {
+          "display_name": "Knee (R)",
+          "landmark_a": "right_hip",
+          "landmark_b": "right_knee",
+          "landmark_c": "right_ankle",
+          "use_3d": true,
+          "check_in_views": [
+            "SIDE"
+          ],
+          "is_rep_driver": false
+        }
+      ],
+      "rep_trigger": {
+        "joint_display_name": "Knee (L)",
+        "direction": "decrease",
+        "enter_angle": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "knee angle (hip-knee-ankle) that starts a rep as the heel slides toward the buttocks (knee flexing, angle decreasing)"
+        },
+        "exit_angle": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "knee angle that completes a rep as the heel slides back out (knee extending, angle increasing)"
+        },
+        "depth_target": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "minimum flexion (lowest knee angle) required during the slide-in phase for the rep to count; 0 disables the check"
+        }
+      },
+      "isometric_trigger": null,
+      "thresholds": {
+        "heel_lifting_max_y_rise": {
+          "value": null,
+          "unit": "normalized y (pelvis/body_scale-relative, same units as *_heel_rel_y)",
+          "sign_convention": "positive = heel rising off the support surface",
+          "_TODO": "max allowed rise in left/right_heel_rel_y from the resting-frame baseline before flagging heel_lifting"
+        },
+        "hip_lifting_max_y_rise": {
+          "value": null,
+          "unit": "normalized y (same units as pelvis_center_y)",
+          "sign_convention": "positive = pelvis rising off the support surface",
+          "_TODO": "max allowed rise in pelvis_center_y from the resting-frame baseline before flagging hip_lifting"
+        }
+      }
+    },
+    {
+      "name": "mini_squat",
+      "display_name": "Mini Squat",
+      "type": "dynamic",
+      "primary_branch": "pose",
+      "valid_views": [
+        "FRONT",
+        "SIDE"
+      ],
+      "joints": [
+        {
+          "display_name": "Knee (L)",
+          "landmark_a": "left_hip",
+          "landmark_b": "left_knee",
+          "landmark_c": "left_ankle",
+          "use_3d": false,
+          "check_in_views": [
+            "FRONT"
+          ],
+          "is_rep_driver": true,
+          "driver_for_views": [
+            "FRONT"
+          ]
+        },
+        {
+          "display_name": "Knee (R)",
+          "landmark_a": "right_hip",
+          "landmark_b": "right_knee",
+          "landmark_c": "right_ankle",
+          "use_3d": false,
+          "check_in_views": [
+            "FRONT"
+          ],
+          "is_rep_driver": false
+        },
+        {
+          "display_name": "Knee (side)",
+          "landmark_a": "left_hip",
+          "landmark_b": "left_knee",
+          "landmark_c": "left_ankle",
+          "use_3d": true,
+          "check_in_views": [
+            "SIDE"
+          ],
+          "is_rep_driver": true,
+          "driver_for_views": [
+            "SIDE"
+          ]
+        }
+      ],
+      "rep_trigger": {
+        "joint_display_name": "Knee (L)",
+        "direction": "decrease",
+        "enter_angle": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "knee angle that starts a rep as the squat descends"
+        },
+        "exit_angle": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "knee angle that completes a rep as the squat returns to standing"
+        },
+        "depth_target": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "minimum knee flexion (lowest angle) required during the squat for the rep to count; 0 disables the check"
+        }
+      },
+      "isometric_trigger": null,
+      "thresholds": {
+        "heel_lifting_max_y_rise": {
+          "value": null,
+          "unit": "normalized y (same units as *_heel_rel_y)",
+          "sign_convention": "positive = heel rising off the floor",
+          "_TODO": "max allowed rise in left/right_heel_rel_y from standing baseline before flagging heel_lifting"
+        },
+        "knee_varus_max_angle_deg": {
+          "value": null,
+          "unit": "deg",
+          "sign_convention": "TBD by owner \u2014 angle of medial knee deviation from the hip-ankle line, FRONT view",
+          "_TODO": "max allowed inward (varus) knee deviation before flagging knee_varus; exact formula/landmarks TBD by owner"
+        },
+        "knee_past_toes_max_margin": {
+          "value": null,
+          "unit": "normalized x (same units as *_knee_rel_x / *_foot_index_rel_x)",
+          "sign_convention": "positive = knee forward of toe",
+          "_TODO": "max allowed forward displacement of knee_rel_x past foot_index_rel_x before flagging knee_past_toes"
+        },
+        "ankles_min_width_ratio": {
+          "value": null,
+          "unit": "ratio, ankle_width_3d / shoulder_width_3d",
+          "sign_convention": "below threshold = ankles too close together",
+          "_TODO": "minimum ankle_width_3d:shoulder_width_3d ratio before flagging ankles_close_together"
+        },
+        "back_slouching_min_trunk_angle_deg": {
+          "value": null,
+          "unit": "deg (trunk_left_angle_2d / trunk_right_angle_2d)",
+          "sign_convention": "below threshold = slouching forward",
+          "_TODO": "minimum trunk angle before flagging back_slouching"
+        }
+      }
+    },
+    {
+      "name": "seated_knee_extension",
+      "display_name": "Seated Knee Extension",
+      "type": "dynamic",
+      "primary_branch": "pose",
+      "valid_views": [
+        "SIDE"
+      ],
+      "joints": [
+        {
+          "display_name": "Knee (L)",
+          "landmark_a": "left_hip",
+          "landmark_b": "left_knee",
+          "landmark_c": "left_ankle",
+          "use_3d": true,
+          "check_in_views": [
+            "SIDE"
+          ],
+          "is_rep_driver": true
+        },
+        {
+          "display_name": "Knee (R)",
+          "landmark_a": "right_hip",
+          "landmark_b": "right_knee",
+          "landmark_c": "right_ankle",
+          "use_3d": true,
+          "check_in_views": [
+            "SIDE"
+          ],
+          "is_rep_driver": false
+        }
+      ],
+      "rep_trigger": {
+        "joint_display_name": "Knee (L)",
+        "direction": "increase",
+        "enter_angle": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "knee angle that starts a rep as the seated leg begins extending"
+        },
+        "exit_angle": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "knee angle that completes a rep as the leg returns to the flexed start position"
+        },
+        "depth_target": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "minimum extension (highest knee angle) required during the rep for it to count; 0 disables the check"
+        }
+      },
+      "isometric_trigger": null,
+      "thresholds": {
+        "hip_lifting_max_y_rise": {
+          "value": null,
+          "unit": "normalized y (pelvis_center_y vs the extractor's own whole-file 'baseline' column)",
+          "sign_convention": "positive = pelvis rising off the seat",
+          "_TODO": "max allowed rise of pelvis_center_y above the clip's 'baseline' column before flagging hip_lifting"
+        },
+        "back_slouching_min_trunk_angle_deg": {
+          "value": null,
+          "unit": "deg (trunk_left_angle_2d / trunk_right_angle_2d)",
+          "sign_convention": "below threshold = slouching forward",
+          "_TODO": "minimum trunk angle before flagging back_slouching"
+        },
+        "back_rocking_max_score": {
+          "value": null,
+          "unit": "same units as the extractor's own whole-file 'rocking_score' column (std-dev of head x-position)",
+          "sign_convention": "above threshold = excessive rocking",
+          "_TODO": "max allowed 'rocking_score' before flagging back_rocking"
+        }
+      }
+    },
+    {
+      "name": "straight_leg_raise",
+      "display_name": "Straight Leg Raise",
+      "type": "dynamic",
+      "primary_branch": "pose",
+      "valid_views": [
+        "SIDE"
+      ],
+      "joints": [
+        {
+          "display_name": "Hip (L)",
+          "landmark_a": "left_shoulder",
+          "landmark_b": "left_hip",
+          "landmark_c": "left_knee",
+          "use_3d": true,
+          "check_in_views": [
+            "SIDE"
+          ],
+          "is_rep_driver": true
+        },
+        {
+          "display_name": "Hip (R)",
+          "landmark_a": "right_shoulder",
+          "landmark_b": "right_hip",
+          "landmark_c": "right_knee",
+          "use_3d": true,
+          "check_in_views": [
+            "SIDE"
+          ],
+          "is_rep_driver": false
+        },
+        {
+          "display_name": "Knee (L)",
+          "landmark_a": "left_hip",
+          "landmark_b": "left_knee",
+          "landmark_c": "left_ankle",
+          "use_3d": true,
+          "check_in_views": [
+            "SIDE"
+          ],
+          "is_rep_driver": false
+        },
+        {
+          "display_name": "Knee (R)",
+          "landmark_a": "right_hip",
+          "landmark_b": "right_knee",
+          "landmark_c": "right_ankle",
+          "use_3d": true,
+          "check_in_views": [
+            "SIDE"
+          ],
+          "is_rep_driver": false
+        }
+      ],
+      "rep_trigger": {
+        "joint_display_name": "Hip (L)",
+        "direction": "decrease",
+        "enter_angle": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "hip angle (shoulder-hip-knee) that starts a rep as the straight leg lifts off the surface"
+        },
+        "exit_angle": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "hip angle that completes a rep as the leg returns to the surface"
+        },
+        "depth_target": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "hip angle target at peak raise for the rep to count as a full raise; 0 disables the check. Legacy label-editor reference constant HIP_MAX_DEG=46 (as raise-angle = 180-hip_angle) exists in test/code/label-editor/slr_label_editor.py but is a LABELING threshold, not confirmed as the live clinical target \u2014 do not copy without owner sign-off"
+        }
+      },
+      "isometric_trigger": null,
+      "thresholds": {
+        "hip_lifting_max_raise_angle_deg": {
+          "value": null,
+          "unit": "deg, raise angle = 180 - hip_angle_2d at peak-raise frame",
+          "sign_convention": "above threshold = excessive hip flexion / compensation, labeled hip_lifting in this dataset",
+          "_TODO": "max allowed peak raise angle before flagging hip_lifting (dataset's label-editor used 46 deg for LABELING only \u2014 needs independent clinical confirmation)"
+        },
+        "knee_flexion_high_min_angle_deg": {
+          "value": null,
+          "unit": "deg (left/right_knee_angle_2d at most-bent frame)",
+          "sign_convention": "below threshold = knee bending too much during the raise (should stay near full extension)",
+          "_TODO": "minimum knee angle (extension) required through the raise before flagging knee_flexion_high; docstring suggests a ~170-180 deg tolerance band but exact value TBD by owner"
+        },
+        "head_lifting_max_y_rise": {
+          "value": null,
+          "unit": "normalized y (same units as nose_rel_y)",
+          "sign_convention": "positive = head rising off the surface",
+          "_TODO": "max allowed rise in nose_rel_y from the resting-frame baseline before flagging head_lifting"
+        }
+      }
+    },
+    {
+      "name": "terminal_knee_extension",
+      "display_name": "Terminal Knee Extension",
+      "type": "dynamic",
+      "primary_branch": "pose",
+      "valid_views": [
+        "SIDE"
+      ],
+      "joints": [
+        {
+          "display_name": "Knee (L)",
+          "landmark_a": "left_hip",
+          "landmark_b": "left_knee",
+          "landmark_c": "left_ankle",
+          "use_3d": true,
+          "check_in_views": [
+            "SIDE"
+          ],
+          "is_rep_driver": true
+        },
+        {
+          "display_name": "Knee (R)",
+          "landmark_a": "right_hip",
+          "landmark_b": "right_knee",
+          "landmark_c": "right_ankle",
+          "use_3d": true,
+          "check_in_views": [
+            "SIDE"
+          ],
+          "is_rep_driver": false
+        }
+      ],
+      "rep_trigger": {
+        "joint_display_name": "Knee (L)",
+        "direction": "increase",
+        "enter_angle": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "knee angle that starts a rep as the leg begins extending toward terminal extension"
+        },
+        "exit_angle": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "knee angle that completes a rep as the leg returns from terminal extension"
+        },
+        "depth_target": {
+          "value": null,
+          "unit": "deg",
+          "_TODO": "minimum terminal-extension angle (highest knee angle, near 180) required during the rep for it to count; 0 disables the check"
+        }
+      },
+      "isometric_trigger": null,
+      "thresholds": {
+        "hip_lifting_max_y_rise": {
+          "value": null,
+          "unit": "normalized y (pelvis_center_y vs the extractor's own whole-file 'avg_pelvis_center_y' column)",
+          "sign_convention": "positive = pelvis rising off the support surface",
+          "_TODO": "max allowed rise of pelvis_center_y above the clip's 'avg_pelvis_center_y' column before flagging hip_lifting"
+        }
+      }
+    },
+    {
+      "name": "squat",
+      "display_name": "Squat",
+      "type": "dynamic",
+      "primary_branch": "pose",
+      "valid_views": [
+        "FRONT",
+        "SIDE"
+      ],
+      "_note": "Restored from the legacy physio project per owner instruction and MASTER_BUILD_PLAN_v3 \u00a7F1/\u00a7G2. Unlike the five ML-dataset exercises, every value here is REAL \u2014 transcribed from backend/_old_physio_reference/config.py, documented in docs/03_legacy.md D5. Not a placeholder.",
+      "joints": [
+        {
+          "display_name": "Knee (L)",
+          "landmark_a": "left_hip",
+          "landmark_b": "left_knee",
+          "landmark_c": "left_ankle",
+          "use_3d": false,
+          "check_in_views": [
+            "FRONT",
+            "SIDE"
+          ],
+          "is_rep_driver": true
+        },
+        {
+          "display_name": "Knee (R)",
+          "landmark_a": "right_hip",
+          "landmark_b": "right_knee",
+          "landmark_c": "right_ankle",
+          "use_3d": false,
+          "check_in_views": [
+            "FRONT",
+            "SIDE"
+          ],
+          "is_rep_driver": false
+        }
+      ],
+      "rep_trigger": {
+        "joint_display_name": "Knee (L)",
+        "direction": "decrease",
+        "enter_angle": {
+          "value": 105,
+          "unit": "deg",
+          "source": "config.py SQUAT_DOWN_ANGLE"
+        },
+        "exit_angle": {
+          "value": 155,
+          "unit": "deg",
+          "source": "config.py SQUAT_UP_ANGLE"
+        },
+        "depth_target": {
+          "value": 120,
+          "unit": "deg",
+          "source": "config.py DEPTH_INSUFFICIENT_ANGLE"
+        }
+      },
+      "isometric_trigger": null,
+      "extra_checks": [
+        "knee_cave",
+        "torso_lean_front",
+        "torso_lean_side",
+        "knee_past_toes",
+        "heel_lift",
+        "butt_wink",
+        "neck"
+      ],
+      "thresholds": {
+        "knee_cave_min_width_ratio": {
+          "value": 0.72,
+          "unit": "ratio",
+          "source": "config.py KNEE_CAVE_RATIO",
+          "signal": "knee_width / ankle_width (FRONT view)",
+          "alert": "Knees caving in \u2014 push knees out"
+        },
+        "torso_lean_max_deg": {
+          "value": 55,
+          "unit": "deg",
+          "source": "config.py BACK_LEAN_MAX",
+          "signal": "torso lean from vertical (shoulder-hip vs vertical)",
+          "alert": "Leaning too far forward \u2014 chest up"
+        },
+        "knee_past_toes_max_x_ratio": {
+          "value": 0.06,
+          "unit": "fraction of frame width",
+          "source": "config.py KNEE_TOE_X_RATIO",
+          "signal": "knee_x - foot_index_x (SIDE view)",
+          "alert": "Knee past toes \u2014 sit back more"
+        },
+        "heel_lift_max_y_rise": {
+          "value": 0.03,
+          "unit": "normalized y",
+          "source": "config.py HEEL_LIFT_NORM_THRESH (~2 cm)",
+          "signal": "heel y rise from baseline",
+          "alert": "Heels lifting \u2014 press heels down"
+        },
+        "butt_wink_min_hip_angle_deg": {
+          "value": 58,
+          "unit": "deg",
+          "source": "config.py BUTT_WINK_HIP_ANGLE_MIN",
+          "signal": "shoulder-hip-knee angle",
+          "alert": "Lower back rounding \u2014 brace your core"
+        },
+        "butt_wink_max_knee_angle_deg": {
+          "value": 115,
+          "unit": "deg",
+          "source": "config.py BUTT_WINK_KNEE_ANGLE_MAX",
+          "signal": "knee angle gate \u2014 butt wink only checked when knee is at least this bent",
+          "alert": null
+        },
+        "neck_min_angle_deg": {
+          "value": 140,
+          "unit": "deg",
+          "source": "config.py NECK_ANGLE_MIN",
+          "signal": "ear-shoulder-hip angle",
+          "alert": "Neck not neutral \u2014 look straight ahead"
+        },
+        "depth_insufficient_alert": {
+          "value": "Not deep enough",
+          "unit": "alert string",
+          "source": "squat.py rep_trigger.depth_alert",
+          "signal": "raised when a rep never reached depth_target"
+        }
+      }
+    }
+  ]
+}

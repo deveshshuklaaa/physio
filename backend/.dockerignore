@@ -1,0 +1,11 @@
+# K3/§8: keep the legacy reference tree and any secret-looking files out of
+# the build context entirely -- COPY can't leak what it never sees.
+_old_physio_reference/
+venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+logs/
+session_data/
+tools/
+run_tests.sh

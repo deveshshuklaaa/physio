@@ -7,6 +7,12 @@ __pycache__/
 venv/
 .env
 
+
+*.md
+*.zip
+gitKeys.txt
+graphify-out/
+
 # Node
 node_modules/
 
@@ -30,6 +36,8 @@ backend/_old_physio_reference/*.md
 backend/_old_physio_reference/.gitignore
 backend/_old_physio_reference/.graphifyignore
 
+.graphifyignore
+
 # IDE
 .vscode/
 .idea/
@@ -39,3 +47,21 @@ backend/_old_physio_reference/.graphifyignore
 # OS
 .DS_Store
 Thumbs.db
+
+# Additional model and data artifacts
+*.joblib
+*.mov
+*.parquet
+*.pkl
+# Structured logs (§8b.7 — may contain landmark DEBUG data; patient biometric)
+backend/logs/
+*.log
+
+# Session evidence -- landmark coordinates are biometric data (§8b.7) and the
+# retention policy (§8: delete only after confirmed report save) cannot be
+# honoured by anything that reaches git history. Same reasoning as backend/logs/.
+backend/app/session_data/
+
+# Phase J React toolchain (~80MB)
+frontend/app/node_modules/
+frontend/dist/

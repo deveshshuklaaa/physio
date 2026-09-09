@@ -1,0 +1,11 @@
+{
+  "name": "rehab-live-frontend",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Plain HTML/JS live session client. No build step, no framework (per MASTER_BUILD_PLAN_v3 §J1).",
+  "scripts": {
+    "test:ring_buffer": "node tools/ring_buffer_selfcheck.mjs",
+    "test:parity": "node tools/parity_check.mjs"
+  }
+}

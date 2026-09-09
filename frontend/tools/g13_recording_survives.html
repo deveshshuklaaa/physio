@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--
+  g13_recording_survives.html — the G13 gate proof, not a UI page.
+  Not part of the app; not linked from any page. Standalone harness run via
+  headless Chrome with a fake camera device (see docs/09_live_frontend.md
+  for the exact command). Deliberately crashes a real Worker mid-session and
+  asserts recording continued and produced a complete, decodable file —
+  "actually check the file, do not infer it from the absence of errors."
+-->
+<html>
+<head><meta charset="utf-8"></head>
+<body>
+<div id="status">running</div>
+<div id="result"></div>
+<script type="module">
+import { IsolatedRecorder } from "../src/lib/recorder.js";
+
+const statusEl = document.getElementById("status");
+const resultEl = document.getElementById("result");
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result.split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function main() {
+  console.log("step: getUserMedia");
+  const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240 } });
+  console.log("step: got stream", stream.getVideoTracks().length);
+
+  const recorder = new IsolatedRecorder(stream, { timesliceMs: 300 });
+  console.log("step: recorder mimeType", recorder.mimeType);
+  recorder.start();
+  console.log("step: recorder started", recorder.isRecording);
+
+  // A REAL, separate Worker (not a simulation) that deliberately throws
+  // shortly after starting — this is the "pose worker dies" event G13 tests.
+  // recorder.js never imports or references this worker in any way.
+  const crashWorkerSrc = `
+    setTimeout(() => { throw new Error("deliberate pose worker crash for G13 test"); }, 400);
+  `;
+  const workerBlobUrl = URL.createObjectURL(new Blob([crashWorkerSrc], { type: "application/javascript" }));
+  const worker = new Worker(workerBlobUrl);
+  let workerDied = false;
+  worker.onerror = (e) => {
+    workerDied = true;
+    e.preventDefault();
+  };
+
+  // Recording continues for 3s total, well past the worker's crash at 400ms.
+  await new Promise((r) => setTimeout(r, 3000));
+  console.log("step: waited 3s, workerDied=", workerDied);
+
+  const blob = await recorder.stop();
+  console.log("step: recorder stopped, blob size=", blob.size);
+  stream.getTracks().forEach((t) => t.stop());
+
+  const base64 = await blobToBase64(blob);
+  console.log("step: base64 len", base64.length);
+  const payload = JSON.stringify({
+    workerDied,
+    blobSize: blob.size,
+    blobType: blob.type,
+    chunkCount: recorder._chunks.length + recorder._chunks.dropped, // total ever written
+    base64,
+  });
+  resultEl.textContent = `${blob.size} bytes, workerDied=${workerDied}`;
+  await fetch("/g13-result", { method: "POST", body: payload });
+  statusEl.textContent = "done";
+}
+
+main().catch((e) => {
+  statusEl.textContent = "error";
+  resultEl.textContent = String(e && e.stack || e);
+});
+</script>
+</body>
+</html>

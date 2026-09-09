@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html><body>
+<script>
+window.__RESULT__ = null;
+const w = new Worker("/tools/g5_worker_test/classic_probe_worker.js"); // classic, no type:module
+w.onmessage = (ev) => { window.__RESULT__ = ev.data; };
+w.onerror = (ev) => { window.__RESULT__ = { ok: false, error: "onerror: " + ev.message }; };
+</script>
+</body></html>

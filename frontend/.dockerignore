@@ -1,0 +1,5 @@
+app/node_modules/
+dist/
+tests/
+tools/
+run_tests.sh
