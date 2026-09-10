@@ -20,6 +20,29 @@ export const AUDIO_MAP = {
   "Heels lifting — press heels down": "heel_lifting.mp3",
   "Lower back rounding — brace your core": "butt_wink.mp3",
   "Neck not neutral — look straight ahead": "neck_neutral.mp3",
+
+  // The five ML-dataset exercises. Every cue file below is NOT YET RECORDED —
+  // see docs/VALIDATION_TODO.md. They are mapped anyway, deliberately: an
+  // unmapped alert returns early from play() and is invisible, whereas a
+  // mapped-but-missing file is reported per-asset by the error handler below
+  // (logger.warn "audio_cue_missing" + a console.error naming the file). A
+  // gap you can see beats a gap you cannot.
+  "Heel lifting off the surface — keep it down": "heel_down.mp3",
+  "Hip lifting off the surface — keep it flat": "hip_flat.mp3",
+  "Slide your heel further in": "slide_further.mp3",
+  "Knees bowing out — track knees over toes": "knee_varus.mp3",
+  "Feet too close together — widen your stance": "widen_stance.mp3",
+  "Back rounding — chest up": "back_rounding.mp3",
+  "Hip lifting off the seat — stay seated": "stay_seated.mp3",
+  "Back slouching — sit tall": "sit_tall.mp3",
+  "Rocking your torso — keep still": "keep_still.mp3",
+  "Extend your knee further": "extend_knee.mp3",
+  "Raising too high — lower the leg": "lower_leg.mp3",
+  "Knee bending — keep your leg straight": "leg_straight.mp3",
+  "Head lifting — rest your head down": "head_down.mp3",
+  "Raise your leg higher": "raise_higher.mp3",
+  "Hip lifting — keep your hip down": "hip_down.mp3",
+  "Straighten your knee fully": "straighten_knee.mp3",
 };
 
 export class AudioCuePlayer {

@@ -1,0 +1,934 @@
+/* ============================================================
+   HEMOPHILIA REPORT
+   Patient Portal Theme
+   ============================================================ */
+
+:root {
+  --navy: #24328f;
+  --navy-dark: #1a2570;
+
+  --blue: #4a7dfc;
+  --blue-light: #eef3ff;
+  --blue-soft: #f5f8ff;
+
+  --bg: #eef3f9;
+  --panel: #ffffff;
+
+  --border: #dce4f0;
+
+  --text: #17233d;
+  --text-secondary: #6c7b91;
+  --muted: #91a0b5;
+
+  --green: #219653;
+  --green-bg: #eaf8f0;
+
+  --red: #b3261e;
+
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 9px;
+
+  --shadow:
+    0 10px 30px rgba(26, 37, 112, 0.08);
+
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+
+/* ============================================================
+   PAGE
+   ============================================================ */
+
+.report-page {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 28px 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eef4ff,
+      #f5f8fc
+    );
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   MAIN CONTAINER
+   ============================================================ */
+
+.report-container {
+  width: min(900px, 100%);
+
+  background: #ffffff;
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow);
+
+  overflow: hidden;
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.report-header {
+  width: 100%;
+
+  min-height: 72px;
+
+  padding: 14px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid var(--border);
+
+  background: #ffffff;
+
+  box-sizing: border-box;
+}
+
+.report-header-left {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  min-width: 0;
+}
+
+.report-icon {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--blue),
+      #5f8dff
+    );
+
+  color: #ffffff;
+
+  font-size: 23px;
+  font-weight: 300;
+
+  box-shadow:
+    0 5px 15px
+    rgba(74, 125, 252, 0.22);
+}
+
+.report-header h1 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.report-header p {
+  margin: 3px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 10px;
+}
+
+
+/* ============================================================
+   STATUS
+   ============================================================ */
+
+.report-status {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 5px 9px;
+
+  border: 1px solid #dce8e0;
+
+  border-radius: 999px;
+
+  background: #f5fbf7;
+
+  color: var(--green);
+
+  font-size: 9px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #2db56d;
+}
+
+
+/* ============================================================
+   REPORT CONTENT
+   ============================================================ */
+
+.report-content {
+  padding: 28px;
+  background: #ffffff;
+
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   TITLE
+   ============================================================ */
+
+.report-title-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding-bottom: 22px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.report-title-section h2 {
+  margin: 0;
+
+  color: var(--navy-dark);
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.report-title-section p {
+  margin: 5px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 11px;
+}
+
+.report-badge {
+  flex-shrink: 0;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  background: var(--blue-light);
+
+  color: var(--navy);
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* ============================================================
+   SECTION
+   ============================================================ */
+
+.report-section {
+  padding: 22px 0;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 15px;
+}
+
+.section-icon {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: var(--blue-light);
+
+  font-size: 13px;
+}
+
+.section-heading h3 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   PATIENT INFORMATION
+   ============================================================ */
+
+.patient-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.patient-field {
+  padding: 14px;
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-sm);
+
+  background: var(--blue-soft);
+}
+
+.patient-field span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--muted);
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.4px;
+}
+
+.patient-field strong {
+  display: block;
+
+  color: var(--text);
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  word-break: break-word;
+}
+
+
+/* ============================================================
+   RISK SECTION
+   ============================================================ */
+
+.risk-section {
+  margin-top: 22px;
+
+  padding: 20px;
+
+  border: 1px solid #dce4f0;
+
+  border-radius: var(--radius-md);
+
+  background:
+    linear-gradient(
+      135deg,
+      #f5f8ff,
+      #ffffff
+    );
+}
+
+.small-label {
+  color: var(--blue);
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+}
+
+.risk-header h3 {
+  margin: 4px 0 0;
+
+  color: var(--text);
+
+  font-size: 15px;
+}
+
+
+.risk-result {
+  margin-top: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.risk-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--text-secondary);
+
+  font-size: 9px;
+
+  font-weight: 600;
+}
+
+.risk-value {
+  display: inline-block;
+
+  padding: 7px 14px;
+
+  border-radius: 999px;
+
+  background: var(--green-bg);
+
+  color: var(--green);
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.score-box {
+  min-width: 90px;
+
+  padding: 10px 14px;
+
+  text-align: center;
+
+  border: 1px solid var(--border);
+
+  border-radius: 10px;
+
+  background: #ffffff;
+}
+
+.score-box span {
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 8px;
+
+  text-transform: uppercase;
+
+  font-weight: 600;
+}
+
+.score-box strong {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--navy);
+
+  font-size: 22px;
+
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   EXPLANATION
+   ============================================================ */
+
+.explanation-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.explanation-item {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 11px 12px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: var(--text);
+
+  font-size: 11px;
+
+  line-height: 1.4;
+}
+
+.explanation-number {
+  width: 22px;
+  height: 22px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--blue-light);
+
+  color: var(--blue);
+
+  font-size: 9px;
+
+  font-weight: 700;
+}
+
+.no-data {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 11px;
+}
+
+
+/* ============================================================
+   MEDICAL DISCLAIMER
+   ============================================================ */
+
+.report-disclaimer {
+  margin-top: 22px;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  padding: 13px;
+
+  border: 1px solid #cfe1eb;
+
+  border-radius: 10px;
+
+  background: #effbfd;
+
+  box-sizing: border-box;
+}
+
+.warning-icon {
+  width: 22px;
+  height: 22px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #d9f1f6;
+
+  color: #3d8194;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+.report-disclaimer strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #315d70;
+
+  font-size: 10px;
+}
+
+.report-disclaimer p {
+  margin: 0;
+
+  color: #64849a;
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   REPORT FOOTER
+   ============================================================ */
+
+.report-footer {
+  margin-top: 24px;
+
+  padding-top: 12px;
+
+  border-top: 1px solid var(--border);
+
+  display: flex;
+  justify-content: space-between;
+
+  color: var(--muted);
+
+  font-size: 8px;
+}
+
+
+/* ============================================================
+   ACTION BUTTONS
+   ============================================================ */
+
+.report-actions {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  padding: 12px 20px;
+
+  border-top: 1px solid var(--border);
+
+  background: #ffffff;
+}
+
+.download-button,
+.back-button {
+  border: none;
+
+  border-radius: 8px;
+
+  padding: 9px 14px;
+
+  font-family: inherit;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    all 0.15s ease;
+}
+
+.download-button {
+  background: var(--blue);
+
+  color: #ffffff;
+}
+
+.download-button:hover {
+  background: var(--navy);
+
+  transform: translateY(-1px);
+}
+
+.back-button {
+  background: var(--blue-light);
+
+  color: var(--navy);
+}
+
+.back-button:hover {
+  background: #e0e8ff;
+
+  transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   PAGE DISCLAIMER
+   ============================================================ */
+
+.page-disclaimer {
+  width: min(900px, 100%);
+
+  margin-top: 10px;
+
+  padding: 9px 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  border: 1px solid #cfe1eb;
+
+  border-radius: 9px;
+
+  background: #effbfd;
+
+  color: #64849a;
+
+  font-size: 9px;
+
+  line-height: 1.4;
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+.info-icon {
+  width: 16px;
+  height: 16px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #d9f1f6;
+
+  color: #3d8194;
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+
+.download-button:focus-visible,
+.back-button:focus-visible {
+  outline: 2px solid var(--blue);
+
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+  .report-page {
+    padding: 18px 12px;
+  }
+
+  .report-content {
+    padding: 20px;
+  }
+
+  .report-title-section {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .patient-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 500px) {
+
+  .report-page {
+    padding: 0;
+  }
+
+  .report-container {
+    border-radius: 0;
+
+    border-left: none;
+    border-right: none;
+  }
+
+  .report-header {
+    padding: 12px;
+  }
+
+  .report-status {
+    font-size: 8px;
+  }
+
+  .report-content {
+    padding: 16px 12px;
+  }
+
+  .report-title-section h2 {
+    font-size: 18px;
+  }
+
+  .risk-result {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .score-box {
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+
+  .report-actions {
+    padding: 10px 12px;
+
+    justify-content: stretch;
+
+    flex-direction: column;
+  }
+
+  .download-button,
+  .back-button {
+    width: 100%;
+
+    padding: 10px;
+  }
+
+  .page-disclaimer {
+    margin: 0;
+
+    border-radius: 0;
+
+    font-size: 8px;
+  }
+
+}
+
+
+/* ============================================================
+   PRINT / PDF
+   ============================================================ */
+
+@media print {
+
+  .report-page {
+    padding: 0;
+
+    background: #ffffff;
+  }
+
+
+  /* =========================================================
+   MODEL PROBABILITY BOX
+========================================================= */
+
+.score-box {
+  width: 130px;
+  min-height: 72px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 14px;
+
+  background: #ffffff;
+  border: 1px solid #d7e0ef;
+  border-radius: 10px;
+
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.score-box span {
+  display: block;
+
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+
+  color: #71809a;
+
+  margin-bottom: 5px;
+}
+
+.score-box strong {
+  display: block;
+
+  font-size: 23px;
+  line-height: 1;
+
+  font-weight: 700;
+
+  color: #173f8f;
+}
+
+  .report-container {
+    width: 100%;
+
+    border: none;
+
+    box-shadow: none;
+
+    border-radius: 0;
+  }
+
+  .report-actions,
+  .page-disclaimer {
+    display: none;
+  }
+
+}

@@ -11,6 +11,26 @@ SESSION = {
     "session_started",
     "session_ended",
     "session_aborted",
+    "session_summary",
+}
+
+# G2-F: Gemini coaching report + video upload/retention. §8's framing
+# constraint applies to every field logged under these events: never imply a
+# model assessed the patient, this is prose generated about rule-based
+# measurements. "video_deleted" already exists in SHAP_REPORT (Phase L's clip
+# cleanup) -- G2-F8's retention sweep reuses that exact name rather than
+# minting a near-duplicate; it means the same thing, "a video file on disk
+# was removed", regardless of which feature triggered it.
+REPORT = {
+    "report_generated",
+    "report_failed",
+    "video_uploaded",
+}
+
+# G2-D: Mongo client lifecycle (app/db.py).
+DB = {
+    "mongo_connected",
+    "mongo_closed",
 }
 
 RECORDER = {
@@ -80,6 +100,13 @@ EXERCISE_CONFIG = {
     "exercise_config_placeholder_warning",
 }
 
+# G2-B1/B4: HTTP and WS auth rejections. Distinct from WS's transport events
+# above -- these are the trust-boundary decisions, not the socket lifecycle.
+AUTH = {
+    "auth_rejected",
+    "ws_auth_rejected",
+}
+
 ALL_EVENTS = (
     SESSION
     | RECORDER
@@ -91,6 +118,9 @@ ALL_EVENTS = (
     | MODEL
     | SHAP_REPORT
     | EXERCISE_CONFIG
+    | AUTH
+    | DB
+    | REPORT
 )
 
 
@@ -103,7 +133,7 @@ if __name__ == "__main__":
     # pipeline event names required by docs/06_ml_pipeline.md §15 are present.
     _sets = [
         SESSION, RECORDER, POSE_WORKER, WS, EMG_IMU, CROSSCHECK, EXTRACTOR,
-        MODEL, SHAP_REPORT, EXERCISE_CONFIG,
+        MODEL, SHAP_REPORT, EXERCISE_CONFIG, AUTH, DB, REPORT,
     ]
     _total = sum(len(s) for s in _sets)
     assert _total == len(ALL_EVENTS), "duplicate event name across components"

@@ -99,3 +99,73 @@ export class IsolatedRecorder {
     return this._recorder?.state === "recording";
   }
 }
+
+// ---------------------------------------------------------------------------
+// G2-F7 -- upload the assembled Blob at session end. Master plan line 1029's
+// gap: stop() above only ever produced a Blob in memory; nothing sent it
+// anywhere. This is deliberately a standalone function, not a method that
+// auto-fires from stop() -- the caller (session end, wherever that lives)
+// already controls exactly when a session is "over" and already knows the
+// sessionId and auth token; duplicating that knowledge into this file would
+// be the second copy the isolation argument at the top of this file argues
+// against for recording itself.
+// ---------------------------------------------------------------------------
+
+/**
+ * POST the recorded Blob to the backend. Multipart, one attempt (no retry --
+ * a dropped video is logged and swallowed, never a reason to fail the
+ * session the patient already finished).
+ *
+ * @param {Blob} blob - from IsolatedRecorder.stop().
+ * @param {object} opts
+ * @param {string} opts.sessionId
+ * @param {string} opts.apiBase - same base other session calls use (the `api`
+ *   query param / ENGINE_SUPPORTED base), e.g. "http://localhost:8000" or
+ *   "/engine" behind nginx.
+ * @param {string} [opts.token] - localStorage.authToken (D2/D12); sent as
+ *   `Authorization: Bearer` like every other call to this backend. NEVER a
+ *   Gemini key or any other server secret -- this file never sees one (F3).
+ * @param {import("./logger.js").BrowserLogger} [opts.logger]
+ * @returns {Promise<boolean>} true iff the backend accepted the upload.
+ */
+export async function uploadRecording(blob, { sessionId, apiBase, token, logger } = {}) {
+  if (!sessionId || !apiBase) {
+    logger?.error("recording_failed", {
+      error_type: "upload_misconfigured",
+      error_message: "uploadRecording requires sessionId and apiBase",
+    });
+    return false;
+  }
+  if (!blob || blob.size === 0) {
+    // Nothing recorded (e.g. camera never started) -- not a failure, just
+    // nothing to send. Don't log recording_failed for a session with no video.
+    return false;
+  }
+
+  const form = new FormData();
+  form.append("file", blob, `${sessionId}.webm`);
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+  try {
+    const res = await fetch(`${apiBase}/session/${encodeURIComponent(sessionId)}/video`, {
+      method: "POST",
+      headers,
+      body: form,
+    });
+    if (!res.ok) {
+      // 403 here specifically means consent was withheld (F6) -- expected,
+      // not a bug, so it's still just a plain video_uploaded(accepted:false)
+      // line, not recording_failed.
+      logger?.info("video_uploaded", { accepted: false, status: res.status });
+      return false;
+    }
+    logger?.info("video_uploaded", { accepted: true, bytes: blob.size });
+    return true;
+  } catch (err) {
+    logger?.error("recording_failed", {
+      error_type: "upload_network",
+      error_message: String(err?.message || err),
+    });
+    return false;
+  }
+}

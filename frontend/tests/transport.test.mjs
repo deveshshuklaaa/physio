@@ -137,6 +137,11 @@ describe("SessionWsClient — one socket, batched, bounded", () => {
     client = new SessionWsClient("ws://localhost:8000/ws/session/test");
     client.connect();
     FakeWebSocket.last.emit("open");
+    // G2-B5: connect() now sends an {"type":"auth"} frame as the first
+    // message on open. Clear it here so the rest of this suite -- written
+    // before auth existed -- can keep asserting on pose_batch/end traffic
+    // without every test re-deriving "skip index 0".
+    FakeWebSocket.last.sent.length = 0;
     opened.push(client);
   });
   afterEach(() => {
@@ -194,6 +199,34 @@ describe("SessionWsClient — one socket, batched, bounded", () => {
     assert.equal(c2._outbound.length, 1, "frame was dropped before connect");
   });
 
+  test("sends an auth frame with the stored token as the FIRST message on open", () => {
+    // G2-B5/D3: the server closes the socket 4401 if anything else arrives
+    // first, so this ordering is load-bearing, not cosmetic.
+    const prevLS = globalThis.localStorage;
+    globalThis.localStorage = { getItem: () => "jwt-under-test" };
+    try {
+      const c4 = new SessionWsClient("ws://localhost:8000/ws/session/z");
+      c4.connect();
+      FakeWebSocket.last.emit("open");
+      opened.push(c4);
+
+      assert.equal(FakeWebSocket.last.sent.length, 1, "expected exactly one frame right after open");
+      assert.deepEqual(FakeWebSocket.last.sentJson[0], { type: "auth", token: "jwt-under-test" });
+    } finally {
+      globalThis.localStorage = prevLS;
+    }
+  });
+
+  test("missing localStorage still sends an auth frame (with a null token), never throws", () => {
+    const c5 = new SessionWsClient("ws://localhost:8000/ws/session/w");
+    assert.doesNotThrow(() => {
+      c5.connect();
+      FakeWebSocket.last.emit("open");
+    });
+    opened.push(c5);
+    assert.equal(FakeWebSocket.last.sentJson[0].type, "auth");
+  });
+
   test("ships buffered logs alongside the pose batch", () => {
     // §8b: browser and server logs must land in one stream under one
     // correlation id, or you are debugging two systems instead of one.
@@ -201,6 +234,11 @@ describe("SessionWsClient — one socket, batched, bounded", () => {
     const c3 = new SessionWsClient("ws://localhost:8000/ws/session/y", { logger });
     c3.connect();
     FakeWebSocket.last.emit("open");
+    // G2-B5: connect() now sends an {"type":"auth"} frame as the first
+    // message on open. Clear it here so the rest of this suite -- written
+    // before auth existed -- can keep asserting on pose_batch/end traffic
+    // without every test re-deriving "skip index 0".
+    FakeWebSocket.last.sent.length = 0;
 
     logger.info("frame_dropped", { reason: "inference_in_flight" });
     c3.sendPose({ ts: 1 });

@@ -1,0 +1,1 @@
+{"is_tree_based": true, "data_sources": ["pose", "imu"], "sklearn_version": "1.9.0", "imported_at": "2026-09-10T09:27:15.356786+00:00"}

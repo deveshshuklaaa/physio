@@ -162,6 +162,8 @@ export class PoseEngine {
       cleanReps: this.cleanReps,
       repWasClean: this.rep_was_clean,
       repFailReason: this.repFailReason,
+      // Present only on the frame where a rep completed; read once.
+      repEntry: (() => { const e = this._pendingRepEntry; this._pendingRepEntry = null; return e; })(),
     };
   }
 
@@ -215,12 +217,17 @@ export class PoseEngine {
         }
         this.rep_was_clean = !this.repHadError;
         if (this.rep_was_clean) this.cleanReps += 1;
-        this.sessionLog.push({
+        const entry = {
           rep: this.repCount,
           errors: [...this.repErrors],
           best_angle: Math.trunc(this.bestDriverAngle),
           clean: this.rep_was_clean,
-        });
+        };
+        this.sessionLog.push(entry);
+        // G2-D6: the same entry has to reach the backend's per-rep log, and
+        // this engine runs inside a worker -- sessionLog never leaves it.
+        // Hand the just-closed rep out with the next frame result.
+        this._pendingRepEntry = entry;
       }
     }
 

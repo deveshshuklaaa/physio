@@ -1,7 +1,6 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
 from app.services.emg_client import get_live_emg_reading, get_emg_status, get_emg_history
 from app.telemetry import snapshot as telemetry_snapshot
@@ -10,6 +9,9 @@ from app.exercise_config import load_exercises
 from app.routes.exercises import router as exercises_router
 from app.routes.session import router as session_router
 from app.routes.admin_models import router as admin_models_router, build_model_registry
+from app.routes.capabilities import router as capabilities_router
+from app.routes.report import router as report_router
+from app.routes.history import router as history_router
 from app.ws.session_ws import router as session_ws_router
 
 
@@ -31,11 +33,10 @@ async def lifespan(app: FastAPI):
     # crashing startup. See app/routes/admin_models.py.
     app.state.model_registry = build_model_registry(app.state.exercise_registry.keys())
     app.state.last_model_import = None
-    # H4/H5 job seam (docs/H4-H6-session_routes.md): app.state.jobs is the seam
-    # Phase I replaces with the real job_queue.py (§10, agent 10) -- do not
-    # build that file here.
-    app.state.sessions = {}
-    app.state.jobs = {}
+    # G2-D4: sessions and jobs are no longer in memory. A session is a row in
+    # MongoDB `physiosessions` (integration plan §4) and the job seam Phase I
+    # replaces (§10, agent 10) is that row's `jobId` field. app/db.py owns the
+    # Motor client and merges its own lifespan in via the session router.
     yield
     # --- shutdown ---
     log_ring_buffer.drain()
@@ -43,29 +44,20 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Physio EMG Backend", lifespan=lifespan)
 
-# Phase J's pages are served from a different origin than this API — a static
-# server in dev, separate compose services in K1 (K2 already notes the
-# hostname split). Without this the browser blocks every request while the
-# server returns 200, so `curl` looks healthy and the page silently falls back
-# to bundled data. That is exactly how ExerciseSelect's first real run showed
-# "Preview data / Failed to fetch" against a running backend, and it kills
-# J3's Start button outright rather than merely mislabelling a footer.
-#
-# ponytail: permissive origins, correct for a LAN-local clinical deployment
-# with no cookie auth. Tighten to an explicit allowlist via env if this is ever
-# exposed beyond the clinic network.
-_CORS_ORIGIN_REGEX = r"https?://(localhost|127\.0\.0\.1)(:\d+)?"
-app.add_middleware(
-    CORSMiddleware,
-    allow_origin_regex=_CORS_ORIGIN_REGEX,
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# G2-A6: CORS is dead. nginx (docker-compose.yml) now puts this API behind the
+# same origin as every other service, so no cross-origin request ever reaches
+# it. The allowlist that used to live here is removed rather than left stale.
 
 app.include_router(exercises_router)
 app.include_router(session_router)
 app.include_router(admin_models_router)
+# G2-E4: their frontend reads this to decide which cards get a Start Now
+# button -- so it never offers an exercise our engine cannot assess.
+app.include_router(capabilities_router)
+# G2-F6: session video upload (consent-gated, 30-day retention).
+app.include_router(report_router)
+# G2-G2: paginated session history, authorized by the same B6 rule.
+app.include_router(history_router)
 
 # H2's WS route. Imported unconditionally at the top: while H4-H6 and H1-H3
 # were built in parallel this was wrapped in try/except ModuleNotFoundError so

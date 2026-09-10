@@ -25,12 +25,20 @@ that exercise still works -- only post-session prediction is off.
 """
 import io
 import json
+import os
 import sys
 import tempfile
 import zipfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+# Never let a test run touch the live database. app/__init__.py now loads
+# MONGO_URI from their .env automatically, so a forgotten MONGO_DB would
+# otherwise write test sessions straight into `hemophilia`. Set before any
+# app.* import, and only as a default -- an explicit MONGO_DB still wins.
+os.environ.setdefault("MONGO_DB", "hemophilia_g2test")
+
 
 from fastapi.testclient import TestClient
 

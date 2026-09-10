@@ -152,6 +152,7 @@ async function handleFrame(msg) {
       cleanReps: out.cleanReps,
       repWasClean: out.repWasClean,
       repFailReason: out.repFailReason,
+      repEntry: out.repEntry,
       pts,
     });
   } catch (err) {

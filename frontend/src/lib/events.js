@@ -11,6 +11,7 @@ export const SESSION = [
   "session_started",
   "session_ended",
   "session_aborted",
+  "session_summary",
 ];
 
 export const RECORDER = [
@@ -75,6 +76,27 @@ export const SHAP_REPORT = [
   "video_deleted",
 ];
 
+export const AUTH = [
+  "auth_rejected",
+  "ws_auth_rejected",
+];
+
+// G2-D: Mongo client lifecycle (backend app/db.py).
+export const DB = [
+  "mongo_connected",
+  "mongo_closed",
+];
+
+// G2-F: Gemini coaching report + video upload (backend app/services/
+// gemini_report.py, app/routes/report.py). "video_deleted" is NOT repeated
+// here -- it already lives in SHAP_REPORT above; the retention sweep reuses
+// it rather than minting a near-duplicate name for "a video file was removed".
+export const REPORT = [
+  "report_generated",
+  "report_failed",
+  "video_uploaded",
+];
+
 export const EXERCISE_CONFIG = [
   "exercise_config_loaded",
   "exercise_config_placeholder_warning",
@@ -91,6 +113,9 @@ export const ALL_EVENTS = new Set([
   ...MODEL,
   ...SHAP_REPORT,
   ...EXERCISE_CONFIG,
+  ...AUTH,
+  ...DB,
+  ...REPORT,
 ]);
 
 export function isValidEvent(name) {

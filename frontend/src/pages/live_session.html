@@ -156,7 +156,16 @@
         const params = new URLSearchParams(location.search);
         const sessionId = params.get("session_id") || `local-${Date.now()}`;
         const exercise = params.get("exercise") || "squat";
-        const API = params.get("api") || "http://127.0.0.1:8000";
+        // G2-A: one origin. The engine is behind nginx at /engine/*, and
+        // :8000 is no longer published at all -- the old 127.0.0.1 default
+        // would now fail to connect from every browser.
+        const API = params.get("api") || "/engine";
+        // A relative API base cannot be string-swapped into a ws:// URL, so
+        // build the socket URL from the page's own origin (/ws/* is proxied
+        // to the same backend).
+        const WS_BASE = /^https?:/i.test(API)
+            ? API.replace(/^http/, "ws")
+            : `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}`;
 
         // Exercise config comes from GET /exercises. No backend exists yet
         // (Phase H), so fall back to the checked-in squat config rather than
@@ -183,7 +192,11 @@
                 canvasEl: document.getElementById("stage-canvas"),
                 exerciseConfig: cfg,
                 sessionId,
-                wsUrl: `${API.replace(/^http/, "ws")}/ws/session/${sessionId}`,
+                wsUrl: `${WS_BASE}/ws/session/${sessionId}`,
+                // G2-F7: upload the recording at session end (consent-gated
+                // server-side). G2-B: the token their SPA stored, same origin.
+                apiBase: API,
+                authToken: localStorage.getItem("authToken"),
             });
             // #end-session-btn teardown is wired by the orchestrator itself.
             // Navigation to the report page waits for that page to exist.

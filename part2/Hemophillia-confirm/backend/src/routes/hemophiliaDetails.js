@@ -1,0 +1,1888 @@
+
+// const express = require("express");
+// const {
+//   transliterateDoctorName,
+// } = require("../services/doctorNameTranslationService");
+
+// const authMiddleware =
+//   require("../middleware/auth");
+
+// const HemophiliaDetails =
+//   require("../models/HemophiliaDetails");
+
+// const PatientProfile =
+//   require("../models/PatientProfile");
+
+// const ScreeningSession =
+//   require("../models/ScreeningSession");
+
+// const Assessment =
+//   require("../models/Assessment");
+
+// const User =
+//   require("../models/User");
+
+// const saveFHIRBundle =
+//   require("../utils/saveFHIRBundle");
+
+// const {
+//   toFHIRBundle,
+// } = require("../fhir/bundleMapper");
+
+// const DoctorChangeRequest =
+//   require("../models/DoctorChangeRequest");
+
+// const router =
+//   express.Router();
+
+
+// // =====================================================
+// // GET APPROVED DOCTORS
+// // =====================================================
+
+// router.get(
+//   "/doctors",
+//   authMiddleware,
+//   async (req, res) => {
+//     try {
+//       console.log("🔵 /doctors route reached");
+
+//       const language =
+//         ["en", "hi", "mr"].includes(req.query.language)
+//           ? req.query.language
+//           : "en";
+
+//       console.log("🟡 Language:", language);
+
+//       const doctors = await User.find({
+//         role: {
+//           $in: ["doctor", "clinician"],
+//         },
+//       })
+//         .select("_id fullName professionalId role nameTranslations")
+//         .sort({ fullName: 1 })
+//         .lean();
+
+//       console.log("🟢 Doctors fetched:", doctors.length);
+
+//       // keep the rest of your existing code below
+
+//       const result = [];
+
+//       for (const doctor of doctors) {
+//         const translations = {
+//           ...(doctor.nameTranslations || {}),
+//         };
+
+//         // ---------------------------------------------
+//         // ENGLISH
+//         // ---------------------------------------------
+
+//         if (!translations.en) {
+//           translations.en =
+//             doctor.fullName;
+//         }
+
+//         // ---------------------------------------------
+//         // REQUESTED LANGUAGE
+//         // ---------------------------------------------
+
+//         if (
+//           !translations[language]
+//         ) {
+//           translations[language] =
+//             await transliterateDoctorName(
+//               doctor.fullName,
+//               language
+//             );
+
+//           await User.updateOne(
+//             {
+//               _id: doctor._id,
+//             },
+//             {
+//               $set: {
+//                 nameTranslations:
+//                   translations,
+//               },
+//             }
+//           );
+//         }
+
+//         result.push({
+//           _id: doctor._id,
+
+//           fullName:
+//             doctor.fullName,
+
+//           professionalId:
+//             doctor.professionalId,
+
+//           role:
+//             doctor.role,
+
+//           nameTranslations:
+//             translations,
+//         });
+//       }
+
+//       return res.json({
+//         success: true,
+//         language,
+//         doctors: result,
+//       });
+//     } catch (error) {
+//       console.error(
+//         "GET DOCTORS ERROR:",
+//         error
+//       );
+
+//       return res.status(500).json({
+//         success: false,
+//         message:
+//           "Failed to load doctors.",
+//       });
+//     }
+//   }
+// );
+
+
+// // =====================================================
+// // SAVE / UPDATE HEMOPHILIA DETAILS
+// // =====================================================
+
+// router.post(
+//   "/",
+//   authMiddleware,
+//   async (req, res) => {
+
+//     try {
+
+//       const data =
+//         req.body || {};
+
+//         // =====================================================
+// // CHECK EXISTING DOCTOR ASSIGNMENT
+// // =====================================================
+
+//       const existingDetails =
+//         await HemophiliaDetails.findOne({
+//           userId: req.userId,
+//         });
+
+//       const existingDoctorId =
+//         existingDetails?.consultingDoctorId
+//           ? String(
+//               existingDetails.consultingDoctorId
+//             )
+//           : null;
+
+//       const submittedDoctorId =
+//         data.consultingDoctorId
+//           ? String(
+//               data.consultingDoctorId
+//             )
+//           : null;
+
+//       // -----------------------------------------------------
+//       // If a doctor is already assigned, the patient MUST
+//       // submit the SAME doctor.
+//       //
+//       // A patient cannot directly replace the doctor.
+//       // They must first request a release.
+//       // -----------------------------------------------------
+
+//       if (
+//         existingDoctorId &&
+//         submittedDoctorId !==
+//           existingDoctorId
+//       ) {
+//         return res.status(409).json({
+//           success: false,
+
+//           code:
+//             "DOCTOR_ASSIGNMENT_LOCKED",
+
+//           message:
+//             "Your consulting doctor is currently assigned to your profile. Please request a doctor change from your current doctor before selecting another doctor.",
+//         });
+//       }
+
+
+
+//       // ===============================================
+//       // FIND PATIENT PROFILE
+//       // ===============================================
+
+//       const profile =
+//         await PatientProfile.findOne({
+//           userId: req.userId,
+//         });
+
+//       if (!profile) {
+
+//         return res.status(404).json({
+//           message:
+//             "Profile not found",
+//         });
+
+//       }
+
+
+//       // ===============================================
+//       // VALIDATE CONSULTING DOCTOR
+//       // ===============================================
+
+//       let consultingDoctor =
+//         null;
+
+//       if (
+//         data.consultingDoctorId
+//       ) {
+
+//         consultingDoctor =
+//           await User.findOne({
+//             _id:
+//               data.consultingDoctorId,
+
+//             role: {
+//               $in: [
+//                 "doctor",
+//                 "clinician",
+//               ],
+//             },
+//           });
+
+//         if (!consultingDoctor) {
+
+//           return res.status(400).json({
+//             message:
+//               "Selected doctor is not available.",
+//           });
+
+//         }
+
+//       }
+
+
+//       // ===============================================
+//       // REMOVE OLD DETAILS
+//       // ===============================================
+
+//       // await HemophiliaDetails.deleteOne({
+//       //   userId: req.userId,
+//       // });
+//       // ===============================================
+// // REMOVE OLD DETAILS
+// // ===============================================
+
+
+
+//       // ===============================================
+//       // CLEAN DATA
+//       // ===============================================
+
+//       const cleanData = {
+//   ...data,
+
+//   userId: req.userId,
+
+//   patientId: profile.patientId,
+
+//   consultingDoctorId: consultingDoctor
+//     ? consultingDoctor._id
+//     : null,
+
+//   // ---------------------------------------------
+//   // PHYSIOTHERAPY BOOLEAN VALUES
+//   // ---------------------------------------------
+//   //
+//   // If the patient is currently undergoing
+//   // physiotherapy, there is no need for a
+//   // "previous physiotherapy" answer.
+//   //
+//   // Therefore keep previousPhysiotherapy as null.
+//   //
+
+//   underPhysiotherapy:
+//     data.underPhysiotherapy === ""
+//       ? null
+//       : data.underPhysiotherapy,
+
+//   previousPhysiotherapy:
+//     data.previousPhysiotherapy === ""
+//       ? null
+//       : data.previousPhysiotherapy,
+// };
+//       // ===============================================
+//       // CREATE DETAILS
+//       // ===============================================
+
+//       let details;
+
+// if (existingDetails) {
+//   // -----------------------------------------------
+//   // UPDATE EXISTING RECORD
+//   // -----------------------------------------------
+
+//   Object.assign(
+//     existingDetails,
+//     cleanData
+//   );
+
+//   details =
+//     await existingDetails.save();
+
+// } else {
+
+//   // -----------------------------------------------
+//   // FIRST SUBMISSION
+//   // -----------------------------------------------
+
+//   details =
+//     new HemophiliaDetails(
+//       cleanData
+//     );
+
+//   await details.save();
+// }
+
+
+//       console.log(
+//         "================================="
+//       );
+
+//       console.log(
+//         "✅ Hemophilia details saved"
+//       );
+
+//       console.log(
+//         "Patient:",
+//         profile.patientId
+//       );
+
+//       console.log(
+//         "Consulting Doctor:",
+//         consultingDoctor
+//           ? consultingDoctor.fullName
+//           : "Not selected"
+//       );
+
+//       console.log(
+//         "================================="
+//       );
+
+
+//       // ===============================================
+//       // LATEST SCREENING SESSION
+//       // ===============================================
+
+//       const screeningSession =
+//         await ScreeningSession.findOne({
+//           userId:
+//             req.userId,
+//         })
+//         .sort({
+//           createdAt: -1,
+//         });
+
+
+//       // ===============================================
+//       // LATEST ASSESSMENT
+//       // ===============================================
+
+//       const assessment =
+//         await Assessment.findOne({
+//           userId:
+//             req.userId,
+//         })
+//         .sort({
+//           createdAt: -1,
+//         });
+
+
+//       // ===============================================
+//       // BUILD FHIR BUNDLE
+//       // ===============================================
+
+//       const bundle =
+//         toFHIRBundle({
+//           patientProfile:
+//             profile,
+
+//           hemophiliaDetails:
+//             details,
+
+//           screeningSession,
+
+//           assessment,
+//         });
+
+
+//       // ===============================================
+//       // SAVE FHIR BUNDLE
+//       // ===============================================
+
+//       const savedBundle =
+//         await saveFHIRBundle(
+//           bundle
+//         );
+
+
+//       console.log(
+//         "================================="
+//       );
+
+//       console.log(
+//         "✅ Complete FHIR Bundle updated"
+//       );
+
+//       console.log(
+//         "Patient:",
+//         profile.patientId
+//       );
+
+//       console.log(
+//         "FHIR resources:",
+//         bundle.total
+//       );
+
+//       console.log(
+//         "================================="
+//       );
+
+
+//       // ===============================================
+//       // RESPONSE
+//       // ===============================================
+
+//       return res.status(200).json({
+
+//         message:
+//           "Hemophilia details saved successfully",
+
+//         details,
+
+//         fhir: {
+
+//           resourceType:
+//             savedBundle.resourceType,
+
+//           id:
+//             savedBundle.id,
+
+//           resources:
+//             bundle.total,
+
+//         },
+
+//       });
+
+//     } catch (err) {
+
+//       console.error(
+//         "❌ Hemophilia details save error:"
+//       );
+
+//       console.error(err);
+
+//       return res.status(500).json({
+
+//         message:
+//           "Failed to save hemophilia details",
+
+//         error:
+//           err.message,
+
+//       });
+
+//     }
+
+//   }
+// );
+
+
+// // =====================================================
+// // GET HEMOPHILIA SUMMARY
+// // =====================================================
+
+// router.get(
+//   "/summary",
+//   authMiddleware,
+//   async (req, res) => {
+
+//     try {
+
+//       const details =
+//         await HemophiliaDetails.findOne({
+//           userId:
+//             req.userId,
+//         });
+
+
+//       if (!details) {
+
+//         return res.status(404).json({
+//           message:
+//             "No hemophilia details found",
+//         });
+
+//       }
+
+
+//       // ===============================================
+//       // DOCTOR
+//       // ===============================================
+
+//       let consultingDoctor =
+//         null;
+
+//       if (
+//         details.consultingDoctorId
+//       ) {
+
+//         consultingDoctor =
+//           await User.findById(
+//             details.consultingDoctorId,
+//             {
+//               fullName: 1,
+//               professionalId: 1,
+//             }
+//           ).lean();
+
+//       }
+
+
+//       // ===============================================
+//       // SUMMARY
+//       // ===============================================
+
+//       const summary = {
+
+//         type:
+//           details.type,
+
+//         severity:
+//           details.severity,
+
+//         ageAtDiagnosis:
+//           details.ageAtDiagnosis,
+
+//         currentFactorTherapy:
+//           details.currentFactorTherapy,
+
+//         jointsAffected:
+//           details.jointsAffected,
+
+//         targetJoint:
+//           details.targetJoint,
+
+//         bleedFrequency:
+//           details.bleedFrequency,
+
+//         bleedingPattern:
+//           details.bleedingPattern,
+
+//         lastBleedDate:
+//           details.lastBleedDate,
+
+//         underPhysiotherapy:
+//           details.underPhysiotherapy,
+
+//         previousPhysiotherapy:
+//           details.previousPhysiotherapy,
+
+//         physiotherapyLocation:
+//           details.physiotherapyLocation,
+
+//         physiotherapySessions:
+//           details.physiotherapySessions,
+
+//         physiotherapyDuration:
+//           details.physiotherapyDuration,
+
+//         physiotherapyBodyPart:
+//           details.physiotherapyBodyPart,
+
+//         physiotherapyTreatment:
+//           details.physiotherapyTreatment,
+
+//         physiotherapyEquipment:
+//           details.physiotherapyEquipment,
+
+//         physiotherapyHelping:
+//           details.physiotherapyHelping,
+
+//         physiotherapyProblems:
+//           details.physiotherapyProblems,
+
+//         mobilityLimitation:
+//           details.mobilityLimitation,
+
+//         assistiveDevices:
+//           details.assistiveDevices,
+
+//         consultingDoctor:
+//           consultingDoctor
+//             ? {
+//                 id:
+//                   consultingDoctor._id,
+
+//                 fullName:
+//                   consultingDoctor.fullName,
+
+//                 professionalId:
+//                   consultingDoctor.professionalId,
+//               }
+//             : null,
+
+//         resources: [
+//           {
+//             label:
+//               "Hemophilia care guidelines",
+
+//             url:
+//               "https://example.com/hemophilia-care-guidelines",
+//           },
+
+//           {
+//             label:
+//               "Living with hemophilia",
+
+//             url:
+//               "https://example.com/living-with-hemophilia",
+//           },
+//         ],
+
+//       };
+
+
+//       return res.json({
+//         summary,
+//       });
+
+//     } catch (err) {
+
+//       console.error(
+//         "Hemophilia summary error:",
+//         err
+//       );
+
+//       return res.status(500).json({
+
+//         message:
+//           "Failed to fetch hemophilia summary",
+
+//         error:
+//           err.message,
+
+//       });
+
+//     }
+
+//   }
+// );
+
+// // =====================================================
+// // GET CURRENT CONSULTING DOCTOR / CHANGE REQUEST STATUS
+// // =====================================================
+// //
+// // GET /api/hemophilia-details/doctor-change-status
+// //
+// // Used by the patient screen to determine:
+// //
+// // 1. Whether a doctor is currently assigned
+// // 2. Which doctor is assigned
+// // 3. Whether a doctor-change request is pending
+// //
+// // IMPORTANT:
+// // The patient cannot modify the assignment through this route.
+// // This route is READ ONLY.
+// // =====================================================
+
+// router.get(
+//   "/doctor-change-status",
+//   authMiddleware,
+//   async (req, res) => {
+//     try {
+//       const patientUserId = req.userId;
+
+//       // -----------------------------------------------
+//       // FIND PATIENT HEMOPHILIA DETAILS
+//       // -----------------------------------------------
+
+//       const details =
+//         await HemophiliaDetails.findOne({
+//           userId: patientUserId,
+//         }).lean();
+
+//       if (!details) {
+//         return res.json({
+//           success: true,
+//           assignedDoctor: null,
+//           pendingRequest: null,
+//         });
+//       }
+
+//       // -----------------------------------------------
+//       // CURRENT ASSIGNED DOCTOR
+//       // -----------------------------------------------
+
+//       let assignedDoctor = null;
+
+//       if (details.consultingDoctorId) {
+//         assignedDoctor =
+//           await User.findById(
+//             details.consultingDoctorId
+//           )
+//             .select(
+//               "_id fullName professionalId role nameTranslations"
+//             )
+//             .lean();
+//       }
+
+//       // -----------------------------------------------
+//       // CURRENT PENDING REQUEST
+//       // -----------------------------------------------
+
+//       const pendingRequest =
+//         await DoctorChangeRequest.findOne({
+//           patientUserId,
+//           status: "PENDING",
+//         })
+//           .select(
+//             "_id currentDoctorId reason status requestedAt"
+//           )
+//           .lean();
+
+//       // -----------------------------------------------
+//       // RESPONSE
+//       // -----------------------------------------------
+
+//       return res.json({
+//         success: true,
+
+//         assignedDoctor:
+//           assignedDoctor
+//             ? {
+//                 _id: assignedDoctor._id,
+//                 fullName:
+//                   assignedDoctor.fullName,
+//                 professionalId:
+//                   assignedDoctor.professionalId,
+//                 role:
+//                   assignedDoctor.role,
+//                 nameTranslations:
+//                   assignedDoctor.nameTranslations ||
+//                   {},
+//               }
+//             : null,
+
+//         pendingRequest:
+//           pendingRequest
+//             ? {
+//                 _id:
+//                   pendingRequest._id,
+//                 currentDoctorId:
+//                   pendingRequest.currentDoctorId,
+//                 status:
+//                   pendingRequest.status,
+//                 requestedAt:
+//                   pendingRequest.requestedAt,
+//               }
+//             : null,
+//       });
+//     } catch (error) {
+//       console.error(
+//         "GET DOCTOR CHANGE STATUS ERROR:",
+//         error
+//       );
+
+//       return res.status(500).json({
+//         success: false,
+//         message:
+//           "Failed to load doctor assignment status.",
+//       });
+//     }
+//   }
+// );
+// // =====================================================
+// // PATIENT REQUEST DOCTOR CHANGE
+// // =====================================================
+// //
+// // POST /api/hemophilia-details/doctor-change-request
+// //
+// // The patient does NOT choose the new doctor here.
+// // The current doctor must first release the patient.
+// // =====================================================
+
+// router.post(
+//   "/doctor-change-request",
+//   authMiddleware,
+//   async (req, res) => {
+//     try {
+//       const patientUserId =
+//         req.userId;
+
+//       const details =
+//         await HemophiliaDetails.findOne({
+//           userId:
+//             patientUserId,
+//         });
+
+//       if (!details) {
+//         return res.status(404).json({
+//           success: false,
+//           message:
+//             "Hemophilia details not found.",
+//         });
+//       }
+
+//       if (
+//         !details.consultingDoctorId
+//       ) {
+//         return res.status(400).json({
+//           success: false,
+//           message:
+//             "You do not currently have a consulting doctor assigned.",
+//         });
+//       }
+
+//       // -----------------------------------------------
+//       // CHECK EXISTING PENDING REQUEST
+//       // -----------------------------------------------
+
+//       const existingRequest =
+//         await DoctorChangeRequest.findOne({
+//           patientUserId,
+//           status:
+//             "PENDING",
+//         });
+
+//       if (existingRequest) {
+//         return res.status(409).json({
+//           success: false,
+//           message:
+//             "You already have a pending doctor change request.",
+//         });
+//       }
+
+//       // -----------------------------------------------
+//       // GET PATIENT ID
+//       // -----------------------------------------------
+
+//       const profile =
+//         await PatientProfile.findOne({
+//           userId:
+//             patientUserId,
+//         });
+
+//       if (!profile) {
+//         return res.status(404).json({
+//           success: false,
+//           message:
+//             "Patient profile not found.",
+//         });
+//       }
+
+//       // -----------------------------------------------
+//       // OPTIONAL REASON
+//       // -----------------------------------------------
+
+//       const reason =
+//         typeof req.body?.reason ===
+//         "string"
+//           ? req.body.reason.trim()
+//           : "";
+
+//       // -----------------------------------------------
+//       // CREATE REQUEST
+//       // -----------------------------------------------
+
+//       const request =
+//         new DoctorChangeRequest({
+//           patientUserId,
+//           patientId:
+//             profile.patientId,
+
+//           currentDoctorId:
+//             details.consultingDoctorId,
+
+//           reason:
+//             reason || undefined,
+
+//           status:
+//             "PENDING",
+
+//           requestedAt:
+//             new Date(),
+//         });
+
+//       await request.save();
+
+//       return res.status(201).json({
+//         success: true,
+
+//         message:
+//           "Doctor change request sent to your current doctor.",
+
+//         request: {
+//           id:
+//             request._id,
+
+//           status:
+//             request.status,
+
+//           requestedAt:
+//             request.requestedAt,
+//         },
+//       });
+
+//     } catch (error) {
+
+//       console.error(
+//         "DOCTOR CHANGE REQUEST ERROR:",
+//         error
+//       );
+
+//       return res.status(500).json({
+//         success: false,
+//         message:
+//           "Failed to submit doctor change request.",
+//       });
+//     }
+//   }
+// );
+
+// module.exports = router;
+
+
+
+const express = require("express");
+const {
+  transliterateDoctorName,
+} = require("../services/doctorNameTranslationService");
+
+const authMiddleware =
+  require("../middleware/auth");
+
+const HemophiliaDetails =
+  require("../models/HemophiliaDetails");
+
+const PatientProfile =
+  require("../models/PatientProfile");
+
+const ScreeningSession =
+  require("../models/ScreeningSession");
+
+const Assessment =
+  require("../models/Assessment");
+
+const User =
+  require("../models/User");
+
+const DoctorChangeRequest =
+  require("../models/DoctorChangeRequest");
+
+const saveFHIRBundle =
+  require("../utils/saveFHIRBundle");
+
+const {
+  toFHIRBundle,
+} = require("../fhir/bundleMapper");
+
+const router =
+  express.Router();
+
+
+// =====================================================
+// GET APPROVED DOCTORS
+// =====================================================
+
+router.get(
+  "/doctors",
+  authMiddleware,
+  async (req, res) => {
+    try {
+      console.log("🔵 /doctors route reached");
+
+      const language =
+        ["en", "hi", "mr"].includes(req.query.language)
+          ? req.query.language
+          : "en";
+
+      console.log("🟡 Language:", language);
+
+      const doctors = await User.find({
+        role: {
+          $in: ["doctor", "clinician"],
+        },
+      })
+        .select("_id fullName professionalId role nameTranslations")
+        .sort({ fullName: 1 })
+        .lean();
+
+      console.log("🟢 Doctors fetched:", doctors.length);
+
+      // keep the rest of your existing code below
+
+      const result = [];
+
+      for (const doctor of doctors) {
+        const translations = {
+          ...(doctor.nameTranslations || {}),
+        };
+
+        // ---------------------------------------------
+        // ENGLISH
+        // ---------------------------------------------
+
+        if (!translations.en) {
+          translations.en =
+            doctor.fullName;
+        }
+
+        // ---------------------------------------------
+        // REQUESTED LANGUAGE
+        // ---------------------------------------------
+
+        if (
+          !translations[language]
+        ) {
+          translations[language] =
+            await transliterateDoctorName(
+              doctor.fullName,
+              language
+            );
+
+          await User.updateOne(
+            {
+              _id: doctor._id,
+            },
+            {
+              $set: {
+                nameTranslations:
+                  translations,
+              },
+            }
+          );
+        }
+
+        result.push({
+          _id: doctor._id,
+
+          fullName:
+            doctor.fullName,
+
+          professionalId:
+            doctor.professionalId,
+
+          role:
+            doctor.role,
+
+          nameTranslations:
+            translations,
+        });
+      }
+
+      return res.json({
+        success: true,
+        language,
+        doctors: result,
+      });
+    } catch (error) {
+      console.error(
+        "GET DOCTORS ERROR:",
+        error
+      );
+
+      return res.status(500).json({
+        success: false,
+        message:
+          "Failed to load doctors.",
+      });
+    }
+  }
+);
+
+
+// =====================================================
+// SAVE / UPDATE HEMOPHILIA DETAILS
+// =====================================================
+
+router.post(
+  "/",
+  authMiddleware,
+  async (req, res) => {
+
+    try {
+
+      const data =
+        req.body || {};
+
+        // =====================================================
+// CHECK EXISTING DOCTOR ASSIGNMENT
+// =====================================================
+
+      const existingDetails =
+        await HemophiliaDetails.findOne({
+          userId: req.userId,
+        });
+
+      const existingDoctorId =
+        existingDetails?.consultingDoctorId
+          ? String(
+              existingDetails.consultingDoctorId
+            )
+          : null;
+
+      const submittedDoctorId =
+        data.consultingDoctorId
+          ? String(
+              data.consultingDoctorId
+            )
+          : null;
+
+      // -----------------------------------------------------
+      // If a doctor is already assigned, the patient MUST
+      // submit the SAME doctor.
+      //
+      // A patient cannot directly replace the doctor.
+      // They must first request a release.
+      // -----------------------------------------------------
+
+      if (
+        existingDoctorId &&
+        submittedDoctorId !==
+          existingDoctorId
+      ) {
+        return res.status(409).json({
+          success: false,
+
+          code:
+            "DOCTOR_ASSIGNMENT_LOCKED",
+
+          message:
+            "Your consulting doctor is currently assigned to your profile. Please request a doctor change from your current doctor before selecting another doctor.",
+        });
+      }
+
+
+
+      // ===============================================
+      // FIND PATIENT PROFILE
+      // ===============================================
+
+      const profile =
+        await PatientProfile.findOne({
+          userId: req.userId,
+        });
+
+      if (!profile) {
+
+        return res.status(404).json({
+          message:
+            "Profile not found",
+        });
+
+      }
+
+
+      // ===============================================
+      // VALIDATE CONSULTING DOCTOR
+      // ===============================================
+
+      let consultingDoctor =
+        null;
+
+      if (
+        data.consultingDoctorId
+      ) {
+
+        consultingDoctor =
+          await User.findOne({
+            _id:
+              data.consultingDoctorId,
+
+            role: {
+              $in: [
+                "doctor",
+                "clinician",
+              ],
+            },
+          });
+
+        if (!consultingDoctor) {
+
+          return res.status(400).json({
+            message:
+              "Selected doctor is not available.",
+          });
+
+        }
+
+      }
+
+
+      // ===============================================
+      // REMOVE OLD DETAILS
+      // ===============================================
+
+      // await HemophiliaDetails.deleteOne({
+      //   userId: req.userId,
+      // });
+      // ===============================================
+// REMOVE OLD DETAILS
+// ===============================================
+
+
+
+      // ===============================================
+      // CLEAN DATA
+      // ===============================================
+
+      const cleanData = {
+  ...data,
+
+  userId: req.userId,
+
+  patientId: profile.patientId,
+
+  consultingDoctorId: consultingDoctor
+    ? consultingDoctor._id
+    : null,
+
+  // ---------------------------------------------
+  // PHYSIOTHERAPY BOOLEAN VALUES
+  // ---------------------------------------------
+  //
+  // If the patient is currently undergoing
+  // physiotherapy, there is no need for a
+  // "previous physiotherapy" answer.
+  //
+  // Therefore keep previousPhysiotherapy as null.
+  //
+
+  underPhysiotherapy:
+    data.underPhysiotherapy === ""
+      ? null
+      : data.underPhysiotherapy,
+
+  previousPhysiotherapy:
+    data.previousPhysiotherapy === ""
+      ? null
+      : data.previousPhysiotherapy,
+};
+      // ===============================================
+      // CREATE DETAILS
+      // ===============================================
+
+      let details;
+
+if (existingDetails) {
+  // -----------------------------------------------
+  // UPDATE EXISTING RECORD
+  // -----------------------------------------------
+
+  Object.assign(
+    existingDetails,
+    cleanData
+  );
+
+  details =
+    await existingDetails.save();
+
+} else {
+
+  // -----------------------------------------------
+  // FIRST SUBMISSION
+  // -----------------------------------------------
+
+  details =
+    new HemophiliaDetails(
+      cleanData
+    );
+
+  await details.save();
+}
+
+
+      console.log(
+        "================================="
+      );
+
+      console.log(
+        "✅ Hemophilia details saved"
+      );
+
+      console.log(
+        "Patient:",
+        profile.patientId
+      );
+
+      console.log(
+        "Consulting Doctor:",
+        consultingDoctor
+          ? consultingDoctor.fullName
+          : "Not selected"
+      );
+
+      console.log(
+        "================================="
+      );
+
+
+      // ===============================================
+      // LATEST SCREENING SESSION
+      // ===============================================
+
+      const screeningSession =
+        await ScreeningSession.findOne({
+          userId:
+            req.userId,
+        })
+        .sort({
+          createdAt: -1,
+        });
+
+
+      // ===============================================
+      // LATEST ASSESSMENT
+      // ===============================================
+
+      const assessment =
+        await Assessment.findOne({
+          userId:
+            req.userId,
+        })
+        .sort({
+          createdAt: -1,
+        });
+
+
+      // ===============================================
+      // BUILD FHIR BUNDLE
+      // ===============================================
+
+      const bundle =
+        toFHIRBundle({
+          patientProfile:
+            profile,
+
+          hemophiliaDetails:
+            details,
+
+          screeningSession,
+
+          assessment,
+        });
+
+
+      // ===============================================
+      // SAVE FHIR BUNDLE
+      // ===============================================
+
+      const savedBundle =
+        await saveFHIRBundle(
+          bundle
+        );
+
+
+      console.log(
+        "================================="
+      );
+
+      console.log(
+        "✅ Complete FHIR Bundle updated"
+      );
+
+      console.log(
+        "Patient:",
+        profile.patientId
+      );
+
+      console.log(
+        "FHIR resources:",
+        bundle.total
+      );
+
+      console.log(
+        "================================="
+      );
+
+
+      // ===============================================
+      // RESPONSE
+      // ===============================================
+
+      return res.status(200).json({
+
+        message:
+          "Hemophilia details saved successfully",
+
+        details,
+
+        fhir: {
+
+          resourceType:
+            savedBundle.resourceType,
+
+          id:
+            savedBundle.id,
+
+          resources:
+            bundle.total,
+
+        },
+
+      });
+
+    } catch (err) {
+
+      console.error(
+        "❌ Hemophilia details save error:"
+      );
+
+      console.error(err);
+
+      return res.status(500).json({
+
+        message:
+          "Failed to save hemophilia details",
+
+        error:
+          err.message,
+
+      });
+
+    }
+
+  }
+);
+
+
+// =====================================================
+// GET HEMOPHILIA SUMMARY
+// =====================================================
+
+router.get(
+  "/summary",
+  authMiddleware,
+  async (req, res) => {
+
+    try {
+
+      const details =
+        await HemophiliaDetails.findOne({
+          userId:
+            req.userId,
+        });
+
+
+      if (!details) {
+
+        return res.status(404).json({
+          message:
+            "No hemophilia details found",
+        });
+
+      }
+
+
+      // ===============================================
+      // DOCTOR
+      // ===============================================
+
+      let consultingDoctor =
+        null;
+
+      if (
+        details.consultingDoctorId
+      ) {
+
+        consultingDoctor =
+          await User.findById(
+            details.consultingDoctorId,
+            {
+              fullName: 1,
+              professionalId: 1,
+            }
+          ).lean();
+
+      }
+
+
+      // ===============================================
+      // SUMMARY
+      // ===============================================
+
+      const summary = {
+
+        type:
+          details.type,
+
+        severity:
+          details.severity,
+
+        ageAtDiagnosis:
+          details.ageAtDiagnosis,
+
+        currentFactorTherapy:
+          details.currentFactorTherapy,
+
+        jointsAffected:
+          details.jointsAffected,
+
+        targetJoint:
+          details.targetJoint,
+
+        bleedFrequency:
+          details.bleedFrequency,
+
+        bleedingPattern:
+          details.bleedingPattern,
+
+        lastBleedDate:
+          details.lastBleedDate,
+
+        underPhysiotherapy:
+          details.underPhysiotherapy,
+
+        previousPhysiotherapy:
+          details.previousPhysiotherapy,
+
+        physiotherapyLocation:
+          details.physiotherapyLocation,
+
+        physiotherapySessions:
+          details.physiotherapySessions,
+
+        physiotherapyDuration:
+          details.physiotherapyDuration,
+
+        physiotherapyBodyPart:
+          details.physiotherapyBodyPart,
+
+        physiotherapyTreatment:
+          details.physiotherapyTreatment,
+
+        physiotherapyEquipment:
+          details.physiotherapyEquipment,
+
+        physiotherapyHelping:
+          details.physiotherapyHelping,
+
+        physiotherapyProblems:
+          details.physiotherapyProblems,
+
+        mobilityLimitation:
+          details.mobilityLimitation,
+
+        assistiveDevices:
+          details.assistiveDevices,
+
+        consultingDoctor:
+          consultingDoctor
+            ? {
+                id:
+                  consultingDoctor._id,
+
+                fullName:
+                  consultingDoctor.fullName,
+
+                professionalId:
+                  consultingDoctor.professionalId,
+              }
+            : null,
+
+        resources: [
+          {
+            label:
+              "Hemophilia care guidelines",
+
+            url:
+              "https://example.com/hemophilia-care-guidelines",
+          },
+
+          {
+            label:
+              "Living with hemophilia",
+
+            url:
+              "https://example.com/living-with-hemophilia",
+          },
+        ],
+
+      };
+
+
+      return res.json({
+        summary,
+      });
+
+    } catch (err) {
+
+      console.error(
+        "Hemophilia summary error:",
+        err
+      );
+
+      return res.status(500).json({
+
+        message:
+          "Failed to fetch hemophilia summary",
+
+        error:
+          err.message,
+
+      });
+
+    }
+
+  }
+);
+// =====================================================
+// GET CURRENT CONSULTING DOCTOR / CHANGE REQUEST STATUS
+// =====================================================
+//
+// GET /api/hemophilia-details/doctor-change-status
+//
+// Read-only endpoint used by the patient screen to know
+// whether a doctor is currently assigned and whether a
+// doctor-change request is already pending.
+// =====================================================
+
+router.get(
+  "/doctor-change-status",
+  authMiddleware,
+  async (req, res) => {
+    try {
+      const patientUserId = req.userId;
+
+      const details =
+        await HemophiliaDetails.findOne({
+          userId: patientUserId,
+        }).lean();
+
+      if (!details) {
+        return res.json({
+          success: true,
+          assignedDoctor: null,
+          pendingRequest: null,
+        });
+      }
+
+      let assignedDoctor = null;
+
+      if (details.consultingDoctorId) {
+        assignedDoctor =
+          await User.findById(
+            details.consultingDoctorId
+          )
+            .select(
+              "_id fullName professionalId role nameTranslations"
+            )
+            .lean();
+      }
+
+      const pendingRequest =
+        await DoctorChangeRequest.findOne({
+          patientUserId,
+          status: "PENDING",
+        })
+          .select(
+            "_id currentDoctorId status requestedAt"
+          )
+          .lean();
+
+      return res.json({
+        success: true,
+
+        assignedDoctor: assignedDoctor
+          ? {
+              _id: assignedDoctor._id,
+              fullName: assignedDoctor.fullName,
+              professionalId:
+                assignedDoctor.professionalId,
+              role: assignedDoctor.role,
+              nameTranslations:
+                assignedDoctor.nameTranslations || {},
+            }
+          : null,
+
+        pendingRequest: pendingRequest
+          ? {
+              _id: pendingRequest._id,
+              currentDoctorId:
+                pendingRequest.currentDoctorId,
+              status: pendingRequest.status,
+              requestedAt:
+                pendingRequest.requestedAt,
+            }
+          : null,
+      });
+    } catch (error) {
+      console.error(
+        "GET DOCTOR CHANGE STATUS ERROR:",
+        error
+      );
+
+      return res.status(500).json({
+        success: false,
+        message:
+          "Failed to load doctor assignment status.",
+      });
+    }
+  }
+);
+
+
+// =====================================================
+// PATIENT REQUEST DOCTOR CHANGE
+// =====================================================
+//
+// POST /api/hemophilia-details/doctor-change-request
+//
+// The patient does NOT choose the new doctor here.
+// The current doctor must first release the patient.
+// =====================================================
+
+router.post(
+  "/doctor-change-request",
+  authMiddleware,
+  async (req, res) => {
+    try {
+      const patientUserId =
+        req.userId;
+
+      const details =
+        await HemophiliaDetails.findOne({
+          userId:
+            patientUserId,
+        });
+
+      if (!details) {
+        return res.status(404).json({
+          success: false,
+          message:
+            "Hemophilia details not found.",
+        });
+      }
+
+      if (
+        !details.consultingDoctorId
+      ) {
+        return res.status(400).json({
+          success: false,
+          message:
+            "You do not currently have a consulting doctor assigned.",
+        });
+      }
+
+      // -----------------------------------------------
+      // CHECK EXISTING PENDING REQUEST
+      // -----------------------------------------------
+
+      const existingRequest =
+        await DoctorChangeRequest.findOne({
+          patientUserId,
+          status:
+            "PENDING",
+        });
+
+      if (existingRequest) {
+        return res.status(409).json({
+          success: false,
+          message:
+            "You already have a pending doctor change request.",
+        });
+      }
+
+      // -----------------------------------------------
+      // GET PATIENT ID
+      // -----------------------------------------------
+
+      const profile =
+        await PatientProfile.findOne({
+          userId:
+            patientUserId,
+        });
+
+      if (!profile) {
+        return res.status(404).json({
+          success: false,
+          message:
+            "Patient profile not found.",
+        });
+      }
+
+      // -----------------------------------------------
+      // OPTIONAL REASON
+      // -----------------------------------------------
+
+      const reason =
+        typeof req.body?.reason ===
+        "string"
+          ? req.body.reason.trim()
+          : "";
+
+      // -----------------------------------------------
+      // CREATE REQUEST
+      // -----------------------------------------------
+
+      const request =
+        new DoctorChangeRequest({
+          patientUserId,
+          patientId:
+            profile.patientId,
+
+          currentDoctorId:
+            details.consultingDoctorId,
+
+          reason:
+            reason || undefined,
+
+          status:
+            "PENDING",
+
+          requestedAt:
+            new Date(),
+        });
+
+      await request.save();
+
+      return res.status(201).json({
+        success: true,
+
+        message:
+          "Doctor change request sent to your current doctor.",
+
+        request: {
+          id:
+            request._id,
+
+          status:
+            request.status,
+
+          requestedAt:
+            request.requestedAt,
+        },
+      });
+
+    } catch (error) {
+
+      console.error(
+        "DOCTOR CHANGE REQUEST ERROR:",
+        error
+      );
+
+      return res.status(500).json({
+        success: false,
+        message:
+          "Failed to submit doctor change request.",
+      });
+    }
+  }
+);
+
+module.exports = router;

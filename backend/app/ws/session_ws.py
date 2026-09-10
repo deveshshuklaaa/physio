@@ -1,14 +1,22 @@
 """The session WebSocket — H2 (endpoint), H3 (EMG relay), H6 (abrupt
-disconnect). MASTER_BUILD_PLAN_v3.md §5, §3.2 R5/R6.
+disconnect), G2-B4 (auth handshake). MASTER_BUILD_PLAN_v3.md §5, §3.2 R5/R6.
 
     WS /ws/session/{session_id}
 
 Wire format is pinned by frontend/src/ws/client.js (already built, already
 unit-tested, never redesigned here):
 
-    receives:  {"type": "pose_batch", "ts": <int>, "frames": [...], "logs": [...]}
+    receives:  {"type": "auth", "token": "<jwt>"}   -- MUST be the first frame
+               {"type": "pose_batch", "ts": <int>, "frames": [...], "logs": [...]}
                {"type": "end"}
     sends:     {"type": "emg", "signal": ..., "envelop": ..., "timestamp": ...}
+
+D3/B4 — the socket is accepted first (so the client gets a clean close code
+rather than a bare TCP reset), then the first frame must be the auth frame
+above within AUTH_TIMEOUT_S seconds. Close 4401 on a missing/malformed/expired
+token or a timeout; close 4403 if the token's owner does not match the
+session's owner (app.routes.session.get_lookup_doctor_id is the same B6 seam
+used by the REST routes).
 
 R5 — this socket carries evidence, not feedback: frames go straight into the
 session's buffer, nothing is compared to a threshold and nothing is sent back
@@ -22,8 +30,14 @@ from contextlib import suppress
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
+from app.auth import CurrentUser, authorize_patient_access, decode_ws_token
 from app.logging_setup import get_logger, correlation, log_ring_buffer
-from app.routes.session import session_exists, end_session
+from app.routes.session import (
+    session_exists,
+    end_session,
+    get_lookup_doctor_id,
+    get_session,
+)
 from app.services import session_buffer as sb
 from app.services.emg_client import get_live_emg_reading
 
@@ -33,6 +47,42 @@ log = get_logger("ws")
 # H3: 2-5 Hz is plenty for a chart; polling a serial-backed Flask service at
 # frame rate is pure waste and adds a stall surface.
 EMG_POLL_INTERVAL_S = 0.3  # ~3.3 Hz
+
+# D3: the auth frame deadline.
+AUTH_TIMEOUT_S = 5.0
+
+
+async def _authenticate(websocket: WebSocket, app, session_id: str) -> CurrentUser | None:
+    """First frame after accept must be {"type":"auth","token":...} within
+    AUTH_TIMEOUT_S. Closes the socket itself on any failure; the caller only
+    needs to check for None and return.
+
+    Distinguishing "missing/malformed/expired token" from "wrong patient" is
+    the whole point of the two close codes -- 4401 means "log in again", 4403
+    means "this session isn't yours", and the client-side handling differs.
+    """
+    try:
+        msg = await asyncio.wait_for(websocket.receive_json(), timeout=AUTH_TIMEOUT_S)
+        if not isinstance(msg, dict) or msg.get("type") != "auth" or not msg.get("token"):
+            raise ValueError("first frame was not a valid auth frame")
+        user = decode_ws_token(msg["token"])
+    except Exception as exc:
+        log.info("ws_auth_rejected", session_id=session_id, reason=type(exc).__name__)
+        with suppress(Exception):
+            await websocket.close(code=4401)
+        return None
+
+    # G2-D4: the session is a physiosessions row now, not an in-memory dict.
+    # Authorize on patientUserId (the ObjectId), never the display patientId.
+    session = await get_session(app, session_id)
+    owner = str(session.get("patientUserId")) if session else None
+    allowed = await authorize_patient_access(user, owner, get_lookup_doctor_id(app))
+    if not allowed:
+        log.info("ws_auth_rejected", session_id=session_id, reason="ownership_mismatch")
+        with suppress(Exception):
+            await websocket.close(code=4403)
+        return None
+    return user
 
 
 async def _emg_relay(websocket: WebSocket, session_id: str) -> None:
@@ -68,7 +118,7 @@ async def _emg_relay(websocket: WebSocket, session_id: str) -> None:
 @router.websocket("/ws/session/{session_id}")
 async def session_ws(websocket: WebSocket, session_id: str) -> None:
     app = websocket.app
-    if not session_exists(app, session_id):
+    if not await session_exists(app, session_id):
         # Reject before accept: a socket for a session that was never
         # started would buffer evidence nothing will ever collect (H4).
         await websocket.close(code=4404)
@@ -77,6 +127,9 @@ async def session_ws(websocket: WebSocket, session_id: str) -> None:
     await websocket.accept()
     with correlation(session_id=session_id):
         log.info("ws_connected")
+
+    if await _authenticate(websocket, app, session_id) is None:
+        return  # already closed 4401/4403 inside _authenticate
 
     buf = sb.get_buffer(session_id)
     buf.start_flush_task(interval_s=sb.FLUSH_INTERVAL_S)

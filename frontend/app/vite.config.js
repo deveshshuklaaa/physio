@@ -27,6 +27,11 @@ function stripLicenseBanners() {
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), stripLicenseBanners()],
+  // G2-A: one origin means their Vite SPA also emits /assets/... from the
+  // site root. Both apps claiming /assets/ collides and 404s theirs. We are
+  // served under /dist/, so base the emitted asset URLs there and leave the
+  // root namespace to them.
+  base: "/dist/",
   resolve: { alias: { "@": path.resolve(process.cwd(), "src") } },
   build: {
     outDir: "../dist",

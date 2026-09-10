@@ -65,3 +65,14 @@ backend/app/session_data/
 # Phase J React toolchain (~80MB)
 frontend/app/node_modules/
 frontend/dist/
+
+# CSFLE local master key -- never commit (G2-A finding)
+master-key.txt
+
+# Vendor CSFLE shared library (~103MB extracted). Downloaded, not source --
+# see docs/09g_g2_0_resolutions.md for the fetch step.
+mongo_crypt_shared_v1-*/
+mongo_crypt_shared_v1-*.tgz
+
+# Local static-server scratch dir
+frontend/.serve/

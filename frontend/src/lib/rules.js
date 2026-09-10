@@ -37,6 +37,7 @@
 
 import { angle3d, torsoLean, detectView } from "./angles.js";
 import { LM } from "./landmarks.js";
+import { EXERCISE_CHECKS } from "./checks/index.js";
 
 /**
  * Read a threshold's numeric value from an exercise record.
@@ -190,6 +191,26 @@ const CHECK_REGISTRY = {
     },
   },
 };
+
+/**
+ * The squat entries above are the legacy port and stay in this file. Every
+ * other exercise's checks live in ./checks/<exercise>.js and are merged in
+ * here as registry fragments — same `{ needs, build }` shape, same contract.
+ *
+ * Merging rather than branching keeps the invariant stated on
+ * rulesForExercise(): an exercise's checks are whatever its `extra_checks`
+ * array names. Adding an exercise is still a data-only change.
+ *
+ * A collision would silently shadow one implementation with another that has
+ * the same name and different geometry — a patient flagged by the wrong rule,
+ * with nothing in the logs to say so. Fail loudly at module load instead.
+ */
+for (const name of Object.keys(EXERCISE_CHECKS)) {
+  if (name in CHECK_REGISTRY) {
+    throw new Error(`check name collision: '${name}' is defined in both rules.js and checks/`);
+  }
+}
+Object.assign(CHECK_REGISTRY, EXERCISE_CHECKS);
 
 /** Check names this build knows how to run. */
 export const KNOWN_CHECKS = Object.freeze(Object.keys(CHECK_REGISTRY));

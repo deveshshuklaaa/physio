@@ -29,7 +29,8 @@
  *      per spec, recording stops AFTER the worker tears down, so teardown
  *      order here is: stop capture loop -> close worker -> recorder.stop().
  */
-import { IsolatedRecorder } from "./recorder.js";
+import { IsolatedRecorder, uploadRecording } from "./recorder.js";
+import { buildSummaryPayload, summaryDisagrees } from "./summary.js";
 import { AudioCuePlayer } from "./audio_cues.js";
 import { SessionWsClient } from "../ws/client.js";
 import { drawSkeleton } from "../render/skeleton.js";
@@ -143,6 +144,11 @@ export function makePainter({
  * @param {object} opts.exerciseConfig - one entry from GET /exercises
  * @param {string} opts.sessionId
  * @param {string} opts.wsUrl - ws(s)://.../ws/session/{session_id}
+ * @param {string} [opts.apiBase] - REST base for the video upload (F7); omit to skip uploading
+ * @param {string} [opts.authToken] - bearer token for that upload
+ * @param {string|null} [opts.reportUrl] - where to send the patient after the
+ *        session is saved. Defaults to the built report page; pass null to
+ *        stay put (the G-phase harnesses drive endSession() directly).
  * @param {Document} [opts.doc] - for testability; defaults to window.document
  */
 export async function startLiveSession(opts) {
@@ -164,13 +170,47 @@ export async function startLiveSession(opts) {
     wsQueue: doc.getElementById("ov-ws-queue"),
   };
 
-  const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+  // G2-E6: with D5's auto-start the camera prompt fires the moment the page
+  // loads, so a denial is the first thing a patient sees go wrong. Turn the
+  // raw DOMException ("Permission denied") into something a patient can act
+  // on -- live_session.html renders err.message straight into the banner.
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+  } catch (err) {
+    const denied = err && (err.name === "NotAllowedError" || err.name === "SecurityError");
+    const missing = err && (err.name === "NotFoundError" || err.name === "OverconstrainedError");
+    const msg = denied
+      ? "Camera access was blocked. Allow camera access in your browser, then reload this page to start your session."
+      : missing
+        ? "No camera was found. Connect a camera, then reload this page to start your session."
+        : `The camera could not be started (${err && err.name ? err.name : "unknown error"}). Reload the page to try again.`;
+    logger.error("session_aborted", { error_type: "camera_unavailable", error_message: String(err && err.name || err) });
+    const wrapped = new Error(msg);
+    wrapped.code = "camera_unavailable";
+    throw wrapped;
+  }
   opts.videoEl.srcObject = stream;
   await opts.videoEl.play();
 
   // --- G12: recording starts BEFORE the worker exists, isolated from it. ---
   const recorder = new IsolatedRecorder(stream, { logger });
   recorder.start();
+
+  let endingPromise = null;
+
+  // Visible progress while the session is being saved. The end sequence does
+  // real network work (summary, then a video upload) and used to do it with
+  // no feedback at all, which read as a frozen page.
+  function onProgress(text) {
+    if (bannerEl) bannerEl.style.display = "";
+    if (bannerTextEl) bannerTextEl.textContent = text;
+    doc.dispatchEvent(new CustomEvent("session:ending", { detail: { text } }));
+  }
+
+  // G2-D6/F7 end-of-session payload, accumulated live.
+  const repLog = [];
+  let lastCounts = { repCount: 0, cleanReps: 0 };
 
   const ws = new SessionWsClient(opts.wsUrl, {
     logger,
@@ -288,6 +328,17 @@ export async function startLiveSession(opts) {
   function updateCounters(msg) {
     if (repTotalEl) repTotalEl.textContent = String(msg.repCount);
     if (repCorrectEl) repCorrectEl.textContent = String(msg.cleanReps);
+    lastCounts = { repCount: msg.repCount ?? 0, cleanReps: msg.cleanReps ?? 0 };
+    // G2-D6: one entry per completed rep, in the shape POST /session/{id}/summary
+    // validates (rep 1..n in order, clean flag, best angle, error names).
+    if (msg.repEntry) {
+      repLog.push({
+        rep: msg.repEntry.rep,
+        clean: !!msg.repEntry.clean,
+        bestAngle: msg.repEntry.best_angle,
+        errors: Array.isArray(msg.repEntry.errors) ? msg.repEntry.errors : [],
+      });
+    }
   }
 
   function handleAlerts(alerts) {
@@ -342,6 +393,8 @@ export async function startLiveSession(opts) {
   }
 
   async function endSession() {
+    if (endingPromise) return endingPromise;   // double-click / disconnect race
+    endingPromise = (async () => {
     workerAlive = false;
     clearInterval(overlayTimer);
     if (rafId) cancelAnimationFrame(rafId);
@@ -349,10 +402,82 @@ export async function startLiveSession(opts) {
     worker.terminate();
     // Recording stops AFTER the worker tears down (G12 ordering contract).
     const blob = await recorder.stop();
+
+    // G2-D6: the summary MUST land before the session is ended. Ending the
+    // session is what fires the Gemini report server-side, and a report
+    // written before the counts arrive would describe a session of zero
+    // reps. This is the only thing that carries repCount/cleanReps/repLog
+    // out of the browser -- nothing else posts them.
+    if (opts.apiBase && opts.sessionId) {
+      onProgress("Saving your session…");
+      const summaryPayload = buildSummaryPayload(repLog);
+      if (summaryDisagrees(summaryPayload, lastCounts)) {
+        // The counters the patient watched and the per-rep log disagree, so
+        // rep entries were lost between the worker and here. Say so loudly:
+        // the report is about to describe a different session than the one
+        // that happened.
+        logger.error("session_aborted", {
+          error_type: "rep_log_mismatch",
+          error_message:
+            `counters ${lastCounts.repCount}/${lastCounts.cleanReps} vs ` +
+            `log ${summaryPayload.repCount}/${summaryPayload.cleanReps}`,
+        });
+      }
+      try {
+        const res = await fetch(
+          `${opts.apiBase}/session/${encodeURIComponent(opts.sessionId)}/summary`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              ...(opts.authToken ? { Authorization: `Bearer ${opts.authToken}` } : {}),
+            },
+            body: JSON.stringify(summaryPayload),
+          }
+        );
+        if (!res.ok) {
+          logger.error("session_aborted", {
+            error_type: "summary_rejected",
+            error_message: `POST /summary -> ${res.status}`,
+          });
+        }
+      } catch (err) {
+        logger.error("session_aborted", {
+          error_type: "summary_failed",
+          error_message: String(err && err.message || err),
+        });
+      }
+    }
+
     ws.sendEnd();
     ws.close();
     logger.info("session_ended", {});
+    // G2-F7: upload the recording. Consent (F6) is enforced server-side --
+    // a withheld consent is a 403 the uploader logs and swallows, so this
+    // never blocks or fails the end of a session. It has to finish BEFORE
+    // navigating away, though: leaving the page cancels an in-flight upload.
+    if (opts.apiBase) {
+      onProgress("Uploading your recording…");
+      await uploadRecording(blob, {
+        sessionId: opts.sessionId,
+        apiBase: opts.apiBase,
+        token: opts.authToken,
+        logger,
+      });
+    }
+
+    // The session is over and everything is saved -- send the patient to the
+    // report. Without this the page just sat frozen on a dead camera view.
+    if (opts.reportUrl !== null) {
+      onProgress("Opening your report…");
+      location.href =
+        opts.reportUrl ||
+        `../../dist/report.html?session_id=${encodeURIComponent(opts.sessionId || "")}` +
+          `&api=${encodeURIComponent(opts.apiBase || "")}`;
+    }
     return blob;
+    })();
+    return endingPromise;
   }
 
   endBtn?.addEventListener("click", () => { endSession(); });

@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# One entry point for the whole stack. Everything runs under docker compose;
+# nginx puts it all on http://localhost, so there is nothing to start in a
+# second terminal unless you specifically want Vite's hot reload.
+set -euo pipefail
+cd "$(dirname "$0")"
+
+APP_SERVICES=(backend frontend hemo-backend hemo-frontend emg-service nginx)
+
+usage() {
+  cat <<'USAGE'
+./dev <command>
+
+  up               start everything (build if images are missing)
+  down             stop everything
+  restart [svc]    restart a service, or all of them
+  rebuild [svc]    rebuild image(s) and restart -- USE THIS after editing code
+  logs [svc]       follow logs (all services, or one)
+  ps               what is running, and which ports are published
+  vite             run their Vite dev server with hot reload (optional)
+  shell <svc>      open a shell inside a container
+  test             run the backend + frontend test suites
+  otp              print the most recent DEV OTP from the backend log
+
+Code changes need `rebuild`, not `restart`: the images COPY the source in, so
+a restart just runs the same baked code again.
+USAGE
+}
+
+case "${1:-}" in
+  up)      docker compose up -d --build; echo; echo "→ http://localhost"; docker compose ps --format '{{.Service}}\t{{.State}}\t{{.Ports}}' ;;
+  down)    docker compose down ;;
+  restart) shift; docker compose restart "${@:-${APP_SERVICES[@]}}" ;;
+  rebuild)
+    shift
+    if [ $# -eq 0 ]; then docker compose up -d --build
+    else docker compose build "$@" && docker compose up -d "$@"; fi
+    docker compose ps --format '{{.Service}}\t{{.State}}' ;;
+  logs)    shift; docker compose logs -f --tail=80 "$@" ;;
+  ps)      docker compose ps --format '{{.Service}}\t{{.State}}\t{{.Ports}}' ;;
+  vite)    cd part2/Hemophillia-confirm/frontend && npm run dev ;;
+  shell)   shift; docker compose exec "${1:?service name required}" sh ;;
+  test)
+    ( cd backend && for f in app/test_events_mirror.py app/routes/test_session.py \
+        app/routes/test_capabilities.py app/routes/test_report.py \
+        app/routes/test_history.py app/ws/test_session_ws.py; do
+        printf '%-28s ' "$(basename "$f")"; ../venv/bin/python "$f" 2>&1 | grep -vi warning | tail -1
+      done )
+    ( cd frontend && node --test 'tests/**/*.test.mjs' 2>&1 | grep -E 'ℹ (pass|fail)' ) ;;
+  otp)     docker compose logs --tail=200 hemo-backend | grep "DEV OTP" | tail -3 ;;
+  *)       usage ;;
+esac

@@ -11,6 +11,13 @@
  *   amber  — a system/capability limitation
  *   red    — NEVER on this screen. Red means patient posture, nothing else.
  * Every state carries an icon AND text, never colour alone.
+ *
+ * G2-E3/D5: this page is also the deep-link landing spot for their
+ * ExercisePlan.jsx "Start Now" button — `?exercise=<theirId>&rec=<recId>`.
+ * When those params are present we read localStorage.authToken (shared
+ * origin, one product) and call startSession() immediately, no click. See
+ * ../lib/deep_link.js for the parsing/classification and G2-E5 below for
+ * every way that can fail visibly instead of silently.
  */
 import { useEffect, useState } from "react";
 import SpotlightCard from "@/components/SpotlightCard";
@@ -18,8 +25,17 @@ import ShinyText from "@/components/ShinyText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { parseDeepLink, resolveEngineExercise, classifyDeepLink, buildStartSessionBody, readSessionLanguage } from "@/lib/deep_link.js";
 
-const API = new URLSearchParams(location.search).get("api") || "http://127.0.0.1:8000";
+// G2-A: one origin. The engine sits behind nginx at /engine/*, and :8000 is
+// no longer published, so the old 127.0.0.1 default could never connect --
+// which surfaced as "this exercise isn't supported" rather than as a
+// connection failure. Overridable with ?api= for a split-origin dev setup.
+const API = new URLSearchParams(location.search).get("api") || "/engine";
+// D12: their app owns "/" (login) and "/exercise-plan" (the plan page) at
+// this shared origin — relative paths, no host baked in.
+const THEIR_LOGIN_PATH = "/";
+const THEIR_PLAN_PATH = "/exercise-plan";
 
 /** Preview data. Used only when the backend is unreachable, so the page can be
  *  looked at standalone. Mirrors REAL availability: squat, heel_slide and
@@ -118,20 +134,49 @@ function ExerciseCard({ ex, onStart }) {
   );
 }
 
+/** G2-E5/E6: full-screen takeover for a deep-link failure that must never
+ *  render a blank/broken camera page underneath it. */
+function DeepLinkNotice({ title, body, actionLabel, onAction }) {
+  return (
+    <div className="flex h-screen w-screen flex-col items-center justify-center gap-4 bg-surface p-8 text-center">
+      <h1 className="text-2xl font-semibold">{title}</h1>
+      <p className="max-w-md text-ink-dim">{body}</p>
+      {actionLabel && (
+        <Button onClick={onAction} className="rounded-lg px-6 py-2.5 text-base font-semibold">
+          {actionLabel}
+        </Button>
+      )}
+    </div>
+  );
+}
+
 export default function ExerciseSelect() {
   const [exercises, setExercises] = useState(null);
   const [online, setOnline] = useState(false);
   const [error, setError] = useState("");
 
+  // G2-E3: deep-link state machine. null while capabilities are still
+  // loading -- classifyDeepLink must not decide "unmapped" against a map
+  // that just hasn't arrived yet.
+  const [deepLink] = useState(() => parseDeepLink(location.search));
+  const [deepLinkState, setDeepLinkState] = useState(deepLink.exerciseId ? "loading" : "manual");
+  const [engineSupported, setEngineSupported] = useState(null);
+  // Unreachable engine != unsupported exercise. Conflating them tells a
+  // patient their prescribed exercise is unavailable when the real problem
+  // is a network hop, and sends them to their doctor over an outage.
+  const [engineOffline, setEngineOffline] = useState(false);
+
   useEffect(() => {
     (async () => {
       try {
-        const [exRes, mdRes] = await Promise.all([
+        const [exRes, mdRes, capRes] = await Promise.all([
           fetch(`${API}/exercises`),
           fetch(`${API}/admin/models/status`).catch(() => null),
+          fetch(`${API}/capabilities`).catch(() => null),
         ]);
         const list = (await exRes.json()).exercises || [];
         const status = mdRes && mdRes.ok ? (await mdRes.json()).exercises || {} : {};
+        const caps = capRes && capRes.ok ? (await capRes.json()).engineSupported || {} : {};
         setExercises(
           list.map((e) => ({
             ...e,
@@ -140,30 +185,139 @@ export default function ExerciseSelect() {
             analysis: status[e.name] ? status[e.name].analysis_unavailable !== true : false,
           }))
         );
+        setEngineSupported(caps);
         setOnline(true);
       } catch (e) {
         setError(String(e.message || e));
         setExercises(PREVIEW);
+        // E4/E5: never guess that an exercise is supported when the map
+        // failed to load -- but report it as the connection failure it is,
+        // with a retry, not as an unsupported exercise.
+        setEngineSupported({});
+        setEngineOffline(true);
       }
     })();
   }, []);
 
+  // G2-E3/D5: once capabilities have resolved (success or not), decide the
+  // deep-link outcome and, if clear to go, start the session with no click.
+  useEffect(() => {
+    if (!deepLink.exerciseId || engineSupported === null) return;
+
+    const token = localStorage.getItem("authToken");
+    if (engineOffline && token) {
+      setDeepLinkState("start-failed");
+      return;
+    }
+    const state = classifyDeepLink({
+      exerciseId: deepLink.exerciseId,
+      token,
+      engineSupported,
+    });
+
+    if (state === "no-token") {
+      // E5: no token -> bounce to their login. Nothing to show here first --
+      // there is nothing this page can do without identity.
+      location.href = THEIR_LOGIN_PATH;
+      return;
+    }
+    if (state === "unmapped") {
+      setDeepLinkState("unmapped");
+      return;
+    }
+    // state === "ready"
+    void startFromDeepLink(token);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [engineSupported, engineOffline]);
+
+  async function startFromDeepLink(token) {
+    setDeepLinkState("starting");
+    const engineExercise = resolveEngineExercise(deepLink.exerciseId, engineSupported);
+    try {
+      const res = await fetch(`${API}/session/start`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify(
+          buildStartSessionBody({
+            engineExercise,
+            exerciseId: deepLink.exerciseId,
+            recommendationId: deepLink.recommendationId,
+            language: readSessionLanguage(),
+          })
+        ),
+      });
+      if (!res.ok) {
+        setDeepLinkState("start-failed");
+        return;
+      }
+      const { session_id } = await res.json();
+      location.href =
+        `../src/pages/live_session.html?exercise=${encodeURIComponent(engineExercise)}` +
+        `&session_id=${encodeURIComponent(session_id)}&api=${encodeURIComponent(API)}`;
+    } catch (e) {
+      // E5: /session/start failing (network, 5xx, whatever) must land on a
+      // retry, never a blank camera page underneath a hung request.
+      setDeepLinkState("start-failed");
+    }
+  }
+
   async function startSession(ex) {
     // J3: POST /session/start, then navigate with the REAL session_id. The
     // live page invents `local-<timestamp>` today, which the WS rejects.
+    // G2-B3: every session route requires Authorization now.
+    const token = localStorage.getItem("authToken");
     const res = await fetch(`${API}/session/start`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ exercise: ex.name }),
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({ exercise: ex.name, language: readSessionLanguage() }),
     });
     if (!res.ok) {
-      setError(`Could not start ${ex.name}: ${res.status}`);
+      setError(
+        !token
+          ? `Could not start ${ex.name}: not signed in (${res.status})`
+          : `Could not start ${ex.name}: ${res.status}`
+      );
       return;
     }
     const { session_id } = await res.json();
     location.href =
       `../src/pages/live_session.html?exercise=${encodeURIComponent(ex.name)}` +
       `&session_id=${encodeURIComponent(session_id)}&api=${encodeURIComponent(API)}`;
+  }
+
+  // --- G2-E5: deep-link failure/loading states take over the whole page,
+  // rather than rendering the picker underneath a request that's about to
+  // redirect anyway. ---
+  if (deepLinkState === "loading" || deepLinkState === "starting") {
+    return (
+      <DeepLinkNotice
+        title="Starting your session…"
+        body="Setting up your exercise from your plan. This should only take a moment."
+      />
+    );
+  }
+  if (deepLinkState === "unmapped") {
+    return (
+      <DeepLinkNotice
+        title="This exercise isn't available yet"
+        body="Our live-assessment camera doesn't support this exercise yet. Go back to your exercise plan and try one of the others, or contact your doctor."
+        actionLabel="Back to my exercise plan"
+        onAction={() => { location.href = THEIR_PLAN_PATH; }}
+      />
+    );
+  }
+  if (deepLinkState === "start-failed") {
+    return (
+      <DeepLinkNotice
+        title="Couldn't start your session"
+        body="Something went wrong reaching the assessment server. Check your connection and try again."
+        actionLabel="Retry"
+        onAction={() => startFromDeepLink(localStorage.getItem("authToken"))}
+      />
+    );
   }
 
   return (

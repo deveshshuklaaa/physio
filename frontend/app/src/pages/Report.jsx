@@ -1,63 +1,57 @@
 /**
- * J7/J8 — Session report.
+ * G2-G1 -- Session report, post-integration.
  *
- * Data source, deliberately narrow: GET /session/{id}. `GET /report/{id}` and
- * `GET /job/{id}` are I15 and do not exist yet (§10 Phase I). This page polls
- * the one seam that does exist and renders every state that seam can produce.
- * When I15 lands, only the fetch target and the "ready" render swap — the
- * poll loop, the states and the two-panel layout stay.
+ * Supersedes J7/J8's placeholder (which polled a session endpoint that had
+ * nothing to show yet -- Phase I's model pipeline was unbuilt). This page
+ * now polls the real seam: `GET /engine/session/{id}` (nginx strips
+ * `/engine`, so the fetch below hits FastAPI's `GET /session/{id}` --
+ * app/routes/session.py, F5). That route returns the whole physiosessions
+ * row (§4), including `status` and `clinical.report.{text,error}`.
  *
- * E-DEC.6: measured (rule) and inferred (model) findings are permanently
- * separate, labelled panels — never interleaved, regardless of model
- * quality. Left = "What we measured" (rule findings, deterministic). Right =
- * "What the analysis suggests" (model + SHAP, always hedged). Phase I has not
- * shipped either producer yet, so both panels currently say so rather than
- * invent numbers (§8: no agent invents clinical wording).
+ * State machine lives in app/src/lib/report_poll.js (reportPhase) so it's
+ * unit-testable without a JSX toolchain -- see frontend/tests/report_poll.test.mjs.
+ *
+ * §8 framing, non-negotiable: this is a coaching narrative Gemini wrote about
+ * rule-based rep data, NOT Phase I's model-explained clinical report. Nothing
+ * here may say a model "assessed" or "diagnosed" the patient -- headings say
+ * "Session summary" and "Coaching notes", never "Diagnosis" or "Assessment".
+ *
+ * G2-G6: the report row may carry a `language` field once the concurrent
+ * per-session-language Gemini work lands. Render the text as-is; no
+ * "this report is in English" wording is added here.
  */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { reportPhase, isTerminalPhase } from "@/lib/report_poll.js";
 
 const params = new URLSearchParams(location.search);
-const API = params.get("api") || "http://127.0.0.1:8000";
+// G2-A: one origin -- the engine is behind nginx at /engine/*, and :8000 is
+// not published. The old 127.0.0.1 default could only ever fail here, which
+// showed the patient a permanently "generating" report.
+const API = params.get("api") || "/engine";
 const SESSION_ID = params.get("session_id") || "";
 
 const POLL_MS = 2000;
 
-/** Session record's own `status` field only ever reaches "active" or "queued"
- *  today (routes/session.py) -- there is no job runner yet to move it to
- *  "done"/"failed". Map what exists onto the three states the DOM contract
- *  requires, so the mapping is a single, obvious place to extend once I15's
- *  richer job status lands. */
-function analysisState(session) {
-  if (!session) return "unavailable";
-  if (!session.job_id) return "pending"; // session still active, nothing queued yet
-  if (session.status === "done") return "ready";
-  if (session.status === "failed") return "unavailable";
-  return "pending"; // queued/running
-}
+// Their SPA's plan route (part2 App.jsx) -- same origin, no token in the URL.
+const PLAN_URL = "/exercise-plan";
 
-function StatePill({ state, live }) {
-  // `live` = the session has no ended_at, i.e. it is STILL RUNNING. The DOM
-  // contract's three states cannot express that, and calling it "Analysis
-  // pending" would be a lie -- nothing has been queued because the session is
-  // not over. Same data-state, honest wording.
-  const meta = live
-    ? {
-        icon: "●",
-        text: "Session in progress — nothing queued yet",
-        color: "var(--color-ok)",
-      }
-    : {
-        pending: { icon: "⏳", text: "Analysis pending", color: "var(--color-warn)" },
-        ready: { icon: "✓", text: "Analysis ready", color: "var(--color-ok)" },
-        unavailable: { icon: "⚠", text: "Analysis unavailable", color: "var(--color-warn)" },
-      }[state] || { icon: "?", text: state, color: "var(--color-warn)" };
+const PHASE_META = {
+  active: { icon: "●", text: "Session in progress", color: "var(--color-ok)" },
+  generating: { icon: "⏳", text: "Analysing your session…", color: "var(--color-warn)" },
+  done: { icon: "✓", text: "Report ready", color: "var(--color-ok)" },
+  failed: { icon: "⚠", text: "Report failed", color: "var(--color-warn)" },
+  unavailable: { icon: "⚠", text: "Session not found", color: "var(--color-warn)" },
+};
 
+function StatePill({ phase }) {
+  const meta = PHASE_META[phase] || PHASE_META.unavailable;
   return (
     <span
-      data-testid="analysis-state"
-      data-state={state}
+      data-testid="report-phase"
+      data-phase={phase}
       className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm"
       style={{ borderColor: meta.color, color: meta.color }}
     >
@@ -69,54 +63,66 @@ function StatePill({ state, live }) {
 
 export default function Report() {
   const [session, setSession] = useState(null);
-  const [error, setError] = useState("");
+  const [fetchError, setFetchError] = useState("");
+  const stopped = useRef(false);
 
   useEffect(() => {
     if (!SESSION_ID) {
-      setError("No session_id in URL");
+      setFetchError("No session_id in URL");
       return;
     }
-    let stop = false;
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      // Same-origin app, patient always signed in to reach this page. If the
+      // token's gone (logout in another tab, expiry), say so plainly rather
+      // than polling a 401 forever.
+      setFetchError("Not signed in — please log in again.");
+      return;
+    }
+
+    let timer = null;
     async function poll() {
       try {
-        const res = await fetch(`${API}/session/${SESSION_ID}`);
+        const res = await fetch(`${API}/session/${SESSION_ID}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.status === 401 || res.status === 403) {
+          if (!stopped.current) setFetchError("Not authorized to view this session.");
+          return; // terminal, no more polling
+        }
+        if (res.status === 404) {
+          if (!stopped.current) setSession(null);
+          return; // "unavailable" phase, terminal -- see below
+        }
         if (!res.ok) throw new Error(`GET /session -> ${res.status}`);
         const data = await res.json();
-        // THIS PAGE NEVER ENDS A SESSION. An earlier version called
-        // POST /session/end here whenever job_id was missing, so that a direct
-        // link or a refresh would still show a job. But a LIVE session has no
-        // job_id by definition, so that fired exactly when it was most
-        // harmful: opening a report in a second tab while the patient was
-        // still exercising ended the session server-side, flushing its buffer
-        // and tearing down its WebSocket. A read-only page must not destroy an
-        // in-progress session.
-        //
-        // Sessions end through J7's End Session button, or -- if the browser
-        // dies without pressing it -- through H6's WS disconnect handler,
-        // which already treats an abrupt disconnect as session end. Neither
-        // path needs help from here. A session with no job_id is simply still
-        // running, and the page says so.
-        if (!stop) {
-          setSession(data);
-          setError("");
-        }
+        if (stopped.current) return;
+        setSession(data);
+        setFetchError("");
+        // Compute the next poll off the freshly-fetched row, not React
+        // state (setState hasn't re-rendered yet in this closure).
+        if (!isTerminalPhase(reportPhase(data))) timer = setTimeout(poll, POLL_MS);
+        return;
       } catch (e) {
-        if (!stop) setError(String(e.message || e));
+        // Transient network error: keep the last good session on screen
+        // rather than blanking it, and try again next tick.
+        if (!stopped.current) {
+          setFetchError(String(e.message || e));
+          timer = setTimeout(poll, POLL_MS);
+        }
+        return;
       }
     }
     poll();
-    // ponytail: fixed-interval poll, no backoff -- session count per clinic
-    // is single digits and I15 will replace this with the job endpoint
-    // before it matters.
-    const id = setInterval(poll, POLL_MS);
     return () => {
-      stop = true;
-      clearInterval(id);
+      stopped.current = true;
+      if (timer) clearTimeout(timer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const state = analysisState(session);
-  const jobId = session?.job_id || "";
+  const phase = reportPhase(session);
+  const report = (session && session.clinical && session.clinical.report) || {};
 
   return (
     <div className="flex h-screen w-screen flex-col overflow-hidden bg-surface">
@@ -126,85 +132,123 @@ export default function Report() {
           <span className="num text-sm text-ink-dim">{SESSION_ID || "no session"}</span>
         </div>
         <div className="flex items-center gap-3">
-          <Badge
-            variant="outline"
-            className="num border-line text-[13px] text-ink-dim"
-          >
-            job:&nbsp;
-            <span data-testid="job-id">{jobId || "—"}</span>
-          </Badge>
-          <StatePill state={state} live={!!session && !session.ended_at} />
+          <StatePill phase={phase} />
           <Button
             className="rounded-lg px-6 py-2.5 text-base font-semibold"
             style={{ background: "var(--color-surface-2)", color: "var(--color-ink)" }}
-            onClick={() => (location.href = `index.html?api=${encodeURIComponent(API)}`)}
+            onClick={() => (location.href = PLAN_URL)}
           >
-            Back to exercises
+            Back to your plan
           </Button>
         </div>
       </header>
 
-      {error && (
+      {fetchError && (
         <div
           className="shrink-0 border-b border-line px-8 py-2 text-[15px]"
           style={{ color: "var(--color-warn)" }}
         >
-          <span aria-hidden>⚠</span> {error}
+          <span aria-hidden>⚠</span> {fetchError}
         </div>
       )}
 
-      <main className="grid min-h-0 flex-1 grid-cols-2 gap-5 p-6">
-        {/* LEFT — measured. Rule findings only, deterministic. Phase I has not
-            shipped the rule-finding pipeline (I10-I12) yet, so this panel
-            says exactly that instead of showing invented findings. */}
+      <main className="flex min-h-0 flex-1 flex-col gap-5 overflow-auto p-6">
+        {/* Counts first, always, as soon as the row loads -- never blocked on
+            the report text (D8: summary is written synchronously; the
+            report is async and may still be generating or may fail). */}
         <section
-          data-testid="measured-panel"
-          className="flex min-h-0 flex-col gap-3 overflow-auto rounded-[14px] border border-line bg-surface-1 p-6"
+          data-testid="summary-panel"
+          className="flex flex-col gap-3 rounded-[14px] border border-line bg-surface-1 p-6"
         >
-          <h2 className="text-xl font-semibold">What we measured</h2>
-          <p className="text-[15px] text-ink-dim">
-            Rule-based findings from live posture thresholds — deterministic,
-            with the crossed value and threshold shown.
-          </p>
-          <div
-            className="flex items-center gap-2 rounded-lg border border-line px-4 py-3 text-[15px]"
-            style={{ color: "var(--color-warn)" }}
-          >
-            <span aria-hidden>⚠</span>
-            <span>
-              Not available yet — the report pipeline (Phase I) has not shipped.
-              Exercise: <span className="num">{session?.exercise || "—"}</span>,
-              status: <span className="num">{session?.status || "—"}</span>.
-            </span>
-          </div>
+          <h2 className="text-xl font-semibold">Session summary</h2>
+          {session ? (
+            <div className="flex gap-8 text-[15px]">
+              <div>
+                <div className="text-ink-dim">Exercise</div>
+                <div className="num text-lg font-semibold">{session.engineExercise || "—"}</div>
+              </div>
+              <div>
+                <div className="text-ink-dim">Reps</div>
+                <div className="num text-lg font-semibold">{session.repCount ?? "—"}</div>
+              </div>
+              <div>
+                <div className="text-ink-dim">Clean reps</div>
+                <div className="num text-lg font-semibold">{session.cleanReps ?? "—"}</div>
+              </div>
+            </div>
+          ) : phase === "unavailable" ? (
+            <p className="text-[15px] text-ink-dim">This session could not be found.</p>
+          ) : (
+            // The row is still on its way. Show the shape of what is coming
+            // rather than a bare word, so the page does not look stalled.
+            <div data-testid="summary-skeleton" className="flex gap-8">
+              {["Exercise", "Reps", "Clean reps"].map((label) => (
+                <div key={label} className="flex flex-col gap-2">
+                  <div className="text-ink-dim text-[15px]">{label}</div>
+                  <Skeleton className="h-6 w-24" />
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
-        {/* RIGHT — inferred. Model + SHAP output, always hedged. Never
-            interleaved with the left panel — E-DEC.6 is permanent, not a
-            function of model quality. */}
+        {/* Coaching notes -- Gemini prose about the measured reps above. Not
+            a diagnosis, not a model assessment (§8). */}
         <section
-          data-testid="suggested-panel"
-          className="flex min-h-0 flex-col gap-3 overflow-auto rounded-[14px] border border-line bg-surface-1 p-6"
+          data-testid="notes-panel"
+          className="flex min-h-0 flex-1 flex-col gap-3 overflow-auto rounded-[14px] border border-line bg-surface-1 p-6"
         >
-          <h2 className="text-xl font-semibold">What the analysis suggests</h2>
-          <p className="text-[15px] text-ink-dim">
-            Model output with SHAP explanation, always hedged with the model
-            card's own caveats. Associative only — never a claim the patient
-            did the thing.
-          </p>
-          <div
-            className="flex items-center gap-2 rounded-lg border border-line px-4 py-3 text-[15px]"
-            style={{ color: "var(--color-warn)" }}
-          >
-            <span aria-hidden>{state === "ready" ? "✓" : "⏳"}</span>
-            <span>
-              {state === "ready"
-                ? "Ready."
-                : state === "unavailable"
-                  ? "Unavailable — this exercise has no trained model, or analysis failed."
-                  : "Pending — queued for analysis, not yet run. Check back shortly."}
-            </span>
-          </div>
+          <h2 className="text-xl font-semibold">Coaching notes</h2>
+          {phase === "done" && (
+            <p data-testid="report-text" className="whitespace-pre-wrap text-[15px]">
+              {report.text}
+            </p>
+          )}
+          {phase === "generating" && (
+            <div data-testid="notes-skeleton" className="flex flex-col gap-4">
+              <div
+                className="flex items-center gap-2 text-[15px]"
+                style={{ color: "var(--color-warn)" }}
+              >
+                <span aria-hidden>⏳</span>
+                <span>Writing your coaching notes… this usually takes a few seconds.</span>
+              </div>
+              {/* Mirrors the finished report's shape: four short sections,
+                  each a heading and a couple of lines. */}
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="flex flex-col gap-2">
+                  <Skeleton className="h-5 w-48" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-[92%]" />
+                  {i === 0 && <Skeleton className="h-4 w-[70%]" />}
+                </div>
+              ))}
+            </div>
+          )}
+          {phase === "failed" && (
+            <div
+              className="flex items-center gap-2 rounded-lg border border-line px-4 py-3 text-[15px]"
+              style={{ color: "var(--color-warn)" }}
+            >
+              <span aria-hidden>⚠</span>
+              <span>
+                {/* ponytail: report.error holds an internal message (e.g.
+                    "GEMINI_API_KEY not set") -- not shown to the patient.
+                    The doctor patient-detail page shows it verbatim for
+                    debugging (PatientResearch.jsx, staff-only). */}
+                We couldn't generate coaching notes for this session. Your counts
+                above are still saved.
+              </span>
+            </div>
+          )}
+          {phase === "active" && (
+            <p className="text-[15px] text-ink-dim">
+              Notes appear once the session ends.
+            </p>
+          )}
+          {phase === "unavailable" && !session && (
+            <p className="text-[15px] text-ink-dim">—</p>
+          )}
         </section>
       </main>
     </div>

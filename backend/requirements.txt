@@ -1,5 +1,11 @@
 annotated-doc==0.0.5
 annotated-types==0.8.0
+PyJWT==2.10.1
+# G2-D1: async Mongo driver -- a sync pymongo call in an async handler blocks
+# the event loop. pymongo/dnspython/bson come along as motor's deps.
+motor==3.7.1
+pymongo==4.18.0
+dnspython==2.8.0
 anyio==4.14.2
 certifi==2026.7.22
 click==8.4.2

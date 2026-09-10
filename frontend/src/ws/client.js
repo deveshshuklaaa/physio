@@ -40,6 +40,7 @@ export class SessionWsClient {
     this._socket.addEventListener("open", () => {
       this._connected = true;
       this.logger?.info("ws_connected", { url: this.url });
+      this._sendAuthFrame(); // G2-B5/D3: MUST be the first message after open
       this._timer = setInterval(() => this._flush(), BATCH_INTERVAL_MS);
     });
     this._socket.addEventListener("close", (ev) => {
@@ -90,6 +91,20 @@ export class SessionWsClient {
     const logs = this.logger ? this.logger.drain() : [];
     const ok = this._send({ type: "pose_batch", ts: Date.now(), frames, logs });
     if (ok) this.logger?.debug("batch_sent", { frame_count: frames.length, log_count: logs.length });
+  }
+
+  /** G2-B5/D3: their React app already stores the JWT in localStorage under
+   * one origin (D1), so we read it directly rather than passing it through
+   * the URL. Sent with no token if localStorage is unavailable or empty --
+   * the server closes 4401 either way, same as a missing token. */
+  _sendAuthFrame() {
+    let token = null;
+    try {
+      token = localStorage.getItem("authToken");
+    } catch (e) {
+      // private-mode / non-browser test env: fall through with no token.
+    }
+    this._send({ type: "auth", token });
   }
 
   _send(payload) {

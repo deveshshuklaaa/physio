@@ -250,13 +250,21 @@ describe("PLACEHOLDER THRESHOLDS MUST NEVER EVALUATE (master plan §8)", () => {
     }
   });
 
-  test("every non-squat exercise in the SHIPPED config yields no live checks", () => {
-    // Driven off the real file, so adding a sixth placeholder exercise is
-    // covered automatically instead of needing a new hardcoded name here.
-    for (const ex of loadRealConfig().filter((e) => e.name !== "squat")) {
+  test("every exercise in the SHIPPED config yields live checks", () => {
+    // Was the inverse assertion: the five ML-dataset exercises all shipped
+    // with null thresholds and no `extra_checks`, so this test locked in
+    // "they legitimately assess nothing". Their values are now filled
+    // (docs/VALIDATION_TODO.md — dataset-derived, NOT clinician-signed) and
+    // their checks implemented in src/lib/checks/, so the assertion flips.
+    //
+    // The placeholder-skipping behaviour it used to cover is still tested,
+    // one test above, against PLACEHOLDER_EXERCISE — that is the fixture that
+    // owns it, and it does not depend on the shipped file staying unfilled.
+    for (const ex of loadRealConfig()) {
       const r = rulesForExercise(ex);
-      assert.equal(r.hasRealThresholds, false, `${ex.name} claimed real thresholds`);
-      assert.deepEqual(r.checks, [], `${ex.name} returned live checks it has no values for`);
+      assert.equal(r.hasRealThresholds, true, `${ex.name} built no live checks`);
+      assert.deepEqual(r.skipped, [], `${ex.name} skipped checks: ${JSON.stringify(r.skipped)}`);
+      assert.equal(r.checks.length, (ex.extra_checks ?? []).length);
     }
   });
 });
