@@ -1,123 +1,47 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
+<html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Clinical Kinetic EMG - Recording History</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="vendor/tailwind/tailwind.js"></script>
+<script src="vendor/clinical-theme.js"></script>
+<link rel="stylesheet" href="vendor/clinical.css">
 <style>
-        .glass-overlay {
-            backdrop-filter: blur(20px);
-            background: rgba(25, 33, 36, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .signal-glow {
-            filter: drop-shadow(0 0 4px rgba(0, 255, 194, 0.4));
+        :root {
+            /* The JS-injected sparkline path (byte-identical inline logic, not editable)
+               reads var(--primary, #00ffc2); define it so the trace renders clinical
+               blue instead of falling back to the old dark-theme teal. */
+            --primary: #2563EB;
         }
         .grid-bg {
-            background-image: radial-gradient(circle, #2d373c 1px, transparent 1px);
+            background-image: radial-gradient(circle, #E2E8F0 1px, transparent 1px);
             background-size: 16px 16px;
         }
-        @keyframes pulse-red {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(0.98); }
+        /* No icon font is vendored offline. Static markup below drops the decorative
+           spans outright. The recording-card template lives inside the byte-identical
+           inline JS string, so its icon spans (timelapse/timer/play_arrow/more_vert)
+           can't be edited directly: collapse the literal ligature words to zero size and
+           substitute short text labels via ::after, or hide outright next to labels. */
+        .material-symbols-outlined { font-size: 0; line-height: 0; }
+        .material-symbols-outlined[data-icon="timelapse"],
+        .material-symbols-outlined[data-icon="timer"] { display: none; }
+        .material-symbols-outlined[data-icon="play_arrow"]::after,
+        .material-symbols-outlined[data-icon="more_vert"]::after {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
         }
-        .alert-pulse {
-            animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
+        .material-symbols-outlined[data-icon="play_arrow"]::after { content: "Play"; }
+        .material-symbols-outlined[data-icon="more_vert"]::after { content: "Delete"; }
+        /* Custom font-size/family keys from the removed dark tailwind-config aren't
+           defined by vendor/clinical-theme.js; restore them (matches live.html/playback.html). */
+        .font-data-sm, .text-data-sm { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 20px; font-weight: 500; font-variant-numeric: tabular-nums; }
+        .font-body-base, .text-body-base { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 24px; font-weight: 400; }
+        .max-w-container-max { max-width: 1280px; }
     </style>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "secondary-fixed": "#9cf0ff",
-                    "on-error-container": "#ffdad6",
-                    "tertiary": "#fffeff",
-                    "on-tertiary-fixed": "#410001",
-                    "on-secondary-container": "#00616d",
-                    "primary": "#fbfffa",
-                    "surface-tint": "#00e1ab",
-                    "on-surface-variant": "#b9cbc1",
-                    "error": "#ffb4ab",
-                    "tertiary-container": "#ffd9d4",
-                    "surface": "#0d1518",
-                    "secondary-fixed-dim": "#00daf3",
-                    "secondary": "#bdf4ff",
-                    "outline-variant": "#3a4a43",
-                    "outline": "#83958c",
-                    "inverse-primary": "#006c50",
-                    "tertiary-fixed": "#ffdad5",
-                    "on-surface": "#dbe4e8",
-                    "inverse-on-surface": "#2a3235",
-                    "surface-variant": "#2e3639",
-                    "on-tertiary-fixed-variant": "#930005",
-                    "primary-fixed-dim": "#00e1ab",
-                    "on-tertiary": "#690003",
-                    "on-error": "#690005",
-                    "surface-container-highest": "#2e3639",
-                    "on-primary-container": "#007255",
-                    "background": "#0d1518",
-                    "inverse-surface": "#dbe4e8",
-                    "on-primary-fixed-variant": "#00513c",
-                    "surface-dim": "#0d1518",
-                    "primary-container": "#00ffc2",
-                    "on-tertiary-container": "#c9090f",
-                    "secondary-container": "#00e3fd",
-                    "surface-container-lowest": "#070f12",
-                    "surface-container-high": "#232b2e",
-                    "on-primary": "#003828",
-                    "on-secondary-fixed": "#001f24",
-                    "tertiary-fixed-dim": "#ffb4aa",
-                    "primary-fixed": "#36ffc4",
-                    "on-primary-fixed": "#002116",
-                    "error-container": "#93000a",
-                    "surface-bright": "#323a3e",
-                    "surface-container": "#192124",
-                    "on-secondary-fixed-variant": "#004f58",
-                    "on-background": "#dbe4e8",
-                    "on-secondary": "#00363d"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "spacing": {
-                    "margin-mobile": "16px",
-                    "margin-desktop": "32px",
-                    "unit": "4px",
-                    "container-max": "1440px",
-                    "gutter": "16px"
-            },
-            "fontFamily": {
-                    "headline-md-mobile": ["Inter"],
-                    "label-caps": ["Inter"],
-                    "data-lg": ["JetBrains Mono"],
-                    "body-base": ["Inter"],
-                    "data-sm": ["JetBrains Mono"],
-                    "headline-md": ["Inter"],
-                    "display-lg": ["Inter"]
-            },
-            "fontSize": {
-                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}],
-                    "data-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.05em", "fontWeight": "500"}],
-                    "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                    "data-sm": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
-            }
-          }
-        }
-      }
-    </script>
 <script src="components.js"></script>
 </head>
 <body class="bg-background text-on-surface font-body-base select-none">
@@ -128,11 +52,11 @@
 <span class="w-1 h-1 bg-primary rounded-full"></span>
             RECORDINGS
         </h2>
-<div id="prune-notice" class="hidden mb-4 p-3 rounded-lg bg-surface-container border border-outline-variant flex items-start justify-between gap-3">
+<div id="prune-notice" class="hidden mb-4 p-3 rounded-lg bg-alert-info-bg border border-alert-info-border flex items-start justify-between gap-3">
 <p id="prune-notice-text" class="font-data-sm text-data-sm text-on-surface-variant"></p>
-<button class="text-on-surface-variant hover:text-on-surface active:scale-95 transition-transform shrink-0" onclick="document.getElementById('prune-notice').classList.add('hidden')">
-<span class="material-symbols-outlined text-[18px]" data-icon="close">close</span>
-</button>
+<button class="font-label-caps text-label-caps text-primary hover:text-primary-focus active:scale-95 transition-transform shrink-0" onclick="document.getElementById('prune-notice').classList.add('hidden')">
+            Dismiss
+        </button>
 </div>
 <div id="recordings-list" class="space-y-4">
     <!-- Loading placeholder -->
@@ -140,9 +64,9 @@
 </div>
 </main>
 <!-- Floating Action Button - Only for Recording History/Home context -->
-<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-40" onclick="window.location.href='live.html'">
-<span class="material-symbols-outlined scale-125" data-icon="add" style="font-variation-settings: 'FILL' 1;">add</span>
-</button>
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-cta flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-40 text-2xl font-bold" onclick="window.location.href='live.html'" aria-label="New recording">
+            +
+        </button>
 <script>
         // mm:ss (or h:mm:ss) from seconds. Falls back to size for old
         // entries recorded before duration was tracked.

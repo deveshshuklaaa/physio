@@ -25,6 +25,72 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { reportPhase, isTerminalPhase } from "@/lib/report_poll.js";
+import { parseMarkdown, splitInline } from "@/lib/markdown.js";
+
+function Inline({ text }) {
+  return splitInline(text).map((s, i) =>
+    s.t === "b" ? (
+      <strong key={i} className="font-semibold text-[var(--color-clin-ink)]">{s.v}</strong>
+    ) : s.t === "i" ? (
+      <em key={i}>{s.v}</em>
+    ) : (
+      s.v
+    )
+  );
+}
+
+function Markdown({ text, ...rest }) {
+  return (
+    <div {...rest} className="flex flex-col gap-3 text-[15px] leading-[24px] text-[var(--color-clin-body)]">
+      {parseMarkdown(text).map((b, i) => {
+        if (b.type === "h") {
+          return (
+            <h3
+              key={i}
+              className="mt-3 text-base font-bold text-[var(--color-clin-heading)] first:mt-0"
+              style={{ fontFamily: "var(--font-heading)" }}
+            >
+              <Inline text={b.text} />
+            </h3>
+          );
+        }
+        if (b.type === "p") {
+          return (
+            <p key={i}>
+              <Inline text={b.text} />
+            </p>
+          );
+        }
+        const List = b.type === "ul" ? "ul" : "ol";
+        return (
+          <List
+            key={i}
+            className={`flex flex-col gap-3 pl-5 ${b.type === "ul" ? "list-disc" : "list-decimal"} marker:text-[var(--color-clin-blue)]`}
+          >
+            {b.items.map((paras, j) => (
+              <li key={j} className="pl-1">
+                {paras.map((p, k) => (
+                  <p
+                    key={k}
+                    className={
+                      k === 0 && paras.length > 1
+                        ? "font-semibold text-[var(--color-clin-ink)]"
+                        : k > 0
+                          ? "mt-1.5"
+                          : undefined
+                    }
+                  >
+                    <Inline text={p} />
+                  </p>
+                ))}
+              </li>
+            ))}
+          </List>
+        );
+      })}
+    </div>
+  );
+}
 
 const params = new URLSearchParams(location.search);
 // G2-A: one origin -- the engine is behind nginx at /engine/*, and :8000 is
@@ -38,12 +104,47 @@ const POLL_MS = 2000;
 // Their SPA's plan route (part2 App.jsx) -- same origin, no token in the URL.
 const PLAN_URL = "/exercise-plan";
 
+// Pill tones map to the design plan's safety hierarchy: green is reserved for
+// a validated, finished report; amber covers provisional/in-progress ML
+// prose and non-urgent failures (never red -- a stalled report is not an
+// acute clinical event); the live "active" state gets the neutral clinical
+// info-blue since it is neither a success nor a warning.
 const PHASE_META = {
-  active: { icon: "●", text: "Session in progress", color: "var(--color-ok)" },
-  generating: { icon: "⏳", text: "Analysing your session…", color: "var(--color-warn)" },
-  done: { icon: "✓", text: "Report ready", color: "var(--color-ok)" },
-  failed: { icon: "⚠", text: "Report failed", color: "var(--color-warn)" },
-  unavailable: { icon: "⚠", text: "Session not found", color: "var(--color-warn)" },
+  active: {
+    icon: "●",
+    text: "Session in progress",
+    bg: "var(--color-clin-info-bg)",
+    border: "var(--color-clin-info-border)",
+    text_color: "var(--color-clin-info-text)",
+  },
+  generating: {
+    icon: "⏳",
+    text: "Analysing your session…",
+    bg: "var(--color-clin-amber-bg)",
+    border: "var(--color-clin-amber-border)",
+    text_color: "var(--color-clin-amber-text)",
+  },
+  done: {
+    icon: "✓",
+    text: "Report ready",
+    bg: "var(--color-clin-green-bg)",
+    border: "var(--color-clin-green-border)",
+    text_color: "var(--color-clin-green-text)",
+  },
+  failed: {
+    icon: "⚠",
+    text: "Report failed",
+    bg: "var(--color-clin-amber-bg)",
+    border: "var(--color-clin-amber-border)",
+    text_color: "var(--color-clin-amber-text)",
+  },
+  unavailable: {
+    icon: "⚠",
+    text: "Session not found",
+    bg: "var(--color-clin-amber-bg)",
+    border: "var(--color-clin-amber-border)",
+    text_color: "var(--color-clin-amber-text)",
+  },
 };
 
 function StatePill({ phase }) {
@@ -52,8 +153,8 @@ function StatePill({ phase }) {
     <span
       data-testid="report-phase"
       data-phase={phase}
-      className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm"
-      style={{ borderColor: meta.color, color: meta.color }}
+      className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium"
+      style={{ background: meta.bg, borderColor: meta.border, color: meta.text_color }}
     >
       <span aria-hidden>{meta.icon}</span>
       <span>{meta.text}</span>
@@ -125,17 +226,24 @@ export default function Report() {
   const report = (session && session.clinical && session.clinical.report) || {};
 
   return (
-    <div className="flex h-screen w-screen flex-col overflow-hidden bg-surface">
-      <header className="flex shrink-0 items-center justify-between border-b border-line px-8 py-4">
+    <div
+      className="flex h-screen w-screen flex-col overflow-hidden bg-[var(--color-clin-canvas)] text-[var(--color-clin-ink)]"
+      style={{ fontFamily: "var(--font-body)" }}
+    >
+      <header className="flex shrink-0 items-center justify-between border-b border-[var(--color-clin-border)] bg-[var(--color-clin-card)] px-8 py-4">
         <div className="flex items-baseline gap-4">
-          <h1 className="text-2xl font-bold">Session Report</h1>
-          <span className="num text-sm text-ink-dim">{SESSION_ID || "no session"}</span>
+          <h1
+            className="text-2xl font-bold tracking-tight text-[var(--color-clin-heading)]"
+            style={{ fontFamily: "var(--font-heading)" }}
+          >
+            Session Report
+          </h1>
+
         </div>
         <div className="flex items-center gap-3">
           <StatePill phase={phase} />
           <Button
-            className="rounded-lg px-6 py-2.5 text-base font-semibold"
-            style={{ background: "var(--color-surface-2)", color: "var(--color-ink)" }}
+            className="h-11 rounded-xl border border-[var(--color-clin-border)] bg-white px-6 text-base font-semibold text-[var(--color-clin-ink)] shadow-none hover:bg-[var(--color-clin-canvas)] focus-visible:ring-[3px] focus-visible:ring-[var(--color-clin-blue-ring)]"
             onClick={() => (location.href = PLAN_URL)}
           >
             Back to your plan
@@ -145,8 +253,12 @@ export default function Report() {
 
       {fetchError && (
         <div
-          className="shrink-0 border-b border-line px-8 py-2 text-[15px]"
-          style={{ color: "var(--color-warn)" }}
+          className="shrink-0 border-b px-8 py-2 text-[15px]"
+          style={{
+            color: "var(--color-clin-amber-text)",
+            background: "var(--color-clin-amber-bg)",
+            borderColor: "var(--color-clin-amber-border)",
+          }}
         >
           <span aria-hidden>⚠</span> {fetchError}
         </div>
@@ -158,34 +270,57 @@ export default function Report() {
             report is async and may still be generating or may fail). */}
         <section
           data-testid="summary-panel"
-          className="flex flex-col gap-3 rounded-[14px] border border-line bg-surface-1 p-6"
+          className="flex flex-col gap-4 rounded-2xl border border-[var(--color-clin-blue)] bg-[var(--color-clin-blue)] p-6 shadow-[0_10px_15px_-3px_rgba(37,99,235,0.12),0_4px_6px_-4px_rgba(37,99,235,0.08)]"
+            style={{color:"#B2CFD3"}}
         >
-          <h2 className="text-xl font-semibold">Session summary</h2>
+          <h2
+            className="text-lg font-semibold text-white"
+            style={{ fontFamily: "var(--font-heading)" }}
+          >
+            Session summary
+          </h2>
           {session ? (
-            <div className="flex gap-8 text-[15px]">
-              <div>
-                <div className="text-ink-dim">Exercise</div>
-                <div className="num text-lg font-semibold">{session.engineExercise || "—"}</div>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="rounded-xl border border-[var(--color-clin-border)] bg-[var(--color-clin-canvas)] p-4">
+                <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-clin-muted)]">
+                  Exercise
+                </div>
+                <div className="mt-1 text-[15px] font-bold tabular-nums text-[var(--color-clin-ink)]">
+                  {session.engineExercise || "—"}
+                </div>
               </div>
-              <div>
-                <div className="text-ink-dim">Reps</div>
-                <div className="num text-lg font-semibold">{session.repCount ?? "—"}</div>
+              <div className="rounded-xl border border-[var(--color-clin-border)] bg-[var(--color-clin-canvas)] p-4">
+                <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-clin-muted)]">
+                  Reps
+                </div>
+                <div className="mt-1 text-[15px] font-bold tabular-nums text-[var(--color-clin-ink)]">
+                  {session.repCount ?? "—"}
+                </div>
               </div>
-              <div>
-                <div className="text-ink-dim">Clean reps</div>
-                <div className="num text-lg font-semibold">{session.cleanReps ?? "—"}</div>
+              <div className="rounded-xl border border-[var(--color-clin-border)] bg-[var(--color-clin-canvas)] p-4">
+                <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-clin-muted)]">
+                  Clean reps
+                </div>
+                <div className="mt-1 text-[15px] font-bold tabular-nums text-[var(--color-clin-ink)]">
+                  {session.cleanReps ?? "—"}
+                </div>
               </div>
             </div>
           ) : phase === "unavailable" ? (
-            <p className="text-[15px] text-ink-dim">This session could not be found.</p>
+            <p className="text-[15px] text-white">This session could not be found.</p>
           ) : (
             // The row is still on its way. Show the shape of what is coming
             // rather than a bare word, so the page does not look stalled.
-            <div data-testid="summary-skeleton" className="flex gap-8">
+            <div data-testid="summary-skeleton" className="grid grid-cols-3 gap-3">
               {["Exercise", "Reps", "Clean reps"].map((label) => (
-                <div key={label} className="flex flex-col gap-2">
-                  <div className="text-ink-dim text-[15px]">{label}</div>
-                  <Skeleton className="h-6 w-24" />
+                <div
+                  key={label}
+                  className="flex flex-col gap-2 rounded-xl border border-[var(--color-clin-border)] bg-[var(--color-clin-canvas)] p-4"
+                >
+                  <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-clin-muted)]">
+                    {label}
+                  </div>
+                  <Skeleton className="h-6 w-24 bg-[var(--color-clin-border)]" />
                 </div>
               ))}
             </div>
@@ -196,19 +331,26 @@ export default function Report() {
             a diagnosis, not a model assessment (§8). */}
         <section
           data-testid="notes-panel"
-          className="flex min-h-0 flex-1 flex-col gap-3 overflow-auto rounded-[14px] border border-line bg-surface-1 p-6"
+          className="flex min-h-0 flex-1 flex-col gap-3 overflow-auto rounded-2xl border border-[var(--color-clin-border)] bg-[var(--color-clin-card)] p-6 shadow-[0_1px_3px_0_rgba(0,0,0,0.05),0_1px_2px_-1px_rgba(0,0,0,0.05)]"
         >
-          <h2 className="text-xl font-semibold">Coaching notes</h2>
+          <h2
+            className="text-lg font-semibold text-[var(--color-clin-ink)]"
+            style={{ fontFamily: "var(--font-heading)" }}
+          >
+            Coaching notes
+          </h2>
           {phase === "done" && (
-            <p data-testid="report-text" className="whitespace-pre-wrap text-[15px]">
-              {report.text}
-            </p>
+            <Markdown data-testid="report-text" text={report.text} />
           )}
           {phase === "generating" && (
             <div data-testid="notes-skeleton" className="flex flex-col gap-4">
               <div
-                className="flex items-center gap-2 text-[15px]"
-                style={{ color: "var(--color-warn)" }}
+                className="flex items-center gap-2 rounded-xl border px-4 py-3 text-[15px]"
+                style={{
+                  color: "var(--color-clin-amber-text)",
+                  background: "var(--color-clin-amber-bg)",
+                  borderColor: "var(--color-clin-amber-border)",
+                }}
               >
                 <span aria-hidden>⏳</span>
                 <span>Writing your coaching notes… this usually takes a few seconds.</span>
@@ -217,18 +359,22 @@ export default function Report() {
                   each a heading and a couple of lines. */}
               {[0, 1, 2, 3].map((i) => (
                 <div key={i} className="flex flex-col gap-2">
-                  <Skeleton className="h-5 w-48" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-[92%]" />
-                  {i === 0 && <Skeleton className="h-4 w-[70%]" />}
+                  <Skeleton className="h-5 w-48 bg-[var(--color-clin-border)]" />
+                  <Skeleton className="h-4 w-full bg-[var(--color-clin-border)]" />
+                  <Skeleton className="h-4 w-[92%] bg-[var(--color-clin-border)]" />
+                  {i === 0 && <Skeleton className="h-4 w-[70%] bg-[var(--color-clin-border)]" />}
                 </div>
               ))}
             </div>
           )}
           {phase === "failed" && (
             <div
-              className="flex items-center gap-2 rounded-lg border border-line px-4 py-3 text-[15px]"
-              style={{ color: "var(--color-warn)" }}
+              className="flex items-center gap-2 rounded-xl border px-4 py-3 text-[15px]"
+              style={{
+                color: "var(--color-clin-amber-text)",
+                background: "var(--color-clin-amber-bg)",
+                borderColor: "var(--color-clin-amber-border)",
+              }}
             >
               <span aria-hidden>⚠</span>
               <span>
@@ -242,12 +388,12 @@ export default function Report() {
             </div>
           )}
           {phase === "active" && (
-            <p className="text-[15px] text-ink-dim">
+            <p className="text-[15px] text-[var(--color-clin-body)]">
               Notes appear once the session ends.
             </p>
           )}
           {phase === "unavailable" && !session && (
-            <p className="text-[15px] text-ink-dim">—</p>
+            <p className="text-[15px] text-[var(--color-clin-body)]">—</p>
           )}
         </section>
       </main>

@@ -1,108 +1,30 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
+<html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Clinical Kinetic EMG - Progress</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="vendor/tailwind/tailwind.js"></script>
+<script src="vendor/clinical-theme.js"></script>
+<link rel="stylesheet" href="vendor/clinical.css">
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
+        /* Custom font-size/family keys from the removed dark tailwind-config
+           aren't defined by vendor/clinical-theme.js; restore them here so
+           both static markup and JS-generated stat tiles / table keep proper
+           typography (see live.html / playback.html for the same fix). */
+        .font-data-sm, .text-data-sm { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 20px; font-weight: 500; font-variant-numeric: tabular-nums; }
+        .font-data-lg, .text-data-lg { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; line-height: 40px; letter-spacing: -0.02em; font-weight: 600; font-variant-numeric: tabular-nums; }
+        .font-body-base, .text-body-base { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 24px; font-weight: 400; }
+        .max-w-container-max { max-width: 1280px; }
+        /* Static table header row + JS-built table rows still use border-outline-variant
+           (clinical-theme.js maps it to an old Stitch token); remap to the plan's
+           hairline border. */
+        .border-outline-variant, .border-outline-variant\/50 { border-color: #E2E8F0 !important; }
     </style>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "secondary-fixed": "#9cf0ff",
-                    "on-error-container": "#ffdad6",
-                    "tertiary": "#fffeff",
-                    "on-tertiary-fixed": "#410001",
-                    "on-secondary-container": "#00616d",
-                    "primary": "#fbfffa",
-                    "surface-tint": "#00e1ab",
-                    "on-surface-variant": "#b9cbc1",
-                    "error": "#ffb4ab",
-                    "tertiary-container": "#ffd9d4",
-                    "surface": "#0d1518",
-                    "secondary-fixed-dim": "#00daf3",
-                    "secondary": "#bdf4ff",
-                    "outline-variant": "#3a4a43",
-                    "outline": "#83958c",
-                    "inverse-primary": "#006c50",
-                    "tertiary-fixed": "#ffdad5",
-                    "on-surface": "#dbe4e8",
-                    "inverse-on-surface": "#2a3235",
-                    "surface-variant": "#2e3639",
-                    "on-tertiary-fixed-variant": "#930005",
-                    "primary-fixed-dim": "#00e1ab",
-                    "on-tertiary": "#690003",
-                    "on-error": "#690005",
-                    "surface-container-highest": "#2e3639",
-                    "on-primary-container": "#007255",
-                    "background": "#0d1518",
-                    "inverse-surface": "#dbe4e8",
-                    "on-primary-fixed-variant": "#00513c",
-                    "surface-dim": "#0d1518",
-                    "primary-container": "#00ffc2",
-                    "on-tertiary-container": "#c9090f",
-                    "secondary-container": "#00e3fd",
-                    "surface-container-lowest": "#070f12",
-                    "surface-container-high": "#232b2e",
-                    "on-primary": "#003828",
-                    "on-secondary-fixed": "#001f24",
-                    "tertiary-fixed-dim": "#ffb4aa",
-                    "primary-fixed": "#36ffc4",
-                    "on-primary-fixed": "#002116",
-                    "error-container": "#93000a",
-                    "surface-bright": "#323a3e",
-                    "surface-container": "#192124",
-                    "on-secondary-fixed-variant": "#004f58",
-                    "on-background": "#dbe4e8",
-                    "on-secondary": "#00363d"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "spacing": {
-                    "margin-mobile": "16px",
-                    "margin-desktop": "32px",
-                    "unit": "4px",
-                    "container-max": "1440px",
-                    "gutter": "16px"
-            },
-            "fontFamily": {
-                    "headline-md-mobile": ["Inter"],
-                    "label-caps": ["Inter"],
-                    "data-lg": ["JetBrains Mono"],
-                    "body-base": ["Inter"],
-                    "data-sm": ["JetBrains Mono"],
-                    "headline-md": ["Inter"],
-                    "display-lg": ["Inter"]
-            },
-            "fontSize": {
-                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}],
-                    "data-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.05em", "fontWeight": "500"}],
-                    "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                    "data-sm": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
-            }
-          }
-        }
-      }
-    </script>
 <script src="components.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="vendor/chartjs/chart.umd.min.js"></script>
+<script src="vendor/chartjs/chartjs-adapter-date-fns.bundle.min.js"></script>
 </head>
-<body class="bg-background text-on-surface font-body-base select-none">
+<body class="bg-surface-canvas text-on-surface font-body-base select-none">
 <emg-nav active="progress"></emg-nav>
 <main class="flex-1 px-margin-mobile py-6 max-w-container-max mx-auto w-full">
 
@@ -135,15 +57,15 @@
 
 <!-- Line / scatter charts -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<div class="bg-surface-card rounded-lg border border-metric shadow-card p-4">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">PEAK AMPLITUDE</h3>
 <div class="h-64"><canvas id="chart-peak"></canvas></div>
 </div>
-<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<div class="bg-surface-card rounded-lg border border-metric shadow-card p-4">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">RMS &amp; STRENGTH</h3>
 <div class="h-64"><canvas id="chart-rms-strength"></canvas></div>
 </div>
-<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<div class="bg-surface-card rounded-lg border border-metric shadow-card p-4">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">RANGE OF MOTION</h3>
 <div class="h-64"><canvas id="chart-rom"></canvas></div>
 </div>
@@ -151,22 +73,22 @@
 
 <!-- Bucketed bar charts -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<div class="bg-surface-card rounded-lg border border-metric shadow-card p-4">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">CONTRACTION RATE</h3>
 <div class="h-64"><canvas id="chart-rate"></canvas></div>
 </div>
-<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<div class="bg-surface-card rounded-lg border border-metric shadow-card p-4">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">LATENCY</h3>
 <div class="h-64"><canvas id="chart-latency"></canvas></div>
 </div>
-<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<div class="bg-surface-card rounded-lg border border-metric shadow-card p-4">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">GYRO MAGNITUDE</h3>
 <div class="h-64"><canvas id="chart-gyro"></canvas></div>
 </div>
 </div>
 
 <!-- Table -->
-<details class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<details class="bg-surface-card rounded-lg border border-metric shadow-card p-4">
 <summary class="cursor-pointer font-label-caps text-label-caps text-on-surface-variant">ALL RECORDS</summary>
 <div class="overflow-x-auto mt-3">
 <table id="records-table" class="w-full text-left font-data-sm text-data-sm whitespace-nowrap">
@@ -248,12 +170,12 @@ function bucketLabel(d, bucket) {
 // Palette (validated: node scripts/validate_palette.js "#3987e5,#d95926"
 // --mode dark --surface "#0d1518" -> ALL CHECKS PASS)
 // =====================================================================
-const SURFACE = '#0d1518';
-const GRID = '#3a4a43';        // outline-variant
-const TEXT = '#b9cbc1';        // on-surface-variant
-const ACCENT = '#00e1ab';      // primary-fixed-dim, single-series brand accent
-const SERIES_1 = '#3987e5';    // categorical slot 1 (dark)
-const SERIES_2 = '#d95926';    // categorical slot 2 (dark)
+const SURFACE = '#FFFFFF';
+const GRID = '#E2E8F0';        // border-metric
+const TEXT = '#64748B';        // muted slate
+const ACCENT = '#2563EB';      // primary, single-series brand accent
+const SERIES_1 = '#2563EB';    // categorical slot 1 (light)
+const SERIES_2 = '#B45309';    // categorical slot 2 (light, amber)
 
 Chart.defaults.color = TEXT;
 Chart.defaults.borderColor = GRID;
@@ -485,7 +407,7 @@ function renderStatTiles() {
   STAT_DEFS.forEach((def) => {
     const points = records.map((r) => ({ v: def.get(r) })).filter((p) => p.v != null).map((p) => p.v);
     const tile = document.createElement('div');
-    tile.className = 'bg-surface-container-low rounded-xl border border-outline-variant p-3';
+    tile.className = 'bg-surface-card rounded-lg border border-metric shadow-card p-3';
     if (!points.length) {
       tile.innerHTML = `
         <p class="font-label-caps text-label-caps text-on-surface-variant mb-1">${def.label}</p>
@@ -497,14 +419,13 @@ function renderStatTiles() {
     const latest = points[points.length - 1];
     const first = points[0];
     const delta = latest - first;
-    const dir = delta > 0 ? 'trending_up' : (delta < 0 ? 'trending_down' : 'trending_flat');
     const deltaText = `${delta >= 0 ? '+' : ''}${delta.toFixed(2)} ${def.unit}`;
     const path = buildSparklinePath(points.slice(-20));
     tile.innerHTML = `
       <p class="font-label-caps text-label-caps text-on-surface-variant mb-1">${def.label}</p>
       <p class="font-data-lg text-data-lg text-on-surface">${latest.toFixed(2)}<span class="text-data-sm text-on-surface-variant"> ${def.unit}</span></p>
       <p class="flex items-center gap-1 font-data-sm text-data-sm text-on-surface-variant">
-        <span class="material-symbols-outlined text-[14px]">${dir}</span>${deltaText}
+        ${deltaText}
       </p>
       <svg class="w-full h-8 mt-1" viewBox="0 0 100 40" preserveAspectRatio="none">
         <path d="${path}" stroke="${ACCENT}" stroke-width="1.5" fill="none"/>

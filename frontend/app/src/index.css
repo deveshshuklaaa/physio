@@ -27,6 +27,43 @@
 
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Report-page-only light theme tokens (Clinical Hematology Care design
+     plan). Namespaced "clin-" and additive only -- ExerciseSelect never
+     references these, so it renders identically. Used exclusively via
+     classNames/inline styles inside src/pages/Report.jsx. */
+  --font-heading: "Plus Jakarta Sans", "Inter", ui-sans-serif, sans-serif;
+
+  --color-clin-canvas: #f8fafc;
+  --color-clin-card: #ffffff;
+  --color-clin-border: #e2e8f0;
+  --color-clin-border-soft: #f1f5f9;
+  --color-clin-ink: #0f172a;
+  --color-clin-heading: #1e40af;
+  --color-clin-body: #475569;
+  --color-clin-muted: #64748b;
+  --color-clin-placeholder: #94a3b8;
+
+  --color-clin-blue: #2563eb;
+  --color-clin-blue-hover: #1d4ed8;
+  --color-clin-blue-active: #1e40af;
+  --color-clin-blue-ring: #bfdbfe;
+
+  --color-clin-green-bg: #dcfce7;
+  --color-clin-green-border: #bbf7d0;
+  --color-clin-green-text: #16a34a;
+
+  --color-clin-amber-bg: #fef3c7;
+  --color-clin-amber-border: #fde68a;
+  --color-clin-amber-text: #b45309;
+
+  --color-clin-info-bg: #f0f9ff;
+  --color-clin-info-border: #bae6fd;
+  --color-clin-info-text: #0369a1;
+
+  --color-clin-danger-bg: #fef2f2;
+  --color-clin-danger-border: #fecaca;
+  --color-clin-danger-text: #b91c1c;
 }
 
 @layer base {

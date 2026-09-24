@@ -1,116 +1,52 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
+<html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>NEUROSCAN EMG - High-Fidelity Playback</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container-lowest": "#070f12",
-                        "surface-container": "#192124",
-                        "on-secondary-fixed-variant": "#004f58",
-                        "on-primary-fixed-variant": "#00513c",
-                        "inverse-primary": "#006c50",
-                        "on-surface-variant": "#b9cbc1",
-                        "on-surface": "#dbe4e8",
-                        "on-secondary-container": "#00616d",
-                        "inverse-on-surface": "#2a3235",
-                        "tertiary-fixed-dim": "#ffb4aa",
-                        "on-background": "#dbe4e8",
-                        "secondary-fixed": "#9cf0ff",
-                        "on-error": "#690005",
-                        "secondary-container": "#00e3fd",
-                        "tertiary-fixed": "#ffdad5",
-                        "tertiary-container": "#ffd9d4",
-                        "surface-variant": "#2e3639",
-                        "on-tertiary-container": "#c9090f",
-                        "outline": "#83958c",
-                        "error-container": "#93000a",
-                        "tertiary": "#fffeff",
-                        "inverse-surface": "#dbe4e8",
-                        "on-secondary-fixed": "#001f24",
-                        "surface": "#0d1518",
-                        "surface-dim": "#0d1518",
-                        "primary-fixed-dim": "#00e1ab",
-                        "on-tertiary-fixed": "#410001",
-                        "secondary": "#bdf4ff",
-                        "on-error-container": "#ffdad6",
-                        "on-primary-fixed": "#002116",
-                        "surface-container-highest": "#2e3639",
-                        "surface-container-high": "#232b2e",
-                        "surface-bright": "#323a3e",
-                        "on-secondary": "#00363d",
-                        "on-tertiary": "#690003",
-                        "primary-fixed": "#36ffc4",
-                        "surface-container-low": "#151d20",
-                        "surface-tint": "#00e1ab",
-                        "background": "#0d1518",
-                        "primary": "#fbfffa",
-                        "outline-variant": "#3a4a43",
-                        "primary-container": "#00ffc2",
-                        "error": "#ffb4ab",
-                        "secondary-fixed-dim": "#00daf3",
-                        "on-primary-container": "#007255",
-                        "on-tertiary-fixed-variant": "#930005",
-                        "on-primary": "#003828"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "gutter": "16px",
-                        "margin-mobile": "16px",
-                        "container-max": "1440px",
-                        "unit": "4px",
-                        "margin-desktop": "32px"
-                    },
-                    "fontFamily": {
-                        "label-caps": ["Inter"],
-                        "headline-md-mobile": ["Inter"],
-                        "display-lg": ["Inter"],
-                        "headline-md": ["Inter"],
-                        "data-sm": ["JetBrains Mono"],
-                        "data-lg": ["JetBrains Mono"],
-                        "body-base": ["Inter"]
-                    },
-                    "fontSize": {
-                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}],
-                        "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "data-sm": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
-                        "data-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.05em", "fontWeight": "500"}],
-                        "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
-                    }
-                }
-            }
-        }
-    </script>
+<script src="vendor/tailwind/tailwind.js"></script>
+<script src="vendor/clinical-theme.js"></script>
+<link rel="stylesheet" href="vendor/clinical.css">
 <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         .emg-grid {
             background-image:
-                linear-gradient(to right, rgba(58, 74, 67, 0.2) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(58, 74, 67, 0.2) 1px, transparent 1px);
+                linear-gradient(to right, rgba(226, 232, 240, 0.7) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(226, 232, 240, 0.7) 1px, transparent 1px);
             background-size: 40px 40px;
         }
         .glow-primary {
-            box-shadow: 0 0 20px rgba(0, 225, 171, 0.15);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.12), 0 4px 6px -4px rgba(37, 99, 235, 0.08);
         }
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
+        }
+        /* Light-theme remap for dark-scheme accent tokens still referenced by
+           inline JS (classList add/remove and innerHTML templates we cannot
+           edit — see hard constraint 3 in the restyle brief). */
+        .text-primary-fixed-dim { color: #1D4ED8 !important; }
+        .bg-primary-fixed-dim { background-color: #2563EB !important; }
+        .border-primary-fixed-dim { border-color: #2563EB !important; }
+        /* Custom font-size/family keys from the removed dark tailwind-config
+           aren't defined by vendor/clinical-theme.js; restore them here so
+           both static markup and JS-generated rows keep proper typography. */
+        .font-data-sm, .text-data-sm { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 20px; font-weight: 500; font-variant-numeric: tabular-nums; }
+        .font-data-lg, .text-data-lg { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; line-height: 40px; letter-spacing: -0.02em; font-weight: 600; font-variant-numeric: tabular-nums; }
+        .font-body-base, .text-body-base { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 24px; font-weight: 400; }
+        .max-w-container-max { max-width: 1280px; }
+        /* Play/pause and annotation-edit controls now show plain words
+           ("Play"/"Pause"/"Edit") instead of Material Symbols ligatures —
+           reset the icon-font styling on just those spans so they read as
+           text buttons instead of literal ligature names. */
+        #playPauseBtn .material-symbols-outlined,
+        .edit-ann.material-symbols-outlined {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: normal;
+            font-variation-settings: normal;
         }
         .waveform-trace {
             stroke-dasharray: 2000;
@@ -137,7 +73,7 @@
   </style>
 <script src="components.js"></script>
   </head>
-<body class="bg-background text-on-background min-h-screen flex flex-col font-body-base antialiased">
+<body class="bg-surface-canvas text-[#0F172A] min-h-screen flex flex-col font-body-base antialiased">
 <emg-nav active="playback"></emg-nav>
 <main class="flex-1 overflow-y-auto">
 <div class="max-w-container-max mx-auto p-4 lg:p-8 space-y-6">
@@ -147,18 +83,14 @@
 <span class="font-data-sm text-data-sm text-primary-fixed-dim" id="sourceFileName">unknown.bin</span>
 </div>
 <!-- No Recording Selected Notice -->
-<div class="hidden bg-surface-container-low rounded-lg border border-outline-variant px-4 py-3 flex items-center gap-3" id="noFileNotice">
-<span class="material-symbols-outlined text-primary-fixed-dim">history</span>
+<div class="hidden bg-surface-card rounded-lg border border-[#E2E8F0] shadow-card px-4 py-3 flex items-center gap-3" id="noFileNotice">
 <div>
 <span class="font-label-caps text-label-caps text-on-surface-variant block">NO RECORDING SELECTED</span>
 <span class="font-data-sm text-data-sm text-primary-fixed-dim">Returning to History…</span>
 </div>
 </div>
 <!-- EMG Waveform Chart Section -->
-<section class="bg-surface-container rounded-xl border border-outline-variant relative overflow-hidden h-[400px] flex flex-col">
-<div class="absolute top-4 left-4 z-10">
-<span class="font-label-caps text-label-caps text-on-surface-variant bg-surface/80 px-2 py-1 rounded">EMG SIGNAL | PLAYBACK</span>
-</div>
+<section class="bg-surface-card rounded-lg border border-[#E2E8F0] shadow-card relative overflow-hidden h-[400px] flex flex-col">
 <!-- Chart Canvas Area -->
 <div class="flex-1 relative emg-grid overflow-hidden">
 <!-- Y-Axis Labels -->
@@ -172,7 +104,7 @@
 <!-- Waveform Canvas -->
 <canvas class="w-full h-full" id="waveformCanvas"></canvas>
 <!-- Playback Scrubber Line (fixed center) -->
-<div class="absolute inset-y-0 left-1/2 w-px bg-primary-fixed shadow-[0_0_8px_#00e1ab] z-20" id="playheadLine"></div>
+<div class="absolute inset-y-0 left-1/2 w-px bg-[#2563EB] shadow-[0_0_8px_rgba(37,99,235,0.5)] z-20" id="playheadLine"></div>
 </div>
 <!-- X-Axis Label -->
 <div class="h-8 border-t border-outline-variant flex items-center justify-between px-4 font-data-sm text-[10px] text-outline">
@@ -187,50 +119,50 @@
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 <!-- Left: Time & Source Stats -->
 <div class="lg:col-span-4 space-y-6">
-<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant">
+<div class="bg-surface-card p-6 rounded-lg border border-[#E2E8F0] shadow-card" style="zoom: 0.8">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4">CURRENT TIMESTAMP</h3>
 <div class="font-data-lg text-data-lg text-primary-fixed-dim tracking-tight" id="currentTimestamp">00:00:00.000</div>
 <div class="mt-4 pt-4 border-t border-outline-variant/30 grid grid-cols-2 gap-4">
 <div>
-<span class="block font-label-caps text-[9px] text-outline">SAMPLING RATE</span>
+<span class="block font-label-caps text-[15px] text-outline">SAMPLING RATE</span>
 <span class="font-data-sm text-data-sm" id="samplingRate">— Hz</span>
 </div>
 <div>
-<span class="block font-label-caps text-[9px] text-outline">TOTAL DURATION</span>
+<span class="block font-label-caps text-[15px] text-outline">TOTAL DURATION</span>
 <span class="font-data-sm text-data-sm" id="totalDuration">—</span>
 </div>
 <div class="col-span-2">
-<span class="block font-label-caps text-[9px] text-outline">CALIBRATION</span>
+<span class="block font-label-caps text-[15px] text-outline">CALIBRATION</span>
 <span class="font-data-sm text-data-sm" id="calibration">—</span>
 </div>
 </div>
 </div>
 <!-- Post-Session Analysis -->
-<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant">
+<div class="bg-surface-card p-6 rounded-lg border border-[#E2E8F0] shadow-card">
 <div class="flex items-center justify-between mb-4">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant">SESSION ANALYSIS</h3>
-<span class="font-label-caps text-[9px] text-outline" id="metricsUnits">—</span>
+<span class="font-label-caps text-[15px] text-outline" id="metricsUnits">—</span>
 </div>
 <div class="grid grid-cols-2 gap-4">
 <div>
-<span class="block font-label-caps text-[9px] text-outline">RMS AMPLITUDE</span>
+<span class="block font-label-caps text-[15px] text-outline">RMS AMPLITUDE</span>
 <span class="font-data-sm text-data-sm text-primary-fixed-dim" id="metricRms">—</span>
 </div>
 <div>
-<span class="block font-label-caps text-[9px] text-outline">PEAK AMPLITUDE</span>
+<span class="block font-label-caps text-[15px] text-outline">PEAK AMPLITUDE</span>
 <span class="font-data-sm text-data-sm text-primary-fixed-dim" id="metricPeak">—</span>
 </div>
 <div>
-<span class="block font-label-caps text-[9px] text-outline">CONTRACTIONS</span>
+<span class="block font-label-caps text-[15px] text-outline">CONTRACTIONS</span>
 <span class="font-data-sm text-data-sm text-primary-fixed-dim" id="metricCount">—</span>
 </div>
 <div>
-<span class="block font-label-caps text-[9px] text-outline">MEAN LATENCY</span>
+<span class="block font-label-caps text-[15px] text-outline">MEAN LATENCY</span>
 <span class="font-data-sm text-data-sm text-primary-fixed-dim" id="metricLatency">—</span>
 </div>
 </div>
 <div class="mt-4 pt-4 border-t border-outline-variant/30">
-<div class="flex justify-between font-label-caps text-[9px] text-outline mb-1">
+<div class="flex justify-between font-label-caps text-[15px] text-outline mb-1">
 <span>#</span><span>START</span><span>DUR</span><span>RMS</span><span>PEAK</span><span>LAT→</span>
 </div>
 <div class="max-h-[160px] overflow-y-auto scrollbar-hide divide-y divide-outline-variant/20" id="contractionList">
@@ -239,15 +171,15 @@
 </div>
 </div>
 <!-- Time Scale Zoom -->
-<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant">
+<div class="bg-surface-card p-6 rounded-lg border border-[#E2E8F0] shadow-card">
 <div class="flex items-center justify-between mb-4">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant">TIME SCALE</h3>
 <div class="flex gap-2">
-<button class="p-1.5 bg-surface-variant hover:bg-primary-container/20 rounded transition-colors" id="zoomOutBtn">
-<span class="material-symbols-outlined text-sm">zoom_out</span>
+<button class="px-3 py-1.5 min-h-[44px] bg-surface-variant hover:bg-primary-container/20 rounded-md font-label-caps text-label-caps text-[#334155] transition-colors" id="zoomOutBtn">
+Zoom out
 </button>
-<button class="p-1.5 bg-surface-variant hover:bg-primary-container/20 rounded transition-colors" id="zoomInBtn">
-<span class="material-symbols-outlined text-sm">zoom_in</span>
+<button class="px-3 py-1.5 min-h-[44px] bg-surface-variant hover:bg-primary-container/20 rounded-md font-label-caps text-label-caps text-[#334155] transition-colors" id="zoomInBtn">
+Zoom in
 </button>
 </div>
 </div>
@@ -261,21 +193,21 @@
 </div>
 </div>
 <!-- Center: Playback Controls -->
-<div class="lg:col-span-4 flex flex-col items-center justify-center space-y-8 bg-surface-container-high rounded-xl border border-outline-variant p-8">
-<div class="flex items-center gap-8">
-<button class="group p-4 hover:bg-surface-variant/50 rounded-full transition-all active:scale-90" id="rewindBtn">
-<span class="material-symbols-outlined text-primary-fixed-dim text-3xl group-hover:scale-110 transition-transform">replay_10</span>
+<div class="lg:col-span-4 self-start flex flex-col items-center justify-center space-y-6 bg-surface-card rounded-lg border border-[#E2E8F0] shadow-card p-6">
+<div class="flex items-center gap-6">
+<button class="group flex flex-col items-center justify-center p-4 min-w-[48px] min-h-[48px] hover:bg-surface-variant/50 rounded-full transition-all active:scale-90 font-label-caps text-label-caps text-primary-fixed-dim group-hover:scale-110" id="rewindBtn">
+&minus;10s
 </button>
-<button class="relative w-24 h-24 bg-primary-fixed-dim rounded-full flex items-center justify-center active:scale-95 duration-150 shadow-[0_0_30px_rgba(0,225,171,0.3)]" id="playPauseBtn">
-<span class="material-symbols-outlined text-on-primary text-5xl" style="font-variation-settings: 'FILL' 1;">pause</span>
+<button class="relative min-h-[48px] px-8 py-3 rounded-xl bg-primary-container flex items-center justify-center active:scale-95 duration-150 shadow-cta" id="playPauseBtn">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">Play</span>
 </button>
-<button class="group p-4 hover:bg-surface-variant/50 rounded-full transition-all active:scale-90" id="forwardBtn">
-<span class="material-symbols-outlined text-primary-fixed-dim text-3xl group-hover:scale-110 transition-transform">forward_10</span>
+<button class="group flex flex-col items-center justify-center p-4 min-w-[48px] min-h-[48px] hover:bg-surface-variant/50 rounded-full transition-all active:scale-90 font-label-caps text-label-caps text-primary-fixed-dim group-hover:scale-110" id="forwardBtn">
++10s
 </button>
 </div>
 <div class="w-full space-y-3">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant text-center">PLAYBACK SPEED</h3>
-<div class="flex bg-surface-container rounded-lg p-1 border border-outline-variant">
+<div class="flex bg-surface-card rounded-lg p-1 border border-[#E2E8F0]">
 <button class="flex-1 py-2 font-data-sm text-data-sm rounded-md hover:bg-surface-variant transition-colors text-on-surface-variant speed-btn" data-speed="0.5">0.5x</button>
 <button class="flex-1 py-2 font-data-sm text-data-sm rounded-md bg-primary-container/20 text-primary-fixed-dim speed-btn" data-speed="1.0">1.0x</button>
 <button class="flex-1 py-2 font-data-sm text-data-sm rounded-md hover:bg-surface-variant transition-colors text-on-surface-variant speed-btn" data-speed="2.0">2.0x</button>
@@ -283,8 +215,8 @@
 </div>
 </div>
 <!-- Right: Annotations & Markers -->
-<div class="lg:col-span-4 bg-surface-container-low rounded-xl border border-outline-variant flex flex-col">
-<div class="p-4 border-b border-outline-variant flex items-center justify-between">
+<div class="lg:col-span-4 bg-surface-card rounded-lg border border-[#E2E8F0] shadow-card flex flex-col">
+<div class="p-4 border-b border-[#E2E8F0] flex items-center justify-between">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant">ANNOTATIONS</h3>
 <button class="text-primary-fixed-dim hover:underline font-label-caps text-[10px]" id="addMarkerBtn">ADD MARKER</button>
 </div>
@@ -529,7 +461,7 @@
             // numbers on the left can be seen against the actual waveform.
             if (metrics && metrics.contractions) {
                 const pxPerSample = width / (endIdx - startIdx);
-                ctx.fillStyle = 'rgba(0, 225, 171, 0.10)';
+                ctx.fillStyle = 'rgba(37, 99, 235, 0.08)';
                 for (const c of metrics.contractions) {
                     const cs = c.start_s * sampleRate;
                     const ce = c.end_s * sampleRate;
@@ -541,7 +473,7 @@
             }
 
             // Grid lines
-            ctx.strokeStyle = '#3a4a43';
+            ctx.strokeStyle = '#E2E8F0';
             ctx.lineWidth = 1;
             for (let x = 0; x <= width; x += 40) {
                 ctx.beginPath();
@@ -569,11 +501,11 @@
                 const y = centerY - sigSlice[i] * scaleY;
                 ctx.lineTo(x, y);
             }
-            ctx.strokeStyle = '#00ffc2';
+            ctx.strokeStyle = '#2563EB';
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Envelope (orange) — same fixed-scale treatment.
+            // Envelope (red) — same fixed-scale treatment.
             const scaleEnv = height * 0.3 * 0.9 / (envelopePeak || 1);
             ctx.beginPath();
             ctx.moveTo(0, centerY - envSlice[0] * scaleEnv);
@@ -582,7 +514,7 @@
                 const y = centerY - envSlice[i] * scaleEnv;
                 ctx.lineTo(x, y);
             }
-            ctx.strokeStyle = '#ffb4ab';
+            ctx.strokeStyle = '#DC2626';
             ctx.lineWidth = 1.5;
             ctx.stroke();
 
@@ -612,7 +544,7 @@
             if (currentSampleIndex >= totalSamples - 1) {
                 currentSampleIndex = totalSamples - 1;
                 isPlaying = false;
-                playPauseIcon.textContent = 'play_arrow';
+                playPauseIcon.textContent = 'Play';
                 playPauseBtn.classList.remove('pulse-active');
             }
 
@@ -627,7 +559,7 @@
         // ============================================================
         playPauseBtn.addEventListener('click', () => {
             isPlaying = !isPlaying;
-            playPauseIcon.textContent = isPlaying ? 'pause' : 'play_arrow';
+            playPauseIcon.textContent = isPlaying ? 'Pause' : 'Play';
             if (isPlaying) {
                 playPauseBtn.classList.add('pulse-active');
                 lastFrameTime = null; // reset so first delta isn't huge
@@ -700,7 +632,7 @@
         function startSeek(e) {
             isSeeking = true;
             isPlaying = false;
-            playPauseIcon.textContent = 'play_arrow';
+            playPauseIcon.textContent = 'Play';
             playPauseBtn.classList.remove('pulse-active');
             updateSeek(e);
             document.addEventListener('mousemove', updateSeek);
@@ -757,10 +689,10 @@
                 row.innerHTML = `
 <div class="flex justify-between items-start mb-1">
 <span class="font-data-sm text-data-sm text-primary-fixed-dim">${formatTimestamp(ann.time_seconds)}</span>
-<span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity edit-ann" data-id="${ann.id}">edit</span>
+<span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity edit-ann" data-id="${ann.id}">Edit</span>
 </div>
 <p class="text-sm font-body-base text-on-surface">${ann.label || '(no label)'}</p>
-${isCurrent ? '<span class="font-label-caps text-[9px] bg-primary-container text-on-primary-container px-1 rounded">CURRENT</span>' : ''}
+${isCurrent ? '<span class="font-label-caps text-[15px] bg-primary-container text-on-primary-container px-1 rounded">CURRENT</span>' : ''}
                 `;
                 row.querySelector('.edit-ann').addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -769,7 +701,7 @@ ${isCurrent ? '<span class="font-label-caps text-[9px] bg-primary-container text
                 row.addEventListener('click', () => {
                     currentSampleIndex = Math.round(ann.time_seconds * sampleRate);
                     isPlaying = false;
-                    playPauseIcon.textContent = 'play_arrow';
+                    playPauseIcon.textContent = 'Play';
                     playPauseBtn.classList.remove('pulse-active');
                     drawWindow();
                     renderAnnotationList();

@@ -409,28 +409,33 @@ function phase17() {
   const src = read('progress.html');
   const components = read('components.js');
 
-  current = 'exact CDN pins, in order, before inline scripts';
-  const chartjsIdx = src.indexOf('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js');
-  const adapterIdx = src.indexOf('https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js');
-  const tailwindIdx = src.indexOf('https://cdn.tailwindcss.com?plugins=forms,container-queries');
+  // Vendored offline copies of Chart.js 4.5.1 and chartjs-adapter-date-fns 3.0.0.
+  current = 'vendored script pins, in order, before inline scripts';
+  const chartjsIdx = src.indexOf('<script src="vendor/chartjs/chart.umd.min.js">');
+  const adapterIdx = src.indexOf('<script src="vendor/chartjs/chartjs-adapter-date-fns.bundle.min.js">');
+  const tailwindIdx = src.indexOf('<script src="vendor/tailwind/tailwind.js">');
+  const themeIdx = src.indexOf('<script src="vendor/clinical-theme.js">');
   const componentsIdx = src.indexOf('<script src="components.js">');
-  check(chartjsIdx !== -1, 'Chart.js 4.5.1 CDN pin must be present verbatim');
-  check(adapterIdx !== -1, 'chartjs-adapter-date-fns@3.0.0 CDN pin must be present verbatim');
-  check(tailwindIdx !== -1 && tailwindIdx < componentsIdx, 'Tailwind CDN must load before components.js');
+  check(chartjsIdx !== -1, 'vendored Chart.js must be loaded');
+  check(adapterIdx !== -1, 'vendored chartjs-adapter-date-fns must be loaded');
+  check(tailwindIdx !== -1 && tailwindIdx < themeIdx, 'vendored Tailwind must load before clinical-theme.js');
+  check(themeIdx !== -1 && themeIdx < componentsIdx, 'clinical-theme.js must load before components.js');
   check(componentsIdx !== -1 && componentsIdx < chartjsIdx, 'components.js must load before Chart.js');
   check(chartjsIdx < adapterIdx, 'Chart.js must load before its date-fns adapter');
 
-  current = 'no other external resources besides the pinned CDNs and fonts';
+  current = 'no external resources: every script and stylesheet is local';
   const scriptSrcs = [...src.matchAll(/<script[^>]+src=["']([^"']+)["']/g)].map((m) => m[1]);
   const allowed = new Set([
-    'https://cdn.tailwindcss.com?plugins=forms,container-queries',
+    'vendor/tailwind/tailwind.js',
+    'vendor/clinical-theme.js',
     'components.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js',
-    'https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js',
+    'vendor/chartjs/chart.umd.min.js',
+    'vendor/chartjs/chartjs-adapter-date-fns.bundle.min.js',
   ]);
   for (const s of scriptSrcs) {
-    check(allowed.has(s), `unexpected external script: ${s}`);
+    check(allowed.has(s), `unexpected script: ${s}`);
   }
+  check(!/(?:src|href)=["']https?:\/\//.test(src), 'progress.html must not load anything from the network');
 
   current = 'components.js is included and emg-nav is active="progress"';
   check(/<script src=["']components\.js["']/.test(src), 'progress.html must load components.js');

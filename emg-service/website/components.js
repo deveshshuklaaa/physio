@@ -1,53 +1,14 @@
-// Shared EMG Viewer navigation component
+// Shared EMG Viewer header (brand only; page-to-page links removed)
 class EMGNav extends HTMLElement {
   connectedCallback() {
-    const active = this.getAttribute('active') || 'live';
-    const links = [
-      { href: 'live.html', label: 'Live', icon: 'monitor_heart', active: active === 'live' },
-      { href: 'history.html', label: 'History', icon: 'history', active: active === 'history' },
-      { href: 'playback.html', label: 'Playback', icon: 'play_circle', active: active === 'playback' },
-      { href: 'progress.html', label: 'Progress', icon: 'insights', active: active === 'progress' },
-    ];
-
     const header = document.createElement('header');
-    header.className = 'sticky top-0 z-50 h-16 shrink-0 bg-surface-container-low border-b border-outline-variant flex items-center justify-between px-margin-mobile';
+    header.className = 'sticky top-0 z-50 h-16 shrink-0 bg-surface-card border-b border-metric flex items-center px-margin-mobile';
 
-    // Brand
-    const brand = document.createElement('div');
-    brand.className = 'flex items-center gap-3';
     const brandText = document.createElement('span');
-    brandText.className = 'font-headline-md text-headline-md font-bold text-primary-fixed-dim hidden sm:inline';
+    brandText.className = 'font-heading text-heading-md font-bold text-primary-heading';
     brandText.textContent = 'EMG Viewer';
-    const brandIcon = document.createElement('span');
-    brandIcon.className = 'material-symbols-outlined text-primary-fixed-dim sm:hidden';
-    brandIcon.textContent = 'monitor_heart';
-    brand.appendChild(brandIcon);
-    brand.appendChild(brandText);
 
-    // Nav links
-    const nav = document.createElement('nav');
-    nav.className = 'flex items-center gap-0';
-    links.forEach(link => {
-      const a = document.createElement('a');
-      a.href = link.href;
-      a.className = 'flex flex-col items-center justify-center px-3 py-2 text-on-surface-variant hover:text-primary-fixed transition-colors relative';
-      if (link.active) {
-        a.setAttribute('aria-current', 'page');
-        a.className += ' text-primary-fixed-dim border-b-2 border-primary-fixed-dim';
-      }
-      const icon = document.createElement('span');
-      icon.className = 'material-symbols-outlined text-[20px]';
-      icon.textContent = link.icon;
-      const label = document.createElement('span');
-      label.className = 'font-label-caps text-[9px] mt-0.5';
-      label.textContent = link.label;
-      a.appendChild(icon);
-      a.appendChild(label);
-      nav.appendChild(a);
-    });
-
-    header.appendChild(brand);
-    header.appendChild(nav);
+    header.appendChild(brandText);
     this.appendChild(header);
   }
 }
