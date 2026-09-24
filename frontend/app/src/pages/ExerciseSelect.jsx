@@ -19,7 +19,7 @@
  * ../lib/deep_link.js for the parsing/classification and G2-E5 below for
  * every way that can fail visibly instead of silently.
  */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SpotlightCard from "@/components/SpotlightCard";
 import ShinyText from "@/components/ShinyText";
 import { Badge } from "@/components/ui/badge";
@@ -158,13 +158,32 @@ export default function ExerciseSelect() {
   // G2-E3: deep-link state machine. null while capabilities are still
   // loading -- classifyDeepLink must not decide "unmapped" against a map
   // that just hasn't arrived yet.
-  const [deepLink] = useState(() => parseDeepLink(location.search));
+  const [deepLink] = useState(() => {
+    const parsed = parseDeepLink(location.search);
+    // S18: strip the query string once it is captured in state, so the
+    // exercise id is not sitting in the address bar, the back-history or a
+    // copied URL. Cosmetic ONLY -- devtools and a direct POST to
+    // /session/start still work. The real gate is the server-side ACTIVE
+    // assignment check (docs/security.md S18); this is not a substitute.
+    if (location.search) {
+      try {
+        history.replaceState(null, "", location.pathname + location.hash);
+      } catch {
+        /* non-blocking: a failed replaceState must never stop the session */
+      }
+    }
+    return parsed;
+  });
   const [deepLinkState, setDeepLinkState] = useState(deepLink.exerciseId ? "loading" : "manual");
   const [engineSupported, setEngineSupported] = useState(null);
   // Unreachable engine != unsupported exercise. Conflating them tells a
   // patient their prescribed exercise is unavailable when the real problem
   // is a network hop, and sends them to their doctor over an outage.
   const [engineOffline, setEngineOffline] = useState(false);
+  // R1/D16: calibrate-before-start attempt counter. After two failed
+  // attempts the patient must be able to skip -- a band that won't settle
+  // must not trap them here the night of a demo.
+  const calibrateAttempts = useRef(0);
 
   useEffect(() => {
     (async () => {
@@ -225,10 +244,43 @@ export default function ExerciseSelect() {
       setDeepLinkState("unmapped");
       return;
     }
-    // state === "ready"
-    void startFromDeepLink(token);
+    // state === "ready" -- R1/D16: calibrate (limb still) before start.
+    setDeepLinkState("calibrate");
+    void runCalibrationGate(token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [engineSupported, engineOffline]);
+
+  // R1/D16: calibrate-before-start. A dead/slow EMG service must NEVER block
+  // session start -- any error, timeout or exhausted poll proceeds anyway.
+  async function runCalibrationGate(token) {
+    try {
+      await fetch(`${API}/session/calibrate`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      let ok = false;
+      for (let i = 0; i < 12; i++) {
+        await new Promise((r) => setTimeout(r, 700));
+        const res = await fetch(`${API}/calibration`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (!data.calibrating) {
+          ok = !!data.ok;
+          break;
+        }
+      }
+      if (ok) {
+        void startFromDeepLink(token);
+      } else {
+        calibrateAttempts.current += 1;
+        setDeepLinkState("calibrate-failed");
+      }
+    } catch {
+      // Unreachable EMG service must never block session start.
+      void startFromDeepLink(token);
+    }
+  }
 
   async function startFromDeepLink(token) {
     setDeepLinkState("starting");
@@ -306,6 +358,33 @@ export default function ExerciseSelect() {
         body="Our live-assessment camera doesn't support this exercise yet. Go back to your exercise plan and try one of the others, or contact your doctor."
         actionLabel="Back to my exercise plan"
         onAction={() => { location.href = THEIR_PLAN_PATH; }}
+      />
+    );
+  }
+  if (deepLinkState === "calibrate") {
+    return (
+      <DeepLinkNotice
+        title="Hold the band still"
+        body="Calibrating the EMG band. Please keep your limb still for a moment."
+      />
+    );
+  }
+  if (deepLinkState === "calibrate-failed") {
+    const token = localStorage.getItem("authToken");
+    const canSkip = calibrateAttempts.current >= 2;
+    return (
+      <DeepLinkNotice
+        title="Band isn't settling"
+        body="Hold the limb still and try again, or continue without a fresh calibration."
+        actionLabel={canSkip ? "Continue anyway" : "Try again"}
+        onAction={() => {
+          if (canSkip) {
+            void startFromDeepLink(token);
+          } else {
+            setDeepLinkState("calibrate");
+            void runCalibrationGate(token);
+          }
+        }}
       />
     );
   }

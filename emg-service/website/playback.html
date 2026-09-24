@@ -7,7 +7,6 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -102,7 +101,7 @@
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         .emg-grid {
-            background-image: 
+            background-image:
                 linear-gradient(to right, rgba(58, 74, 67, 0.2) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(58, 74, 67, 0.2) 1px, transparent 1px);
             background-size: 40px 40px;
@@ -136,26 +135,25 @@
       min-height: max(884px, 100dvh);
     }
   </style>
+<script src="components.js"></script>
   </head>
 <body class="bg-background text-on-background min-h-screen flex flex-col font-body-base antialiased">
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface border-b border-outline-variant">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">sensors</span>
-<h1 class="font-display-lg text-headline-md tracking-tighter text-primary-fixed-dim">NEUROSCAN EMG</h1>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex flex-col items-end">
-<span class="font-label-caps text-label-caps text-on-surface-variant">SOURCE FILE</span>
-<span class="font-data-sm text-data-sm text-primary-fixed-dim">Subject_A42_Session1.csv</span>
-</div>
-<button class="p-2 hover:bg-surface-variant/50 transition-colors rounded-full active:scale-95 duration-100">
-<span class="material-symbols-outlined text-primary-fixed-dim">bluetooth_connected</span>
-</button>
-</div>
-</header>
-<main class="flex-1 mt-16 pb-24 overflow-y-auto">
+<emg-nav active="playback"></emg-nav>
+<main class="flex-1 overflow-y-auto">
 <div class="max-w-container-max mx-auto p-4 lg:p-8 space-y-6">
+<!-- Source File -->
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SOURCE FILE</span>
+<span class="font-data-sm text-data-sm text-primary-fixed-dim" id="sourceFileName">unknown.bin</span>
+</div>
+<!-- No Recording Selected Notice -->
+<div class="hidden bg-surface-container-low rounded-lg border border-outline-variant px-4 py-3 flex items-center gap-3" id="noFileNotice">
+<span class="material-symbols-outlined text-primary-fixed-dim">history</span>
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block">NO RECORDING SELECTED</span>
+<span class="font-data-sm text-data-sm text-primary-fixed-dim">Returning to History…</span>
+</div>
+</div>
 <!-- EMG Waveform Chart Section -->
 <section class="bg-surface-container rounded-xl border border-outline-variant relative overflow-hidden h-[400px] flex flex-col">
 <div class="absolute top-4 left-4 z-10">
@@ -173,8 +171,8 @@
 </div>
 <!-- Waveform Canvas -->
 <canvas class="w-full h-full" id="waveformCanvas"></canvas>
-<!-- Playback Scrubber Line (placeholder) -->
-<div class="absolute inset-y-0 left-1/2 w-px bg-primary-fixed shadow-[0_0_8px_#00e1ab] z-20"></div>
+<!-- Playback Scrubber Line (fixed center) -->
+<div class="absolute inset-y-0 left-1/2 w-px bg-primary-fixed shadow-[0_0_8px_#00e1ab] z-20" id="playheadLine"></div>
 </div>
 <!-- X-Axis Label -->
 <div class="h-8 border-t border-outline-variant flex items-center justify-between px-4 font-data-sm text-[10px] text-outline">
@@ -191,15 +189,52 @@
 <div class="lg:col-span-4 space-y-6">
 <div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4">CURRENT TIMESTAMP</h3>
-<div class="font-data-lg text-data-lg text-primary-fixed-dim tracking-tight">00:02:14.452</div>
+<div class="font-data-lg text-data-lg text-primary-fixed-dim tracking-tight" id="currentTimestamp">00:00:00.000</div>
 <div class="mt-4 pt-4 border-t border-outline-variant/30 grid grid-cols-2 gap-4">
 <div>
 <span class="block font-label-caps text-[9px] text-outline">SAMPLING RATE</span>
-<span class="font-data-sm text-data-sm">1000 Hz</span>
+<span class="font-data-sm text-data-sm" id="samplingRate">— Hz</span>
 </div>
 <div>
 <span class="block font-label-caps text-[9px] text-outline">TOTAL DURATION</span>
-<span class="font-data-sm text-data-sm">00:15:30</span>
+<span class="font-data-sm text-data-sm" id="totalDuration">—</span>
+</div>
+<div class="col-span-2">
+<span class="block font-label-caps text-[9px] text-outline">CALIBRATION</span>
+<span class="font-data-sm text-data-sm" id="calibration">—</span>
+</div>
+</div>
+</div>
+<!-- Post-Session Analysis -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-outline-variant">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant">SESSION ANALYSIS</h3>
+<span class="font-label-caps text-[9px] text-outline" id="metricsUnits">—</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<span class="block font-label-caps text-[9px] text-outline">RMS AMPLITUDE</span>
+<span class="font-data-sm text-data-sm text-primary-fixed-dim" id="metricRms">—</span>
+</div>
+<div>
+<span class="block font-label-caps text-[9px] text-outline">PEAK AMPLITUDE</span>
+<span class="font-data-sm text-data-sm text-primary-fixed-dim" id="metricPeak">—</span>
+</div>
+<div>
+<span class="block font-label-caps text-[9px] text-outline">CONTRACTIONS</span>
+<span class="font-data-sm text-data-sm text-primary-fixed-dim" id="metricCount">—</span>
+</div>
+<div>
+<span class="block font-label-caps text-[9px] text-outline">MEAN LATENCY</span>
+<span class="font-data-sm text-data-sm text-primary-fixed-dim" id="metricLatency">—</span>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant/30">
+<div class="flex justify-between font-label-caps text-[9px] text-outline mb-1">
+<span>#</span><span>START</span><span>DUR</span><span>RMS</span><span>PEAK</span><span>LAT→</span>
+</div>
+<div class="max-h-[160px] overflow-y-auto scrollbar-hide divide-y divide-outline-variant/20" id="contractionList">
+<!-- rendered dynamically -->
 </div>
 </div>
 </div>
@@ -208,16 +243,16 @@
 <div class="flex items-center justify-between mb-4">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant">TIME SCALE</h3>
 <div class="flex gap-2">
-<button class="p-1.5 bg-surface-variant hover:bg-primary-container/20 rounded transition-colors">
+<button class="p-1.5 bg-surface-variant hover:bg-primary-container/20 rounded transition-colors" id="zoomOutBtn">
 <span class="material-symbols-outlined text-sm">zoom_out</span>
 </button>
-<button class="p-1.5 bg-surface-variant hover:bg-primary-container/20 rounded transition-colors">
+<button class="p-1.5 bg-surface-variant hover:bg-primary-container/20 rounded transition-colors" id="zoomInBtn">
 <span class="material-symbols-outlined text-sm">zoom_in</span>
 </button>
 </div>
 </div>
 <div class="relative h-1 bg-surface-variant rounded-full overflow-hidden">
-<div class="absolute h-full bg-primary-fixed-dim w-3/4"></div>
+<div class="absolute h-full bg-primary-fixed-dim" id="zoomFill" style="width: 75%"></div>
 </div>
 <div class="flex justify-between mt-2 font-data-sm text-[10px] text-outline">
 <span>100ms</span>
@@ -228,22 +263,22 @@
 <!-- Center: Playback Controls -->
 <div class="lg:col-span-4 flex flex-col items-center justify-center space-y-8 bg-surface-container-high rounded-xl border border-outline-variant p-8">
 <div class="flex items-center gap-8">
-<button class="group p-4 hover:bg-surface-variant/50 rounded-full transition-all active:scale-90">
+<button class="group p-4 hover:bg-surface-variant/50 rounded-full transition-all active:scale-90" id="rewindBtn">
 <span class="material-symbols-outlined text-primary-fixed-dim text-3xl group-hover:scale-110 transition-transform">replay_10</span>
 </button>
-<button class="relative w-24 h-24 bg-primary-fixed-dim rounded-full flex items-center justify-center active:scale-95 duration-150 shadow-[0_0_30px_rgba(0,225,171,0.3)] pulse-active">
+<button class="relative w-24 h-24 bg-primary-fixed-dim rounded-full flex items-center justify-center active:scale-95 duration-150 shadow-[0_0_30px_rgba(0,225,171,0.3)]" id="playPauseBtn">
 <span class="material-symbols-outlined text-on-primary text-5xl" style="font-variation-settings: 'FILL' 1;">pause</span>
 </button>
-<button class="group p-4 hover:bg-surface-variant/50 rounded-full transition-all active:scale-90">
+<button class="group p-4 hover:bg-surface-variant/50 rounded-full transition-all active:scale-90" id="forwardBtn">
 <span class="material-symbols-outlined text-primary-fixed-dim text-3xl group-hover:scale-110 transition-transform">forward_10</span>
 </button>
 </div>
 <div class="w-full space-y-3">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant text-center">PLAYBACK SPEED</h3>
 <div class="flex bg-surface-container rounded-lg p-1 border border-outline-variant">
-<button class="flex-1 py-2 font-data-sm text-data-sm rounded-md hover:bg-surface-variant transition-colors text-on-surface-variant">0.5x</button>
-<button class="flex-1 py-2 font-data-sm text-data-sm rounded-md bg-primary-container/20 text-primary-fixed-dim">1.0x</button>
-<button class="flex-1 py-2 font-data-sm text-data-sm rounded-md hover:bg-surface-variant transition-colors text-on-surface-variant">2.0x</button>
+<button class="flex-1 py-2 font-data-sm text-data-sm rounded-md hover:bg-surface-variant transition-colors text-on-surface-variant speed-btn" data-speed="0.5">0.5x</button>
+<button class="flex-1 py-2 font-data-sm text-data-sm rounded-md bg-primary-container/20 text-primary-fixed-dim speed-btn" data-speed="1.0">1.0x</button>
+<button class="flex-1 py-2 font-data-sm text-data-sm rounded-md hover:bg-surface-variant transition-colors text-on-surface-variant speed-btn" data-speed="2.0">2.0x</button>
 </div>
 </div>
 </div>
@@ -251,177 +286,204 @@
 <div class="lg:col-span-4 bg-surface-container-low rounded-xl border border-outline-variant flex flex-col">
 <div class="p-4 border-b border-outline-variant flex items-center justify-between">
 <h3 class="font-label-caps text-label-caps text-on-surface-variant">ANNOTATIONS</h3>
-<button class="text-primary-fixed-dim hover:underline font-label-caps text-[10px]">ADD MARKER</button>
+<button class="text-primary-fixed-dim hover:underline font-label-caps text-[10px]" id="addMarkerBtn">ADD MARKER</button>
 </div>
 <div class="flex-1 overflow-y-auto max-h-[300px] scrollbar-hide">
-<div class="divide-y divide-outline-variant/30">
-<div class="p-4 hover:bg-surface-variant/30 cursor-pointer transition-colors group">
-<div class="flex justify-between items-start mb-1">
-<span class="font-data-sm text-data-sm text-primary-fixed-dim">00:00:45.000</span>
-<span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">edit</span>
-</div>
-<p class="text-sm font-body-base text-on-surface">Initial Contraction Start</p>
-</div>
-<div class="p-4 bg-primary-container/5 border-l-2 border-primary-fixed-dim">
-<div class="flex justify-between items-start mb-1">
-<span class="font-data-sm text-data-sm text-primary-fixed-dim">00:02:14.452</span>
-<span class="font-label-caps text-[9px] bg-primary-container text-on-primary-container px-1 rounded">CURRENT</span>
-</div>
-<p class="text-sm font-body-base text-on-surface">Peak Amplitude Threshold</p>
-</div>
-<div class="p-4 hover:bg-surface-variant/30 cursor-pointer transition-colors">
-<div class="flex justify-between items-start mb-1">
-<span class="font-data-sm text-data-sm text-primary-fixed-dim">00:03:12.110</span>
-</div>
-<p class="text-sm font-body-base text-on-surface">Relaxation Phase</p>
-</div>
-<div class="p-4 hover:bg-surface-variant/30 cursor-pointer transition-colors">
-<div class="flex justify-between items-start mb-1">
-<span class="font-data-sm text-data-sm text-primary-fixed-dim">00:04:45.000</span>
-</div>
-<p class="text-sm font-body-base text-on-surface">Artifact Detection - Motion</p>
-</div>
+<div class="divide-y divide-outline-variant/30" id="annotationsList">
+<!-- Annotations rendered dynamically -->
 </div>
 </div>
 </div>
 </div>
 </div>
 </main>
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 pb-safe bg-surface-container-low border-t border-outline-variant shadow-lg rounded-t-xl md:hidden">
-<a class="flex flex-col items-center justify-center bg-primary-container/20 text-primary-fixed-dim rounded-xl px-4 py-1.5 active:scale-90 duration-150 ease-in-out" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">monitor_heart</span>
-<span class="font-label-caps text-label-caps">Live Scan</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-primary-fixed transition-all" href="#">
-<span class="material-symbols-outlined">history</span>
-<span class="font-label-caps text-label-caps">History</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:text-primary-fixed transition-all" href="#">
-<span class="material-symbols-outlined">account_circle</span>
-<span class="font-label-caps text-label-caps">Profile</span>
-</a>
-</nav>
-<!-- Desktop Nav (Simulated TopAppBar cluster) -->
-<div class="hidden md:flex fixed top-0 right-32 z-[60] h-16 items-center gap-6">
-<a class="font-label-caps text-label-caps text-primary-fixed-dim border-b-2 border-primary-fixed-dim h-full flex items-center px-2" href="#">Live Scan</a>
-<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary-fixed-dim transition-colors h-full flex items-center px-2" href="#">History</a>
-<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary-fixed-dim transition-colors h-full flex items-center px-2" href="#">Analysis</a>
-</div>
 <script>
-        // Simple Micro-interaction for Play/Pause toggle
-        const playBtn = document.querySelector('.relative.w-24.h-24');
-        let isPlaying = true;
-        
-        playBtn.addEventListener('click', () => {
-            isPlaying = !isPlaying;
-            const icon = playBtn.querySelector('.material-symbols-outlined');
-            icon.textContent = isPlaying ? 'pause' : 'play_arrow';
-            
-            if (isPlaying) {
-                playBtn.classList.add('pulse-active');
-            } else {
-                playBtn.classList.remove('pulse-active');
-            }
-        });
+        // ============================================================
+        // STATE VARIABLES
+        // ============================================================
+        let signal = null;           // Int16Array, decoded once from /api/recording/<file>
+        let envelope = null;         // Int16Array
+        let sampleRate = 500;        // from /api/recording_meta
+        let totalSamples = 0;        // signal.length
+        let signalPeak = 0;          // fixed max |signal| across whole file, set once in loadRecording
+        let envelopePeak = 0;        // fixed max |envelope| across whole file, set once in loadRecording
+        let currentSampleIndex = 0;  // the playhead — single source of truth for "now"
+        let isPlaying = false;       // start paused (safer default than mockup's "playing")
+        let playbackSpeed = 1.0;     // 0.5 | 1.0 | 2.0, set by speed buttons
+        let windowSeconds = 1.0;     // total visible width of the chart, driven by zoom controls
+        let annotations = [];        // loaded from /api/annotations/<file>
+        let lastFrameTime = null;    // for rAF delta-time accounting
+        let metrics = null;          // post-session analysis from the recording's preamble
 
-        // Hover effect for trace
-        const svg = document.querySelector('svg');
-        svg.addEventListener('mousemove', (e) => {
-            // Optional: add tooltips for amplitude at hover point
-        });
-    </script>
-    <script>
-        // Playback functionality: load selected file and render waveform
-        (async () => {
+        // DOM elements
+        const canvas = document.getElementById('waveformCanvas');
+        const ctx = canvas.getContext('2d');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playPauseIcon = playPauseBtn.querySelector('.material-symbols-outlined');
+        const rewindBtn = document.getElementById('rewindBtn');
+        const forwardBtn = document.getElementById('forwardBtn');
+        const zoomInBtn = document.getElementById('zoomInBtn');
+        const zoomOutBtn = document.getElementById('zoomOutBtn');
+        const zoomFill = document.getElementById('zoomFill');
+        const speedButtons = document.querySelectorAll('.speed-btn');
+        const currentTimestampEl = document.getElementById('currentTimestamp');
+        const samplingRateEl = document.getElementById('samplingRate');
+        const totalDurationEl = document.getElementById('totalDuration');
+        const calibrationEl = document.getElementById('calibration');
+        const sourceFileNameEl = document.getElementById('sourceFileName');
+        const annotationsList = document.getElementById('annotationsList');
+        const addMarkerBtn = document.getElementById('addMarkerBtn');
+        const playheadLine = document.getElementById('playheadLine');
+        const contractionList = document.getElementById('contractionList');
+
+        // ============================================================
+        // UTILITIES
+        // ============================================================
+        // De-interleave raw <8h samples: signal, envelope, ax, ay, az, gx, gy, gz.
+        // Only signal and envelope are used here; the six IMU fields are skipped.
+        function deinterleave(data) {
+            const n = Math.floor(data.length / 8);
+            const signal = new Int16Array(n);
+            const envelope = new Int16Array(n);
+            for (let j = 0; j < n; j++) {
+                signal[j] = data[j * 8];
+                envelope[j] = data[j * 8 + 1];
+            }
+            return { signal, envelope };
+        }
+
+        // Single pass over the whole recording — O(n), no allocation, no spread/.map()
+        // (both blow up or waste memory on files with hundreds of thousands of samples).
+        function computePeaks(signal, envelope) {
+            let signalPeak = 0;
+            let envelopePeak = 0;
+            for (let i = 0; i < signal.length; i++) {
+                const s = Math.abs(signal[i]);
+                if (s > signalPeak) signalPeak = s;
+                const e = Math.abs(envelope[i]);
+                if (e > envelopePeak) envelopePeak = e;
+            }
+            return { signalPeak, envelopePeak };
+        }
+
+        function formatTimestamp(seconds) {
+            if (!isFinite(seconds)) return '00:00:00.000';
+            const s = Math.floor(seconds);
+            const ms = Math.floor((seconds - s) * 1000);
+            const h = Math.floor(s / 3600);
+            const m = Math.floor((s % 3600) / 60);
+            const sec = s % 60;
+            const mm = String(m).padStart(h ? 2 : 1, '0');
+            const ss = String(sec).padStart(2, '0');
+            const msStr = String(ms).padStart(3, '0');
+            return h ? `${h}:${mm}:${ss}.${msStr}` : `${mm}:${ss}.${msStr}`;
+        }
+
+        function formatDuration(seconds) {
+            if (!isFinite(seconds)) return '—';
+            const s = Math.round(seconds);
+            const h = Math.floor(s / 3600);
+            const m = Math.floor((s % 3600) / 60);
+            const sec = s % 60;
+            const mm = String(m).padStart(h ? 2 : 1, '0');
+            const ss = String(sec).padStart(2, '0');
+            return h ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
+        }
+
+        // Post-session analysis is computed by the backend and stored in the
+        // recording itself — this only formats it, so playback and the stored
+        // file can never disagree about the numbers.
+        function renderMetrics() {
+            const set = (id, v) => document.getElementById(id).textContent = v;
+            if (!metrics) {
+                ['metricRms','metricPeak','metricCount','metricLatency'].forEach(id => set(id, 'n/a'));
+                set('metricsUnits', 'NOT ANALYZED');
+                contractionList.innerHTML = '<div class="py-2 font-data-sm text-[10px] text-outline">No analysis stored for this recording.</div>';
+                return;
+            }
+            set('metricsUnits', (metrics.units || '').replace('_', ' ').toUpperCase());
+            set('metricRms', metrics.rms.toFixed(1));
+            set('metricPeak', String(metrics.peak));
+            set('metricCount', String(metrics.contraction_count));
+            set('metricLatency', metrics.mean_latency_s == null ? '—' : `${metrics.mean_latency_s.toFixed(2)}s`);
+
+            const lat = metrics.latencies_s || [];
+            contractionList.innerHTML = '';
+            (metrics.contractions || []).forEach((c, i) => {
+                const row = document.createElement('div');
+                row.className = 'flex justify-between py-1.5 font-data-sm text-[10px] cursor-pointer hover:bg-surface-variant/40';
+                row.innerHTML = `<span class="text-outline">${i + 1}</span>` +
+                    `<span>${c.start_s.toFixed(2)}s</span>` +
+                    `<span>${c.duration_s.toFixed(2)}s</span>` +
+                    `<span>${c.rms.toFixed(0)}</span>` +
+                    `<span>${c.peak}</span>` +
+                    `<span class="text-primary-fixed-dim">${lat[i] == null ? '—' : lat[i].toFixed(2) + 's'}</span>`;
+                row.addEventListener('click', () => {
+                    currentSampleIndex = Math.min(totalSamples - 1, Math.round(c.start_s * sampleRate));
+                    drawWindow();
+                    updateSeekBar();
+                    currentTimestampEl.textContent = formatTimestamp(currentSampleIndex / sampleRate);
+                });
+                contractionList.appendChild(row);
+            });
+        }
+
+        // ============================================================
+        // DATA LOADING
+        // ============================================================
+        async function loadRecording() {
             const urlParams = new URLSearchParams(window.location.search);
             const filename = urlParams.get('file');
-            const sourceFileSpan = document.querySelector('.font-data-sm.text-data-sm.text-primary-fixed-dim');
-            if (sourceFileSpan) {
-                sourceFileSpan.textContent = filename || 'unknown.bin';
-            }
+            sourceFileNameEl.textContent = filename || 'unknown.bin';
             if (!filename) {
                 console.warn('No file specified');
+                document.getElementById('noFileNotice').classList.remove('hidden');
+                setTimeout(() => window.location.replace('history.html'), 1500);
                 return;
             }
             try {
-                const response = await fetch(`/api/recording/${encodeURIComponent(filename)}`);
-                if (!response.ok) throw new Error(`Failed to fetch file: ${response.status}`);
-                const buffer = await response.arrayBuffer();
-                const data = new Int16Array(buffer);
-                // Expect interleaved int16: signal, envelope, signal, envelope...
-                const signal = [];
-                const envelope = [];
-                for (let i = 0; i < data.length; i += 2) {
-                    signal.push(data[i]);
-                    if (i+1 < data.length) envelope.push(data[i+1]);
+                // 1. Fetch metadata first (fast)
+                const metaRes = await fetch(`/api/recording_meta/${encodeURIComponent(filename)}`);
+                if (!metaRes.ok) throw new Error(`Failed to fetch meta: ${metaRes.status}`);
+                const meta = await metaRes.json();
+                sampleRate = meta.sample_rate || 500;
+                totalSamples = meta.num_samples || 0;
+                samplingRateEl.textContent = `${sampleRate} Hz`;
+                totalDurationEl.textContent = formatDuration(meta.duration_seconds || 0);
+                if (meta.calibration) {
+                    const c = meta.calibration;
+                    calibrationEl.textContent = `ax${c.ax} ay${c.ay} az${c.az} gx${c.gx} gy${c.gy} gz${c.gz}`;
+                } else {
+                    calibrationEl.textContent = 'not recorded';
                 }
-                const canvas = document.getElementById('waveformCanvas');
-                if (!canvas) return;
-                const ctx = canvas.getContext('2d');
-                const dpr = window.devicePixelRatio || 1;
-                const resize = () => {
-                    canvas.width = canvas.clientWidth * dpr;
-                    canvas.height = canvas.clientHeight * dpr;
-                    ctx.scale(dpr, dpr);
-                    drawWaveform();
-                };
-                window.addEventListener('resize', resize);
-                resize();
-                function drawWaveform() {
-                    const width = canvas.width / dpr;
-                    const height = canvas.height / dpr;
-                    ctx.clearRect(0, 0, width, height);
-                    // Draw grid (optional)
-                    ctx.strokeStyle = '#3a4a43';
-                    ctx.lineWidth = 1;
-                    for (let x = 0; x <= width; x += 40) {
-                        ctx.beginPath();
-                        ctx.moveTo(x, 0);
-                        ctx.lineTo(x, height);
-                        ctx.stroke();
-                    }
-                    for (let y = 0; y <= height; y += 40) {
-                        ctx.beginPath();
-                        ctx.moveTo(0, y);
-                        ctx.lineTo(width, y);
-                        ctx.stroke();
-                    }
-                    // Draw signal
-                    if (signal.length === 0) return;
-                    const maxSample = Math.max(...signal.map(Math.abs)) || 1;
-                    const scaleY = height * 0.4 / maxSample; // use 40% of height for wave
-                    const centerY = height / 2;
-                    const step = width / Math.max(signal.length - 1, 1);
-                    ctx.beginPath();
-                    ctx.moveTo(0, centerY - signal[0] * scaleY);
-                    for (let i = 1; i < signal.length; i++) {
-                        const x = i * step;
-                        const y = centerY - signal[i] * scaleY;
-                        ctx.lineTo(x, y);
-                    }
-                    ctx.strokeStyle = '#00ffc2';
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
-                    // Optionally draw envelope in orange
-                    if (envelope.length > 0) {
-                        const maxEnv = Math.max(...envelope.map(Math.abs)) || 1;
-                        const scaleEnv = height * 0.3 / maxEnv;
-                        ctx.beginPath();
-                        ctx.moveTo(0, centerY - envelope[0] * scaleEnv);
-                        for (let i = 1; i < envelope.length; i++) {
-                            const x = i * step;
-                            const y = centerY - envelope[i] * scaleEnv;
-                            ctx.lineTo(x, y);
-                        }
-                        ctx.strokeStyle = '#ffb4ab'; // error color
-                        ctx.lineWidth = 1.5;
-                        ctx.stroke();
-                    }
+
+                // 2. Fetch full recording
+                const recRes = await fetch(`/api/recording/${encodeURIComponent(filename)}`);
+                if (!recRes.ok) throw new Error(`Failed to fetch recording: ${recRes.status}`);
+                const buffer = await recRes.arrayBuffer();
+                const decoded = deinterleave(new Int16Array(buffer));
+                signal = decoded.signal;
+                envelope = decoded.envelope;
+                totalSamples = signal.length;
+                const peaks = computePeaks(signal, envelope);
+                signalPeak = peaks.signalPeak;
+                envelopePeak = peaks.envelopePeak;
+
+                // 3. Fetch annotations
+                const annRes = await fetch(`/api/annotations/${encodeURIComponent(filename)}`);
+                if (annRes.ok) {
+                    annotations = await annRes.json();
+                } else {
+                    annotations = [];
                 }
+
+                // 4. Initial draw
+                metrics = meta.metrics || null;
+                renderMetrics();
+                drawWindow();
+                renderAnnotationList();
             } catch (err) {
                 console.error('Error loading playback:', err);
-                // Show error overlay
                 const errorDiv = document.createElement('div');
                 errorDiv.style.position = 'absolute';
                 errorDiv.style.inset = '0';
@@ -434,6 +496,335 @@
                 errorDiv.textContent = `Error loading file: ${err.message}`;
                 document.querySelector('main')?.appendChild(errorDiv);
             }
-        })();
+        }
+
+        // ============================================================
+        // RENDERING — drawWindow()
+        // ============================================================
+        function drawWindow() {
+            if (!signal || totalSamples === 0) return;
+
+            const dpr = window.devicePixelRatio || 1;
+            const width = canvas.clientWidth;
+            const height = canvas.clientHeight;
+
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.scale(dpr, dpr);
+
+            const windowSamples = Math.round(windowSeconds * sampleRate);
+            let startIdx = currentSampleIndex - windowSamples / 2;
+            let endIdx = currentSampleIndex + windowSamples / 2;
+            startIdx = Math.max(0, startIdx);
+            endIdx = Math.min(totalSamples, endIdx);
+            if (endIdx - startIdx < 2) return;
+
+            const sigSlice = signal.subarray(startIdx, endIdx);
+            const envSlice = envelope.subarray(startIdx, endIdx);
+
+            // Clear
+            ctx.clearRect(0, 0, width, height);
+
+            // Detected contractions — shaded behind the grid so the analysis
+            // numbers on the left can be seen against the actual waveform.
+            if (metrics && metrics.contractions) {
+                const pxPerSample = width / (endIdx - startIdx);
+                ctx.fillStyle = 'rgba(0, 225, 171, 0.10)';
+                for (const c of metrics.contractions) {
+                    const cs = c.start_s * sampleRate;
+                    const ce = c.end_s * sampleRate;
+                    if (ce < startIdx || cs > endIdx) continue;
+                    const x0 = (Math.max(cs, startIdx) - startIdx) * pxPerSample;
+                    const x1 = (Math.min(ce, endIdx) - startIdx) * pxPerSample;
+                    ctx.fillRect(x0, 0, Math.max(x1 - x0, 1), height);
+                }
+            }
+
+            // Grid lines
+            ctx.strokeStyle = '#3a4a43';
+            ctx.lineWidth = 1;
+            for (let x = 0; x <= width; x += 40) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+            for (let y = 0; y <= height; y += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+
+            // Signal (green) — scale fixed once per file (see computePeaks), not per slice,
+            // so amplitude stays comparable across the whole recording.
+            const scaleY = height * 0.4 * 0.9 / (signalPeak || 1);
+            const centerY = height / 2;
+            const step = width / Math.max(sigSlice.length - 1, 1);
+
+            ctx.beginPath();
+            ctx.moveTo(0, centerY - sigSlice[0] * scaleY);
+            for (let i = 1; i < sigSlice.length; i++) {
+                const x = i * step;
+                const y = centerY - sigSlice[i] * scaleY;
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = '#00ffc2';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Envelope (orange) — same fixed-scale treatment.
+            const scaleEnv = height * 0.3 * 0.9 / (envelopePeak || 1);
+            ctx.beginPath();
+            ctx.moveTo(0, centerY - envSlice[0] * scaleEnv);
+            for (let i = 1; i < envSlice.length; i++) {
+                const x = i * step;
+                const y = centerY - envSlice[i] * scaleEnv;
+                ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = '#ffb4ab';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Update current timestamp display
+            currentTimestampEl.textContent = formatTimestamp(currentSampleIndex / sampleRate);
+        }
+
+        // ============================================================
+        // PLAYBACK LOOP — tick() driven by requestAnimationFrame
+        // ============================================================
+        function tick(now) {
+            if (!isPlaying) {
+                requestAnimationFrame(tick);
+                return;
+            }
+            if (lastFrameTime === null) {
+                lastFrameTime = now;
+                requestAnimationFrame(tick);
+                return;
+            }
+            const deltaMs = now - lastFrameTime;
+            lastFrameTime = now;
+
+            const samplesAdvanced = (deltaMs / 1000) * sampleRate * playbackSpeed;
+            currentSampleIndex += samplesAdvanced;
+
+            if (currentSampleIndex >= totalSamples - 1) {
+                currentSampleIndex = totalSamples - 1;
+                isPlaying = false;
+                playPauseIcon.textContent = 'play_arrow';
+                playPauseBtn.classList.remove('pulse-active');
+            }
+
+            drawWindow();
+            updateAnnotationHighlight();
+
+            requestAnimationFrame(tick);
+        }
+
+        // ============================================================
+        // TRANSPORT CONTROLS
+        // ============================================================
+        playPauseBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            playPauseIcon.textContent = isPlaying ? 'pause' : 'play_arrow';
+            if (isPlaying) {
+                playPauseBtn.classList.add('pulse-active');
+                lastFrameTime = null; // reset so first delta isn't huge
+            } else {
+                playPauseBtn.classList.remove('pulse-active');
+            }
+        });
+
+        rewindBtn.addEventListener('click', () => {
+            currentSampleIndex = Math.max(0, currentSampleIndex - 10 * sampleRate);
+            drawWindow();
+        });
+
+        forwardBtn.addEventListener('click', () => {
+            currentSampleIndex = Math.min(totalSamples - 1, currentSampleIndex + 10 * sampleRate);
+            drawWindow();
+        });
+
+        speedButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                playbackSpeed = parseFloat(btn.dataset.speed);
+                speedButtons.forEach(b => {
+                    if (b === btn) {
+                        b.classList.add('bg-primary-container/20', 'text-primary-fixed-dim');
+                        b.classList.remove('hover:bg-surface-variant', 'text-on-surface-variant');
+                    } else {
+                        b.classList.remove('bg-primary-container/20', 'text-primary-fixed-dim');
+                        b.classList.add('hover:bg-surface-variant', 'text-on-surface-variant');
+                    }
+                });
+            });
+        });
+
+        zoomInBtn.addEventListener('click', () => {
+            windowSeconds = Math.max(0.1, windowSeconds * 0.5);
+            updateZoomUI();
+            drawWindow();
+        });
+
+        zoomOutBtn.addEventListener('click', () => {
+            windowSeconds = Math.min(5.0, windowSeconds * 2.0);
+            updateZoomUI();
+            drawWindow();
+        });
+
+        function updateZoomUI() {
+            // Map 0.1s..5s to fill width 0%..100%
+            const min = 0.1, max = 5.0;
+            const pct = Math.min(1, Math.max(0, (windowSeconds - min) / (max - min)));
+            zoomFill.style.width = `${pct * 100}%`;
+        }
+
+        // ============================================================
+        // SEEK BAR (NEW)
+        // ============================================================
+        const seekBar = document.createElement('div');
+        seekBar.id = 'seekBar';
+        seekBar.className = 'w-full h-2 bg-surface-variant rounded-full mt-2 cursor-pointer relative';
+        seekBar.innerHTML = '<div id="seekFill" class="absolute top-0 left-0 h-full bg-primary-fixed-dim rounded-full" style="width: 0%"></div>';
+        // Insert after X-axis label
+        const xAxisLabel = document.querySelector('section > div.h-8');
+        xAxisLabel.parentNode.insertBefore(seekBar, xAxisLabel.nextSibling);
+
+        const seekFill = document.getElementById('seekFill');
+        let isSeeking = false;
+
+        seekBar.addEventListener('mousedown', startSeek);
+        seekBar.addEventListener('touchstart', startSeek, { passive: true });
+
+        function startSeek(e) {
+            isSeeking = true;
+            isPlaying = false;
+            playPauseIcon.textContent = 'play_arrow';
+            playPauseBtn.classList.remove('pulse-active');
+            updateSeek(e);
+            document.addEventListener('mousemove', updateSeek);
+            document.addEventListener('touchmove', updateSeek, { passive: true });
+            document.addEventListener('mouseup', endSeek);
+            document.addEventListener('touchend', endSeek);
+        }
+
+        function updateSeek(e) {
+            if (!isSeeking) return;
+            const rect = seekBar.getBoundingClientRect();
+            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            if (clientX === undefined) return;
+            let pct = (clientX - rect.left) / rect.width;
+            pct = Math.max(0, Math.min(1, pct));
+            currentSampleIndex = Math.round(pct * (totalSamples - 1));
+            seekFill.style.width = `${pct * 100}%`;
+            drawWindow();
+        }
+
+        function endSeek() {
+            isSeeking = false;
+            document.removeEventListener('mousemove', updateSeek);
+            document.removeEventListener('touchmove', updateSeek);
+            document.removeEventListener('mouseup', endSeek);
+            document.removeEventListener('touchend', endSeek);
+        }
+
+        // Update seek bar fill during playback (throttled)
+        let seekUpdateFrame = 0;
+        function updateSeekBar() {
+            if (totalSamples > 0) {
+                const pct = currentSampleIndex / (totalSamples - 1);
+                seekFill.style.width = `${pct * 100}%`;
+            }
+            seekUpdateFrame = requestAnimationFrame(updateSeekBar);
+        }
+        updateSeekBar();
+
+        // ============================================================
+        // ANNOTATIONS PANEL
+        // ============================================================
+        function renderAnnotationList() {
+            annotations.sort((a, b) => a.time_seconds - b.time_seconds);
+            annotationsList.innerHTML = '';
+            const currentTime = currentSampleIndex / sampleRate;
+            annotations.forEach(ann => {
+                const row = document.createElement('div');
+                row.className = 'p-4 hover:bg-surface-variant/30 cursor-pointer transition-colors group';
+                const isCurrent = Math.abs(ann.time_seconds - currentTime) < windowSeconds / 2;
+                if (isCurrent) {
+                    row.classList.add('bg-primary-container/5', 'border-l-2', 'border-primary-fixed-dim');
+                }
+                row.innerHTML = `
+<div class="flex justify-between items-start mb-1">
+<span class="font-data-sm text-data-sm text-primary-fixed-dim">${formatTimestamp(ann.time_seconds)}</span>
+<span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity edit-ann" data-id="${ann.id}">edit</span>
+</div>
+<p class="text-sm font-body-base text-on-surface">${ann.label || '(no label)'}</p>
+${isCurrent ? '<span class="font-label-caps text-[9px] bg-primary-container text-on-primary-container px-1 rounded">CURRENT</span>' : ''}
+                `;
+                row.querySelector('.edit-ann').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    editAnnotation(ann.id);
+                });
+                row.addEventListener('click', () => {
+                    currentSampleIndex = Math.round(ann.time_seconds * sampleRate);
+                    isPlaying = false;
+                    playPauseIcon.textContent = 'play_arrow';
+                    playPauseBtn.classList.remove('pulse-active');
+                    drawWindow();
+                    renderAnnotationList();
+                });
+                annotationsList.appendChild(row);
+            });
+        }
+
+        function updateAnnotationHighlight() {
+            // Throttle: only check every ~10 frames
+            if (++seekUpdateFrame % 10 !== 0) return;
+            renderAnnotationList();
+        }
+
+        function editAnnotation(id) {
+            const ann = annotations.find(a => a.id === id);
+            if (!ann) return;
+            const newLabel = window.prompt('Edit annotation label:', ann.label);
+            if (newLabel === null || newLabel === ann.label) return;
+            // Optimistic update
+            ann.label = newLabel;
+            renderAnnotationList();
+            // Persist
+            const urlParams = new URLSearchParams(window.location.search);
+            const filename = urlParams.get('file');
+            fetch(`/api/annotations/${encodeURIComponent(filename)}/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ label: newLabel })
+            }).catch(err => console.error('Annotation update failed:', err));
+        }
+
+        addMarkerBtn.addEventListener('click', () => {
+            const time_seconds = currentSampleIndex / sampleRate;
+            const label = window.prompt('Annotation label:');
+            if (label === null) return;
+            const urlParams = new URLSearchParams(window.location.search);
+            const filename = urlParams.get('file');
+            fetch(`/api/annotations/${encodeURIComponent(filename)}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ time_seconds, label })
+            })
+            .then(res => res.json())
+            .then(newAnnotations => {
+                annotations = newAnnotations;
+                renderAnnotationList();
+            })
+            .catch(err => console.error('Add marker failed:', err));
+        });
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        loadRecording();
+        requestAnimationFrame(tick);
     </script>
 </body></html>

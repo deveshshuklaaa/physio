@@ -322,7 +322,7 @@ export async function startLiveSession(opts) {
   function renderFrame(msg) {
     painter.setPose(msg.pts, msg.alerts);
     painter.paint();
-    ws.sendPose({ ts: msg.ts, landmarks: msg.pts, alerts: msg.alerts, view: msg.view });
+    ws.sendPose({ ts: msg.ts, landmarks: msg.evidencePts ?? msg.pts, alerts: msg.alerts, view: msg.view });
   }
 
   function updateCounters(msg) {

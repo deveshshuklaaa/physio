@@ -1,0 +1,18 @@
+---
+source_file: "part2/Hemophillia-confirm/backend/ml/predict.py"
+type: "code"
+community: "predict.py"
+location: "L205"
+tags:
+  - graphify/code
+  - graphify/EXTRACTED
+  - community/predictpy
+---
+
+# encode_binary()
+
+## Connections
+- [[normalize_text()]] - `calls` [EXTRACTED]
+- [[predict.py]] - `contains` [EXTRACTED]
+
+#graphify/code #graphify/EXTRACTED #community/predictpy

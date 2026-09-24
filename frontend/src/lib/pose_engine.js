@@ -12,11 +12,14 @@
  *        angle = use_3d ? angle3d(raw...) : angle2d(pts...)
  *   4. driver_angle = angle of the joint_check with is_rep_driver && view in
  *      driver_for_views (first match wins, matches legacy iteration order)
+ *   4b. driver_angle is One-Euro filtered (live_tuning.js ANGLE_FILTER)
  *   5. extra_checks (exercise-specific; squat only today) run IN THE SAME
  *      "if view in valid_views" branch, each doing its own fresh
  *      detectView() call internally (D3's documented asymmetry — see
  *      rules.js for why that's preserved rather than "fixed")
  *   6. dynamic rep state machine (rep_trigger) advances using driver_angle
+ *   6b. rep guards (live_tuning.js REP_GUARDS): hold frames on enter/exit,
+ *       minimum rep time, minimum movement; rejected reps -> repRejected
  *
  * Isometric state machine is NOT implemented: no exercise in the current
  * registry has real isometric thresholds (only squat, which is dynamic, has
@@ -28,14 +31,20 @@
 import { angle2d, angle3d, detectView } from "./angles.js";
 import { LM, VISIBILITY_THRESH } from "./landmarks.js";
 import { rulesForExercise, depthAlert } from "./rules.js";
+import { OneEuroScalar } from "./smoother.js";
+import { ANGLE_FILTER, REP_GUARDS } from "./live_tuning.js";
 
-/** Port of math_utils.build_pts: EMA-smooth + visibility filter + pixel projection. */
-export function buildPts(rawLandmarks, w, h, smoother) {
+/**
+ * Port of math_utils.build_pts: EMA-smooth + visibility filter + pixel projection.
+ * tSeconds: optional frame timestamp in seconds, forwarded to the smoother
+ * (ignored by EmaSmoother, required by OneEuroSmoother).
+ */
+export function buildPts(rawLandmarks, w, h, smoother, tSeconds) {
   const pts = {};
   for (const [name, idx] of Object.entries(LM)) {
     const lm = rawLandmarks[idx];
     if (!lm || lm.visibility === undefined || lm.visibility < VISIBILITY_THRESH) continue;
-    const [sx, sy] = smoother.smooth(name, lm);
+    const [sx, sy] = smoother.smooth(name, lm, tSeconds);
     pts[name] = [Math.trunc(sx * w), Math.trunc(sy * h)];
   }
   return pts;
@@ -48,6 +57,10 @@ function computeJointAngle(jc, rawLandmarks, pts) {
       const b = rawLandmarks[LM[jc.landmark_b]];
       const c = rawLandmarks[LM[jc.landmark_c]];
       if (!a || !b || !c) return null;
+      // 3D reads RAW landmarks (no EMA, no build_pts filter), so gate visibility here —
+      // an occluded joint otherwise feeds a phantom angle to the rep machine.
+      if ((a.visibility ?? 0) < VISIBILITY_THRESH || (b.visibility ?? 0) < VISIBILITY_THRESH
+          || (c.visibility ?? 0) < VISIBILITY_THRESH) return null;
       return angle3d(a, b, c);
     }
     if (!(jc.landmark_a in pts) || !(jc.landmark_b in pts) || !(jc.landmark_c in pts)) return null;
@@ -86,6 +99,13 @@ export class PoseEngine {
     this.rep_was_clean = null;
 
     this._rt = this._resolveRepTrigger(exerciseConfig);
+    this._angleFilter = new OneEuroScalar(ANGLE_FILTER);
+    this._frameIdx = 0;
+    this._enterCount = 0;
+    this._exitCount = 0;
+    this._enterFirstT = null;
+    this._exitFirstT = null;
+    this._pendingRejected = null;
   }
 
   _resolveRepTrigger(cfg) {
@@ -106,12 +126,17 @@ export class PoseEngine {
 
   /**
    * Process one frame. rawLandmarks: array of 33 {x,y,z,visibility}. w,h in px.
+   * tMs: frame timestamp in ms (optional; synthetic 10 fps clock used when absent).
    * Returns { view, alerts, jointAngles, driverAngle, stage, repCount,
-   *           cleanReps, repWasClean, repFailReason }.
+   *           cleanReps, repWasClean, repFailReason, repRejected, pts }.
    */
-  processFrame(rawLandmarks, w, h) {
+  processFrame(rawLandmarks, w, h, tMs) {
+    // ponytail: synthetic 10 fps clock when the caller passes no timestamp (tests, selfcheck).
+    const t = tMs ?? this._frameIdx * 100;
+    this._frameIdx++;
+
     const view = detectView(rawLandmarks, LM);
-    const pts = buildPts(rawLandmarks, w, h, this.smoother);
+    const pts = buildPts(rawLandmarks, w, h, this.smoother, t / 1000);
 
     const jointAngles = {};
     let driverAngle = null;
@@ -139,9 +164,13 @@ export class PoseEngine {
         }
       }
 
+      // One-Euro on the driver angle only: rep counting gets a jitter-free
+      // signal while landmarks (and so the offline-parity angles) stay EMA.
+      if (driverAngle != null) driverAngle = this._angleFilter.filter(driverAngle, t / 1000);
+
       // extra_checks, same branch, legacy execution order (rules.js).
       for (const fn of this.extraChecks) {
-        const a = fn({ lms: rawLandmarks, pts, w, h, stage: this.stage, view });
+        const a = fn({ lms: rawLandmarks, pts, w, h, stage: this.stage, view, driverAngle });
         if (a) alerts.push(a);
       }
     }
@@ -149,7 +178,7 @@ export class PoseEngine {
     // Dynamic rep state machine (D3 6.f), only if this exercise has real
     // enter/exit thresholds.
     if (this._rt && driverAngle != null && driverAngle > 0) {
-      alerts = this._advanceRepMachine(driverAngle, alerts);
+      alerts = this._advanceRepMachine(driverAngle, alerts, t);
     }
 
     return {
@@ -164,17 +193,30 @@ export class PoseEngine {
       repFailReason: this.repFailReason,
       // Present only on the frame where a rep completed; read once.
       repEntry: (() => { const e = this._pendingRepEntry; this._pendingRepEntry = null; return e; })(),
+      // Present only on the frame a rep was rejected by a guard; read once.
+      repRejected: (() => { const r = this._pendingRejected; this._pendingRejected = null; return r; })(),
+      pts,
     };
   }
 
-  _advanceRepMachine(driverAngle, alerts) {
+  _advanceRepMachine(driverAngle, alerts, t) {
     const rt = this._rt;
+    const g = REP_GUARDS;
     const decreasing = rt.direction === "decrease";
 
     if (this.stage === "UP") {
-      const entered = decreasing ? driverAngle < rt.enterAngle : driverAngle > rt.enterAngle;
-      if (entered) {
+      const pastEnter = decreasing ? driverAngle < rt.enterAngle : driverAngle > rt.enterAngle;
+      if (pastEnter) {
+        if (this._enterCount === 0) this._enterFirstT = t;
+        this._enterCount += 1;
+      } else {
+        this._enterCount = 0;
+      }
+      if (this._enterCount >= g.holdFrames) {
         this.stage = "DOWN";
+        this._enterCount = 0;
+        this._exitCount = 0;
+        this._exitFirstT = null;
         this.repHadError = false;
         this.repFailReason = "";
         this.repErrors = [];
@@ -197,9 +239,27 @@ export class PoseEngine {
         }
       }
 
-      const exited = decreasing ? driverAngle > rt.exitAngle : driverAngle < rt.exitAngle;
-      if (exited) {
+      const pastExit = decreasing ? driverAngle > rt.exitAngle : driverAngle < rt.exitAngle;
+      if (pastExit) {
+        if (this._exitCount === 0) this._exitFirstT = t;
+        this._exitCount += 1;
+      } else {
+        this._exitCount = 0;
+      }
+      if (this._exitCount >= g.holdFrames) {
         this.stage = "UP";
+        this._exitCount = 0;
+        const durationS = (this._exitFirstT - this._enterFirstT) / 1000;
+        const romDeg = decreasing ? rt.enterAngle - this.bestDriverAngle : this.bestDriverAngle - rt.enterAngle;
+        const reason = durationS < g.minRepS ? "too_fast" : romDeg < g.minRomDeg ? "too_small" : null;
+        if (reason) {
+          // Not a rep: not counted, not flagged. Logged by the worker as rep_rejected.
+          this._pendingRejected = { reason, duration_s: Number(durationS.toFixed(2)), rom_deg: Math.trunc(romDeg) };
+          this.repHadError = false;
+          this.repFailReason = "";
+          this.repErrors = [];
+          return alerts;
+        }
         this.repCount += 1;
         if (rt.depthTarget > 0) {
           const depthOk = decreasing

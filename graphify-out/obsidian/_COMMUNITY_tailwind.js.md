@@ -1,0 +1,203 @@
+---
+type: community
+members: 162
+---
+
+# tailwind.js
+
+**Members:** 162 nodes
+
+## Members
+- [[dot-toString()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[dot-walk()_1]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Ag()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Am()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Cg()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Cm()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Cx()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[DS()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Dh()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Dk()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[FS()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[G0()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[G2()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[GA()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[GC()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Gt()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[H0()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[HS()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Hf()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Hh()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[IS()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Ih()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Ja()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Lt()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Lx()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[MS()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Md()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Mk()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Mr()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Mx()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[NS()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[O2()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Od()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Qo()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Qp()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[R2()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Sm()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[T2()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Uh()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[V0()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[VS()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Vp()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[W0()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[WC()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Wa()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Xa()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Yv()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[ZC()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[Symbol.toStringTag()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[_emitEvictions()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[_entriesAscending()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[_moveToRecent()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[_set()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[aS()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[ad()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[ak()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[ao()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[applyVariantOffset()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[assign()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[async()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[ay()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[bE()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[blueGray()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[breakpoints()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[cS()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[catch()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[checkMissedSemicolon()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[ck()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[clean()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[cleanRaws()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[cleaner()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[cn()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[colon()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[compare()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[convertDirection()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[coolGray()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[dO()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[da()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[dd()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[div()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[dm()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[doubleColon()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[ed()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[ef()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[el()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[extglobChars()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[fA()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[fC()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[finally()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[first()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[fixAngle()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[fixDirection()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[fixRadial()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[fk()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[gE()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[gk()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[globChars()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[hE()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[hack()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[hl()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[ho()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[ib()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[id()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[isRadial()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[isSelected()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[jk()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[kS()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[km()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[l3()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[last()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[lightBlue()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[lk()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[lr()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[mE()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[markClean()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[mc()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[newDirection()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[next()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[no()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[o()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[oC()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[oO()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[oS()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[opts()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[oy()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[pA()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[prefixName()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[prefixQuery()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[processor()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[proxyOf()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[q5()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[q_()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[qk()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[rb()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[recalculateVariantOffsets()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[remapArbitraryVariantOffsets()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[resize()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[revertDirection()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[roundFloat()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[sd()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[select()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[size()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[so()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[sort()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[sortArbitraryProperties()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[tailwind.js]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[td()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[then()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[tm()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[to()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[trueGray()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[uk()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[ur()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[v3()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[variable()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[vm()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[warmGray()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[xm()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[za()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[ze()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[zk()]] - code - frontend/src/vendor/tailwind/tailwind.js
+- [[zn()]] - code - frontend/src/vendor/tailwind/tailwind.js
+
+## Live Query (requires Dataview plugin)
+
+```dataview
+TABLE source_file, type FROM #community/tailwindjs
+SORT file.name ASC
+```
+
+## Connections to other communities
+- 70 edges to [[_COMMUNITY_clone]]
+- 67 edges to [[_COMMUNITY_decl]]
+- 63 edges to [[_COMMUNITY_has]]
+- 50 edges to [[_COMMUNITY_remove]]
+- 42 edges to [[_COMMUNITY_add]]
+- 41 edges to [[_COMMUNITY_push]]
+- 40 edges to [[_COMMUNITY_replace]]
+- 28 edges to [[_COMMUNITY_ql]]
+- 19 edges to [[_COMMUNITY_sync]]
+- 14 edges to [[_COMMUNITY_lE]]
+- 13 edges to [[_COMMUNITY_Ax]]
+- 4 edges to [[_COMMUNITY_m]]
+- 3 edges to [[_COMMUNITY_e]]
+- 1 edge to [[_COMMUNITY_session_orchestrator.js]]
+- 1 edge to [[_COMMUNITY_vision_bundle.mjs]]
+
+## Top bridge nodes
+- [[tailwind.js]] - degree 567, connects to 13 communities
+- [[sort()]] - degree 14, connects to 5 communities
+- [[Mr()]] - degree 10, connects to 3 communities
+- [[_set()]] - degree 6, connects to 3 communities
+- [[Ag()]] - degree 7, connects to 2 communities

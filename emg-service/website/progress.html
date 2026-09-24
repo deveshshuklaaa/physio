@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clinical Kinetic EMG - Progress</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#9cf0ff",
+                    "on-error-container": "#ffdad6",
+                    "tertiary": "#fffeff",
+                    "on-tertiary-fixed": "#410001",
+                    "on-secondary-container": "#00616d",
+                    "primary": "#fbfffa",
+                    "surface-tint": "#00e1ab",
+                    "on-surface-variant": "#b9cbc1",
+                    "error": "#ffb4ab",
+                    "tertiary-container": "#ffd9d4",
+                    "surface": "#0d1518",
+                    "secondary-fixed-dim": "#00daf3",
+                    "secondary": "#bdf4ff",
+                    "outline-variant": "#3a4a43",
+                    "outline": "#83958c",
+                    "inverse-primary": "#006c50",
+                    "tertiary-fixed": "#ffdad5",
+                    "on-surface": "#dbe4e8",
+                    "inverse-on-surface": "#2a3235",
+                    "surface-variant": "#2e3639",
+                    "on-tertiary-fixed-variant": "#930005",
+                    "primary-fixed-dim": "#00e1ab",
+                    "on-tertiary": "#690003",
+                    "on-error": "#690005",
+                    "surface-container-highest": "#2e3639",
+                    "on-primary-container": "#007255",
+                    "background": "#0d1518",
+                    "inverse-surface": "#dbe4e8",
+                    "on-primary-fixed-variant": "#00513c",
+                    "surface-dim": "#0d1518",
+                    "primary-container": "#00ffc2",
+                    "on-tertiary-container": "#c9090f",
+                    "secondary-container": "#00e3fd",
+                    "surface-container-lowest": "#070f12",
+                    "surface-container-high": "#232b2e",
+                    "on-primary": "#003828",
+                    "on-secondary-fixed": "#001f24",
+                    "tertiary-fixed-dim": "#ffb4aa",
+                    "primary-fixed": "#36ffc4",
+                    "on-primary-fixed": "#002116",
+                    "error-container": "#93000a",
+                    "surface-bright": "#323a3e",
+                    "surface-container": "#192124",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "on-background": "#dbe4e8",
+                    "on-secondary": "#00363d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "margin-desktop": "32px",
+                    "unit": "4px",
+                    "container-max": "1440px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "headline-md-mobile": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "data-lg": ["JetBrains Mono"],
+                    "body-base": ["Inter"],
+                    "data-sm": ["JetBrains Mono"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                    "data-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.05em", "fontWeight": "500"}],
+                    "body-base": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "data-sm": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<script src="components.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body class="bg-background text-on-surface font-body-base select-none">
+<emg-nav active="progress"></emg-nav>
+<main class="flex-1 px-margin-mobile py-6 max-w-container-max mx-auto w-full">
+
+<h2 class="font-label-caps text-label-caps text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="w-1 h-1 bg-primary rounded-full"></span>
+    PROGRESS
+</h2>
+
+<!-- Filter row -->
+<div class="flex flex-wrap items-center gap-3 mb-6">
+<div id="range-presets" class="inline-flex w-fit items-center rounded-md" role="group" aria-label="Date range"></div>
+<div id="bucket-toggle"></div>
+<p id="skipped-note" class="font-data-sm text-data-sm text-on-surface-variant hidden"></p>
+</div>
+
+<div id="error-state" class="hidden text-center py-16">
+<p id="error-message" class="text-on-surface-variant mb-4">Couldn't load progress data.</p>
+<button onclick="loadProgress()" class="inline-block px-4 py-2 rounded-md bg-primary-container text-on-primary-container font-label-caps text-label-caps">Retry</button>
+</div>
+
+<div id="empty-state" class="hidden text-center py-16">
+<p class="text-on-surface-variant mb-4">No recordings yet.</p>
+<a href="live.html" class="inline-block px-4 py-2 rounded-md bg-primary-container text-on-primary-container font-label-caps text-label-caps">Go to Live</a>
+</div>
+
+<div id="dashboard-content">
+
+<!-- Stat tiles -->
+<div id="stat-tiles" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8"></div>
+
+<!-- Line / scatter charts -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">PEAK AMPLITUDE</h3>
+<div class="h-64"><canvas id="chart-peak"></canvas></div>
+</div>
+<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">RMS &amp; STRENGTH</h3>
+<div class="h-64"><canvas id="chart-rms-strength"></canvas></div>
+</div>
+<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">RANGE OF MOTION</h3>
+<div class="h-64"><canvas id="chart-rom"></canvas></div>
+</div>
+</div>
+
+<!-- Bucketed bar charts -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">CONTRACTION RATE</h3>
+<div class="h-64"><canvas id="chart-rate"></canvas></div>
+</div>
+<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">LATENCY</h3>
+<div class="h-64"><canvas id="chart-latency"></canvas></div>
+</div>
+<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">GYRO MAGNITUDE</h3>
+<div class="h-64"><canvas id="chart-gyro"></canvas></div>
+</div>
+</div>
+
+<!-- Table -->
+<details class="bg-surface-container-low rounded-xl border border-outline-variant p-4">
+<summary class="cursor-pointer font-label-caps text-label-caps text-on-surface-variant">ALL RECORDS</summary>
+<div class="overflow-x-auto mt-3">
+<table id="records-table" class="w-full text-left font-data-sm text-data-sm whitespace-nowrap">
+<thead>
+<tr class="text-on-surface-variant border-b border-outline-variant">
+<th class="py-2 pr-4">Timestamp</th>
+<th class="py-2 pr-4">Filename</th>
+<th class="py-2 pr-4">Duration (s)</th>
+<th class="py-2 pr-4">Contractions</th>
+<th class="py-2 pr-4">Peak (mV)</th>
+<th class="py-2 pr-4">RMS (mV)</th>
+<th class="py-2 pr-4">Strength (mV)</th>
+<th class="py-2 pr-4">Rate (bursts/min)</th>
+<th class="py-2 pr-4">Mean latency (s)</th>
+<th class="py-2 pr-4">Peak latency (s)</th>
+<th class="py-2 pr-4">Fatigue</th>
+<th class="py-2 pr-4">ROM (°)</th>
+<th class="py-2 pr-4">Gyro burst (°/s)</th>
+<th class="py-2 pr-4">Gyro rest (°/s)</th>
+<th class="py-2 pr-4">Shaky</th>
+</tr>
+</thead>
+<tbody id="records-table-body"></tbody>
+</table>
+</div>
+</details>
+
+</div>
+</main>
+
+<script>
+// =====================================================================
+// Pure helpers (extracted and evaluated by test_website.js phase 17)
+// =====================================================================
+
+// Auto-pick a bucket size from the span (ms) of the selected date range.
+function autoBucket(spanMs) {
+  const DAY = 24 * 60 * 60 * 1000;
+  if (spanMs < 2 * DAY) return 'session';
+  if (spanMs <= 60 * DAY) return 'day';
+  return 'week';
+}
+
+// Group key for a timestamp under a given bucket size. 'day' and 'week'
+// collapse to the calendar boundary (local time); 'session' is unique
+// per-record (to the second).
+function bucketKey(date, bucket) {
+  const d = new Date(date);
+  const p2 = (n) => String(n).padStart(2, '0');
+  if (bucket === 'day') {
+    return `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())}`;
+  }
+  if (bucket === 'week') {
+    const dow = d.getDay(); // 0 = Sunday
+    const diff = (dow === 0 ? -6 : 1 - dow); // days back to Monday
+    const monday = new Date(d.getFullYear(), d.getMonth(), d.getDate() + diff);
+    return `${monday.getFullYear()}-${p2(monday.getMonth() + 1)}-${p2(monday.getDate())}`;
+  }
+  return `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())}T${p2(d.getHours())}:${p2(d.getMinutes())}:${p2(d.getSeconds())}`;
+}
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function bucketLabel(d, bucket) {
+  const p2 = (n) => String(n).padStart(2, '0');
+  if (bucket === 'session') {
+    return `${p2(d.getDate())} ${MONTHS[d.getMonth()]} ${p2(d.getHours())}:${p2(d.getMinutes())}`;
+  }
+  if (bucket === 'day') {
+    return `${p2(d.getDate())} ${MONTHS[d.getMonth()]}`;
+  }
+  const dow = d.getDay();
+  const diff = (dow === 0 ? -6 : 1 - dow);
+  const monday = new Date(d.getFullYear(), d.getMonth(), d.getDate() + diff);
+  return `Wk ${p2(monday.getDate())} ${MONTHS[monday.getMonth()]}`;
+}
+
+// =====================================================================
+// Palette (validated: node scripts/validate_palette.js "#3987e5,#d95926"
+// --mode dark --surface "#0d1518" -> ALL CHECKS PASS)
+// =====================================================================
+const SURFACE = '#0d1518';
+const GRID = '#3a4a43';        // outline-variant
+const TEXT = '#b9cbc1';        // on-surface-variant
+const ACCENT = '#00e1ab';      // primary-fixed-dim, single-series brand accent
+const SERIES_1 = '#3987e5';    // categorical slot 1 (dark)
+const SERIES_2 = '#d95926';    // categorical slot 2 (dark)
+
+Chart.defaults.color = TEXT;
+Chart.defaults.borderColor = GRID;
+Chart.defaults.font.family = 'Inter';
+
+// min/max pin every line chart to the same x-domain (the selected range),
+// not just the span of whichever records happen to have a non-null value
+// for that particular chart -- otherwise e.g. the IMU-only ROM chart's
+// axis silently shrinks to just its own few valid records.
+function timeAxis(min, max) {
+  return {
+    type: 'time',
+    time: { unit: 'day' },
+    min, max,
+    grid: { color: GRID },
+    ticks: { color: TEXT },
+    title: { display: true, text: 'Time', color: TEXT },
+  };
+}
+
+function valueAxis(unit) {
+  return {
+    beginAtZero: true,
+    grid: { color: GRID },
+    ticks: { color: TEXT },
+    title: { display: true, text: unit, color: TEXT },
+  };
+}
+
+function categoryAxis() {
+  return { grid: { display: false }, ticks: { color: TEXT } };
+}
+
+// Even spacing: sessions clustered in real time (5 in one afternoon) crush
+// together on a time axis. Plot against session index instead -- one evenly
+// spaced slot per record, date shown on the tick.
+function shortDate(d) {
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
+function indexAxis(recs) {
+  return {
+    type: 'linear',
+    offset: true,
+    min: -0.5,
+    max: Math.max(recs.length - 0.5, 0.5),
+    grid: { color: GRID },
+    afterBuildTicks: (axis) => { axis.ticks = recs.map((_, i) => ({ value: i })); },
+    ticks: {
+      color: TEXT, autoSkip: true, maxRotation: 45, minRotation: 0,
+      callback: (v) => (Number.isInteger(v) && recs[v]) ? shortDate(recs[v].date) : '',
+    },
+    title: { display: true, text: 'Session date', color: TEXT },
+  };
+}
+
+// =====================================================================
+// State
+// =====================================================================
+let allRecords = [];   // parsed records, sorted ascending by date
+let skipped = [];
+let units = { amplitude: 'mV', mv_per_count: 0.7082 };
+let rangeValue = 'all';        // '7d' | '30d' | '90d' | 'all'
+let bucketOverride = null;     // set once the user clicks the toggle; cleared on range change
+let loadError = null;          // set when the /api/progress fetch/parse itself failed
+const charts = {};             // id -> Chart instance
+
+function destroyChart(id) {
+  if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+}
+
+function mean(arr) {
+  const v = arr.filter((x) => x != null);
+  if (!v.length) return null;
+  return v.reduce((a, b) => a + b, 0) / v.length;
+}
+function minOf(arr) {
+  const v = arr.filter((x) => x != null);
+  return v.length ? Math.min(...v) : null;
+}
+function maxOf(arr) {
+  const v = arr.filter((x) => x != null);
+  return v.length ? Math.max(...v) : null;
+}
+
+function rangeBounds() {
+  if (!allRecords.length) return [new Date(), new Date()];
+  if (rangeValue === 'all') {
+    return [allRecords[0].date, allRecords[allRecords.length - 1].date];
+  }
+  const days = { '7d': 7, '30d': 30, '90d': 90 }[rangeValue] || 7;
+  const end = new Date();
+  const start = new Date(end.getTime() - days * 24 * 60 * 60 * 1000);
+  return [start, end];
+}
+
+function filteredRecords() {
+  const [start, end] = rangeBounds();
+  return allRecords.filter((r) => r.date >= start && r.date <= end);
+}
+
+function currentBucket() {
+  const [start, end] = rangeBounds();
+  return bucketOverride || autoBucket(end - start);
+}
+
+// =====================================================================
+// Fetch + init
+// =====================================================================
+async function loadProgress() {
+  loadError = null;
+  try {
+    const res = await fetch('/api/progress');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    units = data.units || units;
+    skipped = data.skipped || [];
+    allRecords = (data.records || [])
+      .map((r) => ({ ...r, date: new Date(r.timestamp) }))
+      .sort((a, b) => a.date - b.date);
+  } catch (e) {
+    allRecords = [];
+    skipped = [];
+    loadError = (e && e.message) ? e.message : 'Unknown error';
+    console.error('Failed to load /api/progress', e);
+  }
+  renderPage();
+}
+
+function renderPage() {
+  const errorState = document.getElementById('error-state');
+  const emptyState = document.getElementById('empty-state');
+  const content = document.getElementById('dashboard-content');
+
+  if (loadError) {
+    document.getElementById('error-message').textContent = `Couldn't load progress data: ${loadError}`;
+    errorState.classList.remove('hidden');
+    emptyState.classList.add('hidden');
+    content.classList.add('hidden');
+    return;
+  }
+  errorState.classList.add('hidden');
+
+  if (!allRecords.length) {
+    emptyState.classList.remove('hidden');
+    content.classList.add('hidden');
+    renderRangePresets();
+    return;
+  }
+  emptyState.classList.add('hidden');
+  content.classList.remove('hidden');
+
+  const skippedNote = document.getElementById('skipped-note');
+  if (skipped.length) {
+    skippedNote.textContent = `${skipped.length} recording${skipped.length === 1 ? '' : 's'} skipped (${skipped.map((s) => s.reason).join(', ')})`;
+    skippedNote.classList.remove('hidden');
+  } else {
+    skippedNote.classList.add('hidden');
+  }
+
+  renderRangePresets();
+  renderBucketToggle();
+  renderStatTiles();
+  renderLineCharts();
+  renderBarCharts();
+  renderTable();
+}
+
+function renderRangePresets() {
+  const container = document.getElementById('range-presets');
+  const options = [
+    { value: '7d', label: '7d' },
+    { value: '30d', label: '30d' },
+    { value: '90d', label: '90d' },
+    { value: 'all', label: 'All' },
+  ];
+  renderToggleGroup(container, options, rangeValue, (v) => {
+    rangeValue = v;
+    bucketOverride = null; // range change resets the bucket override
+    renderPage();
+  });
+}
+
+function renderBucketToggle() {
+  const container = document.getElementById('bucket-toggle');
+  const options = [
+    { value: 'session', label: 'Session' },
+    { value: 'day', label: 'Day' },
+    { value: 'week', label: 'Week' },
+  ];
+  renderToggleGroup(container, options, currentBucket(), (v) => {
+    bucketOverride = v;
+    renderBarCharts();
+  });
+}
+
+// =====================================================================
+// Stat tiles
+// =====================================================================
+const STAT_DEFS = [
+  { key: 'peak_mv', label: 'Peak amplitude', unit: 'mV', get: (r) => r.peak_mv },
+  { key: 'rms_mv', label: 'RMS amplitude', unit: 'mV', get: (r) => r.rms_mv },
+  { key: 'strength_mv', label: 'Strength', unit: 'mV', get: (r) => r.strength_mv },
+  { key: 'rate_per_min', label: 'Rate', unit: 'bursts/min', get: (r) => r.rate_per_min },
+  { key: 'mean_latency_s', label: 'Mean latency', unit: 's', get: (r) => r.mean_latency_s },
+  { key: 'peak_latency_s', label: 'Peak latency', unit: 's', get: (r) => r.peak_latency_s },
+  { key: 'rom_deg', label: 'Range of motion', unit: '°', get: (r) => r.imu && r.imu.valid ? r.imu.rom_deg : null },
+  { key: 'gyro_burst_dps', label: 'Gyro in bursts', unit: '°/s', get: (r) => r.imu && r.imu.valid ? r.imu.gyro_burst_dps : null },
+];
+
+function buildSparklinePath(points) {
+  if (!points || points.length < 2) return 'M0 20 L100 20';
+  const maxVal = Math.max(...points);
+  const minVal = Math.min(...points);
+  const span = maxVal - minVal || 1;
+  const stepX = 100 / (points.length - 1);
+  let path = `M0 ${40 - ((points[0] - minVal) / span) * 32 - 4}`;
+  for (let i = 1; i < points.length; i++) {
+    const x = i * stepX;
+    const y = 40 - ((points[i] - minVal) / span) * 32 - 4;
+    path += ` L${x.toFixed(1)} ${y.toFixed(1)}`;
+  }
+  return path;
+}
+
+function renderStatTiles() {
+  const container = document.getElementById('stat-tiles');
+  const records = filteredRecords();
+  container.innerHTML = '';
+  STAT_DEFS.forEach((def) => {
+    const points = records.map((r) => ({ v: def.get(r) })).filter((p) => p.v != null).map((p) => p.v);
+    const tile = document.createElement('div');
+    tile.className = 'bg-surface-container-low rounded-xl border border-outline-variant p-3';
+    if (!points.length) {
+      tile.innerHTML = `
+        <p class="font-label-caps text-label-caps text-on-surface-variant mb-1">${def.label}</p>
+        <p class="font-data-lg text-data-lg text-on-surface-variant">—</p>
+        <p class="font-data-sm text-data-sm text-on-surface-variant">too few contractions</p>`;
+      container.appendChild(tile);
+      return;
+    }
+    const latest = points[points.length - 1];
+    const first = points[0];
+    const delta = latest - first;
+    const dir = delta > 0 ? 'trending_up' : (delta < 0 ? 'trending_down' : 'trending_flat');
+    const deltaText = `${delta >= 0 ? '+' : ''}${delta.toFixed(2)} ${def.unit}`;
+    const path = buildSparklinePath(points.slice(-20));
+    tile.innerHTML = `
+      <p class="font-label-caps text-label-caps text-on-surface-variant mb-1">${def.label}</p>
+      <p class="font-data-lg text-data-lg text-on-surface">${latest.toFixed(2)}<span class="text-data-sm text-on-surface-variant"> ${def.unit}</span></p>
+      <p class="flex items-center gap-1 font-data-sm text-data-sm text-on-surface-variant">
+        <span class="material-symbols-outlined text-[14px]">${dir}</span>${deltaText}
+      </p>
+      <svg class="w-full h-8 mt-1" viewBox="0 0 100 40" preserveAspectRatio="none">
+        <path d="${path}" stroke="${ACCENT}" stroke-width="1.5" fill="none"/>
+      </svg>`;
+    container.appendChild(tile);
+  });
+}
+
+// =====================================================================
+// Line / scatter charts (a-d) -- one point per record, true time axis
+// =====================================================================
+function pointStyleFor(shaky) {
+  return shaky
+    ? { pointBackgroundColor: SURFACE, pointBorderColor: ACCENT, pointBorderWidth: 2 }
+    : { pointBackgroundColor: ACCENT, pointBorderColor: ACCENT, pointBorderWidth: 0 };
+}
+
+function renderLineCharts() {
+  const records = filteredRecords();
+  // All four line charts share one x-domain (the selected range), so an
+  // IMU-only chart like ROM doesn't silently shrink its axis to just the
+  // few records that happen to have a non-null value.
+  const [rangeStart, rangeEnd] = rangeBounds();
+
+  destroyChart('chart-peak');
+  charts['chart-peak'] = new Chart(document.getElementById('chart-peak'), {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'Peak amplitude',
+        data: records.map((r, i) => ({ x: i, y: r.peak_mv, shaky: r.shaky })),
+        borderColor: ACCENT,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        pointBackgroundColor: (ctx) => pointStyleFor(ctx.raw && ctx.raw.shaky).pointBackgroundColor,
+        pointBorderColor: (ctx) => pointStyleFor(ctx.raw && ctx.raw.shaky).pointBorderColor,
+        pointBorderWidth: (ctx) => pointStyleFor(ctx.raw && ctx.raw.shaky).pointBorderWidth,
+        borderWidth: 2,
+        spanGaps: false,
+        showLine: true,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: indexAxis(records), y: valueAxis('mV') },
+    },
+  });
+
+  destroyChart('chart-rms-strength');
+  charts['chart-rms-strength'] = new Chart(document.getElementById('chart-rms-strength'), {
+    type: 'line',
+    data: {
+      datasets: [
+        {
+          label: 'RMS amplitude (mV)',
+          data: records.map((r, i) => ({ x: i, y: r.rms_mv, shaky: r.shaky })),
+          borderColor: SERIES_1,
+          pointBackgroundColor: (ctx) => pointStyleFor(ctx.raw && ctx.raw.shaky).pointBackgroundColor === SURFACE ? SURFACE : SERIES_1,
+          pointBorderColor: SERIES_1,
+          pointBorderWidth: (ctx) => (ctx.raw && ctx.raw.shaky) ? 2 : 0,
+          pointRadius: 4, borderWidth: 2, spanGaps: false,
+        },
+        {
+          label: 'Strength (mV)',
+          data: records.map((r, i) => ({ x: i, y: r.strength_mv, shaky: r.shaky })),
+          borderColor: SERIES_2,
+          pointBackgroundColor: (ctx) => (ctx.raw && ctx.raw.shaky) ? SURFACE : SERIES_2,
+          pointBorderColor: SERIES_2,
+          pointBorderWidth: (ctx) => (ctx.raw && ctx.raw.shaky) ? 2 : 0,
+          pointRadius: 4, borderWidth: 2, spanGaps: false,
+        },
+      ],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, labels: { color: TEXT } } },
+      scales: { x: indexAxis(records), y: valueAxis('mV') },
+    },
+  });
+
+  destroyChart('chart-rom');
+  const romRecords = records.filter((r) => r.imu && r.imu.valid);
+  charts['chart-rom'] = new Chart(document.getElementById('chart-rom'), {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'Range of motion',
+        data: romRecords.map((r, i) => ({ x: i, y: r.imu.rom_deg })),
+        borderColor: ACCENT, pointBackgroundColor: ACCENT,
+        pointRadius: 4, borderWidth: 2, spanGaps: false,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: indexAxis(romRecords), y: valueAxis('°') },
+    },
+  });
+}
+
+// =====================================================================
+// Bucketed bar charts (e-h)
+// =====================================================================
+function enumerateBucketDefs(records, bucket) {
+  if (!records.length) return [];
+  if (bucket === 'session') {
+    const seen = new Map();
+    records.forEach((r) => {
+      const k = bucketKey(r.date, 'session');
+      if (!seen.has(k)) seen.set(k, { key: k, date: r.date, label: bucketLabel(r.date, 'session'), records: [] });
+      seen.get(k).records.push(r);
+    });
+    return Array.from(seen.values()).sort((a, b) => a.date - b.date);
+  }
+  const start = records[0].date;
+  const end = records[records.length - 1].date;
+  const defs = [];
+  if (bucket === 'day') {
+    let d = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+    const endDay = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+    while (d <= endDay) {
+      defs.push({ key: bucketKey(d, 'day'), date: new Date(d), label: bucketLabel(d, 'day'), records: [] });
+      d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
+    }
+  } else {
+    const dow0 = start.getDay();
+    const diff0 = (dow0 === 0 ? -6 : 1 - dow0);
+    let d = new Date(start.getFullYear(), start.getMonth(), start.getDate() + diff0);
+    const dowE = end.getDay();
+    const diffE = (dowE === 0 ? -6 : 1 - dowE);
+    const endWeek = new Date(end.getFullYear(), end.getMonth(), end.getDate() + diffE);
+    while (d <= endWeek) {
+      defs.push({ key: bucketKey(d, 'week'), date: new Date(d), label: bucketLabel(d, 'week'), records: [] });
+      d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 7);
+    }
+  }
+  const byKey = new Map(defs.map((b) => [b.key, b]));
+  records.forEach((r) => {
+    const k = bucketKey(r.date, bucket);
+    if (byKey.has(k)) byKey.get(k).records.push(r);
+  });
+  return defs;
+}
+
+function nullTooltip(labelPrefix) {
+  return {
+    callbacks: {
+      label: (ctx) => ctx.parsed.y == null ? 'too few contractions' : `${labelPrefix ? labelPrefix(ctx) : ctx.dataset.label}: ${ctx.parsed.y}`,
+    },
+  };
+}
+
+function renderBarCharts() {
+  const records = filteredRecords();
+  const bucket = currentBucket();
+  const defs = enumerateBucketDefs(records, bucket);
+  const labels = defs.map((b) => b.label);
+
+  destroyChart('chart-rate');
+  charts['chart-rate'] = new Chart(document.getElementById('chart-rate'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Contraction rate',
+        data: defs.map((b) => mean(b.records.map((r) => r.rate_per_min))),
+        backgroundColor: ACCENT, maxBarThickness: 24, borderRadius: 4,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { display: false }, tooltip: nullTooltip() },
+      scales: { x: categoryAxis(), y: valueAxis('bursts/min') },
+    },
+  });
+
+  destroyChart('chart-latency');
+  charts['chart-latency'] = new Chart(document.getElementById('chart-latency'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Mean latency (s)',
+          data: defs.map((b) => mean(b.records.map((r) => r.mean_latency_s))),
+          backgroundColor: SERIES_1, maxBarThickness: 24, borderRadius: 4,
+        },
+        {
+          label: 'Peak latency (s)',
+          data: defs.map((b) => maxOf(b.records.map((r) => r.peak_latency_s))),
+          backgroundColor: SERIES_2, maxBarThickness: 24, borderRadius: 4,
+        },
+      ],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { display: true, labels: { color: TEXT } }, tooltip: nullTooltip() },
+      scales: { x: categoryAxis(), y: valueAxis('s') },
+    },
+  });
+
+  destroyChart('chart-gyro');
+  charts['chart-gyro'] = new Chart(document.getElementById('chart-gyro'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Burst (°/s)',
+          data: defs.map((b) => mean(b.records.filter((r) => r.imu && r.imu.valid).map((r) => r.imu.gyro_burst_dps))),
+          backgroundColor: SERIES_1, maxBarThickness: 24, borderRadius: 4,
+        },
+        {
+          label: 'Rest (°/s)',
+          data: defs.map((b) => mean(b.records.filter((r) => r.imu && r.imu.valid).map((r) => r.imu.gyro_rest_dps))),
+          backgroundColor: SERIES_2, maxBarThickness: 24, borderRadius: 4,
+        },
+      ],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { display: true, labels: { color: TEXT } }, tooltip: nullTooltip() },
+      scales: { x: categoryAxis(), y: valueAxis('°/s') },
+    },
+  });
+}
+
+// =====================================================================
+// Table view
+// =====================================================================
+function fmt(v, digits) {
+  return v == null ? '—' : (typeof v === 'number' ? v.toFixed(digits == null ? 2 : digits) : String(v));
+}
+
+// Record-derived values (filename, timestamp, ...) come from history.json
+// / on-disk filenames -- never interpolate them into an innerHTML template.
+// Every cell is built as a real DOM node with its value set via
+// textContent, so a crafted filename can only ever render as inert text.
+const RECORD_TABLE_COLUMNS = [
+  (r) => r.timestamp,
+  (r) => r.filename,
+  (r) => fmt(r.duration_s, 1),
+  (r) => fmt(r.contraction_count, 0),
+  (r) => fmt(r.peak_mv),
+  (r) => fmt(r.rms_mv),
+  (r) => fmt(r.strength_mv),
+  (r) => fmt(r.rate_per_min),
+  (r) => fmt(r.mean_latency_s, 3),
+  (r) => fmt(r.peak_latency_s, 3),
+  (r) => fmt(r.fatigue_index, 3),
+  (r) => (r.imu && r.imu.valid ? fmt(r.imu.rom_deg) : '—'),
+  (r) => (r.imu && r.imu.valid ? fmt(r.imu.gyro_burst_dps) : '—'),
+  (r) => (r.imu && r.imu.valid ? fmt(r.imu.gyro_rest_dps) : '—'),
+  (r) => (r.shaky === true ? 'yes' : (r.shaky === false ? 'no' : '—')),
+];
+
+function renderTable() {
+  const body = document.getElementById('records-table-body');
+  const records = filteredRecords();
+  body.innerHTML = '';
+  records.forEach((r) => {
+    const tr = document.createElement('tr');
+    tr.className = 'border-b border-outline-variant/50';
+    RECORD_TABLE_COLUMNS.forEach((getValue) => {
+      const td = document.createElement('td');
+      td.className = 'py-1 pr-4';
+      td.textContent = getValue(r);
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+}
+
+loadProgress();
+</script>
+</body>
+</html>

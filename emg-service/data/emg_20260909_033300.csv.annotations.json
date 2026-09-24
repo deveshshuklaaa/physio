@@ -1,0 +1,12 @@
+[
+  {
+    "id": "fec89e9b8c524faaa39e6b97b3bbda05",
+    "time_seconds": 0,
+    "label": "too little activation"
+  },
+  {
+    "id": "af64bf8b7884433890b1022872a0887b",
+    "time_seconds": 1.3957999999999993,
+    "label": "too much activation"
+  }
+]

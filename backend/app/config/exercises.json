@@ -55,7 +55,8 @@
       "isometric_trigger": null,
       "extra_checks": [
         "heel_lifting",
-        "hip_lifting"
+        "hip_lifting",
+        "slide_insufficient"
       ],
       "thresholds": {
         "heel_lifting_max_y_rise": {
@@ -77,6 +78,17 @@
           "unit": "alert string",
           "source": "docs/08_exercise_config.md threshold table (dataset-derived, NOT clinician-signed)",
           "signal": "raised when a rep never reached depth_target"
+        },
+        "slide_insufficient_min_heel_travel_ratio": {
+          "value": 0.25,
+          "unit": "fraction of the rest hip->heel pixel distance",
+          "source": "geometry of depth_target: with thigh ~= shin, knee 90 deg puts the heel at 0.71 of the straight-leg hip->heel distance (travel 0.29); 0.25 leaves slack. Provisional, NOT clinician-signed (2026-09-24)",
+          "alert": "Slide your heel further toward your hip"
+        },
+        "slide_insufficient_return_deg": {
+          "value": 15,
+          "unit": "deg",
+          "source": "provisional live tuning (2026-09-24): slide_insufficient judges once the knee has straightened this far back from its lowest point"
         }
       }
     },
@@ -84,7 +96,7 @@
       "name": "mini_squat",
       "display_name": "Mini Squat",
       "type": "dynamic",
-      "primary_branch": "pose",
+      "primary_branch": "both",
       "valid_views": [
         "FRONT",
         "SIDE"
@@ -198,7 +210,7 @@
       "name": "seated_knee_extension",
       "display_name": "Seated Knee Extension",
       "type": "dynamic",
-      "primary_branch": "pose",
+      "primary_branch": "both",
       "valid_views": [
         "SIDE"
       ],
@@ -426,24 +438,25 @@
         "joint_display_name": "Knee (L)",
         "direction": "increase",
         "enter_angle": {
-          "value": 100,
+          "value": 155,
           "unit": "deg",
-          "source": "docs/08_exercise_config.md threshold table (dataset-derived, NOT clinician-signed)"
+          "source": "derived from clinician start/end positions (supine, pillow under knee: knee 40 deg -> 0 deg flexion = 140 -> 180 deg); enter/exit sit above the ~140 deg rest with a 10 deg hysteresis band. Provisional (2026-09-24)"
         },
         "exit_angle": {
-          "value": 95,
+          "value": 145,
           "unit": "deg",
-          "source": "docs/08_exercise_config.md threshold table (dataset-derived, NOT clinician-signed); doc's 160 corrected to 95 -- with direction=increase, pose_engine exits a rep when the driver angle falls BELOW exit_angle, so an exit above enter_angle (100) fires on the frame after entry and counts a rep at ~110 deg every time. 95 mirrors seated_knee_extension: the return to the flexed start position."
+          "source": "derived from clinician start/end positions (supine, pillow under knee: knee 40 deg -> 0 deg flexion = 140 -> 180 deg); enter/exit sit above the ~140 deg rest with a 10 deg hysteresis band. Provisional (2026-09-24)"
         },
         "depth_target": {
           "value": 170,
           "unit": "deg",
-          "source": "docs/08_exercise_config.md threshold table (dataset-derived, NOT clinician-signed)"
+          "source": "derived from clinician start/end positions (supine, pillow under knee: knee 40 deg -> 0 deg flexion = 140 -> 180 deg); enter/exit sit above the ~140 deg rest with a 10 deg hysteresis band. Provisional (2026-09-24)"
         }
       },
       "isometric_trigger": null,
       "extra_checks": [
-        "hip_lifting"
+        "hip_lifting",
+        "thigh_lifting"
       ],
       "thresholds": {
         "hip_lifting_max_y_rise": {
@@ -458,6 +471,12 @@
           "unit": "alert string",
           "source": "docs/08_exercise_config.md threshold table (dataset-derived, NOT clinician-signed)",
           "signal": "raised when a rep never reached depth_target"
+        },
+        "thigh_lifting_max_hip_change_deg": {
+          "value": 20,
+          "unit": "deg (left shoulder-hip-knee 2D angle, relative to its value when the rep starts)",
+          "source": "clinician note: hip stays at 40 deg flexion during TKE; +-20 deg owner-set tolerance for pillow/support variation. Provisional (2026-09-24)",
+          "alert": "Keep your thigh on the pillow \u2014 only straighten the knee"
         }
       }
     },

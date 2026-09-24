@@ -39,7 +39,6 @@
                         "on-secondary-fixed": "#001f24",
                         "surface-container-highest": "#2e3639",
                         "inverse-surface": "#dbe4e8",
-                        "background": "#0d1518",
                         "on-error-container": "#ffdad6",
                         "on-tertiary-container": "#c9090f",
                         "on-tertiary-fixed-variant": "#930005",
@@ -119,28 +118,33 @@
             }
         }
     </script>
+<script src="components.js"></script>
 </head>
-<body class="bg-background text-on-surface font-body-base overflow-hidden select-none">
+<body class="bg-background text-on-surface font-body-base select-none h-screen flex flex-col overflow-hidden">
+<emg-nav active="live"></emg-nav>
 <!-- Notification Toast -->
 <div class="fixed top-20 left-1/2 -translate-x-1/2 z-[100] bg-primary-container text-on-primary-container px-4 py-2 rounded-full shadow-lg flex items-center gap-2 opacity-0 pointer-events-none scale-90" id="toast">
 <span class="material-symbols-outlined text-[18px]">check_circle</span>
 <span class="font-label-caps text-[10px]">DATA POINT SAVED</span>
 </div>
-<!-- Top AppBar -->
-<header class="fixed top-0 w-full z-50 bg-surface-container-low border-b border-outline-variant flex items-center justify-between px-margin-mobile h-16">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary-fixed-dim" data-icon="settings_input_component">settings_input_component</span>
-<h1 class="font-headline-md-mobile text-headline-md-mobile font-bold text-primary-container tracking-tighter uppercase">Clinical Kinetic Pro</h1>
+<!-- Save Prompt -->
+<div class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 z-[90] w-[90%] max-w-sm bg-surface-container border border-outline-variant rounded-xl shadow-lg p-4 flex flex-col gap-3" id="save-prompt">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary-fixed-dim">check_circle</span>
+<div class="flex flex-col gap-0.5 min-w-0">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Recording Saved</span>
+<span class="font-data-sm text-data-sm truncate" id="save-prompt-filename"></span>
 </div>
-<div class="flex items-center gap-2 px-3 py-1 bg-surface-container-highest rounded-full border border-outline-variant">
-<div class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_8px_rgba(0,255,194,0.6)]"></div>
-<span class="font-label-caps text-label-caps text-on-surface-variant">CONNECTED: NANO_V3</span>
 </div>
-</header>
+<div class="flex justify-end gap-2">
+<button class="font-label-caps text-label-caps px-3 py-2 rounded-lg text-on-surface-variant hover:text-primary-fixed active:scale-95 transition-all duration-150" id="save-prompt-dismiss">Dismiss</button>
+<button class="font-label-caps text-label-caps px-3 py-2 rounded-lg bg-primary-container text-on-primary-container active:scale-95 transition-all duration-150" id="save-prompt-view">View</button>
+</div>
+</div>
 <!-- Main Viewport -->
-<main class="pt-16 pb-20 h-screen flex flex-col overflow-hidden">
+<main class="flex-1 min-h-0 pb-20 flex flex-col overflow-hidden">
 <!-- Live Signal Chart Area -->
-<section class="flex-1 min-h-[353px] relative bg-surface-container-lowest overflow-hidden border-b border-outline-variant">
+<section class="flex-1 min-h-0 relative bg-surface-container-lowest overflow-hidden border-b border-outline-variant">
 <!-- Grid Overlay -->
 <div class="absolute inset-0 pointer-events-none opacity-20" style="background-image: radial-gradient(#3a4a43 1px, transparent 1px), linear-gradient(to right, #3a4a43 1px, transparent 1px), linear-gradient(to bottom, #3a4a43 1px, transparent 1px); background-size: 40px 40px;">
 </div>
@@ -149,6 +153,10 @@
 <div class="flex items-center gap-2 bg-background/80 backdrop-blur-xl px-2 py-1 rounded border border-outline-variant">
 <span class="font-label-caps text-label-caps text-primary-fixed-dim">INPUT: CH1</span>
 <span class="font-label-caps text-label-caps bg-primary-container text-on-primary-container px-1.5 rounded" id="live-badge">LIVE</span>
+</div>
+<div class="flex items-center gap-1.5 bg-background/80 backdrop-blur-xl px-2 py-1 rounded border border-outline-variant">
+<span class="w-2 h-2 rounded-full bg-primary-container" id="status-dot"></span>
+<span class="font-label-caps text-label-caps text-on-surface-variant" id="status-label">Streaming</span>
 </div>
 </div>
 <div class="absolute top-4 right-margin-mobile z-10 text-right">
@@ -160,79 +168,94 @@
 <!-- Fade to Edge -->
 <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-surface-container-lowest to-transparent pointer-events-none"></div>
 </section>
-<!-- Metrics Section -->
-<section class="bg-surface p-margin-mobile grid grid-cols-2 gap-4 overflow-y-auto">
-<!-- Data Cards -->
-<div class="bg-surface-container p-4 rounded-lg border border-outline-variant hover:border-primary-container/30 transition-all">
-<header class="font-label-caps text-label-caps text-on-surface-variant mb-1">RMS AMPLITUDE</header>
-<div class="font-data-lg text-data-lg text-on-surface" id="rms-value">0.0</div>
-<div class="h-1.5 w-full bg-surface-container-highest mt-3 rounded-full overflow-hidden">
-<div class="h-full bg-primary-container transition-all duration-150" id="rms-bar" style="width: 0%"></div>
-</div>
-</div>
-<div class="bg-surface-container p-4 rounded-lg border border-outline-variant hover:border-primary-container/30 transition-all">
-<header class="font-label-caps text-label-caps text-on-surface-variant mb-1">PEAK FREQ</header>
-<div class="font-data-lg text-data-lg text-on-surface">84.2 <span class="text-xs text-on-surface-variant">Hz</span></div>
-<div class="flex gap-1 mt-3">
-<div class="h-4 w-2 bg-primary-container opacity-40"></div>
-<div class="h-4 w-2 bg-primary-container opacity-60"></div>
-<div class="h-4 w-2 bg-primary-container"></div>
-<div class="h-4 w-2 bg-primary-container opacity-20"></div>
-</div>
-</div>
-</section>
-<!-- Gain Multiplier (Consolidated with Metrics) -->
+<!-- Gain Multiplier -->
 <div class="col-span-2 bg-surface-container p-4 rounded-lg border border-outline-variant">
 <div class="flex justify-between items-center mb-4">
 <span class="font-label-caps text-label-caps text-on-surface-variant">ANALOG GAIN MULTIPLIER</span>
-<span class="font-data-sm text-data-sm text-primary-fixed-dim" id="gain-label">x250</span>
+<span class="font-data-sm text-data-sm text-primary-fixed-dim" id="gain-label">x1</span>
 </div>
-<input class="w-full h-1 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary-container" id="gain-slider" max="50" min="1" type="range" value="5"/>
+<input class="w-full h-1 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary-container" id="gain-slider" max="10" min="0.5" step="0.5" type="range" value="1"/>
 </div>
-<!-- Warning Banner -->
-<div class="col-span-2 flex items-center gap-3 bg-error-container/10 border border-error-container/30 p-3 rounded alert-pulse">
-<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
-<span class="font-label-caps text-label-caps text-error">MUSCLE FATIGUE THRESHOLD DETECTED</span>
+<!-- IMU Readouts -->
+<div class="col-span-2 bg-surface-container p-4 rounded-lg border border-outline-variant">
+<header class="font-label-caps text-label-caps text-on-surface-variant mb-2">IMU (raw LSB, &plusmn;2 g / &plusmn;500 &deg;/s)</header>
+<div class="grid grid-cols-3 gap-2 font-data-sm text-data-sm tabular-nums">
+<div>AX <span id="imu-ax">0</span></div>
+<div>AY <span id="imu-ay">0</span></div>
+<div>AZ <span id="imu-az">0</span></div>
+<div>GX <span id="imu-gx">0</span></div>
+<div>GY <span id="imu-gy">0</span></div>
+<div>GZ <span id="imu-gz">0</span></div>
+</div>
+</div>
+<!-- Calibration Offsets -->
+<div class="col-span-2 bg-surface-container p-4 rounded-lg border border-outline-variant">
+<div class="flex justify-between items-center mb-2">
+<header class="font-label-caps text-label-caps text-on-surface-variant">CALIBRATION OFFSETS</header>
+<span class="font-label-caps text-label-caps text-error bg-error-container px-1.5 rounded" id="cal-shaky" hidden>SHAKY</span>
+</div>
+<div class="grid grid-cols-3 gap-2 font-data-sm text-data-sm tabular-nums">
+<div><span class="font-label-caps text-label-caps text-on-surface-variant">AX</span> <span id="cal-ax">—</span></div>
+<div><span class="font-label-caps text-label-caps text-on-surface-variant">AY</span> <span id="cal-ay">—</span></div>
+<div><span class="font-label-caps text-label-caps text-on-surface-variant">AZ</span> <span id="cal-az">—</span></div>
+<div><span class="font-label-caps text-label-caps text-on-surface-variant">GX</span> <span id="cal-gx">—</span></div>
+<div><span class="font-label-caps text-label-caps text-on-surface-variant">GY</span> <span id="cal-gy">—</span></div>
+<div><span class="font-label-caps text-label-caps text-on-surface-variant">GZ</span> <span id="cal-gz">—</span></div>
+</div>
 </div>
 </main>
-<!-- Bottom Navigation Controls -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 bg-surface-container-high border-t border-outline-variant shadow-lg px-margin-mobile pb-safe">
+<!-- Bottom Recording Controls -->
+<div role="toolbar" aria-label="Recording controls" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 bg-surface-container-high border-t border-outline-variant shadow-lg px-margin-mobile pb-safe">
 <!-- Pause / Resume -->
 <button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed active:scale-95 transition-all duration-150" id="btn-pause">
 <span class="material-symbols-outlined text-[28px]" data-icon="pause_circle">pause_circle</span>
 <span class="font-label-caps text-[10px] mt-1">Pause</span>
 </button>
-<!-- History -->
-<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed active:scale-95 transition-all duration-150" id="btn-history">
-<span class="material-symbols-outlined text-[28px]" data-icon="history">history</span>
-<span class="font-label-caps text-[10px] mt-1">History</span>
+<!-- Record / Stop Recording -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed active:scale-95 transition-all duration-150" id="btn-record">
+<span class="material-symbols-outlined text-[28px]" data-icon="fiber_manual_record">fiber_manual_record</span>
+<span class="font-label-caps text-[10px] mt-1">Record</span>
 </button>
-<!-- Export -->
-<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed active:scale-95 transition-all duration-150" id="btn-export">
-<span class="material-symbols-outlined text-[28px]" data-icon="file_download">file_download</span>
-<span class="font-label-caps text-[10px] mt-1">Export</span>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed active:scale-95 transition-all duration-150" id="btn-calibrate">
+<span class="material-symbols-outlined text-[28px]" data-icon="tune">tune</span>
+<span class="font-label-caps text-[10px] mt-1">Calibrate</span>
 </button>
-</nav>
+</div>
 <script>
         let peakValue = 1; // running max abs signal, session-wide
         const canvas = document.getElementById('emgCanvas');
         const ctx = canvas.getContext('2d');
         const pauseBtn = document.getElementById('btn-pause');
-        const historyBtn = document.getElementById('btn-history');
+        const recordBtn = document.getElementById('btn-record');
+        const calibrateBtn = document.getElementById('btn-calibrate');
+        const calShaky = document.getElementById('cal-shaky');
         const gainSlider = document.getElementById('gain-slider');
         const gainLabel = document.getElementById('gain-label');
         const voltageDisplay = document.getElementById('instant-voltage');
         const liveBadge = document.getElementById('live-badge');
-        const rmsValueText = document.getElementById('rms-value');
-        const rmsBar = document.getElementById('rms-bar');
+        const statusDot = document.getElementById('status-dot');
+        const statusLabel = document.getElementById('status-label');
         const toast = document.getElementById('toast');
+        const savePrompt = document.getElementById('save-prompt');
+        const savePromptFilename = document.getElementById('save-prompt-filename');
+        const savePromptView = document.getElementById('save-prompt-view');
+        const savePromptDismiss = document.getElementById('save-prompt-dismiss');
 
         let isPaused = false;
-        let gain = 50;
+        let isRecording = false;
+        let gain = 1;
         let dataBuffer = [];
         const maxBufferLength = 800; // Total points to store for scrolling
         let frameCount = 0;
         const sampleQueue = []; // incoming samples from SSE
+        let latestImu = [0, 0, 0, 0, 0, 0]; // ax, ay, az, gx, gy, gz -- most recent SSE sample
+
+        // Calibration / calibrating state
+        const MIN_CALIBRATING = 1500; // ms floor so the state doesn't flicker past unread
+        let isCalibrating = false;
+        let calibratingUntil = 0;
+        let lastCalibrationSeq = null;
+        let renderedCalibrationSeq = null;
 
         // Initialize Canvas Size
         function resize() {
@@ -272,13 +295,13 @@
         function updateUI(latestVal) {
             frameCount++;
             if (frameCount % 6 === 0) { // Throttle UI updates
-               // const voltage = (Math.abs(latestVal) * 1.5).toFixed(2);
-               // voltageDisplay.innerText = `${voltage}mV`;
-
-                // RMS calc simulation
-                const rms = (Math.abs(latestVal) * gain * 0.5).toFixed(1);
-                rmsValueText.innerText = rms;
-                rmsBar.style.width = `${Math.min(100, rms / 3)}%`;
+                // IMU readouts (raw LSB)
+                document.getElementById('imu-ax').innerText = latestImu[0];
+                document.getElementById('imu-ay').innerText = latestImu[1];
+                document.getElementById('imu-az').innerText = latestImu[2];
+                document.getElementById('imu-gx').innerText = latestImu[3];
+                document.getElementById('imu-gy').innerText = latestImu[4];
+                document.getElementById('imu-gz').innerText = latestImu[5];
             }
         }
 
@@ -301,63 +324,194 @@
             }
         });
 
-        historyBtn.addEventListener('click', async () => {
-            try {
-                const response = await fetch('/api/snapshot', { method: 'POST' });
-                if (!response.ok) throw new Error('Snapshot failed');
-                const data = await response.json();
-                // Show toast
-                toast.classList.remove('opacity-0', 'pointer-events-none', 'scale-90');
-                toast.classList.add('opacity-100', 'scale-100');
-                setTimeout(() => {
-                    toast.classList.add('opacity-0', 'pointer-events-none', 'scale-90');
-                    toast.classList.remove('opacity-100', 'scale-100');
-                }, 2000);
-                // Optionally navigate to history page after a short delay
-                setTimeout(() => {
-                    window.location.href = 'history.html';
-                }, 1500);
-            } catch (err) {
-                console.error('Snapshot error:', err);
-                // Show error toast
-                toast.innerHTML = '<span class="material-symbols-outlined text-[18px]">error</span><span class="font-label-caps text-[10px]">SAVE FAILED</span>';
-                toast.classList.remove('opacity-0', 'pointer-events-none', 'scale-90');
-                toast.classList.add('opacity-100', 'scale-100');
-                setTimeout(() => {
-                    toast.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span><span class="font-label-caps text-[10px]">DATA POINT SAVED</span>';
-                    toast.classList.add('opacity-0', 'pointer-events-none', 'scale-90');
-                    toast.classList.remove('opacity-100', 'scale-100');
-                }, 2000);
+        // Record button - start/stop recording
+        recordBtn.addEventListener('click', async () => {
+            const icon = recordBtn.querySelector('.material-symbols-outlined');
+            const text = recordBtn.querySelector('span:last-child');
+
+            if (!isRecording) {
+                // Start recording
+                try {
+                    const response = await fetch('/api/start_capture', { method: 'POST' });
+                    if (!response.ok) throw new Error('Start recording failed');
+                    isRecording = true;
+                    icon.innerText = 'stop_circle';
+                    text.innerText = 'Stop';
+                    recordBtn.classList.add('alert-pulse');
+                    recordBtn.classList.add('text-error');
+                    liveBadge.className = 'font-label-caps text-label-caps bg-error-container text-error px-1.5 rounded';
+                    liveBadge.innerText = 'REC';
+                } catch (err) {
+                    console.error('Start recording error:', err);
+                    showToast('RECORD FAILED', true);
+                }
+            } else {
+                // Stop recording
+                try {
+                    const response = await fetch('/api/stop_recording', { method: 'POST' });
+                    if (!response.ok) throw new Error('Stop recording failed');
+                    const data = await response.json();
+                    isRecording = false;
+                    icon.innerText = 'fiber_manual_record';
+                    text.innerText = 'Record';
+                    recordBtn.classList.remove('alert-pulse');
+                    recordBtn.classList.remove('text-error');
+                    liveBadge.className = 'font-label-caps text-label-caps bg-primary-container text-on-primary-container px-1.5 rounded';
+                    liveBadge.innerText = 'LIVE';
+                    // Show toast
+                    showToast('DATA POINT SAVED');
+                    // Let the user decide whether to go look at the recording
+                    showSavePrompt(data.filename);
+                } catch (err) {
+                    console.error('Stop recording error:', err);
+                    showToast('SAVE FAILED', true);
+                }
             }
         });
 
+        // Calibrate button - ask the board to recalibrate its IMU in place
+        calibrateBtn.addEventListener('click', async () => {
+            try {
+                const response = await fetch('/api/recalibrate', { method: 'POST' });
+                if (!response.ok) {
+                    const body = await response.json().catch(() => ({}));
+                    showToast(body.error || body.reason || `CALIBRATE FAILED (${response.status})`, true);
+                    return;
+                }
+                isCalibrating = true;
+                calibratingUntil = Date.now() + MIN_CALIBRATING;
+                statusDot.className = 'w-2 h-2 rounded-full bg-secondary-container';
+                statusLabel.innerText = 'Calibrating…';
+            } catch (err) {
+                console.error('Recalibrate error:', err);
+                showToast('CALIBRATE FAILED', true);
+            }
+        });
+
+        function renderCalibration(cal) {
+            if (!cal || cal.mpu_ok === false) {
+                for (const k of ['ax', 'ay', 'az', 'gx', 'gy', 'gz']) {
+                    document.getElementById(`cal-${k}`).innerText = cal ? 'IMU DEAD' : '—';
+                }
+                calShaky.hidden = true;
+                return;
+            }
+            document.getElementById('cal-ax').innerText = cal.ax;
+            document.getElementById('cal-ay').innerText = cal.ay;
+            document.getElementById('cal-az').innerText = cal.az;
+            document.getElementById('cal-gx').innerText = cal.gx;
+            document.getElementById('cal-gy').innerText = cal.gy;
+            document.getElementById('cal-gz').innerText = cal.gz;
+            calShaky.hidden = !cal.shaky;
+        }
+
+        function showSavePrompt(filename) {
+            if (filename) {
+                savePromptFilename.textContent = filename;
+                savePromptFilename.hidden = false;
+                savePromptView.hidden = false;
+                savePromptView.onclick = () => {
+                    window.location.href = `playback.html?file=${encodeURIComponent(filename)}`;
+                };
+            } else {
+                savePromptFilename.hidden = true;
+                savePromptView.hidden = true;
+                savePromptView.onclick = null;
+            }
+            // Reused single element: a second recording just updates it in place, no stacking.
+            savePrompt.classList.remove('hidden');
+        }
+
+        function hideSavePrompt() {
+            savePrompt.classList.add('hidden');
+        }
+
+        savePromptDismiss.addEventListener('click', hideSavePrompt);
+
+        function showToast(message, isError = false) {
+            const icon = toast.querySelector('.material-symbols-outlined');
+            const text = toast.querySelector('span:last-child');
+            if (isError) {
+                icon.innerText = 'error';
+                text.innerText = message;
+            } else {
+                icon.innerText = 'check_circle';
+                text.innerText = message;
+            }
+            toast.classList.remove('opacity-0', 'pointer-events-none', 'scale-90');
+            toast.classList.add('opacity-100', 'scale-100');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none', 'scale-90');
+                toast.classList.remove('opacity-100', 'scale-100');
+            }, 2000);
+        }
+
         gainSlider.addEventListener('input', (e) => {
-            gain = e.target.value;
+            gain = parseFloat(e.target.value);
             gainLabel.innerText = `x${gain}`;
         });
 
-        // Check serial connection status on load. The backend auto-starts
-        // capture on boot, but if the Nano's serial port couldn't be opened
-        // (wrong /dev/ttyUSBx, not plugged in, permissions, etc.) surface it
-        // here instead of just showing a flat, silent line.
+        // Poll link status (spec 5.2: mirrors the board's own RGB LED)
         async function checkStatus() {
             try {
                 const res = await fetch('/api/status');
                 const data = await res.json();
-                if (data.error) {
-                    liveBadge.className = 'font-label-caps text-label-caps bg-error-container text-error px-1.5 rounded';
-                    liveBadge.innerText = 'NO SERIAL';
-                    console.error('Serial error:', data.error);
-                } else if (!data.capture_running) {
-                    // Backend up but capture thread not running yet; try starting it.
-                    fetch('/api/start_capture', { method: 'POST' }).catch(() => {});
+
+                // A fresh calibration is detected by calibration_seq changing, not by timing.
+                if (lastCalibrationSeq === null) {
+                    lastCalibrationSeq = data.calibration_seq;
+                } else if (data.calibration_seq !== lastCalibrationSeq) {
+                    lastCalibrationSeq = data.calibration_seq;
+                    isCalibrating = false;
+                }
+                if (data.calibrating) {
+                    isCalibrating = true;
+                    calibratingUntil = Math.max(calibratingUntil, Date.now() + MIN_CALIBRATING);
+                }
+                if (isCalibrating && Date.now() >= calibratingUntil && !data.calibrating) {
+                    isCalibrating = false;
+                }
+
+                // Label priority: calibrating > no data > streaming.
+                if (isCalibrating || Date.now() < calibratingUntil) {
+                    statusDot.className = 'w-2 h-2 rounded-full bg-secondary-container';
+                    statusLabel.innerText = 'Calibrating…';
+                } else if (data.udp_active) {
+                    statusDot.className = 'w-2 h-2 rounded-full bg-primary-container';
+                    statusLabel.innerText = 'Streaming';
+                } else {
+                    statusDot.className = 'w-2 h-2 rounded-full bg-error';
+                    statusLabel.innerText = 'No data';
                     peakValue = 1;
+                }
+
+                // Repaint the calibration panel only on a genuinely new calibration.
+                if (data.calibration_seq !== renderedCalibrationSeq) {
+                    renderedCalibrationSeq = data.calibration_seq;
+                    renderCalibration(data.calibration);
+                }
+
+                // If a recording is already active on the server (e.g. page refresh mid-recording),
+                // restore the REC button to its active/pulsing state so UI doesn't lie.
+                // Guarded on !isRecording so re-polling every second doesn't re-trigger this
+                // or fight the record button once the UI already reflects "recording".
+                if (data.recording_active && !isRecording) {
+                    isRecording = true;
+                    const icon = recordBtn.querySelector('.material-symbols-outlined');
+                    const text = recordBtn.querySelector('span:last-child');
+                    icon.innerText = 'stop_circle';
+                    text.innerText = 'Stop';
+                    recordBtn.classList.add('alert-pulse');
+                    recordBtn.classList.add('text-error');
+                    liveBadge.className = 'font-label-caps text-label-caps bg-error-container text-error px-1.5 rounded';
+                    liveBadge.innerText = 'REC';
                 }
             } catch (err) {
                 console.error('Status check failed:', err);
             }
         }
         checkStatus();
+        setInterval(checkStatus, 1000);
 
         // Set up EventSource for live serial data
         const eventSource = new EventSource('/api/stream');
@@ -369,7 +523,12 @@
                 const envelop = parseInt(parts[1], 10);
                 // Push signal to queue for processing
                 sampleQueue.push(signal);
-                // Optionally, we could also store envelope if needed for other metrics
+                if (parts.length >= 8) {
+                    latestImu = [
+                        parseInt(parts[2], 10), parseInt(parts[3], 10), parseInt(parts[4], 10),
+                        parseInt(parts[5], 10), parseInt(parts[6], 10), parseInt(parts[7], 10),
+                    ];
+                }
             }
         };
         eventSource.onerror = function(err) {

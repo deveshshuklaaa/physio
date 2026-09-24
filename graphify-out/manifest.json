@@ -1,0 +1,1982 @@
+{
+  "backend/_old_physio_reference/admin.py": {
+    "mtime": 1786100076.8043761,
+    "seen": 1789365912.8088436,
+    "ast_hash": "2a9ba019829b559660d8e235318d5ff0",
+    "semantic_hash": "2a9ba019829b559660d8e235318d5ff0"
+  },
+  "backend/_old_physio_reference/drawing.py": {
+    "mtime": 1776182412.985785,
+    "seen": 1789365912.8088489,
+    "ast_hash": "9fe3016685b49f7c32a6e97c1d54c4a4",
+    "semantic_hash": "9fe3016685b49f7c32a6e97c1d54c4a4"
+  },
+  "backend/_old_physio_reference/exercise_base.py": {
+    "mtime": 1776192024.7503395,
+    "seen": 1789365912.8088522,
+    "ast_hash": "3ece7ac511ba40f586d87d62185b6ae5",
+    "semantic_hash": "3ece7ac511ba40f586d87d62185b6ae5"
+  },
+  "backend/_old_physio_reference/exercise_runner.py": {
+    "mtime": 1777521014.9594295,
+    "seen": 1789365912.808855,
+    "ast_hash": "574185ddef8ea53852c18261f90ba0a0",
+    "semantic_hash": "574185ddef8ea53852c18261f90ba0a0"
+  },
+  "backend/_old_physio_reference/exercises/isometric_quadriceps.py": {
+    "mtime": 1776237873.9164894,
+    "seen": 1789365912.8088584,
+    "ast_hash": "700bd3ffc00ae6f1e2ec2e04d5d88cba",
+    "semantic_hash": "700bd3ffc00ae6f1e2ec2e04d5d88cba"
+  },
+  "backend/_old_physio_reference/exercises/seated_leg_extensions.py": {
+    "mtime": 1787254961.622569,
+    "seen": 1789365912.808861,
+    "ast_hash": "1fe14668975fce115c60a4aa92796989",
+    "semantic_hash": "1fe14668975fce115c60a4aa92796989"
+  },
+  "backend/_old_physio_reference/exercises/squat.py": {
+    "mtime": 1776182576.627424,
+    "seen": 1789365912.8088636,
+    "ast_hash": "35b7045acf367e3968046ec64173a7d0",
+    "semantic_hash": "35b7045acf367e3968046ec64173a7d0"
+  },
+  "backend/_old_physio_reference/gemini.py": {
+    "mtime": 1777520746.8297524,
+    "seen": 1789365912.808866,
+    "ast_hash": "e2820b40ed08871715ed855300cf68f0",
+    "semantic_hash": "e2820b40ed08871715ed855300cf68f0"
+  },
+  "backend/_old_physio_reference/landmarks.py": {
+    "mtime": 1776232537.400789,
+    "seen": 1789365912.8088684,
+    "ast_hash": "721bc7ce2991935ce631ee37edca3e90",
+    "semantic_hash": "721bc7ce2991935ce631ee37edca3e90"
+  },
+  "backend/_old_physio_reference/main.py": {
+    "mtime": 1776182653.425661,
+    "seen": 1789365912.8088706,
+    "ast_hash": "fd181cf09b455f23da2727f315e0b21b",
+    "semantic_hash": "fd181cf09b455f23da2727f315e0b21b"
+  },
+  "backend/_old_physio_reference/math_utils.py": {
+    "mtime": 1776182658.154119,
+    "seen": 1789365912.8088727,
+    "ast_hash": "d6c1c2bd6d2e7751fbfaa8501f29e6c7",
+    "semantic_hash": "d6c1c2bd6d2e7751fbfaa8501f29e6c7"
+  },
+  "backend/_old_physio_reference/posture_checks.py": {
+    "mtime": 1776182662.0321622,
+    "seen": 1789365912.8088756,
+    "ast_hash": "d807be2d48f529131e2d6895a6419b9a",
+    "semantic_hash": "d807be2d48f529131e2d6895a6419b9a"
+  },
+  "backend/_old_physio_reference/smoother.py": {
+    "mtime": 1776182671.4478977,
+    "seen": 1789365912.8088777,
+    "ast_hash": "b205cdf71fea195a31fb091a21321245",
+    "semantic_hash": "b205cdf71fea195a31fb091a21321245"
+  },
+  "backend/_old_physio_reference/voice.py": {
+    "mtime": 1787254958.2643936,
+    "seen": 1789365912.8088942,
+    "ast_hash": "e0d072f845d050510774ae294625eff5",
+    "semantic_hash": "e0d072f845d050510774ae294625eff5"
+  },
+  "backend/app/main.py": {
+    "mtime": 1788991162.3388112,
+    "seen": 1789365912.8089204,
+    "ast_hash": "5c07cfa13af9f9ce3d059399cd1db805",
+    "semantic_hash": ""
+  },
+  "backend/app/services/emg_client.py": {
+    "mtime": 1788390797.4812417,
+    "seen": 1789365912.8089626,
+    "ast_hash": "ffd5191c7c42f2a7a672ae0dfedff0c7",
+    "semantic_hash": "ffd5191c7c42f2a7a672ae0dfedff0c7"
+  },
+  "backend/ml/extract_landmarks.py": {
+    "mtime": 1787255953.5157807,
+    "seen": 1789365912.8090136,
+    "ast_hash": "2968f2d586708cf24c7263ba1e552e78",
+    "semantic_hash": "2968f2d586708cf24c7263ba1e552e78"
+  },
+  "emg-service/backend/app.py": {
+    "mtime": 1786128347.851766,
+    "seen": 1789365912.809082,
+    "ast_hash": "df6f40947265db0eb038497104669a2d",
+    "semantic_hash": "df6f40947265db0eb038497104669a2d"
+  },
+  "emg-service/data/history.json": {
+    "mtime": 1784919486.5185971,
+    "seen": 1789365912.8090847,
+    "ast_hash": "2852fe7aec2a20c38e09bacf789b70a2",
+    "semantic_hash": "2852fe7aec2a20c38e09bacf789b70a2"
+  },
+  "emg-service/emg_review.py": {
+    "mtime": 1786128369.5628011,
+    "seen": 1789365912.8090878,
+    "ast_hash": "1d1d9f5a4332fba0948c0a1da206d91e",
+    "semantic_hash": "1d1d9f5a4332fba0948c0a1da206d91e"
+  },
+  "emg-service/emg_serial_capture.py": {
+    "mtime": 1786128395.2588537,
+    "seen": 1789365912.8090904,
+    "ast_hash": "cfbbe0de6e37e4750e9f007be99a1e20",
+    "semantic_hash": "cfbbe0de6e37e4750e9f007be99a1e20"
+  },
+  "backend/_old_physio_reference/requirements.txt": {
+    "mtime": 1786113340.942119,
+    "seen": 1789365912.8094525,
+    "ast_hash": "a8d4cc859e4ec32a06e3d2f8473c1a03",
+    "semantic_hash": "a8d4cc859e4ec32a06e3d2f8473c1a03"
+  },
+  "backend/requirements.txt": {
+    "mtime": 1788982625.743873,
+    "seen": 1789365912.8094544,
+    "ast_hash": "5b39b12914046fe210eac218237e3078",
+    "semantic_hash": ""
+  },
+  "emg-service/requirements.txt": {
+    "mtime": 1786113401.288328,
+    "seen": 1789365912.8094597,
+    "ast_hash": "8509b0050ac1abaf288f2bef5525864a",
+    "semantic_hash": "8509b0050ac1abaf288f2bef5525864a"
+  },
+  "emg-service/website/history.html": {
+    "mtime": 1784911601.02322,
+    "seen": 1789365912.8094623,
+    "ast_hash": "261936bfaccbbad13aea8b69c072e65e",
+    "semantic_hash": "261936bfaccbbad13aea8b69c072e65e"
+  },
+  "emg-service/website/history2.html": {
+    "mtime": 1784058318.5134416,
+    "seen": 1789365912.8094642,
+    "ast_hash": "c9652807f588439f95028bdd9a07a199",
+    "semantic_hash": "c9652807f588439f95028bdd9a07a199"
+  },
+  "emg-service/website/index.html": {
+    "mtime": 1784056558.4731033,
+    "seen": 1789365912.8094664,
+    "ast_hash": "8f093f26074fd9b62d15a59952790f66",
+    "semantic_hash": "8f093f26074fd9b62d15a59952790f66"
+  },
+  "emg-service/website/live (copy)july 24.html": {
+    "mtime": 1784919795.061352,
+    "seen": 1789365912.8094685,
+    "ast_hash": "05bcfc8da8e4fac82b09af1b33a337f1",
+    "semantic_hash": "05bcfc8da8e4fac82b09af1b33a337f1"
+  },
+  "emg-service/website/live.html": {
+    "mtime": 1784920148.958092,
+    "seen": 1789365912.8094704,
+    "ast_hash": "21b97973d77232dabc617fee4b8c027e",
+    "semantic_hash": "21b97973d77232dabc617fee4b8c027e"
+  },
+  "emg-service/website/live2.html": {
+    "mtime": 1784057530.3976629,
+    "seen": 1789365912.8094726,
+    "ast_hash": "7afba1379a91c4b666f5f06995766bec",
+    "semantic_hash": "7afba1379a91c4b666f5f06995766bec"
+  },
+  "emg-service/website/live3.html": {
+    "mtime": 1784060227.9572392,
+    "seen": 1789365912.8094745,
+    "ast_hash": "4d008718415317cc74bdc97299d6457f",
+    "semantic_hash": "4d008718415317cc74bdc97299d6457f"
+  },
+  "emg-service/website/playback.html": {
+    "mtime": 1784058353.8713226,
+    "seen": 1789365912.8094766,
+    "ast_hash": "cfe8deab18e7b525198a3b18e3dfd9be",
+    "semantic_hash": "cfe8deab18e7b525198a3b18e3dfd9be"
+  },
+  "requirements.txt": {
+    "mtime": 1786457143.918899,
+    "seen": 1789365912.809496,
+    "ast_hash": "bdefa4d6930ef8a3c36260fee3bc0e5e",
+    "semantic_hash": "bdefa4d6930ef8a3c36260fee3bc0e5e"
+  },
+  "backend/app/__init__.py": {
+    "mtime": 1788994197.6696937,
+    "seen": 1789365912.808897,
+    "ast_hash": "f00cdeb92d093c97aa8d026bdad34a8e",
+    "semantic_hash": ""
+  },
+  "backend/app/config/__init__.py": {
+    "mtime": 1787259275.9107065,
+    "seen": 1789365912.8089046,
+    "ast_hash": "1fd4e68c7d322b78d3622595edd25469",
+    "semantic_hash": "1fd4e68c7d322b78d3622595edd25469"
+  },
+  "backend/app/events.py": {
+    "mtime": 1788989196.2014866,
+    "seen": 1789365912.808913,
+    "ast_hash": "e60e8b16915fb02ce7b044ac6104a773",
+    "semantic_hash": ""
+  },
+  "backend/app/exercise_config.py": {
+    "mtime": 1787265210.0469017,
+    "seen": 1789365912.8089151,
+    "ast_hash": "548cc2f38b69b1c3ad4ba10c193b2b9f",
+    "semantic_hash": "548cc2f38b69b1c3ad4ba10c193b2b9f"
+  },
+  "backend/app/logging_setup.py": {
+    "mtime": 1787303753.3353167,
+    "seen": 1789365912.8089178,
+    "ast_hash": "6c367bddbcec50ac690f5469190333c9",
+    "semantic_hash": "6c367bddbcec50ac690f5469190333c9"
+  },
+  "backend/app/models/__init__.py": {
+    "mtime": 1787259275.901707,
+    "seen": 1789365912.8089223,
+    "ast_hash": "7893a72a0719fd7af2b013fe1c435d98",
+    "semantic_hash": "7893a72a0719fd7af2b013fe1c435d98"
+  },
+  "backend/app/routes/__init__.py": {
+    "mtime": 1787259275.8917072,
+    "seen": 1789365912.8089275,
+    "ast_hash": "8b65578dcf9b5264657fc7114867e437",
+    "semantic_hash": "8b65578dcf9b5264657fc7114867e437"
+  },
+  "backend/app/routes/exercises.py": {
+    "mtime": 1787263169.917166,
+    "seen": 1789365912.8089352,
+    "ast_hash": "56914c0c631af22f6bd27ee25b023c04",
+    "semantic_hash": "56914c0c631af22f6bd27ee25b023c04"
+  },
+  "backend/app/services/__init__.py": {
+    "mtime": 1787259275.8867073,
+    "seen": 1789365912.80896,
+    "ast_hash": "522924d403a92ba5a5d4e70ff3aec774",
+    "semantic_hash": "522924d403a92ba5a5d4e70ff3aec774"
+  },
+  "backend/app/services/test_emg_client.py": {
+    "mtime": 1787252257.4428117,
+    "seen": 1789365912.8089695,
+    "ast_hash": "e53073a1cca643a813f007df1e1d305a",
+    "semantic_hash": "e53073a1cca643a813f007df1e1d305a"
+  },
+  "backend/app/telemetry.py": {
+    "mtime": 1787259479.1710258,
+    "seen": 1789365912.808976,
+    "ast_hash": "5de34577240fd80510812f2ce3af9b3d",
+    "semantic_hash": "5de34577240fd80510812f2ce3af9b3d"
+  },
+  "backend/app/test_events_mirror.py": {
+    "mtime": 1787259380.6986094,
+    "seen": 1789365912.8089778,
+    "ast_hash": "59e1c2b62b630b872b27da53c9ae2020",
+    "semantic_hash": "59e1c2b62b630b872b27da53c9ae2020"
+  },
+  "backend/app/ws/__init__.py": {
+    "mtime": 1787259275.896707,
+    "seen": 1789365912.8089802,
+    "ast_hash": "13e76e396b5f8c6fc3e93fe857bae350",
+    "semantic_hash": "13e76e396b5f8c6fc3e93fe857bae350"
+  },
+  "backend/ml/aggregate_features.py": {
+    "mtime": 1787255967.39796,
+    "seen": 1789365912.8089898,
+    "ast_hash": "33343712f03dbc64c82052de194b5fc0",
+    "semantic_hash": "33343712f03dbc64c82052de194b5fc0"
+  },
+  "backend/ml/common_features.py": {
+    "mtime": 1787255961.2875526,
+    "seen": 1789365912.8089921,
+    "ast_hash": "2b8c62d2f9419259b5a110db41136bd1",
+    "semantic_hash": "2b8c62d2f9419259b5a110db41136bd1"
+  },
+  "backend/ml/exercise_extractors/__init__.py": {
+    "mtime": 1787255961.3033583,
+    "seen": 1789365912.8089948,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "backend/ml/exercise_extractors/heel_slide.py": {
+    "mtime": 1787255961.290759,
+    "seen": 1789365912.808997,
+    "ast_hash": "37824f55f5c78ba5c3f8f95ff2963caa",
+    "semantic_hash": "37824f55f5c78ba5c3f8f95ff2963caa"
+  },
+  "backend/ml/exercise_extractors/mini_squat.py": {
+    "mtime": 1787255961.293358,
+    "seen": 1789365912.8089995,
+    "ast_hash": "bf88ae03cd96d62ab5e5762201cb3e82",
+    "semantic_hash": "bf88ae03cd96d62ab5e5762201cb3e82"
+  },
+  "backend/ml/exercise_extractors/run_feature_extractor.py": {
+    "mtime": 1786558254.345166,
+    "seen": 1789365912.809002,
+    "ast_hash": "b97e242e7b9626b16afd381f0fd943f6",
+    "semantic_hash": "b97e242e7b9626b16afd381f0fd943f6"
+  },
+  "backend/ml/exercise_extractors/seated_knee_extension.py": {
+    "mtime": 1787255961.2963927,
+    "seen": 1789365912.8090048,
+    "ast_hash": "3ce78f5fbe3289d299a70753fe6e9eec",
+    "semantic_hash": "3ce78f5fbe3289d299a70753fe6e9eec"
+  },
+  "backend/ml/exercise_extractors/slr.py": {
+    "mtime": 1787255961.301147,
+    "seen": 1789365912.8090072,
+    "ast_hash": "c5f506bb1010ed81d707d3f31f85098d",
+    "semantic_hash": "c5f506bb1010ed81d707d3f31f85098d"
+  },
+  "backend/ml/exercise_extractors/tke.py": {
+    "mtime": 1787255961.2987387,
+    "seen": 1789365912.809009,
+    "ast_hash": "a200c7308a03677dfcbc039e97ca0e11",
+    "semantic_hash": "a200c7308a03677dfcbc039e97ca0e11"
+  },
+  "backend/ml/export_model.py": {
+    "mtime": 1787256372.0023973,
+    "seen": 1789365912.8090112,
+    "ast_hash": "12fb025e91311ef9695c29d9ed5879c8",
+    "semantic_hash": "12fb025e91311ef9695c29d9ed5879c8"
+  },
+  "backend/ml/run_landmark_pipeline.py": {
+    "mtime": 1786303763.2755094,
+    "seen": 1789365912.8090186,
+    "ast_hash": "9a5436f7a73c00245b01ebc4f6727f5a",
+    "semantic_hash": "9a5436f7a73c00245b01ebc4f6727f5a"
+  },
+  "backend/ml/train_model.py": {
+    "mtime": 1787256229.4778697,
+    "seen": 1789365912.809023,
+    "ast_hash": "667c3ad3e3f8fdfbda763138e783ceca",
+    "semantic_hash": "667c3ad3e3f8fdfbda763138e783ceca"
+  },
+  "backend/ml/write_model_card.py": {
+    "mtime": 1787256445.8906167,
+    "seen": 1789365912.8090577,
+    "ast_hash": "6d02155d8922a651ca6bda82680b9139",
+    "semantic_hash": "6d02155d8922a651ca6bda82680b9139"
+  },
+  "frontend/package.json": {
+    "mtime": 1787266638.0563903,
+    "seen": 1789365912.8091471,
+    "ast_hash": "4169296d64b5032f4f54472e165196eb",
+    "semantic_hash": "4169296d64b5032f4f54472e165196eb"
+  },
+  "frontend/src/assets/vendor/mediapipe/vision_bundle.mjs": {
+    "mtime": 1787266106.7837558,
+    "seen": 1789365912.8091526,
+    "ast_hash": "013a380dfa9df1a679300e85ced6f6ac",
+    "semantic_hash": "013a380dfa9df1a679300e85ced6f6ac"
+  },
+  "frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js": {
+    "mtime": 1787266113.6798131,
+    "seen": 1789365912.8091545,
+    "ast_hash": "818dc4628ec93bfc86c4ce324f0da4dd",
+    "semantic_hash": "818dc4628ec93bfc86c4ce324f0da4dd"
+  },
+  "frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js": {
+    "mtime": 1787266115.0318244,
+    "seen": 1789365912.809157,
+    "ast_hash": "cfc27210da601b077d9e44197e19bc86",
+    "semantic_hash": "cfc27210da601b077d9e44197e19bc86"
+  },
+  "frontend/src/lib/angles.js": {
+    "mtime": 1787265563.7575517,
+    "seen": 1789365912.8091593,
+    "ast_hash": "5bfd0d41c0e2544daec741cb5b9ab1bb",
+    "semantic_hash": "5bfd0d41c0e2544daec741cb5b9ab1bb"
+  },
+  "frontend/src/lib/audio_cues.js": {
+    "mtime": 1788978013.2149892,
+    "seen": 1789365912.8091612,
+    "ast_hash": "6c9c4b758ba62a66d50de37b2ec3f5bc",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/events.js": {
+    "mtime": 1788989204.3632994,
+    "seen": 1789365912.809173,
+    "ast_hash": "a0ec241cc34563538023c928030c8a21",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/landmarks.js": {
+    "mtime": 1787265575.2037313,
+    "seen": 1789365912.8091753,
+    "ast_hash": "cb8407652a13694d8c43948c05313522",
+    "semantic_hash": "cb8407652a13694d8c43948c05313522"
+  },
+  "frontend/src/lib/logger.js": {
+    "mtime": 1787265722.2028036,
+    "seen": 1789365912.8091774,
+    "ast_hash": "52bdd0533672e338b3e9d17ea7a3fcd3",
+    "semantic_hash": "52bdd0533672e338b3e9d17ea7a3fcd3"
+  },
+  "frontend/src/lib/pose_engine.js": {
+    "mtime": 1788999252.6711285,
+    "seen": 1789365912.809179,
+    "ast_hash": "435969e64d171b926036b9c1b611ba76",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/recorder.js": {
+    "mtime": 1788989362.8417609,
+    "seen": 1789365912.8091817,
+    "ast_hash": "c4787b4b1fd99c2c1d833b017e0be637",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/ring_buffer.js": {
+    "mtime": 1787266627.8334775,
+    "seen": 1789365912.809184,
+    "ast_hash": "c5bd30c77525d9aabeca555d83a0a78e",
+    "semantic_hash": "c5bd30c77525d9aabeca555d83a0a78e"
+  },
+  "frontend/src/lib/rules.js": {
+    "mtime": 1788977927.8898122,
+    "seen": 1789365912.8091857,
+    "ast_hash": "736b164d4100645deb41f9e3d7861ea3",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/session_orchestrator.js": {
+    "mtime": 1788999859.3069441,
+    "seen": 1789365912.8091881,
+    "ast_hash": "65736417a709a791a9288df1ff623318",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/smoother.js": {
+    "mtime": 1787442315.7472653,
+    "seen": 1789365912.80919,
+    "ast_hash": "44f98a0878d1e39107341bedda2bb28e",
+    "semantic_hash": "44f98a0878d1e39107341bedda2bb28e"
+  },
+  "frontend/src/render/skeleton.js": {
+    "mtime": 1787439512.778794,
+    "seen": 1789365912.8091946,
+    "ast_hash": "8cf16748fec9d83e5d9e1d55cebb7b2d",
+    "semantic_hash": "8cf16748fec9d83e5d9e1d55cebb7b2d"
+  },
+  "frontend/src/vendor/tailwind/tailwind.js": {
+    "mtime": 1787266333.3391244,
+    "seen": 1789365912.8091967,
+    "ast_hash": "9aca14a5f8c2b5683912a08db4f7841e",
+    "semantic_hash": "9aca14a5f8c2b5683912a08db4f7841e"
+  },
+  "frontend/src/workers/pose_worker.js": {
+    "mtime": 1788999252.6728032,
+    "seen": 1789365912.809199,
+    "ast_hash": "c2ffbe2348a0f7c339e8a7e69819f6f1",
+    "semantic_hash": ""
+  },
+  "frontend/src/ws/client.js": {
+    "mtime": 1788981663.3390746,
+    "seen": 1789365912.8092012,
+    "ast_hash": "e40e373a29b82a3a08c190f26051600a",
+    "semantic_hash": ""
+  },
+  "frontend/tools/g13_test/run_g13_test.mjs": {
+    "mtime": 1787266654.9664876,
+    "seen": 1789365912.809228,
+    "ast_hash": "568cef973185fec155f24506b2e7cc93",
+    "semantic_hash": "568cef973185fec155f24506b2e7cc93"
+  },
+  "frontend/tools/g5_worker_test/classic_probe_worker.js": {
+    "mtime": 1787266764.1694257,
+    "seen": 1789365912.8092299,
+    "ast_hash": "d2a3e04842f8323f18b879e264282692",
+    "semantic_hash": "d2a3e04842f8323f18b879e264282692"
+  },
+  "frontend/tools/g5_worker_test/run_g5_test.mjs": {
+    "mtime": 1787306106.6813536,
+    "seen": 1789365912.8092313,
+    "ast_hash": "f9957fcaaaa09f5dd578072856692ead",
+    "semantic_hash": "f9957fcaaaa09f5dd578072856692ead"
+  },
+  "frontend/tools/parity_check.mjs": {
+    "mtime": 1787265692.1574125,
+    "seen": 1789365912.8092418,
+    "ast_hash": "547f9a4fc8986b482d881d0728a18e50",
+    "semantic_hash": "547f9a4fc8986b482d881d0728a18e50"
+  },
+  "frontend/tools/parity_python.py": {
+    "mtime": 1787265681.0030491,
+    "seen": 1789365912.8092456,
+    "ast_hash": "ec4be8e47e1ba149701489b0acaa2b1d",
+    "semantic_hash": "ec4be8e47e1ba149701489b0acaa2b1d"
+  },
+  "frontend/tools/pose_engine_selfcheck.mjs": {
+    "mtime": 1787265941.3312585,
+    "seen": 1789365912.8092492,
+    "ast_hash": "ffa7dec60ba1c443ccdb4d1a3a8efb7a",
+    "semantic_hash": "ffa7dec60ba1c443ccdb4d1a3a8efb7a"
+  },
+  "frontend/tools/ring_buffer_selfcheck.mjs": {
+    "mtime": 1787266635.434375,
+    "seen": 1789365912.809251,
+    "ast_hash": "79f9f4164667af9171c9a5459f3420fb",
+    "semantic_hash": "79f9f4164667af9171c9a5459f3420fb"
+  },
+  "frontend/src/pages/live_session.html": {
+    "mtime": 1788989767.3966343,
+    "seen": 1789365912.8094826,
+    "ast_hash": "bb627c0f713c1fe3eacb17f22f51c67e",
+    "semantic_hash": ""
+  },
+  "frontend/tools/g13_recording_survives.html": {
+    "mtime": 1787266522.7077038,
+    "seen": 1789365912.8094842,
+    "ast_hash": "0f8fa8b4ece821abe9e717af2f90f895",
+    "semantic_hash": "0f8fa8b4ece821abe9e717af2f90f895"
+  },
+  "frontend/tools/g13_test/index.html": {
+    "mtime": 1787266514.2456517,
+    "seen": 1789365912.8094862,
+    "ast_hash": "eb822676f9acaa5ca6a5e4e2b4adcf8f",
+    "semantic_hash": "eb822676f9acaa5ca6a5e4e2b4adcf8f"
+  },
+  "frontend/tools/g5_worker_test/classic_probe.html": {
+    "mtime": 1787266767.744356,
+    "seen": 1789365912.809488,
+    "ast_hash": "2042bd16d5e43cb9fe4ba3d9ec5bd6eb",
+    "semantic_hash": "2042bd16d5e43cb9fe4ba3d9ec5bd6eb"
+  },
+  "frontend/tools/g5_worker_test/index.html": {
+    "mtime": 1787266898.9811234,
+    "seen": 1789365912.80949,
+    "ast_hash": "2c67e44d6704ff34785241e0d0420c7a",
+    "semantic_hash": "2c67e44d6704ff34785241e0d0420c7a"
+  },
+  "backend/_old_physio_reference/superseded_app_copies/exercise_base.py": {
+    "mtime": 1786227091.957745,
+    "seen": 1789365912.8088808,
+    "ast_hash": "387d82d86a8373972dd04bde42284458",
+    "semantic_hash": "387d82d86a8373972dd04bde42284458"
+  },
+  "backend/_old_physio_reference/superseded_app_copies/exercise_config_legacy_loader.py": {
+    "mtime": 1786229090.943482,
+    "seen": 1789365912.8088837,
+    "ast_hash": "1c076c3de4ad60634bca68a229058404",
+    "semantic_hash": "1c076c3de4ad60634bca68a229058404"
+  },
+  "backend/_old_physio_reference/superseded_app_copies/exercises/__init__.py": {
+    "mtime": 1787259275.9067068,
+    "seen": 1789365912.8088858,
+    "ast_hash": "450cc17731b72d7575b6e2acba06df14",
+    "semantic_hash": "450cc17731b72d7575b6e2acba06df14"
+  },
+  "backend/_old_physio_reference/superseded_app_copies/exercises/isometric_quadriceps.py": {
+    "mtime": 1786227841.2912903,
+    "seen": 1789365912.8088877,
+    "ast_hash": "e8caf78d39c770b6dbc0743f0ca78c86",
+    "semantic_hash": "e8caf78d39c770b6dbc0743f0ca78c86"
+  },
+  "backend/_old_physio_reference/superseded_app_copies/exercises/seated_leg_extensions.py": {
+    "mtime": 1786227926.2583737,
+    "seen": 1789365912.8088899,
+    "ast_hash": "ffb4b694a7a361e602b213aeae094aef",
+    "semantic_hash": "ffb4b694a7a361e602b213aeae094aef"
+  },
+  "backend/_old_physio_reference/superseded_app_copies/exercises/squat.py": {
+    "mtime": 1786228446.6000102,
+    "seen": 1789365912.808892,
+    "ast_hash": "89a9ed693ffdc94b22995df44e439326",
+    "semantic_hash": "89a9ed693ffdc94b22995df44e439326"
+  },
+  "frontend/run_tests.sh": {
+    "mtime": 1787439615.5646605,
+    "seen": 1789365912.80915,
+    "ast_hash": "a08fc34d4b233f7fdd9178256540c800",
+    "semantic_hash": "a08fc34d4b233f7fdd9178256540c800"
+  },
+  "frontend/tests/helpers.mjs": {
+    "mtime": 1787305043.1375296,
+    "seen": 1789365912.8092072,
+    "ast_hash": "3596cac6bb9c88bd3b0e0683bdbc57b0",
+    "semantic_hash": "3596cac6bb9c88bd3b0e0683bdbc57b0"
+  },
+  "frontend/tests/painter.test.mjs": {
+    "mtime": 1787441333.974737,
+    "seen": 1789365912.809212,
+    "ast_hash": "ecd88a66f61db7ea50e36cca3e812136",
+    "semantic_hash": "ecd88a66f61db7ea50e36cca3e812136"
+  },
+  "frontend/tests/painter_interpolation.test.mjs": {
+    "mtime": 1787445331.6377664,
+    "seen": 1789365912.8092136,
+    "ast_hash": "af8727a723862276856ffd5e1b936c39",
+    "semantic_hash": "af8727a723862276856ffd5e1b936c39"
+  },
+  "frontend/tests/rules.test.mjs": {
+    "mtime": 1788978139.4811473,
+    "seen": 1789365912.8092186,
+    "ast_hash": "8633e97289bad3cf3c551b2400ceb453",
+    "semantic_hash": ""
+  },
+  "frontend/tests/smoothing_audio.test.mjs": {
+    "mtime": 1787305820.6176817,
+    "seen": 1789365912.8092206,
+    "ast_hash": "0fe1416caa451f4f31a654c53b188561",
+    "semantic_hash": "0fe1416caa451f4f31a654c53b188561"
+  },
+  "frontend/tests/transport.test.mjs": {
+    "mtime": 1788981710.1147575,
+    "seen": 1789365912.8092256,
+    "ast_hash": "e3d26f28afd456a15c200e48bed73512",
+    "semantic_hash": ""
+  },
+  "frontend/tools/g6_g10_test/run_g6_g10_test.mjs": {
+    "mtime": 1787315284.9164233,
+    "seen": 1789365912.8092358,
+    "ast_hash": "9193670b749635e552855e7830493b85",
+    "semantic_hash": "9193670b749635e552855e7830493b85"
+  },
+  "frontend/tools/skeleton_selfcheck.mjs": {
+    "mtime": 1787439527.9501202,
+    "seen": 1789365912.8092537,
+    "ast_hash": "6595f781d974c739b09d7f2d23207207",
+    "semantic_hash": "6595f781d974c739b09d7f2d23207207"
+  },
+  "frontend/tools/g6_g10_test/render_audio_probe.html": {
+    "mtime": 1787315092.709219,
+    "seen": 1789365912.8094919,
+    "ast_hash": "089b4265848fc8f51a276ff29e8572bd",
+    "semantic_hash": "089b4265848fc8f51a276ff29e8572bd"
+  },
+  "backend/app/config/exercises.json": {
+    "mtime": 1789022338.560593,
+    "seen": 1789365912.8089075,
+    "ast_hash": "e136a1aa10263bd794614ebd0b54f745",
+    "semantic_hash": ""
+  },
+  "backend/ml/trained_models/model_card.json": {
+    "mtime": 1787257157.9029078,
+    "seen": 1789365912.8090527,
+    "ast_hash": "f4af3bb8bbed07d316772bb2e4ee6b5e",
+    "semantic_hash": "f4af3bb8bbed07d316772bb2e4ee6b5e"
+  },
+  "frontend/tools/g5_worker_test/squat_config.json": {
+    "mtime": 1787266687.6116736,
+    "seen": 1789365912.8092334,
+    "ast_hash": "b55f63baf22381e24171fed212a9015d",
+    "semantic_hash": "b55f63baf22381e24171fed212a9015d"
+  },
+  "frontend/tools/parity_cases.json": {
+    "mtime": 1787265672.2891452,
+    "seen": 1789365912.8092399,
+    "ast_hash": "7d8d205eaa1a011a03989ab25b7d0690",
+    "semantic_hash": "7d8d205eaa1a011a03989ab25b7d0690"
+  },
+  "frontend/tools/parity_js_out.json": {
+    "mtime": 1788978910.761371,
+    "seen": 1789365912.8092437,
+    "ast_hash": "660cb97c5a6a7e64cf47ea68861ba670",
+    "semantic_hash": "660cb97c5a6a7e64cf47ea68861ba670"
+  },
+  "frontend/tools/parity_python_out.json": {
+    "mtime": 1788978910.638823,
+    "seen": 1789365912.8092475,
+    "ast_hash": "9a883ed29d424b197b34595d24820fce",
+    "semantic_hash": "9a883ed29d424b197b34595d24820fce"
+  },
+  ".mcp.json": {
+    "mtime": 1787783120.9276986,
+    "seen": 1789365912.80883,
+    "ast_hash": "248f2002b4f078af61910d88240f0d72",
+    "semantic_hash": "248f2002b4f078af61910d88240f0d72"
+  },
+  "backend/app/routes/admin_models.py": {
+    "mtime": 1787778878.32136,
+    "seen": 1789365912.8089297,
+    "ast_hash": "ef0fb833ab0e496176a1b00dd0b4fb06",
+    "semantic_hash": "ef0fb833ab0e496176a1b00dd0b4fb06"
+  },
+  "backend/app/routes/session.py": {
+    "mtime": 1788990237.6538565,
+    "seen": 1789365912.8089426,
+    "ast_hash": "542baf32797cd755183eeaaf7a019568",
+    "semantic_hash": ""
+  },
+  "backend/app/routes/test_admin_models.py": {
+    "mtime": 1788994358.6458178,
+    "seen": 1789365912.8089457,
+    "ast_hash": "e756df786418e2894a96304a774a4cca",
+    "semantic_hash": ""
+  },
+  "backend/app/routes/test_cors.py": {
+    "mtime": 1787784779.129861,
+    "seen": 1789365912.8089502,
+    "ast_hash": "1010e63cc067c1b89f187eeacb855be3",
+    "semantic_hash": "1010e63cc067c1b89f187eeacb855be3"
+  },
+  "backend/app/routes/test_session.py": {
+    "mtime": 1788994358.6444273,
+    "seen": 1789365912.8089578,
+    "ast_hash": "4538392474df6717aa5fa22023ac760c",
+    "semantic_hash": ""
+  },
+  "backend/app/services/session_buffer.py": {
+    "mtime": 1787768867.9006464,
+    "seen": 1789365912.8089669,
+    "ast_hash": "6fbf000182e11acf73a68d0b72bfc266",
+    "semantic_hash": "6fbf000182e11acf73a68d0b72bfc266"
+  },
+  "backend/app/services/test_session_buffer.py": {
+    "mtime": 1787768228.3510795,
+    "seen": 1789365912.8089714,
+    "ast_hash": "55c3ac7921af461d40575c4fff778e8e",
+    "semantic_hash": "55c3ac7921af461d40575c4fff778e8e"
+  },
+  "backend/app/ws/session_ws.py": {
+    "mtime": 1788987186.7352798,
+    "seen": 1789365912.8089824,
+    "ast_hash": "26b92ad04d42a64e919c80b3def060e2",
+    "semantic_hash": ""
+  },
+  "backend/app/ws/test_session_ws.py": {
+    "mtime": 1788994358.6454003,
+    "seen": 1789365912.8089845,
+    "ast_hash": "580367f949278936779fc0ac6c06207e",
+    "semantic_hash": ""
+  },
+  "backend/ml/__init__.py": {
+    "mtime": 1787777000.4490469,
+    "seen": 1789365912.8089871,
+    "ast_hash": "8382fe7fcf9e98e6e25f66ece6644ae3",
+    "semantic_hash": "8382fe7fcf9e98e6e25f66ece6644ae3"
+  },
+  "backend/ml/repackage_legacy_bundle.py": {
+    "mtime": 1787778762.5948977,
+    "seen": 1789365912.8090155,
+    "ast_hash": "8b6d306a7f69c7ed05674ab52c8c5573",
+    "semantic_hash": "8b6d306a7f69c7ed05674ab52c8c5573"
+  },
+  "backend/ml/test_validate_model_package.py": {
+    "mtime": 1787776846.8545544,
+    "seen": 1789365912.8090205,
+    "ast_hash": "3024e92153437e397c9fca864c1eb61f",
+    "semantic_hash": "3024e92153437e397c9fca864c1eb61f"
+  },
+  "backend/ml/validate_model_package.py": {
+    "mtime": 1787778661.4098718,
+    "seen": 1789365912.8090546,
+    "ast_hash": "c21f7432ddf6874de55b776608ec6d13",
+    "semantic_hash": "c21f7432ddf6874de55b776608ec6d13"
+  },
+  "backend/run_tests.sh": {
+    "mtime": 1788392091.1682053,
+    "seen": 1789365912.8090599,
+    "ast_hash": "4f0e920e8a6ee8084b9cffc379c6a7b1",
+    "semantic_hash": "4f0e920e8a6ee8084b9cffc379c6a7b1"
+  },
+  "backend/tools/fake_session_client.py": {
+    "mtime": 1787763051.895797,
+    "seen": 1789365912.8090622,
+    "ast_hash": "f03a20a1ec32149f626a4c9b663226d3",
+    "semantic_hash": "f03a20a1ec32149f626a4c9b663226d3"
+  },
+  "backend/tools/p0_legacy_bench.py": {
+    "mtime": 1787781267.140051,
+    "seen": 1789365912.8090646,
+    "ast_hash": "bc6f8087c42017b6c4331153e4c738aa",
+    "semantic_hash": "bc6f8087c42017b6c4331153e4c738aa"
+  },
+  "backend/tools/test_e_gate.py": {
+    "mtime": 1787776920.547474,
+    "seen": 1789365912.8090672,
+    "ast_hash": "be65d778f7dd27d14417a6d803409387",
+    "semantic_hash": "be65d778f7dd27d14417a6d803409387"
+  },
+  "backend/tools/test_h7_fake_client.py": {
+    "mtime": 1787760409.8465044,
+    "seen": 1789365912.8090694,
+    "ast_hash": "eaacf361e58ce47f76c26ac62f5ec154",
+    "semantic_hash": "eaacf361e58ce47f76c26ac62f5ec154"
+  },
+  "backend/tools/test_h_gate.py": {
+    "mtime": 1787760445.0829616,
+    "seen": 1789365912.8090715,
+    "ast_hash": "d38dc84cd87645fe2ae8f1a9362efcb5",
+    "semantic_hash": "d38dc84cd87645fe2ae8f1a9362efcb5"
+  },
+  "frontend/app/components.json": {
+    "mtime": 1787783862.820796,
+    "seen": 1789365912.8090947,
+    "ast_hash": "82c9ef9957f83b6eedc1a29408f84f2a",
+    "semantic_hash": "82c9ef9957f83b6eedc1a29408f84f2a"
+  },
+  "frontend/app/jsconfig.json": {
+    "mtime": 1787783862.816796,
+    "seen": 1789365912.809097,
+    "ast_hash": "00ee490896ea4f5f5ea6daaf4d19d1f2",
+    "semantic_hash": "00ee490896ea4f5f5ea6daaf4d19d1f2"
+  },
+  "frontend/app/package.json": {
+    "mtime": 1787784123.3705354,
+    "seen": 1789365912.809099,
+    "ast_hash": "42f709b6cbe0ebe3d553982b7d1fcadf",
+    "semantic_hash": "42f709b6cbe0ebe3d553982b7d1fcadf"
+  },
+  "frontend/app/src/components/AnimatedList.jsx": {
+    "mtime": 1787783933.4562526,
+    "seen": 1789365912.8091009,
+    "ast_hash": "8f36b1743e76a99ad1eb11b0db908764",
+    "semantic_hash": "8f36b1743e76a99ad1eb11b0db908764"
+  },
+  "frontend/app/src/components/CountUp.jsx": {
+    "mtime": 1787783932.8662486,
+    "seen": 1789365912.8091028,
+    "ast_hash": "e97cabeb7b31070f8dbfa2626d581101",
+    "semantic_hash": "e97cabeb7b31070f8dbfa2626d581101"
+  },
+  "frontend/app/src/components/GlareHover.jsx": {
+    "mtime": 1787783932.7742481,
+    "seen": 1789365912.8091054,
+    "ast_hash": "3480c633ae25212775cce8c29672d954",
+    "semantic_hash": "3480c633ae25212775cce8c29672d954"
+  },
+  "frontend/app/src/components/ShinyText.jsx": {
+    "mtime": 1787783933.0472498,
+    "seen": 1789365912.8091078,
+    "ast_hash": "77bba1034a0f3368e92cf3e1ccbb79dc",
+    "semantic_hash": "77bba1034a0f3368e92cf3e1ccbb79dc"
+  },
+  "frontend/app/src/components/SpotlightCard.jsx": {
+    "mtime": 1787783932.2962449,
+    "seen": 1789365912.8091097,
+    "ast_hash": "084b410c1a5c6c781e2b33d17549695e",
+    "semantic_hash": "084b410c1a5c6c781e2b33d17549695e"
+  },
+  "frontend/app/src/components/ui/alert.jsx": {
+    "mtime": 1787783903.494057,
+    "seen": 1789365912.8091118,
+    "ast_hash": "a331add3027c5fa8734cc500e3706436",
+    "semantic_hash": "a331add3027c5fa8734cc500e3706436"
+  },
+  "frontend/app/src/components/ui/badge.jsx": {
+    "mtime": 1787783903.4100564,
+    "seen": 1789365912.8091137,
+    "ast_hash": "37dd832f832c4aaacdbf40c4bd1d3fe8",
+    "semantic_hash": "37dd832f832c4aaacdbf40c4bd1d3fe8"
+  },
+  "frontend/app/src/components/ui/button.jsx": {
+    "mtime": 1787783903.1580548,
+    "seen": 1789365912.809116,
+    "ast_hash": "1227a51073b1653979643408d41c82ec",
+    "semantic_hash": "1227a51073b1653979643408d41c82ec"
+  },
+  "frontend/app/src/components/ui/card.jsx": {
+    "mtime": 1787783903.317056,
+    "seen": 1789365912.809118,
+    "ast_hash": "301e5f8a0a7d40af41cc10e3b1f4e5a0",
+    "semantic_hash": "301e5f8a0a7d40af41cc10e3b1f4e5a0"
+  },
+  "frontend/app/src/components/ui/progress.jsx": {
+    "mtime": 1787783903.5840576,
+    "seen": 1789365912.8091197,
+    "ast_hash": "3dc0edd72ca43680999d712890337c3b",
+    "semantic_hash": "3dc0edd72ca43680999d712890337c3b"
+  },
+  "frontend/app/src/components/ui/scroll-area.jsx": {
+    "mtime": 1787783903.7610588,
+    "seen": 1789365912.8091218,
+    "ast_hash": "d94579dd1a3db711e01be8d248d9410f",
+    "semantic_hash": "d94579dd1a3db711e01be8d248d9410f"
+  },
+  "frontend/app/src/components/ui/separator.jsx": {
+    "mtime": 1787783903.638058,
+    "seen": 1789365912.809124,
+    "ast_hash": "fbaafd8105ac6d9e6f6f52903622a905",
+    "semantic_hash": "fbaafd8105ac6d9e6f6f52903622a905"
+  },
+  "frontend/app/src/components/ui/skeleton.jsx": {
+    "mtime": 1787783903.6780581,
+    "seen": 1789365912.8091264,
+    "ast_hash": "6a393fdd3b8dff04a6d9f8753f7e4052",
+    "semantic_hash": "6a393fdd3b8dff04a6d9f8753f7e4052"
+  },
+  "frontend/app/src/lib/utils.js": {
+    "mtime": 1787784091.645463,
+    "seen": 1789365912.8091328,
+    "ast_hash": "797a470fba33fad4eb6950ee26393eb7",
+    "semantic_hash": "797a470fba33fad4eb6950ee26393eb7"
+  },
+  "frontend/app/src/main.jsx": {
+    "mtime": 1787784034.7022932,
+    "seen": 1789365912.8091354,
+    "ast_hash": "4fe791dee4589e371f37b5ee4ab3a715",
+    "semantic_hash": "4fe791dee4589e371f37b5ee4ab3a715"
+  },
+  "frontend/app/src/pages/ExerciseSelect.jsx": {
+    "mtime": 1788998526.186394,
+    "seen": 1789365912.8091376,
+    "ast_hash": "6786697e9cf69aa60c28ee648c8ea915",
+    "semantic_hash": ""
+  },
+  "frontend/app/src/pages/Report.jsx": {
+    "mtime": 1788999318.7421317,
+    "seen": 1789365912.80914,
+    "ast_hash": "c918d96d40a3ac6100fd43549c4c7b32",
+    "semantic_hash": ""
+  },
+  "frontend/app/src/report-main.jsx": {
+    "mtime": 1787785668.058629,
+    "seen": 1789365912.8091424,
+    "ast_hash": "6279983dd73bd8f9645fe8df7b86475b",
+    "semantic_hash": "6279983dd73bd8f9645fe8df7b86475b"
+  },
+  "frontend/app/vite.config.js": {
+    "mtime": 1788981439.0134647,
+    "seen": 1789365912.8091447,
+    "ast_hash": "59b8064a62285d00bf75d982c5eec2d6",
+    "semantic_hash": ""
+  },
+  "frontend/tools/j_pages_test/run_j_test.mjs": {
+    "mtime": 1787786373.9295077,
+    "seen": 1789365912.8092375,
+    "ast_hash": "a5eb4283aa252da4b53943cbd2aee458",
+    "semantic_hash": "a5eb4283aa252da4b53943cbd2aee458"
+  },
+  "package.json": {
+    "mtime": 1787783150.3677247,
+    "seen": 1789365912.8092601,
+    "ast_hash": "23f9af21ab98371177a4d3046a6415c4",
+    "semantic_hash": "23f9af21ab98371177a4d3046a6415c4"
+  },
+  "frontend/app/index.html": {
+    "mtime": 1787784034.6972933,
+    "seen": 1789365912.8094788,
+    "ast_hash": "497eaa0a745e0f6671cc4567dac8f658",
+    "semantic_hash": "497eaa0a745e0f6671cc4567dac8f658"
+  },
+  "frontend/app/report.html": {
+    "mtime": 1787785665.404626,
+    "seen": 1789365912.8094807,
+    "ast_hash": "b27756744dc2cdee468f30783225a81a",
+    "semantic_hash": "b27756744dc2cdee468f30783225a81a"
+  },
+  "backend/tools/test_k_compose.py": {
+    "mtime": 1788390406.1012967,
+    "seen": 1789365912.8090742,
+    "ast_hash": "3dfbfaecbfe503c866346a4185cfa765",
+    "semantic_hash": "3dfbfaecbfe503c866346a4185cfa765"
+  },
+  "backend/tools/test_k_gate.py": {
+    "mtime": 1788392842.908717,
+    "seen": 1789365912.8090765,
+    "ast_hash": "aa220b5d42871fca24cfeaa8b0ee2057",
+    "semantic_hash": "aa220b5d42871fca24cfeaa8b0ee2057"
+  },
+  "emg-service/run.py": {
+    "mtime": 1788390813.2910035,
+    "seen": 1789365912.8090925,
+    "ast_hash": "b684723c769dc21f73b67d43442055e6",
+    "semantic_hash": "b684723c769dc21f73b67d43442055e6"
+  },
+  "docker-compose.yml": {
+    "mtime": 1788987588.793765,
+    "seen": 1789365912.8094563,
+    "ast_hash": "743c8a4ad747413b845fa1b932274e39",
+    "semantic_hash": ""
+  },
+  "backend/_old_physio_reference/audio/butt_wink.mp3": {
+    "mtime": 1776182476.5607216,
+    "seen": 1789365912.8095255,
+    "ast_hash": "e8c5a47fe227e106306e4e510bffed28",
+    "semantic_hash": "e8c5a47fe227e106306e4e510bffed28"
+  },
+  "backend/_old_physio_reference/audio/caving.mp3": {
+    "mtime": 1776182505.7427125,
+    "seen": 1789365912.8095276,
+    "ast_hash": "732b68045c31de75e7967ac5f50c32a0",
+    "semantic_hash": "732b68045c31de75e7967ac5f50c32a0"
+  },
+  "backend/_old_physio_reference/audio/chest_up.mp3": {
+    "mtime": 1776182519.380897,
+    "seen": 1789365912.8095295,
+    "ast_hash": "798400d63e0a7a7e199b607625e4ef03",
+    "semantic_hash": "798400d63e0a7a7e199b607625e4ef03"
+  },
+  "backend/_old_physio_reference/audio/heel_lifting.mp3": {
+    "mtime": 1776182514.4522297,
+    "seen": 1789365912.8095317,
+    "ast_hash": "5e0db9564d53db1ef4d31270b92c998c",
+    "semantic_hash": "5e0db9564d53db1ef4d31270b92c998c"
+  },
+  "backend/_old_physio_reference/audio/neck_neutral.mp3": {
+    "mtime": 1776182523.846705,
+    "seen": 1789365912.8095336,
+    "ast_hash": "870a6a9b317675c58016dbed68977105",
+    "semantic_hash": "870a6a9b317675c58016dbed68977105"
+  },
+  "backend/_old_physio_reference/audio/not_deep.mp3": {
+    "mtime": 1776182529.5537024,
+    "seen": 1789365912.8095357,
+    "ast_hash": "d529e01258d6386367a24a7b4a8cbc7e",
+    "semantic_hash": "d529e01258d6386367a24a7b4a8cbc7e"
+  },
+  "backend/_old_physio_reference/audio/toes.mp3": {
+    "mtime": 1776182485.0136335,
+    "seen": 1789365912.8095376,
+    "ast_hash": "59c834bb7d58b72b4611d3a58afb22f9",
+    "semantic_hash": "59c834bb7d58b72b4611d3a58afb22f9"
+  },
+  "frontend/src/assets/audio/butt_wink.mp3": {
+    "mtime": 1787265548.5190525,
+    "seen": 1789365912.8095396,
+    "ast_hash": "e8c5a47fe227e106306e4e510bffed28",
+    "semantic_hash": "e8c5a47fe227e106306e4e510bffed28"
+  },
+  "frontend/src/assets/audio/caving.mp3": {
+    "mtime": 1787265548.519308,
+    "seen": 1789365912.8095417,
+    "ast_hash": "732b68045c31de75e7967ac5f50c32a0",
+    "semantic_hash": "732b68045c31de75e7967ac5f50c32a0"
+  },
+  "frontend/src/assets/audio/chest_up.mp3": {
+    "mtime": 1787265548.5203083,
+    "seen": 1789365912.8095434,
+    "ast_hash": "798400d63e0a7a7e199b607625e4ef03",
+    "semantic_hash": "798400d63e0a7a7e199b607625e4ef03"
+  },
+  "frontend/src/assets/audio/heel_lifting.mp3": {
+    "mtime": 1787265548.5213082,
+    "seen": 1789365912.8095453,
+    "ast_hash": "5e0db9564d53db1ef4d31270b92c998c",
+    "semantic_hash": "5e0db9564d53db1ef4d31270b92c998c"
+  },
+  "frontend/src/assets/audio/neck_neutral.mp3": {
+    "mtime": 1787265548.522308,
+    "seen": 1789365912.8095472,
+    "ast_hash": "870a6a9b317675c58016dbed68977105",
+    "semantic_hash": "870a6a9b317675c58016dbed68977105"
+  },
+  "frontend/src/assets/audio/not_deep.mp3": {
+    "mtime": 1787265548.5233083,
+    "seen": 1789365912.8095493,
+    "ast_hash": "d529e01258d6386367a24a7b4a8cbc7e",
+    "semantic_hash": "d529e01258d6386367a24a7b4a8cbc7e"
+  },
+  "frontend/src/assets/audio/toes.mp3": {
+    "mtime": 1787265548.524137,
+    "seen": 1789365912.8095515,
+    "ast_hash": "59c834bb7d58b72b4611d3a58afb22f9",
+    "semantic_hash": "59c834bb7d58b72b4611d3a58afb22f9"
+  },
+  "frontend/tools/g13_test/g13_output.webm": {
+    "mtime": 1788978919.2003913,
+    "seen": 1789365912.8095534,
+    "ast_hash": "b8a75abcc8bb6617672761a2bcc69086",
+    "semantic_hash": ""
+  },
+  "backend/app/auth.py": {
+    "mtime": 1788981517.4795527,
+    "seen": 1789365912.808901,
+    "ast_hash": "c0e4bf8fffebd66b74eb444648e7cec0",
+    "semantic_hash": ""
+  },
+  "backend/app/db.py": {
+    "mtime": 1788989714.0646968,
+    "seen": 1789365912.80891,
+    "ast_hash": "f22a2823180db88546883bc1a7e43a87",
+    "semantic_hash": ""
+  },
+  "backend/app/models/session_doc.py": {
+    "mtime": 1788990237.6544168,
+    "seen": 1789365912.8089247,
+    "ast_hash": "5a99630e2146be9fb946ccd06f96b480",
+    "semantic_hash": ""
+  },
+  "backend/app/routes/capabilities.py": {
+    "mtime": 1788989071.1014307,
+    "seen": 1789365912.8089325,
+    "ast_hash": "6db2e678ade2956523329e98cca5c5a9",
+    "semantic_hash": ""
+  },
+  "backend/app/routes/history.py": {
+    "mtime": 1788990559.5319011,
+    "seen": 1789365912.8089375,
+    "ast_hash": "fe562957e9eade7cfbb3485479ddd991",
+    "semantic_hash": ""
+  },
+  "backend/app/routes/report.py": {
+    "mtime": 1788991153.533954,
+    "seen": 1789365912.8089397,
+    "ast_hash": "3b4227f0cf3f1cd8a92abc8ea8b1757d",
+    "semantic_hash": ""
+  },
+  "backend/app/routes/test_capabilities.py": {
+    "mtime": 1788989123.0921893,
+    "seen": 1789365912.8089478,
+    "ast_hash": "be0b76752fae6da3dca211329f981586",
+    "semantic_hash": ""
+  },
+  "backend/app/routes/test_history.py": {
+    "mtime": 1788994358.643498,
+    "seen": 1789365912.8089528,
+    "ast_hash": "c46d16a75b558caf637d6ed75effaa9b",
+    "semantic_hash": ""
+  },
+  "backend/app/routes/test_report.py": {
+    "mtime": 1789031317.5547168,
+    "seen": 1789365912.8089552,
+    "ast_hash": "7f2f52f82fe5463b502ba745982c1794",
+    "semantic_hash": ""
+  },
+  "backend/app/services/gemini_report.py": {
+    "mtime": 1789031388.3378835,
+    "seen": 1789365912.8089645,
+    "ast_hash": "006a7b50e3ffd88214e51bb316b0b8fa",
+    "semantic_hash": ""
+  },
+  "backend/app/services/video_retention.py": {
+    "mtime": 1788989322.4666462,
+    "seen": 1789365912.8089736,
+    "ast_hash": "0c725a7d4fb183e0a7a6fc1facb8ec0a",
+    "semantic_hash": ""
+  },
+  "backend/ml/trained_models/_previous/mini_squat/_import_meta.json": {
+    "mtime": 1789032434.3744442,
+    "seen": 1789365912.8090255,
+    "ast_hash": "c0d1d01794a63974711d64ac821d571e",
+    "semantic_hash": ""
+  },
+  "backend/ml/trained_models/_previous/mini_squat/feature_names.json": {
+    "mtime": 1789032434.3669386,
+    "seen": 1789365912.8090281,
+    "ast_hash": "e9c33aabdb394be07a4465f38ca7edce",
+    "semantic_hash": ""
+  },
+  "backend/ml/trained_models/_previous/mini_squat/impute_median.json": {
+    "mtime": 1789032434.3670485,
+    "seen": 1789365912.8090384,
+    "ast_hash": "2106ffed81b2c0c68f16709cdb395cc1",
+    "semantic_hash": ""
+  },
+  "backend/ml/trained_models/_previous/mini_squat/labels.json": {
+    "mtime": 1789032434.3671439,
+    "seen": 1789365912.8090413,
+    "ast_hash": "f4dbfb00cba91ea11ad6d8882c1f19e2",
+    "semantic_hash": ""
+  },
+  "backend/ml/trained_models/mini_squat/_import_meta.json": {
+    "mtime": 1789032435.3570845,
+    "seen": 1789365912.8090434,
+    "ast_hash": "24c3cdb85c9574abd94ca43acffe73a6",
+    "semantic_hash": ""
+  },
+  "backend/ml/trained_models/mini_squat/feature_names.json": {
+    "mtime": 1789032435.344379,
+    "seen": 1789365912.809046,
+    "ast_hash": "e9c33aabdb394be07a4465f38ca7edce",
+    "semantic_hash": ""
+  },
+  "backend/ml/trained_models/mini_squat/impute_median.json": {
+    "mtime": 1789032435.3445308,
+    "seen": 1789365912.8090482,
+    "ast_hash": "2106ffed81b2c0c68f16709cdb395cc1",
+    "semantic_hash": ""
+  },
+  "backend/ml/trained_models/mini_squat/labels.json": {
+    "mtime": 1789032435.3446586,
+    "seen": 1789365912.80905,
+    "ast_hash": "f4dbfb00cba91ea11ad6d8882c1f19e2",
+    "semantic_hash": ""
+  },
+  "dev": {
+    "mtime": 1789000089.8132212,
+    "seen": 1789365912.8090796,
+    "ast_hash": "60edc16f4132c40fd89c79500ee31dfc",
+    "semantic_hash": ""
+  },
+  "frontend/app/src/lib/deep_link.js": {
+    "mtime": 1788990257.0714636,
+    "seen": 1789365912.8091285,
+    "ast_hash": "0445a6fdca405d993e531cad413c1d7c",
+    "semantic_hash": ""
+  },
+  "frontend/app/src/lib/report_poll.js": {
+    "mtime": 1788990525.9885406,
+    "seen": 1789365912.8091307,
+    "ast_hash": "1903c6b1099aa5e501521dac9a49f897",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/checks/index.js": {
+    "mtime": 1788977961.690446,
+    "seen": 1789365912.8091633,
+    "ast_hash": "9341d11fb8fadc6ed84aff2104058c04",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/checks/mini_squat.js": {
+    "mtime": 1789022153.6262622,
+    "seen": 1789365912.8091655,
+    "ast_hash": "a9163f77e15d50fe570de4205595ab71",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/checks/seated_knee_extension.js": {
+    "mtime": 1788977937.6623416,
+    "seen": 1789365912.8091674,
+    "ast_hash": "46fcdd7e1d38e0a751a62935701cb12e",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/checks/shared.js": {
+    "mtime": 1789022327.0747142,
+    "seen": 1789365912.809169,
+    "ast_hash": "a0f1b0de74220170206d8b6ebd60c147",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/checks/straight_leg_raise.js": {
+    "mtime": 1788978074.8410022,
+    "seen": 1789365912.809171,
+    "ast_hash": "5025dae2b60e465b062ad6425718c603",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/summary.js": {
+    "mtime": 1788999839.93709,
+    "seen": 1789365912.809192,
+    "ast_hash": "07ba8f24770433f91ee0d0f8dd4216d4",
+    "semantic_hash": ""
+  },
+  "frontend/tests/deep_link.test.mjs": {
+    "mtime": 1788990298.1290987,
+    "seen": 1789365912.809203,
+    "ast_hash": "f435ae40445ea858eb5b249da4b79d61",
+    "semantic_hash": ""
+  },
+  "frontend/tests/exercise_checks.test.mjs": {
+    "mtime": 1788978812.9601307,
+    "seen": 1789365912.809205,
+    "ast_hash": "84c4774ef4c1be3c82018a7e1f5e578c",
+    "semantic_hash": ""
+  },
+  "frontend/tests/knee_varus.test.mjs": {
+    "mtime": 1789022216.2869272,
+    "seen": 1789365912.8092093,
+    "ast_hash": "79ca0eeb524456b59fb74d8459e8dbb2",
+    "semantic_hash": ""
+  },
+  "frontend/tests/report_poll.test.mjs": {
+    "mtime": 1788990511.7868116,
+    "seen": 1789365912.8092158,
+    "ast_hash": "1ff2752f098f311d6736757b02a6911c",
+    "semantic_hash": ""
+  },
+  "frontend/tests/summary.test.mjs": {
+    "mtime": 1788999859.378132,
+    "seen": 1789365912.8092237,
+    "ast_hash": "7eacbbb77f1a8d7dc5c428a440ec1fff",
+    "semantic_hash": ""
+  },
+  "hardware/esp32_imu/backend/emg_imu_app.py": {
+    "mtime": 1788396513.9435136,
+    "seen": 1789365912.8092556,
+    "ast_hash": "ae66ae48db57e827e324d11947718fd8",
+    "semantic_hash": ""
+  },
+  "hardware/esp32_imu/tests/test_handshake.py": {
+    "mtime": 1788396531.5268154,
+    "seen": 1789365912.8092577,
+    "ast_hash": "7dea1e338f8976f319d87385b7f38f81",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/config/cryptSharedPath.js": {
+    "mtime": 1788993594.7899477,
+    "seen": 1789365912.8092618,
+    "ast_hash": "102bebf8fdd8a745e74be69f69418e61",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/config/cryptoConfig.js": {
+    "mtime": 1788993568.4608276,
+    "seen": 1789365912.809264,
+    "ast_hash": "d6c376bdf30bf3db9777f8b3d858841a",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/config/dataKey.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8092656,
+    "ast_hash": "256ab8d00c9daa185dc2abd521650b73",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/config/db.js": {
+    "mtime": 1788993581.3924916,
+    "seen": 1789365912.8092678,
+    "ast_hash": "d0247130df02b4db6244a667c252aa35",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/config/encryption.js": {
+    "mtime": 1788993581.3917544,
+    "seen": 1789365912.80927,
+    "ast_hash": "e08b86cc7cfd59e095142c88ede19854",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/db-test.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8092718,
+    "ast_hash": "b8b688d7ac4a11cd5c20fc33c03c3b6e",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/ml/predict.py": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8092735,
+    "ast_hash": "ce8e613bb7287302bcd0806ab523041f",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/package.json": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8092754,
+    "ast_hash": "825d21636b118b3c6a6454117922332b",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/raw-test.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8092775,
+    "ast_hash": "57319dd25f08f57ca7087db331b0d6cd",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/scripts/createAdmin.js": {
+    "mtime": 1788993801.4916787,
+    "seen": 1789365912.8092794,
+    "ast_hash": "a1486237e03f5ca41b9c3d3e810a07aa",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/scripts/createDataKey.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8092813,
+    "ast_hash": "410d45fd7eeb28db204bb8adee84f4cd",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/scripts/createStaffAccount.js": {
+    "mtime": 1788994961.8190966,
+    "seen": 1789365912.8092833,
+    "ast_hash": "6d59358bf2bd8f3992bf21685c845e74",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/scripts/generateMasterKey.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8092854,
+    "ast_hash": "af50a1a07f72fa8ebad274402391bef8",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/fhir/bundleMapper.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809287,
+    "ast_hash": "71e3c727f20a906812605f9b3edaffe8",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/fhir/conditionMapper.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8092895,
+    "ast_hash": "e360a9b58ab67228826fa1fd383595cb",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/fhir/fhirConstants.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8092914,
+    "ast_hash": "f67614a16b1ca82d56982dcc8cb4850b",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/fhir/medicationMapper.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809293,
+    "ast_hash": "336caf0ff9f63dc2e2f64ff7aeedaae9",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/fhir/observationMapper.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8092952,
+    "ast_hash": "4f3d442ab6b56922eae8e87193887f0a",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/fhir/patientMapper.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8092968,
+    "ast_hash": "477119c7ce90c41f4287ff4914cc8c13",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/fhir/questionnaireMapper.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8092988,
+    "ast_hash": "c438d0ebed1c4eb29a7d715d145f4f43",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/index.js": {
+    "mtime": 1788980949.8839252,
+    "seen": 1789365912.8093004,
+    "ast_hash": "5c8a5f21604e7933a087d3e82b35a263",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/middleware/adminAuth.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093026,
+    "ast_hash": "99557a87bb8fd8df5249f68f66146093",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/middleware/adminAuthMiddleware.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093042,
+    "ast_hash": "55d707cdd0d716899bbbb1daaf3dc4b6",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/middleware/auth.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093061,
+    "ast_hash": "393d5eb2fc63cf94f98fa9db2bccd70c",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/middleware/roleMiddleware.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093078,
+    "ast_hash": "03bb50b37033265e227dd56aeea9bd34",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/models/Assessment.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093097,
+    "ast_hash": "775c338445c219cbf747eb35a561c6e7",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/models/DoctorChangeRequest.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093114,
+    "ast_hash": "5b75c3da5d3e102238d862ecb2ccd204",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/models/DoctorRegistrationRequest.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093133,
+    "ast_hash": "720a3b637ee4474dc613f46f64f38136",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/models/FHIRResource.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809315,
+    "ast_hash": "ab2509b9a843af36557e5164261fe256",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/models/HemophiliaDetails.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809317,
+    "ast_hash": "2120a750e5d6f61272f63d7053c36f2c",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/models/LoginOTP.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093193,
+    "ast_hash": "f3db82091f45c7ee632542c8faf8f1db",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/models/PatientExerciseRecommendation.js": {
+    "mtime": 1788981163.9465528,
+    "seen": 1789365912.809321,
+    "ast_hash": "eb99c221e1caf7b63ff8d2495bf53214",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/models/PatientProfile.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093228,
+    "ast_hash": "1295ffa1175276f70ded8b04fd86adfd",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/models/ScreeningSession.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093245,
+    "ast_hash": "6cd059de2744823fbe51fc3ab5fd6a02",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/models/User.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093264,
+    "ast_hash": "096faceafe4adba3950aa902312fa3ea",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/admin.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809328,
+    "ast_hash": "755f9bbcca978ffda8978f129e1c05ed",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/adminAuth.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.80933,
+    "ast_hash": "9821f12a184474522a8d4b8c24f2a39b",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/adminPatientResearch.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809332,
+    "ast_hash": "d51e39765b0a975b8b22d0e3385ba117",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/assessment.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809334,
+    "ast_hash": "fc40a1518ade5dc4a5f03dbd4e2197e6",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/auth.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809336,
+    "ast_hash": "c4736ae1f1ad3e0597bed00a03e422cd",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/chatbot.js": {
+    "mtime": 1788993611.4020743,
+    "seen": 1789365912.8093379,
+    "ast_hash": "ab03838b114e9f90648f0ceff1185e7d",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/doctorAuth.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093398,
+    "ast_hash": "ed2fe7180fd8e588c3074166573669f1",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/doctorDashboard.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093414,
+    "ast_hash": "68011db840268c16b0f695f0a18e116b",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/doctorPatients.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093433,
+    "ast_hash": "cc9a44b5be974ab0e97ebccb98db8062",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/doctorRegistration.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093448,
+    "ast_hash": "2d01272c0815d599f34cd34966598273",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js": {
+    "mtime": 1788981149.0938804,
+    "seen": 1789365912.8093467,
+    "ast_hash": "43f90a41bc45b2382a7d8657787b4c77",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/fhir.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093483,
+    "ast_hash": "393e18582f56e9f9708fe7631cffa928",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/hemophiliaDetails.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093503,
+    "ast_hash": "5ea6120f229c8622638cd7789f3fbc2e",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/otpAuth.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093522,
+    "ast_hash": "6e6d996f99ea1778e0b560af6d84c7e1",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/patientResearch.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809354,
+    "ast_hash": "00326dc754b700e203e21c39c396c37d",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/profile.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093557,
+    "ast_hash": "16fe31d1a71cdea72126a0f8322a9dfe",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/reports.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093576,
+    "ast_hash": "fdc0cc1294fc900ce381d33fa1b3e85f",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/routes/safety_engine_equivalence.test.js": {
+    "mtime": 1788981196.1106453,
+    "seen": 1789365912.8093593,
+    "ast_hash": "fda55e653ea12365a886d21d9deb52e5",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/services/doctorNameTranslationService.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093612,
+    "ast_hash": "09ed7fad1d58b0e29a6430d530d454be",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/services/emailService.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809363,
+    "ast_hash": "ab9335c2fdc6ebc64e578041472f0971",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/services/otpService.js": {
+    "mtime": 1788971008.2080827,
+    "seen": 1789365912.809365,
+    "ast_hash": "3015e5ac2453362c7f3047dd5f5375dd",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/utils/fhirEncryption.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093667,
+    "ast_hash": "e424352814d5dba513f7f8f42ac047e1",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/utils/generatePatientPDF.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093686,
+    "ast_hash": "9b1218ca1108e21bf839b22640a23413",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/utils/saveFHIRBundle.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093703,
+    "ast_hash": "9c141056e1c9bec85b0fa688c8670857",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/src/utils/saveFHIRResource.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093722,
+    "ast_hash": "cabdc9d59f65a48028929f5f288e03e5",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/backend/testMongoConnect.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093739,
+    "ast_hash": "cae71b2fbd6d9f80a73f1f852c87cc5f",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/package.json": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093758,
+    "ast_hash": "1902751bdbce28e0dbab63e6bd4cecc2",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/App.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093772,
+    "ast_hash": "928de0bbcad79dd9b89de865a0e176dd",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/apiClient.js": {
+    "mtime": 1788996233.4093976,
+    "seen": 1789365912.809379,
+    "ast_hash": "63d5e1754b8a9d47b2be47dae869e075",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/components/AskChatWidget.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093808,
+    "ast_hash": "6e6ed10143424f849da1b0d9fe107698",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/components/ExerciseReviewPanel.jsx": {
+    "mtime": 1788996261.551777,
+    "seen": 1789365912.8093827,
+    "ast_hash": "37179f0a18f878242ed9046acaeff45b",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/components/LanguageSelector.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093843,
+    "ast_hash": "59c9e71fdc6c99a2459bab26552cc2c4",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/components/Layout.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093863,
+    "ast_hash": "8303add6f9225d97fd08be9771b1ec2b",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/components/RequireAuth.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093877,
+    "ast_hash": "b03725fef3515f9a411361cba2488aa1",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/i18n/i18n.js": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093896,
+    "ast_hash": "3e02bba0aafcff702d208490a56fec4d",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/main.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093915,
+    "ast_hash": "809df27f49f0f189cf86e87bdce391e2",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/AdminChangePassword.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093934,
+    "ast_hash": "d66f0d0a8f9e79db6f1697cc76ee8593",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/AdminDashboard.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093953,
+    "ast_hash": "3cfa5e8a6b4ee5edcf3d15ea6e8cfa0f",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/AdminDoctorRequestDetails.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809397,
+    "ast_hash": "a1a39af2572409567f5768156704dd77",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/AdminDoctorRequests.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8093994,
+    "ast_hash": "b9eb1b1bb8500966975ca11c1033125a",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/AdminDoctors.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809401,
+    "ast_hash": "74965325e3b05ea15dbc7b97fab6b5b7",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/AdminLogin.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094027,
+    "ast_hash": "f3cacbc0a30fc38a86053d5a3bbb62fb",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/AdminManagement.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094046,
+    "ast_hash": "baddd356ff656b38a9b6885e46f36648",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/AdminPatientResearch.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094065,
+    "ast_hash": "494660af75bcf280bc72548704c8be55",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/AdminProfile.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094084,
+    "ast_hash": "5b8c289de447ab8ae40ce5ddb4ceb11e",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/App_EXERCISE_INTEGRATED.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094103,
+    "ast_hash": "74d02fb591c87e9538707d3d286c0f43",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/AuthScreen.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094122,
+    "ast_hash": "55cd907f283ff490f1f227717aa45891",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/AwarenessScreen.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094141,
+    "ast_hash": "71ae8c92ffb618395e94b86f063e3828",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/CareGuidanceScreen.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094163,
+    "ast_hash": "bbe3bee135a6639f668798b59655c573",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/ChatbotScreen.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809418,
+    "ast_hash": "afd595c955be41b36dfbaa40cfa2e45d",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/ConsentScreen.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094199,
+    "ast_hash": "c4bac99a102305c5bdc5be2661a716be",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/DoctorChangePassword.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094215,
+    "ast_hash": "b945ec44c305b101c6de787e7f899c52",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/DoctorDashboard.jsx": {
+    "mtime": 1788996261.5494103,
+    "seen": 1789365912.8094234,
+    "ast_hash": "a9ce60ab985594aa52676382e8f64221",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/DoctorLogin.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809425,
+    "ast_hash": "efa480e31759f74074c2883ceb7b8c81",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/DoctorRegistration.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809427,
+    "ast_hash": "40a211f205650576333bf5315f8f14a0",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan.jsx": {
+    "mtime": 1788990833.4403276,
+    "seen": 1789365912.809429,
+    "ast_hash": "4009892816d57d9e1d323db071eea947",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan_BASE.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094308,
+    "ast_hash": "828fff5907cbbd17bf1772ae1672b9af",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/HemophiliaChatbot.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094325,
+    "ast_hash": "34618e93d0c6280efedb2949bf8d0ea4",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/HemophiliaDetailsScreen.jsx": {
+    "mtime": 1788980893.1787548,
+    "seen": 1789365912.8094347,
+    "ast_hash": "641b982aff0c3fb06846d229cb9c4c4d",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/InfoChatbotScreen.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094363,
+    "ast_hash": "489c7ae1349b2d67b4336682f86f07b8",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/OTPVerification.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094382,
+    "ast_hash": "a7f62c0bc1480d6b53e362d48f8dddc6",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/PatientResearch.jsx": {
+    "mtime": 1788990966.1523123,
+    "seen": 1789365912.80944,
+    "ast_hash": "9f4c41f975cc838d44433a0ae48232aa",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/ProfileStepper.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809442,
+    "ast_hash": "48af545419f5a2133e10886ffa06fcbf",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/Report.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809444,
+    "ast_hash": "fe74ec439bbefff36dfc3ffb777476bb",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/src/pages/ScreeningResultScreen.jsx": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094456,
+    "ast_hash": "12c07a519ec84f2a8813e703793e9d7d",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/vite.config.mjs": {
+    "mtime": 1788997728.5962887,
+    "seen": 1789365912.8094475,
+    "ast_hash": "25b7056401d7893b028c7f2963275269",
+    "semantic_hash": ""
+  },
+  "tools/build_obsidian_vault.py": {
+    "mtime": 1788394046.891636,
+    "seen": 1789365912.8094494,
+    "ast_hash": "b597f9a30a46b892804c9ee346681cf7",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/index.html": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094938,
+    "ast_hash": "98308267da995f4c0e6948719a4c86f6",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/anq.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094978,
+    "ast_hash": "681b3273e2600b456cec865d84309d0b",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/ask-icon.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8094995,
+    "ast_hash": "3c8fbc671fac19490f0685ee13c5053e",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/banner.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8095012,
+    "ast_hash": "690fb0949c8effde00a386a490376f8b",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/care.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8095033,
+    "ast_hash": "5c886416722f04fe31537697c97624f1",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/ex.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809505,
+    "ast_hash": "eb8425063ad34ccca4d1b1f977d3d633",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/exercise.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809507,
+    "ast_hash": "afdc868ce6893dd985fa9238d3d3893f",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/gr.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809509,
+    "ast_hash": "93c82fa1cb85cb5f0a630ec9fe7d5a96",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/home-bg.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8095107,
+    "ast_hash": "d858c99ab0815e2d7fcd2b809c63cbab",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/is.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8095126,
+    "ast_hash": "402b05b3f349545c62ad89cddd9f8053",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/login-bg.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8095145,
+    "ast_hash": "89fb94c1f264391fc7cdb629f010b5dc",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/login-hero.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8095162,
+    "ast_hash": "2b1c094e1e51743f13a4f302f3b3eebd",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/medical-bg.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.809518,
+    "ast_hash": "fb5d8d1b82439161cc0fbd7e07fe69fb",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/ra.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8095198,
+    "ast_hash": "6176db08c1a0a7fde4cafcf6cda67f2d",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/reg-bg.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8095217,
+    "ast_hash": "3a0f39805165dc32029baa5bb1970712",
+    "semantic_hash": ""
+  },
+  "part2/Hemophillia-confirm/frontend/public/images/reg.png": {
+    "mtime": 1788948615.0,
+    "seen": 1789365912.8095233,
+    "ast_hash": "c114f56fbd7e9f80aced7ec32b427536",
+    "semantic_hash": ""
+  }
+}

@@ -5,9 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Clinical Kinetic EMG - Recording History</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
         .glass-overlay {
             backdrop-filter: blur(20px);
@@ -63,27 +61,27 @@
                     "on-tertiary": "#690003",
                     "on-error": "#690005",
                     "surface-container-highest": "#2e3639",
-                    "on-primary-container": "007255",
-                    "background": "0d1518",
-                    "inverse-surface": "dbe4e8",
-                    "on-primary-fixed-variant": "00513c",
-                    "surface-dim": "0d1518",
-                    "primary-container": "00ffc2",
-                    "on-tertiary-container": "c9090f",
-                    "secondary-container": "00e3fd",
-                    "surface-container-lowest": "070f12",
-                    "surface-container-high": "232b2e",
-                    "on-primary": "003828",
-                    "on-secondary-fixed": "001f24",
-                    "tertiary-fixed-dim": "ffb4aa",
-                    "primary-fixed": "36ffc4",
-                    "on-primary-fixed": "002116",
-                    "error-container": "93000a",
-                    "surface-bright": "323a3e",
-                    "surface-container": "192124",
-                    "on-secondary-fixed-variant": "004f58",
-                    "on-background": "dbe4e8",
-                    "on-secondary": "00363d"
+                    "on-primary-container": "#007255",
+                    "background": "#0d1518",
+                    "inverse-surface": "#dbe4e8",
+                    "on-primary-fixed-variant": "#00513c",
+                    "surface-dim": "#0d1518",
+                    "primary-container": "#00ffc2",
+                    "on-tertiary-container": "#c9090f",
+                    "secondary-container": "#00e3fd",
+                    "surface-container-lowest": "#070f12",
+                    "surface-container-high": "#232b2e",
+                    "on-primary": "#003828",
+                    "on-secondary-fixed": "#001f24",
+                    "tertiary-fixed-dim": "#ffb4aa",
+                    "primary-fixed": "#36ffc4",
+                    "on-primary-fixed": "#002116",
+                    "error-container": "#93000a",
+                    "surface-bright": "#323a3e",
+                    "surface-container": "#192124",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "on-background": "#dbe4e8",
+                    "on-secondary": "#00363d"
             },
             "borderRadius": {
                     "DEFAULT": "0.125rem",
@@ -120,41 +118,31 @@
         }
       }
     </script>
+<script src="components.js"></script>
 </head>
-<body class="bg-background text-on-surface font-body-base overflow-hidden select-none">
+<body class="bg-background text-on-surface font-body-base select-none">
+<emg-nav active="history"></emg-nav>
 <!-- Main Content Area -->
-<main class="flex-1 px-margin-mobile py-6 pb-32 max-w-container-max mx-auto w-full">
+<main class="flex-1 px-margin-mobile py-6 max-w-container-max mx-auto w-full">
 <h2 class="font-label-caps text-label-caps text-on-surface-variant mb-4 flex items-center gap-2">
 <span class="w-1 h-1 bg-primary rounded-full"></span>
             RECORDINGS
         </h2>
+<div id="prune-notice" class="hidden mb-4 p-3 rounded-lg bg-surface-container border border-outline-variant flex items-start justify-between gap-3">
+<p id="prune-notice-text" class="font-data-sm text-data-sm text-on-surface-variant"></p>
+<button class="text-on-surface-variant hover:text-on-surface active:scale-95 transition-transform shrink-0" onclick="document.getElementById('prune-notice').classList.add('hidden')">
+<span class="material-symbols-outlined text-[18px]" data-icon="close">close</span>
+</button>
+</div>
 <div id="recordings-list" class="space-y-4">
     <!-- Loading placeholder -->
     <p class="text-center py-8 text-on-surface-variant">Loading recordings...</p>
 </div>
 </main>
 <!-- Floating Action Button - Only for Recording History/Home context -->
-<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-40">
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-40" onclick="window.location.href='live.html'">
 <span class="material-symbols-outlined scale-125" data-icon="add" style="font-variation-settings: 'FILL' 1;">add</span>
 </button>
-<!-- BottomNavBar from JSON Authority -->
-<nav class="fixed bottom-0 w-full z-50 bg-surface-container dark:bg-surface-container border-t border-outline-variant dark:border-outline-variant flex justify-around items-center h-20 px-2 pb-safe">
-<!-- Destination: History (ACTIVE) -->
-<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-95 transition-transform duration-150" href="index.html">
-<span class="material-symbols-outlined" data-icon="history" style="font-variation-settings: 'FILL' 1;">history</span>
-<span class="font-label-caps text-label-caps">History</span>
-</a>
-<!-- Destination: Live Scan (INACTIVE) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary active:scale-95 transition-transform duration-150" href="live.html">
-<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
-<span class="font-label-caps text-label-caps">Live Scan</span>
-</a>
-<!-- Destination: Profile (INACTIVE) -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary active:scale-95 transition-transform duration-150" href="playback.html">
-<span class="material-symbols-outlined" data-icon="person">person</span>
-<span class="font-label-caps text-label-caps">Profile</span>
-</a>
-</nav>
 <script>
         // mm:ss (or h:mm:ss) from seconds. Falls back to size for old
         // entries recorded before duration was tracked.
@@ -169,6 +157,49 @@
             const mm = String(m).padStart(h ? 2 : 1, '0');
             const ss = String(sec).padStart(2, '0');
             return h ? `${h}:${String(m).padStart(2,'0')}:${ss}` : `${mm}:${ss}`;
+        }
+
+        // Build SVG path from points array (normalized to viewBox 0 0 100 40)
+        function buildSparklinePath(points) {
+            if (!points || points.length === 0) return 'M0 20 Q 20 0 40 20 T 60 20 T 80 20 100 20';
+            const maxVal = Math.max(...points, 1);
+            const stepX = 100 / (points.length - 1);
+            let path = `M0 ${40 - (points[0] / maxVal) * 30}`;
+            for (let i = 1; i < points.length; i++) {
+                const x = i * stepX;
+                const y = 40 - (points[i] / maxVal) * 30;
+                path += ` L${x.toFixed(1)} ${y.toFixed(1)}`;
+            }
+            return path;
+        }
+
+        // Delete a recording (with confirmation) and remove its card on success.
+        async function deleteRecording(filename, cardEl) {
+            if (!confirm(`Delete recording "${filename}"? This cannot be undone.`)) return;
+            try {
+                const res = await fetch(`/api/recording/${encodeURIComponent(filename)}`, { method: 'DELETE' });
+                if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || `HTTP ${res.status}`);
+                cardEl.remove();
+            } catch (err) {
+                alert(`Failed to delete "${filename}": ${err.message}`);
+            }
+        }
+
+        // Remove history entries whose files are gone from disk; surface what was cleaned up.
+        async function pruneHistory() {
+            try {
+                const res = await fetch('/api/prune_history', { method: 'POST' });
+                if (!res.ok) return;
+                const { removed } = await res.json();
+                if (removed && removed.length > 0) {
+                    const notice = document.getElementById('prune-notice');
+                    const text = document.getElementById('prune-notice-text');
+                    text.textContent = `${removed.length} recording${removed.length === 1 ? '' : 's'} no longer on disk — removed from history: ${removed.join(', ')}`;
+                    notice.classList.remove('hidden');
+                }
+            } catch (err) {
+                console.error('Prune failed:', err);
+            }
         }
 
         // Fetch recordings from API and render list
@@ -190,7 +221,7 @@
                     const formatted = date.toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
                     const durationLabel = formatDuration(rec.duration, rec.size);
                     html += `
-<div class="bg-surface-container-low rounded-xl border border-outline-variant overflow-hidden hover:border-outline transition-colors group">
+<div class="bg-surface-container-low rounded-xl border border-outline-variant overflow-hidden hover:border-outline transition-colors group" data-filename="${rec.filename}">
 <div class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
 <div class="flex-1">
 <div class="flex items-center gap-2 mb-1">
@@ -206,8 +237,7 @@
 </div>
 <!-- Sparkline Preview -->
 <div class="h-16 w-full md:w-48 bg-surface-container-lowest rounded border border-outline-variant grid-bg relative overflow-hidden">
-<svg class="absolute inset-0 w-full h-full" viewbox="0 0 100 40">
-<!-- Simple placeholder sparkline -->
+<svg class="absolute inset-0 w-full h-full sparkline-svg" viewbox="0 0 100 40">
 <path class="stroke-[var(--primary, #00ffc2)] stroke-[1.5] fill-none" d="M0 20 Q 20 0 40 20 T 60 20 T 80 20 100 20"></path>
 </svg>
 </div>
@@ -215,7 +245,7 @@
 <button class="p-2 hover:bg-surface-variant rounded-full text-on-surface-variant transition-colors" onclick="window.location.href='playback.html?file=${encodeURIComponent(rec.filename)}'">
 <span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
 </button>
-<button class="p-2 hover:bg-surface-variant rounded-full text-on-surface-variant transition-colors">
+<button class="delete-btn p-2 hover:bg-error-container hover:text-error rounded-full text-on-surface-variant transition-colors">
 <span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
 </button>
 </div>
@@ -224,12 +254,32 @@
                     `;
                 });
                 container.innerHTML = html;
+
+                // Second async pass: fetch real sparklines for each card, and wire up delete
+                document.querySelectorAll('[data-filename]').forEach(card => {
+                    const filename = card.dataset.filename;
+                    const svg = card.querySelector('.sparkline-svg');
+                    fetch(`/api/preview/${encodeURIComponent(filename)}?points=48`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.points) {
+                                const path = buildSparklinePath(data.points);
+                                svg.querySelector('path').setAttribute('d', path);
+                            }
+                        })
+                        .catch(err => console.error('Preview fetch failed for', filename, err));
+
+                    card.querySelector('.delete-btn').addEventListener('click', () => deleteRecording(filename, card));
+                });
             } catch (err) {
                 console.error('Error loading recordings:', err);
                 container.innerHTML = `<p class="text-center py-8 text-on-surface-variant">Error loading recordings: ${err.message}</p>`;
             }
         }
-        // Load on page load
-        window.addEventListener('DOMContentLoaded', loadRecordings);
+        // Load on page load: prune stale history entries first, then list what remains.
+        window.addEventListener('DOMContentLoaded', async () => {
+            await pruneHistory();
+            loadRecordings();
+        });
     </script>
 </body></html>

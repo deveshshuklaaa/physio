@@ -19,13 +19,14 @@
  *
  * Each check has the signature:
  *   (ctx) => alertString | null
- * where ctx = { lms, pts, w, h, stage, view } — mirroring squat.py's
+ * where ctx = { lms, pts, w, h, stage, view, driverAngle } — mirroring squat.py's
  * `fn(lms, pts, w, h, stage)`, with `view` precomputed by the caller for
  * convenience. Individual checks still call detectView(lms) fresh themselves,
  * exactly as the legacy code does: D3 records that detect_view is called
  * fresh INSIDE each extra_check, independently of the outer `view`. That call
  * structure is replicated deliberately — "optimising" it changes behaviour at
  * view boundaries and breaks parity with the offline pipeline.
+ * `driverAngle` is the engine's filtered rep-driver angle (deg) or null.
  *
  * State: squat.py's check_heel_lift keeps `_heel_baseline`/`_prev_stage` as
  * Python MODULE-LEVEL globals — a hidden cross-session channel the legacy
@@ -64,7 +65,9 @@ export function thresholdAlert(exerciseConfig, key) {
  *
  *   needs  — threshold keys the check cannot run without. If any is a
  *            placeholder, the check is skipped rather than guessed at.
- *   build  — (values, alerts) => checkFn, closing over per-session state.
+ *   build  — (values, alerts, exerciseConfig) => checkFn, closing over
+ *            per-session state. exerciseConfig is the full record, for
+ *            checks that need a non-threshold value (e.g. depth_target).
  *
  * `values` and `alerts` are keyed by the same threshold keys as `needs`.
  */
@@ -272,7 +275,7 @@ export function rulesForExercise(exerciseConfig) {
       values[k] = thresholdValue(exerciseConfig, k);
       alerts[k] = thresholdAlert(exerciseConfig, k);
     }
-    checks.push(spec.build(values, alerts));
+    checks.push(spec.build(values, alerts, exerciseConfig));
   }
 
   return { checks, hasRealThresholds: checks.length > 0, skipped };

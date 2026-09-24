@@ -49,7 +49,7 @@ def build_gemini_prompt(session_log: list[dict], total: int, clean: int) -> str:
 
     return f"""You are an expert physiotherapy coach and movement specialist.
 A patient just completed a squat session analyzed by a pose-estimation system.
-Write a clear, encouraging, and actionable coaching report based on the data below.
+Write a clear and actionable coaching report based on the data below.
 
 SESSION DATA
 Total reps:  {total}
@@ -98,7 +98,7 @@ Do NOT use asterisks. Plain text only. Keep the total report under 400 words.
 
 def call_gemini(prompt: str) -> str:
     """
-    Calls Gemini 2.5 Flash via REST API.
+    Calls Gemini 2.5 Flash via REST API.    
     Returns the coaching text, or a descriptive ERROR string on failure.
     """
     try:

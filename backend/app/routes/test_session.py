@@ -42,6 +42,17 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 # app.* import, and only as a default -- an explicit MONGO_DB still wins.
 os.environ.setdefault("MONGO_DB", "hemophilia_g2test")
 
+# Never let a test run touch the live EMG service either. Since P2.3,
+# POST /session/start fires emg_client.start_capture, and EMG_SERVICE_URL
+# defaults to http://localhost:5000 -- which the P5.2 loopback port makes
+# reachable from the host. Without this, running the suite starts REAL
+# recordings on the real Flask service, writes fixture-attributed entries
+# into emg-service/data/history.json, and can leave a capture running that
+# then blocks recalibration (docs/13 F2). Point it at a closed port: the
+# client's circuit breaker swallows the ConnectError, start_capture returns
+# None, and nothing is written anywhere.
+os.environ.setdefault("EMG_SERVICE_URL", "http://127.0.0.1:9")
+
 
 import jwt as pyjwt
 from fastapi.testclient import TestClient

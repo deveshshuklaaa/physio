@@ -1,0 +1,246 @@
+---
+type: community
+members: 204
+---
+
+# vision_wasm_nosimd_internal.js
+
+**Members:** 204 nodes
+
+## Members
+- [[fromWireType()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[toWireType()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[ExitStatus()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[GetAdapterVendor()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[HandleAllocator()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[HaveOffsetConverter()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnEmptyPacketListener()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnFloat32ArrayImageListener()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnFloat32ArrayImageVectorListener()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnSimpleListenerBinaryArray()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnSimpleListenerBool()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnSimpleListenerDouble()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnSimpleListenerFloat()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnSimpleListenerInt()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnSimpleListenerString()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnSimpleListenerUint()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnUint8ArrayImageListener()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnUint8ArrayImageVectorListener()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnVectorFinishedListener()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnVectorListenerBool()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnVectorListenerDouble()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnVectorListenerFloat()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnVectorListenerInt()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnVectorListenerProto()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnVectorListenerString()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnVectorListenerUint()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnWebGLTextureListener()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsOnWebGLTextureVectorListener()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsWrapErrorListener()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsWrapImageConverter()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[JsWrapSimpleListeners()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[UseBottomLeftGpuOrigin()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[___syscall_fcntl64()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[___syscall_fstat64()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[___syscall_lstat64()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[___syscall_newfstatat()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[___syscall_openat()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[___syscall_stat64()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[__gmtime_js()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[__localtime_js()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[__mmap_js()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[__munmap_js()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_fd_close()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_fd_read()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_fd_seek()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_fd_write()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glActiveTexture()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glBlendEquation()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glBlendFunc()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glClear()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glClearColor()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glDisable()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glEnable()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glFinish()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glFlush()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glGenVertexArrays()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glTexParameterf()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glTexParameteri()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glTexStorage2D()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glTexStorage3D()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_glViewport()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_mediapipe_find_canvas_event_target()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_mediapipe_webgl_tex_image_drawable()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[_removeHandler()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[add()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[allocate()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[analyzePath()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[calculateAt()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[calculateMouseCoords()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[calculateMouseEvent()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[canPerformEventHandlerRequests()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[chdir()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[checkIsRunning()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[chmod()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[chown()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[closeStream()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[constructor()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[create()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[createDataFile()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[createDefaultDevices()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[createDefaultDirectories()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[createDevice()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[createFile()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[createNode()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[createPath()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[createSpecialDirectories()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[createStandardStreams()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[createStream()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[decodeMemoryView()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[destroyContext()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[destroyNode()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[destructorFunction()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[doMsync()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[doStat()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[ensureErrnoError()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[expandFileStorage()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[extractZone()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[fakeRequestAnimationFrame()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[fchmod()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[fchown()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[findObject()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[fixedGetContext()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[flagsToPermissionString()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[ftruncate()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[fullscreenEnabled()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[get()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getExtensions()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getFileDataAsTypedArray()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getMimetype()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getMounts()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getMouseWheelDelta()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getMovementX()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getMovementY()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getNodeNameForTarget()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getPath()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getStr()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getStreamChecked()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getStreamFromFD()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getUniqueRunDependency()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getUserMedia()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getattr()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[getp()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[handleAllocatorInit()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[hashAddNode()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[hashName()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[hashRemoveNode()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[ioctl()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[isBlkdev()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[isChrdev()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[isClosed()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[isDir()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[isFIFO()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[isFile()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[isLink()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[isMountpoint()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[isRoot()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[isSocket()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[lchmod()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[lchown()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[llseek()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[locateFile()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[lookup()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[lookupNode()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[lookupPath()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[lstat()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[makeMultisampleState()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[makePrimitiveState()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[mayCreate()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[mayDelete()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[mayLookup()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[mayOpen()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[mediapipe_create_utility_canvas2d()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[mkdev()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[mkdir()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[mkdirTree()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[mknod()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[mount()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[nextfd()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[nodePermissions()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[open()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[pause()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[quit()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[readFile()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[readPointer()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[readdir()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[readlink()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[register()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[registerDevice()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[registerOrRemoveHandler()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[registerRemoveEventListeners()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[remove()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[removeAllEventListeners()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[removeDeferredCalls()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[rename()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[requestAnimationFrame()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[resizeFileStorage()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[resume()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[rmdir()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[roundedToNextMultipleOf()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[runDeferredCalls()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[runIter()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[safeRequestAnimationFrame()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[setCanvasSize()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[setFullscreenCanvasSize()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[setMouseCoords()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[setWindowedCanvasSize()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[setattr()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[shutdown()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[simpleReadValueFromPointer()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[stat()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[staticInit()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[symlink()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[testGlobal()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[trim()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[truncate()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[unlink()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[unmount()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[updateCanvasDimensions()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[updateResizeListeners()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[updateStatus()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[utime()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[vision_wasm_nosimd_internal.js]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[writeFile()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+- [[xnnLoadWasmModuleJS()_1]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js
+
+## Live Query (requires Dataview plugin)
+
+```dataview
+TABLE source_file, type FROM #community/vision_wasm_nosimd_internaljs
+SORT file.name ASC
+```
+
+## Connections to other communities
+- 16 edges to [[_COMMUNITY_dot-get_1]]
+- 15 edges to [[_COMMUNITY_init]]
+- 6 edges to [[_COMMUNITY_createLazyFile_1]]
+- 6 edges to [[_COMMUNITY_postRun_1]]
+- 5 edges to [[_COMMUNITY_makeVertexAttributes_1]]
+- 4 edges to [[_COMMUNITY____syscall_ioctl_1]]
+- 3 edges to [[_COMMUNITY_compareByDay_1]]
+- 3 edges to [[_COMMUNITY_write_1]]
+- 2 edges to [[_COMMUNITY_close_1]]
+- 2 edges to [[_COMMUNITY_convertReturnValue_1]]
+- 2 edges to [[_COMMUNITY__emscripten_stack_snapshot_1]]
+- 2 edges to [[_COMMUNITY_leadingNulls_1]]
+- 2 edges to [[_COMMUNITY_makeDepthStencilState_1]]
+- 2 edges to [[_COMMUNITY_registerType_1]]
+- 1 edge to [[_COMMUNITY_syncfs_1]]
+- 1 edge to [[_COMMUNITY_custom_emscripten_dbgn_1]]
+- 1 edge to [[_COMMUNITY_deferCall_1]]
+- 1 edge to [[_COMMUNITY_requestFullscreen_1]]
+- 1 edge to [[_COMMUNITY_decl]]
+- 1 edge to [[_COMMUNITY_ExceptionInfo_1]]
+
+## Top bridge nodes
+- [[vision_wasm_nosimd_internal.js]] - degree 279, connects to 20 communities

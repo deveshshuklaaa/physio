@@ -1,0 +1,17 @@
+---
+source_file: "part2/Hemophillia-confirm/frontend/src/pages/DoctorDashboard.jsx"
+type: "code"
+community: "DoctorDashboard.jsx"
+location: "L6020"
+tags:
+  - graphify/code
+  - graphify/EXTRACTED
+  - community/DoctorDashboardjsx
+---
+
+# ChartCard()
+
+## Connections
+- [[DoctorDashboard.jsx]] - `contains` [EXTRACTED]
+
+#graphify/code #graphify/EXTRACTED #community/DoctorDashboardjsx

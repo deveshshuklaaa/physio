@@ -1,0 +1,17 @@
+---
+source_file: "part2/Hemophillia-confirm/backend/config/cryptoConfig.js"
+type: "code"
+community: "cryptoConfig.js"
+location: "L19"
+tags:
+  - graphify/code
+  - graphify/EXTRACTED
+  - community/cryptoConfigjs
+---
+
+# localMasterKey
+
+## Connections
+- [[cryptoConfig.js]] - `contains` [EXTRACTED]
+
+#graphify/code #graphify/EXTRACTED #community/cryptoConfigjs

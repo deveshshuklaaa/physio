@@ -56,10 +56,11 @@
 const WASM_BASE_URL = new URL("../assets/vendor/mediapipe/wasm/", self.location.href).href;
 const MODEL_URL = new URL("../assets/vendor/mediapipe/models/pose_landmarker_lite.task", self.location.href).href;
 
-let PoseEngine, buildPts, createSmoother, BrowserLogger;
+let PoseEngine, buildPts, createSmoother, BrowserLogger, OneEuroSmoother, MP_CONFIDENCE, DISPLAY_FILTER;
 let landmarker = null;
 let engine = null;
 let smoother = null;
+let displaySmoother = null;
 let logger = null;
 let inFlight = false; // THE single boolean guard — see file header. Do not change shape.
 let droppedCount = 0;
@@ -69,8 +70,9 @@ const FRAME_RECEIVED_SAMPLE_N = 5; // §8b.6: sample high-frequency events, neve
 
 async function init({ exerciseConfig, sessionId, smootherKind, smootherOpts }) {
   ({ PoseEngine, buildPts } = await import("../lib/pose_engine.js"));
-  ({ createSmoother } = await import("../lib/smoother.js"));
+  ({ createSmoother, OneEuroSmoother } = await import("../lib/smoother.js"));
   ({ BrowserLogger } = await import("../lib/logger.js"));
+  ({ MP_CONFIDENCE, DISPLAY_FILTER } = await import("../lib/live_tuning.js"));
 
   logger = new BrowserLogger({ sessionId, component: "pose_worker" });
 
@@ -82,11 +84,16 @@ async function init({ exerciseConfig, sessionId, smootherKind, smootherOpts }) {
     baseOptions: { modelAssetPath: MODEL_URL, delegate: "CPU" },
     runningMode: "VIDEO",
     numPoses: 1,
+    minPoseDetectionConfidence: MP_CONFIDENCE,
+    minPosePresenceConfidence: MP_CONFIDENCE,
+    minTrackingConfidence: MP_CONFIDENCE,
   });
   smoother = createSmoother(smootherKind || "ema", smootherOpts ||{});
+  // Display-only smoother: the painted skeleton. Rule math keeps `smoother` (EMA).
+  displaySmoother = new OneEuroSmoother(DISPLAY_FILTER);
   engine = new PoseEngine(exerciseConfig, smoother);
 
-  logger.info("worker_ready", { exercise: exerciseConfig.name, model: "pose_landmarker_lite" });
+  logger.info("worker_ready", { exercise: exerciseConfig.name, model: "pose_landmarker_lite", delegate: "CPU", mp_confidence: MP_CONFIDENCE });
   postMessage({ type: "ready" });
 }
 
@@ -128,8 +135,10 @@ async function handleFrame(msg) {
     }
 
     const raw = result.landmarks[0]; // single-person, numPoses:1
-    const out = engine.processFrame(raw, w, h);
-    const pts = buildPts(raw, w, h, smoother); // re-derive for the renderer (cheap; engine computes its own internally)
+    const out = engine.processFrame(raw, w, h, tsMs);
+    // Renderer gets its own One-Euro pass. The old line re-ran the rule-math
+    // EMA a second time per frame, advancing its state twice.
+    const pts = buildPts(raw, w, h, displaySmoother, tsMs / 1000);
 
     // Decision inputs, not just outcomes (§8b.4): angle + threshold source is
     // implicit in exerciseConfig (logged once at worker_ready); log the
@@ -137,6 +146,7 @@ async function handleFrame(msg) {
     for (const alert of out.alerts) {
       logger.info("flag_raised", { alert, view: out.view, driver_angle: out.driverAngle });
     }
+    if (out.repRejected) logger.info("rep_rejected", out.repRejected);
     logger.debug("rule_evaluated", { view: out.view, joint_angles: out.jointAngles });
 
     postMessage({
@@ -154,6 +164,7 @@ async function handleFrame(msg) {
       repFailReason: out.repFailReason,
       repEntry: out.repEntry,
       pts,
+      evidencePts: out.pts, // EMA rule-math points: what the WS records as evidence
     });
   } catch (err) {
     logger?.error("worker_died", { error_type: err?.name, error_message: String(err?.message || err), stack: err?.stack });
@@ -176,6 +187,7 @@ self.onmessage = async (ev) => {
         break;
       case "reset":
         smoother?.reset();
+        displaySmoother?.reset();
         if (engine) {
           const cfg = engine.config;
           engine = new PoseEngine(cfg, smoother);

@@ -49,6 +49,7 @@ POSE_WORKER = {
     "flag_raised",
     "worker_died",
     "audio_cue_missing",
+    "rep_rejected",
 }
 
 WS = {

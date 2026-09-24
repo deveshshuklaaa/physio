@@ -57,7 +57,7 @@ export class EmaSmoother {
  * One-Euro filter — NEW design, not a legacy port. Off by default.
  * Standard formulation (Casiez et al. 2012), one instance per scalar signal.
  */
-class OneEuroScalar {
+export class OneEuroScalar {
   constructor({ minCutoff = 1.0, beta = 0.0, dCutoff = 1.0 } = {}) {
     this.minCutoff = minCutoff;
     this.beta = beta;

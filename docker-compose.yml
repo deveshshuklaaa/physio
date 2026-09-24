@@ -2,8 +2,32 @@ services:
   emg-service:
     build:
       context: ./emg-service
-    # G2-A3: internal only, no host port. Reached at http://emg-service:5000
-    # from inside the compose network.
+    # D27: internal only, NO http host port and no nginx location -- permanently
+    # unreachable from a browser. Reached at http://emg-service:5000 from inside
+    # the compose network. Bench access is `docker compose exec`, never an nginx
+    # location.
+    environment:
+      # Q49/D5: app.py's DATA_DIR defaults to BASE_DIR/.. == /srv in the
+      # container, i.e. recordings land next to the code and a rebuild destroys
+      # them. Point it at the mounted directory instead. Requires app.py to read
+      # this env var (see docs/12 §7.3).
+      EMG_DATA_DIR: /srv/data
+    volumes:
+      # Q49: recordings, history.json and progress_cache.json survive a rebuild.
+      # Bind mount, not a named volume, so the R4 demo recordings are visible in
+      # the repo and seedable by copying files in.
+      - ./emg-service/data:/srv/data
+    ports:
+      # Q26: the band streams UDP to 8888. Without this the container receives
+      # nothing -- this worked before only because Flask ran on the host, not in
+      # compose. TCP 5000 stays unpublished (D27).
+      - "8888:8888/udp"
+      # D29 TEMPORARY -- 2026-09-22 demo only. Operator access to
+      # history.html / playback.html / progress.html, which have no auth (S2)
+      # and no patient scoping (S12). Bound to 127.0.0.1 deliberately: the
+      # demo machine can reach it, the LAN cannot.
+      # REVERT AFTER THE DEMO by deleting the next line:
+      - "127.0.0.1:5000:5000"
 
   backend:
     build:

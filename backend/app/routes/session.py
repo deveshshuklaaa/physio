@@ -47,6 +47,22 @@ from app.auth import CurrentUser, authorize_patient_access, get_current_user
 from app.logging_setup import get_logger, correlation
 
 router = APIRouter(lifespan=dbmod.lifespan)
+
+# Strong references to fire-and-forget side-effect tasks (report generation,
+# EMG capture start/stop). The event loop keeps only a WEAK reference to a
+# bare asyncio.create_task(), so a task can be garbage-collected before it
+# runs -- the same bug session_ws.py's _pending_finalizers guards against.
+# Symptom seen live: a session ends, stop_capture never fires, Flask records
+# forever and the .partial.csv is never finalised.
+_bg_tasks: set = set()
+
+
+def _spawn(coro):
+    t = asyncio.create_task(coro)
+    _bg_tasks.add(t)
+    t.add_done_callback(_bg_tasks.discard)
+    return t
+ 
 log = get_logger("session")
 
 # D6 caps. A rep log is one entry per repetition of one exercise session; a
@@ -217,7 +233,11 @@ async def end_session(app, session_id: str) -> str:
     # Imported here, not at module top, to avoid a session.py <-> gemini_report
     # import cycle at load time.
     from app.services.gemini_report import generate_report
-    asyncio.create_task(generate_report(app, session_id))
+    _spawn(generate_report(app, session_id))
+    # O4: finalise the EMG recording -- without this the ids never reach
+    # history.json. Same fire-and-forget/breaker rules as capture start.
+    from app.services import emg_client
+    _spawn(emg_client.stop_capture(emg_client.EMG_SERVICE_URL))
     return job_id
 
 
@@ -269,6 +289,18 @@ async def session_start(
         "updatedAt": now,
     }
     await _sessions(app).insert_one(doc)
+    # O4/D31: tag the EMG recording with this session and patient. Fire-and-
+    # forget, like generate_report above: emg_client never raises and honours
+    # its circuit breaker, so a dead or slow EMG service cannot delay or fail
+    # session start. D12: the patient id comes from the JWT, never the body.
+    from app.services import emg_client
+    _spawn(
+        emg_client.start_capture(
+            emg_client.EMG_SERVICE_URL,
+            patient_user_id=user.user_id,
+            session_id=session_id,
+        )
+    )
     with correlation(session_id=session_id):
         log.info("session_started", exercise=body.exercise, patient_id=user.user_id)
     return {"session_id": session_id}
@@ -336,6 +368,31 @@ async def session_summary(
     with correlation(session_id=session_id):
         log.info("session_summary", rep_count=body.repCount, clean_reps=body.cleanReps)
     return {"ok": True}
+
+
+@router.post("/session/calibrate")
+async def session_calibrate(user: CurrentUser = Depends(get_current_user)):
+    """R1.2a: pre-session calibration gate (docs/13 R1). No session id yet --
+    this runs before /session/start. Never raises: a dead EMG service
+    degrades to a normal response, exactly like start_capture/stop_capture."""
+    from app.services import emg_client
+    result = await emg_client.recalibrate(emg_client.EMG_SERVICE_URL)
+    return result if result is not None else {"status": "unavailable"}
+
+
+@router.get("/calibration")
+async def session_calibration_status(user: CurrentUser = Depends(get_current_user)):
+    """R1.2b: poll target for the calibrate gate. NOTE the bare path -- NOT
+    /session/calibration, which /session/{session_id} below would swallow."""
+    from app.services import emg_client
+    status = await emg_client.get_emg_status(emg_client.EMG_SERVICE_URL)
+    calibration = status.get("calibration") if isinstance(status, dict) else None
+    calibrating = bool(status.get("calibrating")) if isinstance(status, dict) else False
+    return {
+        "calibrating": calibrating,
+        "calibration": calibration,
+        "ok": emg_client.calibration_ok(calibration),
+    }
 
 
 @router.get("/session/{session_id}")

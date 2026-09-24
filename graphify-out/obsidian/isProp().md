@@ -1,0 +1,19 @@
+---
+source_file: "frontend/src/vendor/tailwind/tailwind.js"
+type: "code"
+community: "remove"
+location: "L44"
+tags:
+  - graphify/code
+  - graphify/EXTRACTED
+  - community/remove
+---
+
+# isProp()
+
+## Connections
+- [[add()_2]] - `calls` [EXTRACTED]
+- [[remove()_2]] - `calls` [EXTRACTED]
+- [[tailwind.js]] - `contains` [EXTRACTED]
+
+#graphify/code #graphify/EXTRACTED #community/remove

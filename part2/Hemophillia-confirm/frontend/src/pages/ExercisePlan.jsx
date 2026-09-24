@@ -1143,6 +1143,21 @@ const ExercisePlan = () => {
                 </div>
               )}
             </section>
+
+            {/* D29 TEMPORARY -- 2026-09-22 demo; unscoped Flask surface via /emg/, revert after */}
+            <section className="exercise-section">
+              <div className="exercise-section-head">
+                <div>
+                  <span className="exercise-section-label">MUSCLE ACTIVITY</span>
+                  <h2>EMG recordings</h2>
+                </div>
+              </div>
+              {/* D29 TEMPORARY -- 2026-09-22 demo; open the Flask EMG pages directly (no iframe), loopback only. Revert with the /emg/ scoped views. */}
+              <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
+                <a className="exercise-start-btn" href="http://127.0.0.1:5000/progress.html" target="_blank" rel="noopener noreferrer">Open EMG dashboard</a>
+                <a className="exercise-start-btn" href="http://127.0.0.1:5000/history.html" target="_blank" rel="noopener noreferrer">Open EMG recordings</a>
+              </div>
+            </section>
           </>
         )}
       </div>

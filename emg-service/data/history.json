@@ -1,17 +1,1265 @@
 [
   {
-    "filename": "emg_20260715_022626.bin",
-    "timestamp": "20260715_022626",
-    "size": 62332
-  },
-  {
-    "filename": "emg_20260715_023015.bin",
-    "timestamp": "20260715_023015",
-    "size": 270700
-  },
-  {
     "filename": "emg_20260725_002806.bin",
     "timestamp": "2026-07-25T00:28:06.481637",
     "size": 2875844
+  },
+  {
+    "filename": "emg_20260909_032701.csv.gz",
+    "timestamp": "2026-09-09T03:27:01.399688",
+    "size": 46305,
+    "duration": 19.7,
+    "sample_rate": 500,
+    "num_samples": 9820,
+    "calibration": {
+      "ax": 2290,
+      "ay": -11387,
+      "az": -27983,
+      "gx": -154,
+      "gy": 37,
+      "gz": 143,
+      "mpu_ok": true,
+      "shaky": false
+    },
+    "patient_user_id": "6aa238e50e48d0e64addbb33"
+  },
+  {
+    "filename": "emg_20260909_033300.csv.gz",
+    "timestamp": "2026-09-09T03:33:00.243834",
+    "size": 37362,
+    "duration": 14.7,
+    "sample_rate": 500,
+    "num_samples": 7340,
+    "calibration": {
+      "ax": 8814,
+      "ay": 1088,
+      "az": -30431,
+      "gx": 2868,
+      "gy": 1369,
+      "gz": -3912,
+      "mpu_ok": true,
+      "shaky": true
+    },
+    "patient_user_id": "6aa238e50e48d0e64addbb33"
+  },
+  {
+    "filename": "emg_20260909_041117.csv.gz",
+    "timestamp": "2026-09-09T04:11:17.851923",
+    "size": 48178,
+    "duration": 20.1,
+    "sample_rate": 500,
+    "num_samples": 10040,
+    "calibration": {
+      "ax": 10221,
+      "ay": -169,
+      "az": -29107,
+      "gx": -195,
+      "gy": 58,
+      "gz": 55,
+      "mpu_ok": true,
+      "shaky": false
+    },
+    "patient_user_id": "6aa238e50e48d0e64addbb33"
+  },
+  {
+    "filename": "emg_20260909_135406.csv.gz",
+    "timestamp": "2026-09-09T13:54:06.186061",
+    "size": 13209,
+    "duration": 5.7,
+    "sample_rate": 500,
+    "num_samples": 2860,
+    "calibration": {
+      "ax": 1538,
+      "ay": -60,
+      "az": -412,
+      "gx": -187,
+      "gy": 13,
+      "gz": 56,
+      "mpu_ok": true,
+      "shaky": false
+    },
+    "patient_user_id": "6aa238e50e48d0e64addbb33"
+  },
+  {
+    "filename": "emg_20260909_135506.csv.gz",
+    "timestamp": "2026-09-09T13:55:06.203632",
+    "size": 50164,
+    "duration": 20.1,
+    "sample_rate": 500,
+    "num_samples": 10060,
+    "calibration": {
+      "ax": 1538,
+      "ay": -60,
+      "az": -412,
+      "gx": -187,
+      "gy": 13,
+      "gz": 56,
+      "mpu_ok": true,
+      "shaky": false
+    },
+    "patient_user_id": "6aa238e50e48d0e64addbb33"
+  },
+  {
+    "filename": "emg_20260909_164511.csv.gz",
+    "timestamp": "2026-09-09T16:45:11.580052",
+    "size": 214698,
+    "duration": 96.8,
+    "sample_rate": 500,
+    "num_samples": 48380,
+    "calibration": {
+      "ax": -8891,
+      "ay": -3061,
+      "az": -3105,
+      "gx": -180,
+      "gy": 47,
+      "gz": 62,
+      "mpu_ok": true,
+      "shaky": false
+    },
+    "metrics": {
+      "rms": 53.65,
+      "peak": 654,
+      "contraction_count": 37,
+      "contractions": [
+        {
+          "start_s": 1.012,
+          "end_s": 1.916,
+          "duration_s": 0.904,
+          "rms": 100.86,
+          "peak": 420
+        },
+        {
+          "start_s": 2.708,
+          "end_s": 3.598,
+          "duration_s": 0.89,
+          "rms": 114.08,
+          "peak": 409
+        },
+        {
+          "start_s": 4.524,
+          "end_s": 5.394,
+          "duration_s": 0.87,
+          "rms": 100.12,
+          "peak": 329
+        },
+        {
+          "start_s": 6.238,
+          "end_s": 7.192,
+          "duration_s": 0.954,
+          "rms": 107.58,
+          "peak": 421
+        },
+        {
+          "start_s": 8.03,
+          "end_s": 8.958,
+          "duration_s": 0.928,
+          "rms": 104.76,
+          "peak": 434
+        },
+        {
+          "start_s": 10.28,
+          "end_s": 11.208,
+          "duration_s": 0.928,
+          "rms": 107.26,
+          "peak": 415
+        },
+        {
+          "start_s": 12.656,
+          "end_s": 13.186,
+          "duration_s": 0.53,
+          "rms": 80.15,
+          "peak": 283
+        },
+        {
+          "start_s": 14.414,
+          "end_s": 15.39,
+          "duration_s": 0.976,
+          "rms": 86.3,
+          "peak": 372
+        },
+        {
+          "start_s": 16.328,
+          "end_s": 17.704,
+          "duration_s": 1.376,
+          "rms": 117.94,
+          "peak": 433
+        },
+        {
+          "start_s": 19.064,
+          "end_s": 20.03,
+          "duration_s": 0.966,
+          "rms": 97.46,
+          "peak": 431
+        },
+        {
+          "start_s": 21.124,
+          "end_s": 22.204,
+          "duration_s": 1.08,
+          "rms": 92.25,
+          "peak": 353
+        },
+        {
+          "start_s": 23.858,
+          "end_s": 24.77,
+          "duration_s": 0.912,
+          "rms": 92.05,
+          "peak": 353
+        },
+        {
+          "start_s": 26.464,
+          "end_s": 27.652,
+          "duration_s": 1.188,
+          "rms": 98.9,
+          "peak": 366
+        },
+        {
+          "start_s": 29.354,
+          "end_s": 29.768,
+          "duration_s": 0.414,
+          "rms": 84.12,
+          "peak": 360
+        },
+        {
+          "start_s": 29.898,
+          "end_s": 30.542,
+          "duration_s": 0.644,
+          "rms": 62.08,
+          "peak": 242
+        },
+        {
+          "start_s": 47.484,
+          "end_s": 47.81,
+          "duration_s": 0.326,
+          "rms": 113.76,
+          "peak": 505
+        },
+        {
+          "start_s": 47.966,
+          "end_s": 48.6,
+          "duration_s": 0.634,
+          "rms": 100.93,
+          "peak": 654
+        },
+        {
+          "start_s": 55.494,
+          "end_s": 56.672,
+          "duration_s": 1.178,
+          "rms": 75.0,
+          "peak": 573
+        },
+        {
+          "start_s": 57.128,
+          "end_s": 57.39,
+          "duration_s": 0.262,
+          "rms": 56.14,
+          "peak": 427
+        },
+        {
+          "start_s": 57.782,
+          "end_s": 57.92,
+          "duration_s": 0.138,
+          "rms": 37.12,
+          "peak": 84
+        },
+        {
+          "start_s": 58.498,
+          "end_s": 58.758,
+          "duration_s": 0.26,
+          "rms": 64.92,
+          "peak": 512
+        },
+        {
+          "start_s": 58.976,
+          "end_s": 59.586,
+          "duration_s": 0.61,
+          "rms": 73.7,
+          "peak": 559
+        },
+        {
+          "start_s": 59.816,
+          "end_s": 60.086,
+          "duration_s": 0.27,
+          "rms": 61.47,
+          "peak": 361
+        },
+        {
+          "start_s": 61.012,
+          "end_s": 61.234,
+          "duration_s": 0.222,
+          "rms": 26.75,
+          "peak": 91
+        },
+        {
+          "start_s": 61.704,
+          "end_s": 62.0,
+          "duration_s": 0.296,
+          "rms": 65.12,
+          "peak": 310
+        },
+        {
+          "start_s": 65.016,
+          "end_s": 65.274,
+          "duration_s": 0.258,
+          "rms": 49.77,
+          "peak": 298
+        },
+        {
+          "start_s": 66.586,
+          "end_s": 67.076,
+          "duration_s": 0.49,
+          "rms": 66.23,
+          "peak": 455
+        },
+        {
+          "start_s": 67.306,
+          "end_s": 67.838,
+          "duration_s": 0.532,
+          "rms": 91.68,
+          "peak": 539
+        },
+        {
+          "start_s": 69.626,
+          "end_s": 69.876,
+          "duration_s": 0.25,
+          "rms": 50.06,
+          "peak": 417
+        },
+        {
+          "start_s": 70.254,
+          "end_s": 70.528,
+          "duration_s": 0.274,
+          "rms": 60.15,
+          "peak": 361
+        },
+        {
+          "start_s": 71.03,
+          "end_s": 71.286,
+          "duration_s": 0.256,
+          "rms": 57.96,
+          "peak": 403
+        },
+        {
+          "start_s": 72.192,
+          "end_s": 72.438,
+          "duration_s": 0.246,
+          "rms": 33.37,
+          "peak": 191
+        },
+        {
+          "start_s": 73.392,
+          "end_s": 73.592,
+          "duration_s": 0.2,
+          "rms": 35.59,
+          "peak": 93
+        },
+        {
+          "start_s": 79.192,
+          "end_s": 79.716,
+          "duration_s": 0.524,
+          "rms": 74.8,
+          "peak": 353
+        },
+        {
+          "start_s": 92.584,
+          "end_s": 92.866,
+          "duration_s": 0.282,
+          "rms": 68.55,
+          "peak": 309
+        },
+        {
+          "start_s": 93.58,
+          "end_s": 94.716,
+          "duration_s": 1.136,
+          "rms": 71.83,
+          "peak": 308
+        },
+        {
+          "start_s": 96.254,
+          "end_s": 96.76,
+          "duration_s": 0.506,
+          "rms": 66.76,
+          "peak": 390
+        }
+      ],
+      "latencies_s": [
+        0.792,
+        0.926,
+        0.844,
+        0.838,
+        1.322,
+        1.448,
+        1.228,
+        0.938,
+        1.36,
+        1.094,
+        1.654,
+        1.694,
+        1.702,
+        0.13,
+        16.942,
+        0.156,
+        6.894,
+        0.456,
+        0.392,
+        0.578,
+        0.218,
+        0.23,
+        0.926,
+        0.47,
+        3.016,
+        1.312,
+        0.23,
+        1.788,
+        0.378,
+        0.502,
+        0.906,
+        0.954,
+        5.6,
+        12.868,
+        0.714,
+        1.538
+      ],
+      "mean_latency_s": 2.029,
+      "units": "adc_counts"
+    },
+    "patient_user_id": "6aa238e50e48d0e64addbb33"
+  },
+  {
+    "filename": "emg_20260911_003429.csv.gz",
+    "timestamp": "2026-09-11T00:34:29.195888",
+    "size": 90958,
+    "duration": 37.4,
+    "sample_rate": 500,
+    "num_samples": 18700,
+    "calibration": {
+      "ax": 565,
+      "ay": 550,
+      "az": -396,
+      "gx": -199,
+      "gy": 56,
+      "gz": 58,
+      "mpu_ok": true,
+      "shaky": false
+    },
+    "metrics": {
+      "rms": 212.3,
+      "peak": 1762,
+      "contraction_count": 20,
+      "contractions": [
+        {
+          "start_s": 1.064,
+          "end_s": 1.718,
+          "duration_s": 0.654,
+          "rms": 322.54,
+          "peak": 923
+        },
+        {
+          "start_s": 2.648,
+          "end_s": 3.512,
+          "duration_s": 0.864,
+          "rms": 306.55,
+          "peak": 1203
+        },
+        {
+          "start_s": 4.62,
+          "end_s": 5.234,
+          "duration_s": 0.614,
+          "rms": 300.17,
+          "peak": 1021
+        },
+        {
+          "start_s": 6.154,
+          "end_s": 6.862,
+          "duration_s": 0.708,
+          "rms": 372.36,
+          "peak": 1145
+        },
+        {
+          "start_s": 8.024,
+          "end_s": 8.642,
+          "duration_s": 0.618,
+          "rms": 247.02,
+          "peak": 757
+        },
+        {
+          "start_s": 9.602,
+          "end_s": 10.3,
+          "duration_s": 0.698,
+          "rms": 282.06,
+          "peak": 1040
+        },
+        {
+          "start_s": 11.17,
+          "end_s": 11.864,
+          "duration_s": 0.694,
+          "rms": 305.91,
+          "peak": 973
+        },
+        {
+          "start_s": 12.734,
+          "end_s": 13.47,
+          "duration_s": 0.736,
+          "rms": 311.29,
+          "peak": 1258
+        },
+        {
+          "start_s": 14.468,
+          "end_s": 15.06,
+          "duration_s": 0.592,
+          "rms": 319.5,
+          "peak": 1025
+        },
+        {
+          "start_s": 16.216,
+          "end_s": 16.898,
+          "duration_s": 0.682,
+          "rms": 332.52,
+          "peak": 1144
+        },
+        {
+          "start_s": 17.77,
+          "end_s": 18.468,
+          "duration_s": 0.698,
+          "rms": 376.71,
+          "peak": 1323
+        },
+        {
+          "start_s": 20.16,
+          "end_s": 20.878,
+          "duration_s": 0.718,
+          "rms": 379.5,
+          "peak": 1579
+        },
+        {
+          "start_s": 22.026,
+          "end_s": 22.52,
+          "duration_s": 0.494,
+          "rms": 331.9,
+          "peak": 1035
+        },
+        {
+          "start_s": 26.472,
+          "end_s": 27.14,
+          "duration_s": 0.668,
+          "rms": 279.09,
+          "peak": 1069
+        },
+        {
+          "start_s": 28.272,
+          "end_s": 28.85,
+          "duration_s": 0.578,
+          "rms": 332.4,
+          "peak": 1345
+        },
+        {
+          "start_s": 29.692,
+          "end_s": 30.528,
+          "duration_s": 0.836,
+          "rms": 361.12,
+          "peak": 1299
+        },
+        {
+          "start_s": 31.332,
+          "end_s": 32.256,
+          "duration_s": 0.924,
+          "rms": 365.31,
+          "peak": 1098
+        },
+        {
+          "start_s": 32.882,
+          "end_s": 33.598,
+          "duration_s": 0.716,
+          "rms": 381.27,
+          "peak": 1762
+        },
+        {
+          "start_s": 34.488,
+          "end_s": 35.042,
+          "duration_s": 0.554,
+          "rms": 335.32,
+          "peak": 1254
+        },
+        {
+          "start_s": 35.772,
+          "end_s": 36.266,
+          "duration_s": 0.494,
+          "rms": 317.74,
+          "peak": 1456
+        }
+      ],
+      "latencies_s": [
+        0.93,
+        1.108,
+        0.92,
+        1.162,
+        0.96,
+        0.87,
+        0.87,
+        0.998,
+        1.156,
+        0.872,
+        1.692,
+        1.148,
+        3.952,
+        1.132,
+        0.842,
+        0.804,
+        0.626,
+        0.89,
+        0.73
+      ],
+      "mean_latency_s": 1.14,
+      "units": "adc_counts"
+    },
+    "patient_user_id": "6aa238e50e48d0e64addbb33"
+  },
+  {
+    "filename": "emg_20260911_003803.csv.gz",
+    "timestamp": "2026-09-11T00:38:03.483708",
+    "size": 171074,
+    "duration": 63.6,
+    "sample_rate": 500,
+    "num_samples": 31800,
+    "calibration": {
+      "ax": 565,
+      "ay": 550,
+      "az": -396,
+      "gx": -199,
+      "gy": 56,
+      "gz": 58,
+      "mpu_ok": true,
+      "shaky": false
+    },
+    "metrics": {
+      "rms": 155.38,
+      "peak": 1740,
+      "contraction_count": 18,
+      "contractions": [
+        {
+          "start_s": 1.558,
+          "end_s": 2.304,
+          "duration_s": 0.746,
+          "rms": 415.19,
+          "peak": 1474
+        },
+        {
+          "start_s": 3.594,
+          "end_s": 4.504,
+          "duration_s": 0.91,
+          "rms": 295.62,
+          "peak": 1289
+        },
+        {
+          "start_s": 11.422,
+          "end_s": 12.064,
+          "duration_s": 0.642,
+          "rms": 337.02,
+          "peak": 1153
+        },
+        {
+          "start_s": 13.418,
+          "end_s": 13.968,
+          "duration_s": 0.55,
+          "rms": 285.08,
+          "peak": 936
+        },
+        {
+          "start_s": 16.342,
+          "end_s": 16.724,
+          "duration_s": 0.382,
+          "rms": 220.98,
+          "peak": 799
+        },
+        {
+          "start_s": 17.68,
+          "end_s": 18.52,
+          "duration_s": 0.84,
+          "rms": 222.03,
+          "peak": 764
+        },
+        {
+          "start_s": 21.02,
+          "end_s": 21.27,
+          "duration_s": 0.25,
+          "rms": 163.9,
+          "peak": 760
+        },
+        {
+          "start_s": 24.362,
+          "end_s": 24.794,
+          "duration_s": 0.432,
+          "rms": 180.04,
+          "peak": 683
+        },
+        {
+          "start_s": 25.034,
+          "end_s": 25.266,
+          "duration_s": 0.232,
+          "rms": 124.19,
+          "peak": 372
+        },
+        {
+          "start_s": 25.512,
+          "end_s": 27.476,
+          "duration_s": 1.964,
+          "rms": 211.71,
+          "peak": 988
+        },
+        {
+          "start_s": 27.832,
+          "end_s": 28.434,
+          "duration_s": 0.602,
+          "rms": 288.49,
+          "peak": 1097
+        },
+        {
+          "start_s": 36.104,
+          "end_s": 38.824,
+          "duration_s": 2.72,
+          "rms": 297.16,
+          "peak": 1124
+        },
+        {
+          "start_s": 40.24,
+          "end_s": 41.416,
+          "duration_s": 1.176,
+          "rms": 333.92,
+          "peak": 1224
+        },
+        {
+          "start_s": 47.406,
+          "end_s": 48.302,
+          "duration_s": 0.896,
+          "rms": 271.75,
+          "peak": 758
+        },
+        {
+          "start_s": 50.984,
+          "end_s": 51.726,
+          "duration_s": 0.742,
+          "rms": 147.25,
+          "peak": 563
+        },
+        {
+          "start_s": 54.36,
+          "end_s": 55.452,
+          "duration_s": 1.092,
+          "rms": 219.53,
+          "peak": 775
+        },
+        {
+          "start_s": 57.942,
+          "end_s": 58.828,
+          "duration_s": 0.886,
+          "rms": 180.81,
+          "peak": 729
+        },
+        {
+          "start_s": 60.854,
+          "end_s": 61.59,
+          "duration_s": 0.736,
+          "rms": 195.23,
+          "peak": 733
+        }
+      ],
+      "latencies_s": [
+        1.29,
+        6.918,
+        1.354,
+        2.374,
+        0.956,
+        2.5,
+        3.092,
+        0.24,
+        0.246,
+        0.356,
+        7.67,
+        1.416,
+        5.99,
+        2.682,
+        2.634,
+        2.49,
+        2.026
+      ],
+      "mean_latency_s": 2.602,
+      "units": "adc_counts"
+    },
+    "patient_user_id": "6aa238e50e48d0e64addbb33"
+  },
+  {
+    "filename": "emg_20260921_195421.csv.gz",
+    "timestamp": "2026-09-21T19:54:21.834119",
+    "size": 1520677,
+    "patient_user_id": "6aa238e50e48d0e64addbb33",
+    "session_id": "s_399ed487c471479bbacd776ce336843d",
+    "duration": 763.1,
+    "sample_rate": 500,
+    "num_samples": 294640,
+    "calibration": {
+      "ax": -20,
+      "ay": -15331,
+      "az": -10414,
+      "gx": -584,
+      "gy": 382,
+      "gz": 224,
+      "mpu_ok": true,
+      "shaky": false
+    },
+    "metrics": {
+      "rms": 229.69,
+      "peak": 1309,
+      "contraction_count": 48,
+      "contractions": [
+        {
+          "start_s": 77.876,
+          "end_s": 128.122,
+          "duration_s": 50.246,
+          "rms": 355.77,
+          "peak": 1005
+        },
+        {
+          "start_s": 153.376,
+          "end_s": 153.848,
+          "duration_s": 0.472,
+          "rms": 269.27,
+          "peak": 606
+        },
+        {
+          "start_s": 155.012,
+          "end_s": 155.964,
+          "duration_s": 0.952,
+          "rms": 288.03,
+          "peak": 628
+        },
+        {
+          "start_s": 156.472,
+          "end_s": 157.844,
+          "duration_s": 1.372,
+          "rms": 265.86,
+          "peak": 578
+        },
+        {
+          "start_s": 161.998,
+          "end_s": 162.292,
+          "duration_s": 0.294,
+          "rms": 385.85,
+          "peak": 1271
+        },
+        {
+          "start_s": 162.732,
+          "end_s": 162.858,
+          "duration_s": 0.126,
+          "rms": 131.28,
+          "peak": 825
+        },
+        {
+          "start_s": 308.618,
+          "end_s": 308.904,
+          "duration_s": 0.286,
+          "rms": 276.12,
+          "peak": 888
+        },
+        {
+          "start_s": 309.156,
+          "end_s": 309.678,
+          "duration_s": 0.522,
+          "rms": 295.32,
+          "peak": 974
+        },
+        {
+          "start_s": 341.214,
+          "end_s": 341.708,
+          "duration_s": 0.494,
+          "rms": 279.0,
+          "peak": 684
+        },
+        {
+          "start_s": 342.118,
+          "end_s": 342.558,
+          "duration_s": 0.44,
+          "rms": 306.87,
+          "peak": 973
+        },
+        {
+          "start_s": 347.244,
+          "end_s": 348.414,
+          "duration_s": 1.17,
+          "rms": 321.83,
+          "peak": 1117
+        },
+        {
+          "start_s": 353.474,
+          "end_s": 354.168,
+          "duration_s": 0.694,
+          "rms": 288.73,
+          "peak": 859
+        },
+        {
+          "start_s": 359.602,
+          "end_s": 359.844,
+          "duration_s": 0.242,
+          "rms": 252.4,
+          "peak": 901
+        },
+        {
+          "start_s": 376.29,
+          "end_s": 383.69,
+          "duration_s": 7.4,
+          "rms": 380.95,
+          "peak": 1045
+        },
+        {
+          "start_s": 385.596,
+          "end_s": 386.63,
+          "duration_s": 1.034,
+          "rms": 284.59,
+          "peak": 678
+        },
+        {
+          "start_s": 392.836,
+          "end_s": 393.49,
+          "duration_s": 0.654,
+          "rms": 275.52,
+          "peak": 797
+        },
+        {
+          "start_s": 393.932,
+          "end_s": 394.614,
+          "duration_s": 0.682,
+          "rms": 278.03,
+          "peak": 744
+        },
+        {
+          "start_s": 395.91,
+          "end_s": 396.398,
+          "duration_s": 0.488,
+          "rms": 262.55,
+          "peak": 615
+        },
+        {
+          "start_s": 396.75,
+          "end_s": 397.496,
+          "duration_s": 0.746,
+          "rms": 293.77,
+          "peak": 948
+        },
+        {
+          "start_s": 397.696,
+          "end_s": 398.652,
+          "duration_s": 0.956,
+          "rms": 276.34,
+          "peak": 669
+        },
+        {
+          "start_s": 399.934,
+          "end_s": 400.102,
+          "duration_s": 0.168,
+          "rms": 234.8,
+          "peak": 654
+        },
+        {
+          "start_s": 400.662,
+          "end_s": 401.88,
+          "duration_s": 1.218,
+          "rms": 325.85,
+          "peak": 750
+        },
+        {
+          "start_s": 402.068,
+          "end_s": 416.088,
+          "duration_s": 14.02,
+          "rms": 310.67,
+          "peak": 874
+        },
+        {
+          "start_s": 416.344,
+          "end_s": 436.562,
+          "duration_s": 20.218,
+          "rms": 343.29,
+          "peak": 1050
+        },
+        {
+          "start_s": 436.984,
+          "end_s": 438.488,
+          "duration_s": 1.504,
+          "rms": 296.03,
+          "peak": 658
+        },
+        {
+          "start_s": 439.428,
+          "end_s": 460.248,
+          "duration_s": 20.82,
+          "rms": 335.12,
+          "peak": 795
+        },
+        {
+          "start_s": 460.512,
+          "end_s": 460.784,
+          "duration_s": 0.272,
+          "rms": 250.5,
+          "peak": 494
+        },
+        {
+          "start_s": 461.438,
+          "end_s": 466.45,
+          "duration_s": 5.012,
+          "rms": 293.3,
+          "peak": 691
+        },
+        {
+          "start_s": 467.064,
+          "end_s": 469.934,
+          "duration_s": 2.87,
+          "rms": 303.13,
+          "peak": 689
+        },
+        {
+          "start_s": 470.242,
+          "end_s": 477.652,
+          "duration_s": 7.41,
+          "rms": 294.14,
+          "peak": 715
+        },
+        {
+          "start_s": 478.502,
+          "end_s": 484.456,
+          "duration_s": 5.954,
+          "rms": 340.99,
+          "peak": 774
+        },
+        {
+          "start_s": 484.79,
+          "end_s": 485.108,
+          "duration_s": 0.318,
+          "rms": 240.19,
+          "peak": 509
+        },
+        {
+          "start_s": 485.392,
+          "end_s": 485.602,
+          "duration_s": 0.21,
+          "rms": 309.38,
+          "peak": 949
+        },
+        {
+          "start_s": 486.248,
+          "end_s": 489.394,
+          "duration_s": 3.146,
+          "rms": 459.63,
+          "peak": 1260
+        },
+        {
+          "start_s": 494.522,
+          "end_s": 501.602,
+          "duration_s": 7.08,
+          "rms": 428.78,
+          "peak": 1309
+        },
+        {
+          "start_s": 503.16,
+          "end_s": 507.106,
+          "duration_s": 3.946,
+          "rms": 281.84,
+          "peak": 633
+        },
+        {
+          "start_s": 507.52,
+          "end_s": 509.694,
+          "duration_s": 2.174,
+          "rms": 299.59,
+          "peak": 878
+        },
+        {
+          "start_s": 509.858,
+          "end_s": 517.654,
+          "duration_s": 7.796,
+          "rms": 324.26,
+          "peak": 809
+        },
+        {
+          "start_s": 517.868,
+          "end_s": 527.82,
+          "duration_s": 9.952,
+          "rms": 325.14,
+          "peak": 956
+        },
+        {
+          "start_s": 528.186,
+          "end_s": 528.618,
+          "duration_s": 0.432,
+          "rms": 256.49,
+          "peak": 545
+        },
+        {
+          "start_s": 530.848,
+          "end_s": 531.708,
+          "duration_s": 0.86,
+          "rms": 304.39,
+          "peak": 1043
+        },
+        {
+          "start_s": 531.958,
+          "end_s": 533.76,
+          "duration_s": 1.802,
+          "rms": 264.61,
+          "peak": 565
+        },
+        {
+          "start_s": 534.238,
+          "end_s": 535.658,
+          "duration_s": 1.42,
+          "rms": 322.94,
+          "peak": 836
+        },
+        {
+          "start_s": 535.954,
+          "end_s": 545.534,
+          "duration_s": 9.58,
+          "rms": 340.23,
+          "peak": 882
+        },
+        {
+          "start_s": 552.304,
+          "end_s": 552.638,
+          "duration_s": 0.334,
+          "rms": 240.24,
+          "peak": 522
+        },
+        {
+          "start_s": 556.336,
+          "end_s": 571.286,
+          "duration_s": 14.95,
+          "rms": 322.31,
+          "peak": 759
+        },
+        {
+          "start_s": 571.66,
+          "end_s": 571.96,
+          "duration_s": 0.3,
+          "rms": 242.46,
+          "peak": 452
+        },
+        {
+          "start_s": 584.664,
+          "end_s": 589.28,
+          "duration_s": 4.616,
+          "rms": 338.15,
+          "peak": 882
+        }
+      ],
+      "latencies_s": [
+        25.254,
+        1.164,
+        0.508,
+        4.154,
+        0.44,
+        145.76,
+        0.252,
+        31.536,
+        0.41,
+        4.686,
+        5.06,
+        5.434,
+        16.446,
+        1.906,
+        6.206,
+        0.442,
+        1.296,
+        0.352,
+        0.2,
+        1.282,
+        0.56,
+        0.188,
+        0.256,
+        0.422,
+        0.94,
+        0.264,
+        0.654,
+        0.614,
+        0.308,
+        0.85,
+        0.334,
+        0.284,
+        0.646,
+        5.128,
+        1.558,
+        0.414,
+        0.164,
+        0.214,
+        0.366,
+        2.23,
+        0.25,
+        0.478,
+        0.296,
+        6.77,
+        3.698,
+        0.374,
+        12.704
+      ],
+      "mean_latency_s": 6.25,
+      "units": "adc_counts"
+    }
+  },
+  {
+    "filename": "emg_20260921_200920.csv.gz",
+    "timestamp": "2026-09-21T20:09:20.455339",
+    "size": 10242,
+    "patient_user_id": "6aa238e50e48d0e64addbb33",
+    "session_id": "s_c4c791d61e6441b098491c6f2efd1ea2",
+    "duration": 3.7,
+    "sample_rate": 500,
+    "num_samples": 1840,
+    "calibration": {
+      "ax": -10232,
+      "ay": 6558,
+      "az": -6894,
+      "gx": 2363,
+      "gy": 4338,
+      "gz": -2276,
+      "mpu_ok": true,
+      "shaky": true
+    },
+    "metrics": {
+      "rms": 225.36,
+      "peak": 489,
+      "contraction_count": 4,
+      "contractions": [
+        {
+          "start_s": 0.428,
+          "end_s": 1.144,
+          "duration_s": 0.716,
+          "rms": 233.37,
+          "peak": 452
+        },
+        {
+          "start_s": 1.42,
+          "end_s": 1.588,
+          "duration_s": 0.168,
+          "rms": 227.5,
+          "peak": 469
+        },
+        {
+          "start_s": 1.992,
+          "end_s": 2.15,
+          "duration_s": 0.158,
+          "rms": 228.66,
+          "peak": 443
+        },
+        {
+          "start_s": 2.77,
+          "end_s": 3.146,
+          "duration_s": 0.376,
+          "rms": 232.13,
+          "peak": 476
+        }
+      ],
+      "latencies_s": [
+        0.276,
+        0.404,
+        0.62
+      ],
+      "mean_latency_s": 0.433,
+      "units": "adc_counts"
+    }
   }
 ]

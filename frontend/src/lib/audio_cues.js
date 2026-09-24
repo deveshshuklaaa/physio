@@ -30,6 +30,9 @@ export const AUDIO_MAP = {
   "Heel lifting off the surface — keep it down": "heel_down.mp3",
   "Hip lifting off the surface — keep it flat": "hip_flat.mp3",
   "Slide your heel further in": "slide_further.mp3",
+  // ponytail: HS/TKE (2026-09-24) reuse existing cues until dedicated mp3s are recorded.
+  "Slide your heel further toward your hip": "slide_further.mp3",
+  "Keep your thigh on the pillow — only straighten the knee": "hip_flat.mp3",
   "Knees bowing out — track knees over toes": "knee_varus.mp3",
   "Feet too close together — widen your stance": "widen_stance.mp3",
   "Back rounding — chest up": "back_rounding.mp3",

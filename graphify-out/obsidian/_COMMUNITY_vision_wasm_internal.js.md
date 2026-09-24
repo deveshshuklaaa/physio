@@ -1,0 +1,247 @@
+---
+type: community
+members: 205
+---
+
+# vision_wasm_internal.js
+
+**Members:** 205 nodes
+
+## Members
+- [[fromWireType()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[toWireType()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[ExitStatus()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[GetAdapterVendor()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[HandleAllocator()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[HaveOffsetConverter()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnEmptyPacketListener()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnFloat32ArrayImageListener()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnFloat32ArrayImageVectorListener()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnSimpleListenerBinaryArray()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnSimpleListenerBool()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnSimpleListenerDouble()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnSimpleListenerFloat()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnSimpleListenerInt()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnSimpleListenerString()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnSimpleListenerUint()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnUint8ArrayImageListener()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnUint8ArrayImageVectorListener()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnVectorFinishedListener()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnVectorListenerBool()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnVectorListenerDouble()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnVectorListenerFloat()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnVectorListenerInt()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnVectorListenerProto()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnVectorListenerString()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnVectorListenerUint()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnWebGLTextureListener()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsOnWebGLTextureVectorListener()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsWrapErrorListener()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsWrapImageConverter()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[JsWrapSimpleListeners()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[UseBottomLeftGpuOrigin()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[___syscall_fcntl64()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[___syscall_fstat64()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[___syscall_lstat64()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[___syscall_newfstatat()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[___syscall_openat()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[___syscall_stat64()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[__gmtime_js()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[__localtime_js()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[__mmap_js()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[__munmap_js()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_fd_close()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_fd_read()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_fd_seek()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_fd_write()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glActiveTexture()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glBlendEquation()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glBlendFunc()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glClear()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glClearColor()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glDisable()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glEnable()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glFinish()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glFlush()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glGenVertexArrays()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glTexParameterf()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glTexParameteri()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glTexStorage2D()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glTexStorage3D()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_glViewport()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_mediapipe_find_canvas_event_target()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_mediapipe_webgl_tex_image_drawable()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[_removeHandler()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[add()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[allocate()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[analyzePath()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[calculateAt()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[calculateMouseCoords()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[calculateMouseEvent()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[canPerformEventHandlerRequests()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[chdir()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[checkIsRunning()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[chmod()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[chown()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[closeStream()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[constructor()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[create()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[createDataFile()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[createDefaultDevices()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[createDefaultDirectories()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[createDevice()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[createFile()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[createNode()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[createPath()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[createSpecialDirectories()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[createStandardStreams()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[createStream()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[decodeMemoryView()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[destroyContext()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[destroyNode()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[destructorFunction()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[doMsync()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[doStat()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[ensureErrnoError()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[expandFileStorage()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[extractZone()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[fakeRequestAnimationFrame()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[fchmod()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[fchown()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[findObject()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[fixedGetContext()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[flagsToPermissionString()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[ftruncate()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[fullscreenEnabled()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[get()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getExtensions()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getFileDataAsTypedArray()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getMimetype()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getMounts()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getMouseWheelDelta()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getMovementX()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getMovementY()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getNodeNameForTarget()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getPath()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getStr()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getStreamChecked()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getStreamFromFD()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getUniqueRunDependency()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getUserMedia()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getattr()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[getp()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[handleAllocatorInit()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[hardware_concurrency()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[hashAddNode()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[hashName()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[hashRemoveNode()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[ioctl()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[isBlkdev()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[isChrdev()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[isClosed()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[isDir()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[isFIFO()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[isFile()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[isLink()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[isMountpoint()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[isRoot()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[isSocket()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[lchmod()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[lchown()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[llseek()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[locateFile()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[lookup()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[lookupNode()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[lookupPath()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[lstat()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[makeMultisampleState()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[makePrimitiveState()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[mayCreate()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[mayDelete()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[mayLookup()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[mayOpen()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[mediapipe_create_utility_canvas2d()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[mkdev()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[mkdir()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[mkdirTree()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[mknod()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[mount()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[nextfd()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[nodePermissions()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[open()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[pause()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[quit()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[readFile()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[readPointer()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[readdir()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[readlink()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[register()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[registerDevice()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[registerOrRemoveHandler()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[registerRemoveEventListeners()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[remove()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[removeAllEventListeners()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[removeDeferredCalls()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[rename()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[requestAnimationFrame()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[resizeFileStorage()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[resume()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[rmdir()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[roundedToNextMultipleOf()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[runDeferredCalls()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[runIter()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[safeRequestAnimationFrame()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[setCanvasSize()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[setFullscreenCanvasSize()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[setMouseCoords()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[setWindowedCanvasSize()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[setattr()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[shutdown()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[simpleReadValueFromPointer()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[stat()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[staticInit()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[symlink()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[testGlobal()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[trim()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[truncate()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[unlink()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[unmount()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[updateCanvasDimensions()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[updateResizeListeners()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[updateStatus()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[utime()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[vision_wasm_internal.js]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[writeFile()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+- [[xnnLoadWasmModuleJS()]] - code - frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js
+
+## Live Query (requires Dataview plugin)
+
+```dataview
+TABLE source_file, type FROM #community/vision_wasm_internaljs
+SORT file.name ASC
+```
+
+## Connections to other communities
+- 16 edges to [[_COMMUNITY_dot-get]]
+- 15 edges to [[_COMMUNITY_init_1]]
+- 6 edges to [[_COMMUNITY_createLazyFile]]
+- 6 edges to [[_COMMUNITY_postRun]]
+- 5 edges to [[_COMMUNITY_makeVertexAttributes]]
+- 4 edges to [[_COMMUNITY____syscall_ioctl]]
+- 3 edges to [[_COMMUNITY_compareByDay]]
+- 3 edges to [[_COMMUNITY_write]]
+- 2 edges to [[_COMMUNITY_close]]
+- 2 edges to [[_COMMUNITY_convertReturnValue]]
+- 2 edges to [[_COMMUNITY__emscripten_stack_snapshot]]
+- 2 edges to [[_COMMUNITY_leadingNulls]]
+- 2 edges to [[_COMMUNITY_makeDepthStencilState]]
+- 2 edges to [[_COMMUNITY_registerType]]
+- 1 edge to [[_COMMUNITY_syncfs]]
+- 1 edge to [[_COMMUNITY_custom_emscripten_dbgn]]
+- 1 edge to [[_COMMUNITY_deferCall]]
+- 1 edge to [[_COMMUNITY_requestFullscreen]]
+- 1 edge to [[_COMMUNITY_decl]]
+- 1 edge to [[_COMMUNITY_ExceptionInfo]]
+
+## Top bridge nodes
+- [[vision_wasm_internal.js]] - degree 280, connects to 20 communities

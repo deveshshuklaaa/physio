@@ -13,10 +13,17 @@ This is the repo's recurring silent-failure shape (PROJECT-STATUS §3): the
 happy path reports success while the real path is dead. A test that only calls
 the API server-side cannot see it, so this asserts the actual CORS headers.
 """
+import os
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+# Never let a test run touch the live EMG service. Since P2.3,
+# POST /session/start fires emg_client.start_capture; EMG_SERVICE_URL
+# defaults to http://localhost:5000, reachable via the P5.2 loopback port.
+# A closed port makes start_capture a no-op (docs/13 F2).
+os.environ.setdefault("EMG_SERVICE_URL", "http://127.0.0.1:9")
 
 from fastapi.testclient import TestClient
 
