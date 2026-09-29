@@ -1,6 +1,6 @@
-venv/
-part2/Hemophillia-confirm/backend/node_modules/
-backend/venv/
-backend/__pycache__/
-backend/.pytest_cache/
-part2/Hemophillia-confirm/frontend/node_modules/
+venv/*
+part2/Hemophillia-confirm/backend/node_modules/*
+backend/venv/*
+backend/__pycache__/*
+backend/.pytest_cache/*
+part2/Hemophillia-confirm/frontend/node_modules/*
