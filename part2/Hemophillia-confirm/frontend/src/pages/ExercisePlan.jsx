@@ -908,6 +908,15 @@ const translateExercisePurpose = (purpose, language) => {
   return phraseMap[purpose] || purpose;
 };
 
+const EXERCISE_YOUTUBE_LINKS = {
+  heel_slides: "https://youtu.be/rAMPY8lAbfY?si=gYGBEpyl5Ny8Uh2s",
+  mini_squats: "https://youtu.be/LYPJeQUuI3E?si=R8wFvt9pmLKMMHCb",
+  seated_knee_extension: "https://youtu.be/VuJZ6dqMf8M?si=dSCt3mwYKvx5iC0W",
+  terminal_knee_extension: "https://youtu.be/xdKm8PSX438?si=TolDquZL3hAQDSrK",
+  squat: "https://youtu.be/8uoaYwS6iFM?si=2P705qcqVpojAyGB",
+  straight_leg_raise: "https://youtu.be/U4L_6JEv9Jg?si=Il_2yCxht-Xt5hv3",
+};
+
 const ExercisePlan = () => {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
@@ -1144,7 +1153,7 @@ const ExercisePlan = () => {
               )}
             </section>
 
-            {/* D29 TEMPORARY -- 2026-09-22 demo; unscoped Flask surface via /emg/, revert after */}
+            {/* EMG section commented out — no longer showing dashboard/history links
             <section className="exercise-section">
               <div className="exercise-section-head">
                 <div>
@@ -1152,12 +1161,12 @@ const ExercisePlan = () => {
                   <h2>EMG recordings</h2>
                 </div>
               </div>
-              {/* D29 TEMPORARY -- 2026-09-22 demo; open the Flask EMG pages directly (no iframe), loopback only. Revert with the /emg/ scoped views. */}
               <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
                 <a className="exercise-start-btn" href="http://127.0.0.1:5000/progress.html" target="_blank" rel="noopener noreferrer">Open EMG dashboard</a>
                 <a className="exercise-start-btn" href="http://127.0.0.1:5000/history.html" target="_blank" rel="noopener noreferrer">Open EMG recordings</a>
               </div>
             </section>
+            */}
           </>
         )}
       </div>
@@ -1183,6 +1192,7 @@ const ExercisePlan = () => {
         .exercise-purpose{color:#71829a;font-size:12px;line-height:1.5;margin:8px 0 15px}.exercise-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.exercise-meta div{background:#fff;border:1px solid #e5eaf1;border-radius:9px;padding:9px}.exercise-meta span{display:block;color:#8b98aa;font-size:9px;margin-bottom:3px}.exercise-meta strong{font-size:11px;color:#34445f}.exercise-joint{margin-top:12px;color:#49698f;font-size:11px;font-weight:700}.exercise-confidence{margin-top:8px;color:#7b8ba0;font-size:10px}
         .exercise-empty{margin-top:24px;padding:50px 20px;text-align:center;background:#fff;border:1px solid #dce5f0;border-radius:18px;color:#71829a}.exercise-empty-icon{font-size:30px;color:#4a7dfc}.exercise-empty h3{margin:10px 0 5px;color:#263650}.exercise-empty p{margin:0;font-size:13px}.exercise-refresh-btn{margin-top:16px;border:0;border-radius:10px;padding:10px 16px;background:#356fd3;color:#fff;font-weight:700;cursor:pointer}.exercise-refresh-btn:hover{opacity:.92}
         .exercise-start-btn{display:block;text-align:center;margin-top:14px;border:0;border-radius:10px;padding:10px 14px;background:#278454;color:#fff;font-weight:700;font-size:13px;text-decoration:none;cursor:pointer}.exercise-start-btn:hover{opacity:.92}.exercise-start-btn--disabled{background:#eef1f6;color:#8b98aa;cursor:not-allowed}
+        .exercise-youtube-btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:6px 14px;border-radius:8px;background:#ff0000;color:#fff;font-size:13px;font-weight:600;text-decoration:none;transition:background .15s ease, transform .15s ease}.exercise-youtube-btn:hover{background:#cc0000;transform:translateY(-1px)}
         .past-sessions-table{display:flex;flex-direction:column;gap:2px}.past-sessions-row{display:grid;grid-template-columns:1fr 1.4fr .7fr .8fr .9fr;gap:8px;align-items:center;padding:10px 8px;border-bottom:1px solid #eef1f6;font-size:12px;color:#34445f}.past-sessions-head{color:#8b98aa;font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;border-bottom:2px solid #e5eaf1}.past-sessions-row a{color:#356fd3;font-weight:700;text-decoration:none;justify-self:end}.past-sessions-row a:hover{text-decoration:underline}
         @media(max-width:720px){.exercise-page{padding:20px 12px}.exercise-hero{padding:20px}.exercise-hero h1{font-size:24px}.exercise-grid{grid-template-columns:1fr}.exercise-meta{grid-template-columns:1fr 1fr}}
       `}</style>
@@ -1214,6 +1224,7 @@ const ExerciseCard = ({ item, active, t, engineSupported }) => {
   const purpose = translateExercisePurpose(item.purpose, language);
   const joint = translateExerciseValue(item.joint, language);
   const frequency = translateExerciseValue(item.frequency || "As advised", language);
+  const youtubeUrl = EXERCISE_YOUTUBE_LINKS[item.exerciseId] || null;
 
   return (
     <article className="exercise-card">
@@ -1264,6 +1275,18 @@ const ExerciseCard = ({ item, active, t, engineSupported }) => {
             {t.awaitingApproval}
           </div>
         )
+      )}
+
+      {youtubeUrl && (
+        <a
+          className="exercise-youtube-btn"
+          href={youtubeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Watch ${exerciseName} on YouTube`}
+        >
+          ▶ YouTube
+        </a>
       )}
     </article>
   );

@@ -1,656 +1,3 @@
-// const express = require("express");
-// const { GoogleGenAI } = require("@google/genai");
-
-// const router = express.Router();
-
-// // =====================================================
-// // GEMINI CONFIGURATION
-// // =====================================================
-
-// const API_KEY = process.env.API_KEY;
-
-// if (!API_KEY) {
-//   console.warn(
-//     "⚠️ API_KEY is not configured in .env"
-//   );
-// }
-
-// const ai = new GoogleGenAI({
-//   apiKey: API_KEY,
-// });
-
-// // =====================================================
-// // MODELS
-// // =====================================================
-
-// const models = [
-//   "gemini-3.5-flash",
-//   "gemini-3.1-flash-lite",
-//   "gemini-2.5-flash-lite",
-//   "gemini-2.5-pro",
-//   "gemini-2.0-flash",
-// ];
-
-// // =====================================================
-// // LANGUAGE HELPER
-// // =====================================================
-
-// function getLanguageName(language) {
-
-//   if (language === "hi") {
-//     return "Hindi";
-//   }
-
-//   if (language === "mr") {
-//     return "Marathi";
-//   }
-
-//   return "English";
-// }
-
-// // =====================================================
-// // MAIN CHATBOT ROUTE
-// //
-// // POST /api/chatbot/message
-// //
-// // Body:
-// //
-// // {
-// //   "message": "What is hemophilia?",
-// //   "language": "en"
-// // }
-// //
-// // =====================================================
-
-// router.post(
-//   "/message",
-//   async (req, res) => {
-
-//     try {
-
-//       const {
-//         message,
-//         language = "en",
-//       } = req.body;
-
-//       // =================================================
-//       // VALIDATE MESSAGE
-//       // =================================================
-
-//       if (
-//         !message ||
-//         typeof message !== "string" ||
-//         !message.trim()
-//       ) {
-
-//         return res.status(400).json({
-//           success: false,
-
-//           reply:
-//             "Please enter a question.",
-//         });
-//       }
-
-//       const question =
-//         message.trim();
-
-//       // =================================================
-//       // LANGUAGE
-//       // =================================================
-
-//       const selectedLanguage =
-//         ["en", "hi", "mr"].includes(language)
-//           ? language
-//           : "en";
-
-//       const languageName =
-//         getLanguageName(
-//           selectedLanguage
-//         );
-
-//       // =================================================
-//       // LOG
-//       // =================================================
-
-//       console.log(
-//         "\n================================="
-//       );
-
-//       console.log(
-//         "🤖 HEMOPHILIA CHATBOT REQUEST"
-//       );
-
-//       console.log(
-//         "Question:",
-//         question
-//       );
-
-//       console.log(
-//         "Language:",
-//         languageName
-//       );
-
-//       console.log(
-//         "================================="
-//       );
-
-//       // =================================================
-//       // STEP 1
-//       // CLASSIFY USER QUESTION
-//       // =================================================
-
-//       const classifierPrompt = `
-// You are a strict query-classification system.
-
-// Your ONLY task is to determine whether the user's question
-// is relevant to the domain of:
-
-// - hemophilia
-// - inherited bleeding disorders
-// - bleeding symptoms
-// - clotting factors
-// - coagulation
-// - factor replacement therapy
-// - hemophilia diagnosis
-// - hemophilia screening
-// - hemophilia treatment
-// - hemophilia complications
-// - hemophilia management
-// - hemophilia care
-// - hemophilia patient monitoring
-// - this application's hemophilia assessment
-// - this application's screening
-// - this application's reports
-// - this application's care-related functionality
-
-// The user may ask the question in:
-// - English
-// - Hindi
-// - Marathi
-
-// You must understand the meaning of the question
-// regardless of the language used.
-
-// You must NOT answer the question.
-
-// You must NOT explain anything.
-
-// You must NOT provide medical advice.
-
-// Return EXACTLY ONE of these values:
-
-// IN_SCOPE
-
-// or
-
-// OUT_OF_SCOPE
-
-// Important:
-
-// Classify based on the actual meaning and intent of
-// the question, not merely because the question contains
-// a medical word.
-
-// Examples:
-
-// - A general question about machine learning
-//   is OUT_OF_SCOPE.
-
-// - A general question about reinforcement learning
-//   is OUT_OF_SCOPE.
-
-// - A question about how machine learning could be used
-//   specifically for hemophilia patient monitoring
-//   is IN_SCOPE.
-
-// - A question about diabetes treatment
-//   is OUT_OF_SCOPE.
-
-// - A question about hemophilia treatment
-//   is IN_SCOPE.
-
-// - A question about hemophilia symptoms
-//   is IN_SCOPE.
-
-// - A question about bleeding after an injury in a person
-//   with suspected hemophilia is IN_SCOPE.
-
-// User question:
-
-// ${question}
-// `;
-
-//       // =================================================
-//       // CLASSIFICATION VARIABLES
-//       // =================================================
-
-//       let classification = null;
-
-//       let classifierModel = null;
-
-//       // =================================================
-//       // TRY CLASSIFIER MODELS
-//       // =================================================
-
-//       for (
-//         const model of models
-//       ) {
-
-//         try {
-
-//           console.log(
-//             "\n🔎 CLASSIFIER TRYING:",
-//             model
-//           );
-
-//           const response =
-//             await ai.models.generateContent({
-//               model,
-//               contents:
-//                 classifierPrompt,
-//             });
-
-//           const rawText =
-//             (
-//               response.text ||
-//               ""
-//             ).trim();
-
-//           console.log(
-//             "🔎 CLASSIFIER RAW RESPONSE:",
-//             rawText
-//           );
-
-//           const normalized =
-//             rawText
-//               .toUpperCase()
-//               .replace(
-//                 /[`"'.,:;]/g,
-//                 ""
-//               )
-//               .trim();
-
-//           if (
-//             normalized.includes(
-//               "OUT_OF_SCOPE"
-//             )
-//           ) {
-
-//             classification =
-//               "OUT_OF_SCOPE";
-
-//           } else if (
-//             normalized.includes(
-//               "IN_SCOPE"
-//             )
-//           ) {
-
-//             classification =
-//               "IN_SCOPE";
-//           }
-
-//           if (classification) {
-
-//             classifierModel =
-//               model;
-
-//             console.log(
-//               "✅ CLASSIFICATION:",
-//               classification
-//             );
-
-//             console.log(
-//               "✅ CLASSIFIER MODEL:",
-//               classifierModel
-//             );
-
-//             break;
-//           }
-
-//           console.log(
-//             "⚠️ Invalid classifier response from:",
-//             model
-//           );
-
-//         } catch (error) {
-
-//           console.log(
-//             "❌ CLASSIFIER FAILED:",
-//             model
-//           );
-
-//           console.log(
-//             error.message
-//           );
-//         }
-//       }
-
-//       // =================================================
-//       // CLASSIFIER FAILED
-//       // =================================================
-
-//       if (!classification) {
-
-//         console.log(
-//           "❌ ALL CLASSIFIER MODELS FAILED"
-//         );
-
-//         return res.status(500).json({
-
-//           success: false,
-
-//           reply:
-//             "I'm currently unable to determine whether your question is related to hemophilia. Please try again.",
-
-//           classification: null,
-//         });
-//       }
-
-//       // =================================================
-//       // OUT OF SCOPE
-//       // =================================================
-
-//       if (
-//         classification ===
-//         "OUT_OF_SCOPE"
-//       ) {
-
-//         console.log(
-//           "🚫 QUESTION REJECTED AS OUT OF SCOPE"
-//         );
-
-//         // -----------------------------------------------
-//         // IMPORTANT:
-//         // Reply in patient's selected language.
-//         // -----------------------------------------------
-
-//         let outOfScopeReply;
-
-//         if (
-//           selectedLanguage ===
-//           "hi"
-//         ) {
-
-//           outOfScopeReply =
-//             "क्षमा करें, मैं केवल हीमोफीलिया, वंशानुगत रक्तस्राव संबंधी विकारों, रक्तस्राव के लक्षणों, उपचार, स्क्रीनिंग और इस एप्लिकेशन की हीमोफीलिया से संबंधित सुविधाओं के बारे में सहायता कर सकता हूँ।";
-
-//         } else if (
-//           selectedLanguage ===
-//           "mr"
-//         ) {
-
-//           outOfScopeReply =
-//             "क्षमस्व, मी केवळ हिमोफिलिया, आनुवंशिक रक्तस्राव विकार, रक्तस्रावाची लक्षणे, उपचार, स्क्रीनिंग आणि या ॲप्लिकेशनच्या हिमोफिलियाशी संबंधित सुविधांबद्दल मदत करू शकतो.";
-
-//         } else {
-
-//           outOfScopeReply =
-//             "Sorry, I can only help with questions related to hemophilia, inherited bleeding disorders, bleeding symptoms, treatment, screening, and this application's hemophilia-related features.";
-//         }
-
-//         return res.json({
-
-//           success: true,
-
-//           reply:
-//             outOfScopeReply,
-
-//           classification:
-//             "OUT_OF_SCOPE",
-
-//           classifierModel,
-
-//           language:
-//             selectedLanguage,
-//         });
-//       }
-
-//       // =================================================
-//       // STEP 2
-//       // ANSWER IN SELECTED LANGUAGE
-//       // =================================================
-
-//       const answerPrompt = `
-// You are a medical information assistant specialized in
-// hemophilia and inherited bleeding disorders.
-
-// The user's question has already been classified as being
-// related to hemophilia or an inherited bleeding disorder.
-
-// The user's selected language is:
-
-// ${languageName}
-
-// IMPORTANT LANGUAGE RULE:
-
-// You MUST answer ONLY in ${languageName}.
-
-// Do not switch to English unless the user explicitly asks
-// you to answer in English.
-
-// If the user asks in Hindi and the selected language is Hindi,
-// answer in Hindi.
-
-// If the user asks in Marathi and the selected language is Marathi,
-// answer in Marathi.
-
-// If the user asks in English and the selected language is English,
-// answer in English.
-
-// Medical terminology may be written with the English term
-// in parentheses when that improves clarity.
-
-// Answer ONLY the user's actual question.
-
-// Use clear, simple language suitable for:
-// - patients
-// - caregivers
-// - healthcare users
-
-// Do not answer questions unrelated to:
-// - hemophilia
-// - inherited bleeding disorders
-// - bleeding symptoms
-// - coagulation
-// - clotting factors
-// - hemophilia treatment
-// - hemophilia screening
-// - hemophilia diagnosis
-// - hemophilia monitoring
-// - hemophilia management
-
-// Do not invent medical facts.
-
-// Do not diagnose the patient.
-
-// Do not prescribe medication.
-
-// Do not provide individualized treatment instructions.
-
-// If the question requires individual medical assessment,
-// clearly recommend consulting a qualified doctor,
-// hematologist, or healthcare professional.
-
-// For urgent or potentially dangerous bleeding symptoms,
-// advise the user to seek urgent medical attention.
-
-// Where appropriate, base explanations on established
-// medical guidance and reputable sources such as:
-// - World Federation of Hemophilia (WFH)
-// - World Health Organization (WHO)
-// - Centers for Disease Control and Prevention (CDC)
-// - peer-reviewed hematology guidance
-
-// Keep the response reasonably concise.
-
-// User question:
-
-// ${question}
-// `;
-
-//       // =================================================
-//       // TRY ANSWER MODELS
-//       // =================================================
-
-//       for (
-//         const model of models
-//       ) {
-
-//         try {
-
-//           console.log(
-//             "\n🧠 ANSWER MODEL TRYING:",
-//             model
-//           );
-
-//           const response =
-//             await ai.models.generateContent({
-//               model,
-//               contents:
-//                 answerPrompt,
-//             });
-
-//           const answer =
-//             (
-//               response.text ||
-//               ""
-//             ).trim();
-
-//           if (!answer) {
-
-//             console.log(
-//               "⚠️ Empty answer from:",
-//               model
-//             );
-
-//             continue;
-//           }
-
-//           console.log(
-//             "✅ ANSWER GENERATED BY:",
-//             model
-//           );
-
-//           console.log(
-//             "================================="
-//           );
-
-//           return res.json({
-
-//             success: true,
-
-//             reply:
-//               answer,
-
-//             classification:
-//               "IN_SCOPE",
-
-//             classifierModel,
-
-//             answerModel:
-//               model,
-
-//             language:
-//               selectedLanguage,
-//           });
-
-//         } catch (error) {
-
-//           console.log(
-//             "❌ ANSWER MODEL FAILED:",
-//             model
-//           );
-
-//           console.log(
-//             error.message
-//           );
-//         }
-//       }
-
-//       // =================================================
-//       // ALL ANSWER MODELS FAILED
-//       // =================================================
-
-//       let failureReply;
-
-//       if (
-//         selectedLanguage ===
-//         "hi"
-//       ) {
-
-//         failureReply =
-//           "क्षमा करें, मैं अभी उत्तर तैयार नहीं कर पा रहा हूँ। कृपया कुछ देर बाद पुनः प्रयास करें।";
-
-//       } else if (
-//         selectedLanguage ===
-//         "mr"
-//       ) {
-
-//         failureReply =
-//           "क्षमस्व, मी सध्या उत्तर तयार करू शकत नाही. कृपया थोड्या वेळाने पुन्हा प्रयत्न करा.";
-
-//       } else {
-
-//         failureReply =
-//           "I'm currently unable to generate an answer. Please try again.";
-//       }
-
-//       return res.status(500).json({
-
-//         success: false,
-
-//         reply:
-//           failureReply,
-
-//         classification:
-//           "IN_SCOPE",
-
-//         classifierModel,
-
-//         language:
-//           selectedLanguage,
-//       });
-
-//     } catch (error) {
-
-//       console.error(
-//         "❌ CHATBOT ROUTE ERROR:",
-//         error
-//       );
-
-//       return res.status(500).json({
-
-//         success: false,
-
-//         reply:
-//           "An error occurred while processing your request. Please try again.",
-
-//       });
-//     }
-//   }
-// );
-
-// // =====================================================
-// // CHATBOT HEALTH CHECK
-// // =====================================================
-
-// router.get(
-//   "/health",
-//   (req, res) => {
-
-//     res.json({
-//       success: true,
-//       message:
-//         "Chatbot route is working.",
-//     });
-//   }
-// );
-
-// // =====================================================
-// // EXPORT
-// // =====================================================
-
-// module.exports = router;
 
 
 const express = require("express");
@@ -1397,6 +744,12 @@ ${question}
 // POST /api/chatbot/predict
 // ============================================================
 
+// ============================================================
+// ML PREDICTION ROUTE
+//
+// POST /api/chatbot/predict
+// ============================================================
+
 router.post(
   "/predict",
   async (req, res) => {
@@ -1440,7 +793,7 @@ router.post(
 
 
       // ======================================================
-      // RUN RANDOM FOREST
+      // RUN CALIBRATED ML MODEL
       // ======================================================
 
       const result =
@@ -1475,6 +828,43 @@ router.post(
 
 
       // ======================================================
+      // PREDICTION CONFIDENCE
+      //
+      // Comes from calibrated predict.py
+      // ======================================================
+
+      const predictionConfidence =
+        Number(
+          result.predictionConfidence
+        );
+
+
+      // ======================================================
+      // VALIDATE CONFIDENCE
+      // ======================================================
+
+      if (
+        !Number.isFinite(
+          predictionConfidence
+        )
+      ) {
+
+        console.error(
+          "❌ Invalid prediction confidence:",
+          result.predictionConfidence
+        );
+
+        return res.status(500).json({
+
+          success: false,
+
+          message:
+            "ML prediction confidence is invalid.",
+        });
+      }
+
+
+      // ======================================================
       // RETURN RESULT
       // ======================================================
 
@@ -1490,9 +880,13 @@ router.post(
         displayLabel:
           translatedLabel,
 
-        predictionProbability:
-          result.predictionProbability,
+        // IMPORTANT:
+        // New field from predict.py
+        predictionConfidence:
+          predictionConfidence,
 
+        // Keep probabilities too
+        // for report/backend usage
         probabilities:
           result.probabilities,
 
@@ -1500,6 +894,7 @@ router.post(
           result.features,
 
         language,
+
       });
 
 
@@ -1510,6 +905,7 @@ router.post(
         error
       );
 
+
       return res.status(500).json({
 
         success: false,
@@ -1519,8 +915,11 @@ router.post(
 
         error:
           error.message,
+
       });
+
     }
+
   }
 );
 

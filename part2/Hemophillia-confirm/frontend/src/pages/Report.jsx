@@ -1077,7 +1077,7 @@
 //           <button
 //             className="back-button"
 //             onClick={() =>
-//               navigate("/chatbbot")
+//               navigate("/chatbot")
 //             }
 //           >
 //             🔙 Back to Chat
@@ -1139,19 +1139,19 @@ export default function Report() {
   const TEXT = {
     en: {
       reportTitle: "Hemophilia Report",
-      reportSubtitle: "ML Screening Assessment Report",
+      reportSubtitle: "Screening Assessment",
 
       assessmentComplete: "Assessment Complete",
 
       screeningAssessment: "Screening Assessment",
 
       summary:
-        "Summary of your hemophilia screening assessment",
+        "Based on the information you provided during the assessment, your responses were most consistent with the selected screening category.",
 
-      mlScreening: "ML SCREENING",
+      mlScreening: "SCREENING REPORT",
 
       patientInformation:
-        "Patient Information",
+        "Patient Details",
 
       name: "Name",
 
@@ -1171,16 +1171,43 @@ export default function Report() {
         "ML SCREENING RESULT",
 
       hemophiliaScreeningPrediction:
-        "Hemophilia Screening Prediction",
+        "Your Screening Result",
 
       predictedCategory:
         "Predicted Category",
 
       modelProbability:
-        "Model Probability",
+        "Screening Confidence",
 
       probabilityBreakdown:
-        "Model Probability Breakdown",
+        "Screening Result Details",
+
+      confidenceHelp:
+        "This shows how strongly the screening system supports the category based on the answers you provided. It is not the chance that you have hemophilia.",
+
+      factorsTitle:
+        "What information was considered?",
+
+      factorsIntro:
+        "These are the symptoms and health history you reported during the assessment.",
+
+      factorsNote:
+        "This information helps with screening, but it does not confirm hemophilia. A healthcare professional should interpret it together with appropriate medical tests.",
+
+      resultMeaningTitle:
+        "What Does This Result Mean?",
+
+      screeningSummary:
+        "Screening Summary",
+
+      summaryConfidence:
+        "Based on the information you provided during the assessment, your responses were most consistent with",
+
+      summaryWithConfidence:
+        "",
+
+      summaryNote:
+        "This is a screening result, not a diagnosis. Your healthcare professional can confirm your condition using clinical evaluation and appropriate tests.",
 
       healthy: "Healthy",
 
@@ -1197,7 +1224,7 @@ export default function Report() {
         "Assessment Explanation",
 
       randomForestPrediction:
-        "Random Forest prediction",
+        "Screening result",
 
       urgentMedicalAttention:
         "Urgent Medical Attention",
@@ -1205,14 +1232,27 @@ export default function Report() {
       emergencyText:
         "One or more emergency bleeding symptoms were identified during the screening. Please seek appropriate medical attention promptly.",
 
+      contactTitle:
+        "Need Help?",
+      contactText:
+        "If you would like to discuss your screening result or need further physiotherapy or hemophilia care, you can contact the K. J. Somaiya Department of Physiotherapy.",
+      contactPhone:
+        "+91 22 2409 1796",
+      contactEmail:
+        "somaiya_physiotherapy@somaiya.edu",
+      contactAddress:
+        "K. J. Somaiya College of Physiotherapy, Ayurvihar Complex, Eastern Express Highway, Sion, Mumbai – 400022",
+      contactHours:
+        "Monday–Friday: 9:00 AM – 4:00 PM | Saturday: 9:00 AM – 1:00 PM",
+
       importantMedicalNotice:
-        "Important Medical Notice",
+        "Important",
 
       medicalNoticeText:
-        "This report is generated from an AI-assisted screening assessment and is not a medical diagnosis. The machine learning prediction represents a screening result based on the information provided during the assessment. Model probability should not be interpreted as a clinical probability or diagnosis. Please consult a qualified healthcare professional for proper evaluation, diagnosis, and treatment.",
+        "This screening result is not a medical diagnosis. Please consult a healthcare professional for appropriate evaluation and testing.",
 
       noExplanation:
-        "The screening assessment was completed using the collected information and machine learning model.",
+        "Your screening result was generated from the information you provided during the assessment.",
 
       downloadReport:
         "Download Report",
@@ -1221,10 +1261,10 @@ export default function Report() {
         "Back to Chat",
 
       footer:
-        "ML screening guidance only",
+        "Screening guidance only",
 
       outsideDisclaimer:
-        "This assessment provides screening guidance only and does not replace diagnosis or treatment from a qualified medical professional.",
+        "This screening result is not a medical diagnosis.",
 
       no: "No",
 
@@ -1287,7 +1327,7 @@ export default function Report() {
       reportTitle: "हीमोफीलिया रिपोर्ट",
 
       reportSubtitle:
-        "एमएल स्क्रीनिंग मूल्यांकन रिपोर्ट",
+        "तुमच्या स्क्रीनिंग मूल्यांकनाचा सारांश",
 
       assessmentComplete:
         "मूल्यांकन पूरा हुआ",
@@ -1326,19 +1366,46 @@ export default function Report() {
         "महिला",
 
       mlScreeningResult:
-        "एमएल स्क्रीनिंग परिणाम",
+        "स्क्रीनिंग परिणाम",
 
       hemophiliaScreeningPrediction:
-        "हीमोफीलिया स्क्रीनिंग अनुमान",
+        "आपका स्क्रीनिंग परिणाम",
 
       predictedCategory:
         "अनुमानित श्रेणी",
 
       modelProbability:
-        "मॉडल संभावना",
+        "स्क्रीनिंग विश्वास स्तर",
 
       probabilityBreakdown:
-        "मॉडल संभावना विवरण",
+        "स्क्रीनिंग परिणाम विवरण",
+
+      confidenceHelp:
+        "यह बताता है कि आपके उत्तरों के आधार पर स्क्रीनिंग प्रणाली इस श्रेणी का कितना समर्थन करती है। यह हीमोफीलिया होने की संभावना नहीं है।",
+
+      factorsTitle:
+        "कौन-सी जानकारी ध्यान में रखी गई?",
+
+      factorsIntro:
+        "ये वे लक्षण और स्वास्थ्य संबंधी जानकारी हैं जो आपने मूल्यांकन के दौरान बताई।",
+
+      factorsNote:
+        "यह जानकारी केवल स्क्रीनिंग में सहायता करती है और हीमोफीलिया की पुष्टि नहीं करती। स्वास्थ्य विशेषज्ञ उचित चिकित्सीय जांच के साथ इसका मूल्यांकन करेंगे।",
+
+      resultMeaningTitle:
+        "आपके परिणाम का क्या अर्थ है?",
+
+      screeningSummary:
+        "स्क्रीनिंग सारांश",
+
+      summaryConfidence:
+        "मूल्यांकन के दौरान आपके द्वारा दी गई जानकारी के आधार पर, आपके उत्तर सबसे अधिक",
+
+      summaryWithConfidence:
+        "स्क्रीनिंग श्रेणी से संगत पाए गए।",
+
+      summaryNote:
+        "यह केवल स्क्रीनिंग परिणाम है, निदान नहीं। आपकी स्थिति की पुष्टि चिकित्सकीय जांच और उचित परीक्षणों से की जा सकती है।",
 
       healthy:
         "स्वस्थ",
@@ -1359,7 +1426,7 @@ export default function Report() {
         "मूल्यांकन विवरण",
 
       randomForestPrediction:
-        "रैंडम फॉरेस्ट अनुमान",
+        "स्क्रीनिंग परिणाम",
 
       urgentMedicalAttention:
         "तत्काल चिकित्सा सहायता",
@@ -1367,14 +1434,27 @@ export default function Report() {
       emergencyText:
         "स्क्रीनिंग के दौरान एक या अधिक आपातकालीन रक्तस्राव संबंधी लक्षण पाए गए। कृपया तुरंत उचित चिकित्सा सहायता लें।",
 
+      contactTitle:
+        "मदद चाहिए?",
+      contactText:
+        "यदि आप अपने स्क्रीनिंग परिणाम के बारे में चर्चा करना चाहते हैं या फिजियोथेरेपी या हीमोफीलिया देखभाल की आवश्यकता है, तो आप K. J. Somaiya Department of Physiotherapy से संपर्क कर सकते हैं।",
+      contactPhone:
+        "+91 22 2409 1796",
+      contactEmail:
+        "somaiya_physiotherapy@somaiya.edu",
+      contactAddress:
+        "K. J. Somaiya College of Physiotherapy, Ayurvihar Complex, Eastern Express Highway, Sion, Mumbai – 400022",
+      contactHours:
+        "सोमवार–शुक्रवार: सुबह 9:00 – शाम 4:00 | शनिवार: सुबह 9:00 – दोपहर 1:00",
+
       importantMedicalNotice:
-        "महत्वपूर्ण चिकित्सा सूचना",
+        "महत्वपूर्ण",
 
       medicalNoticeText:
-        "यह रिपोर्ट एआई-सहायता प्राप्त स्क्रीनिंग मूल्यांकन से तैयार की गई है और यह चिकित्सा निदान नहीं है। मशीन लर्निंग अनुमान मूल्यांकन के दौरान दी गई जानकारी के आधार पर एक स्क्रीनिंग परिणाम है। मॉडल संभावना को चिकित्सीय संभावना या निदान के रूप में नहीं समझा जाना चाहिए। उचित मूल्यांकन, निदान और उपचार के लिए योग्य स्वास्थ्य सेवा पेशेवर से परामर्श करें।",
+        "यह रिपोर्ट आपके द्वारा दी गई जानकारी के आधार पर एआई-सहायता प्राप्त स्क्रीनिंग परिणाम प्रदान करती है। यह चिकित्सा निदान नहीं है और हीमोफीलिया की पुष्टि या उसे खारिज नहीं करती। उचित चिकित्सीय मूल्यांकन और जांच के लिए योग्य स्वास्थ्य सेवा पेशेवर से परामर्श करें।",
 
       noExplanation:
-        "स्क्रीनिंग मूल्यांकन एकत्र की गई जानकारी और मशीन लर्निंग मॉडल का उपयोग करके पूरा किया गया।",
+        "आपका स्क्रीनिंग परिणाम मूल्यांकन के दौरान दी गई जानकारी के आधार पर तैयार किया गया है।",
 
       downloadReport:
         "रिपोर्ट डाउनलोड करें",
@@ -1383,7 +1463,7 @@ export default function Report() {
         "चैट पर वापस जाएँ",
 
       footer:
-        "केवल एमएल स्क्रीनिंग मार्गदर्शन",
+        "केवल स्क्रीनिंग मार्गदर्शन",
 
       outsideDisclaimer:
         "यह मूल्यांकन केवल स्क्रीनिंग मार्गदर्शन प्रदान करता है और योग्य चिकित्सा पेशेवर द्वारा निदान या उपचार का विकल्प नहीं है।",
@@ -1454,7 +1534,7 @@ export default function Report() {
         "हिमोफिलिया रिपोर्ट",
 
       reportSubtitle:
-        "एमएल स्क्रीनिंग मूल्यांकन रिपोर्ट",
+        "तुमच्या स्क्रीनिंग मूल्यांकनाचा सारांश",
 
       assessmentComplete:
         "मूल्यांकन पूर्ण",
@@ -1493,19 +1573,46 @@ export default function Report() {
         "स्त्री",
 
       mlScreeningResult:
-        "एमएल स्क्रीनिंग निकाल",
+        "स्क्रीनिंग निकाल",
 
       hemophiliaScreeningPrediction:
-        "हिमोफिलिया स्क्रीनिंग अंदाज",
+        "तुमचा स्क्रीनिंग निकाल",
 
       predictedCategory:
         "अंदाजित श्रेणी",
 
       modelProbability:
-        "मॉडेल संभाव्यता",
+        "स्क्रीनिंग विश्वास पातळी",
 
       probabilityBreakdown:
-        "मॉडेल संभाव्यता तपशील",
+        "स्क्रीनिंग निकाल तपशील",
+
+      confidenceHelp:
+        "तुमच्या उत्तरांच्या आधारे स्क्रीनिंग प्रणाली या श्रेणीला किती समर्थन देते हे दर्शवते. ही हिमोफिलिया असण्याची शक्यता नाही.",
+
+      factorsTitle:
+        "कोणती माहिती विचारात घेतली गेली?",
+
+      factorsIntro:
+        "मूल्यांकनादरम्यान तुम्ही सांगितलेली ही लक्षणे आणि आरोग्याशी संबंधित माहिती विचारात घेतली गेली.",
+
+      factorsNote:
+        "ही माहिती केवळ स्क्रीनिंगसाठी मदत करते आणि हिमोफिलियाची पुष्टी करत नाही. योग्य वैद्यकीय तपासण्यांसह आरोग्यसेवा तज्ज्ञ याचे मूल्यांकन करतील.",
+
+      resultMeaningTitle:
+        "तुमच्या निकालाचा अर्थ काय?",
+
+      screeningSummary:
+        "स्क्रीनिंग सारांश",
+
+      summaryConfidence:
+        "मूल्यांकनादरम्यान तुम्ही दिलेल्या माहितीच्या आधारे, तुमची उत्तरे",
+
+      summaryWithConfidence:
+        "या स्क्रीनिंग श्रेणीशी सर्वाधिक सुसंगत असल्याचे आढळले.",
+
+      summaryNote:
+        "हा केवळ स्क्रीनिंग निकाल आहे, निदान नाही. योग्य वैद्यकीय तपासण्या आणि चाचण्यांद्वारे स्थितीची पुष्टी केली जाऊ शकते.",
 
       healthy:
         "निरोगी",
@@ -1526,7 +1633,7 @@ export default function Report() {
         "मूल्यांकनाचे स्पष्टीकरण",
 
       randomForestPrediction:
-        "रँडम फॉरेस्ट अंदाज",
+        "स्क्रीनिंग निकाल",
 
       urgentMedicalAttention:
         "तातडीची वैद्यकीय मदत",
@@ -1534,14 +1641,27 @@ export default function Report() {
       emergencyText:
         "स्क्रीनिंगदरम्यान एक किंवा अधिक आपत्कालीन रक्तस्त्रावाची लक्षणे आढळली. कृपया त्वरित योग्य वैद्यकीय मदत घ्या.",
 
+      contactTitle:
+        "मदत हवी आहे?",
+      contactText:
+        "तुमच्या स्क्रीनिंग निकालाबद्दल चर्चा करायची असल्यास किंवा फिजिओथेरपी किंवा हिमोफिलिया काळजीची गरज असल्यास, तुम्ही K. J. Somaiya Department of Physiotherapy शी संपर्क साधू शकता.",
+      contactPhone:
+        "+91 22 2409 1796",
+      contactEmail:
+        "somaiya_physiotherapy@somaiya.edu",
+      contactAddress:
+        "K. J. Somaiya College of Physiotherapy, Ayurvihar Complex, Eastern Express Highway, Sion, Mumbai – 400022",
+      contactHours:
+        "सोमवार–शुक्रवार: सकाळी 9:00 – संध्याकाळी 4:00 | शनिवार: सकाळी 9:00 – दुपारी 1:00",
+
       importantMedicalNotice:
-        "महत्त्वाची वैद्यकीय सूचना",
+        "महत्त्वाचे",
 
       medicalNoticeText:
-        "हा रिपोर्ट एआय-सहाय्यित स्क्रीनिंग मूल्यांकनातून तयार करण्यात आला आहे आणि हे वैद्यकीय निदान नाही. मशीन लर्निंग अंदाज हा मूल्यांकनादरम्यान दिलेल्या माहितीवर आधारित स्क्रीनिंग निकाल आहे. मॉडेल संभाव्यतेचा अर्थ वैद्यकीय संभाव्यता किंवा निदान असा लावू नये. योग्य तपासणी, निदान आणि उपचारासाठी पात्र आरोग्यसेवा व्यावसायिकांचा सल्ला घ्या.",
+        "हा रिपोर्ट तुम्ही दिलेल्या माहितीवर आधारित एआय-सहाय्यित स्क्रीनिंग निकाल देतो. हे वैद्यकीय निदान नाही आणि हिमोफिलियाची पुष्टी किंवा शक्यता नाकारत नाही. योग्य वैद्यकीय मूल्यांकन आणि निदानासाठी पात्र आरोग्यसेवा व्यावसायिकांचा सल्ला घ्या.",
 
       noExplanation:
-        "गोळा केलेली माहिती आणि मशीन लर्निंग मॉडेल वापरून स्क्रीनिंग मूल्यांकन पूर्ण करण्यात आले.",
+        "तुमचा स्क्रीनिंग निकाल मूल्यांकनादरम्यान तुम्ही दिलेल्या माहितीच्या आधारे तयार करण्यात आला आहे.",
 
       downloadReport:
         "रिपोर्ट डाउनलोड करा",
@@ -1550,7 +1670,7 @@ export default function Report() {
         "चॅटकडे परत जा",
 
       footer:
-        "फक्त एमएल स्क्रीनिंग मार्गदर्शन",
+        "फक्त स्क्रीनिंग मार्गदर्शन",
 
       outsideDisclaimer:
         "हे मूल्यांकन केवळ स्क्रीनिंग मार्गदर्शन देते आणि पात्र वैद्यकीय व्यावसायिकांकडून होणाऱ्या निदान किंवा उपचारांचा पर्याय नाही.",
@@ -2114,6 +2234,203 @@ export default function Report() {
       "true";
 
   // =========================================================
+  // PATIENT-FRIENDLY EXPLANATION
+  // =========================================================
+
+  const isTechnicalExplanation = (item) => {
+    if (typeof item !== "string") {
+      return true;
+    }
+
+    const text = item
+      .toLowerCase()
+      .trim();
+
+    return (
+      text.startsWith("random forest prediction:") ||
+      text.startsWith("ml screening prediction:") ||
+      text.startsWith("prediction confidence:") ||
+      text.startsWith("model probability:") ||
+      text.startsWith("prediction probability:") ||
+      text.includes("random forest") ||
+      text.includes("machine learning")
+    );
+  };
+
+  const cleanExplanationItems = (items) =>
+    items
+      .filter(
+        (item) =>
+          typeof item === "string"
+      )
+      .map((item) =>
+        item
+          .replace(/^[-•✓]\s*/, "")
+          .trim()
+      )
+      .filter(Boolean)
+      .filter(
+        (item) =>
+          !isTechnicalExplanation(item)
+    );
+
+  let influenceExplanations =
+    cleanExplanationItems(
+      explanation
+    );
+
+  if (
+    influenceExplanations.length === 0 &&
+    typeof data.summaryText === "string"
+  ) {
+    influenceExplanations =
+      cleanExplanationItems(
+        data.summaryText.split("\n")
+      );
+  }
+
+  if (
+    influenceExplanations.length === 0 &&
+    Array.isArray(data.answers)
+  ) {
+    const answerMap = Object.fromEntries(
+      data.answers
+        .filter(
+          (item) =>
+            item &&
+            item.question !== undefined
+        )
+        .map((item) => [
+          item.question,
+          item.answer,
+        ])
+    );
+
+    const positiveReasons = [];
+
+    const addReason = (condition, text) => {
+      if (condition) {
+        positiveReasons.push(text);
+      }
+    };
+
+    addReason(
+      ["sometimes", "often", "yes", "2", 2].includes(
+        answerMap.prolonged_bleeding_minor_cut
+      ),
+      txt.features.prolongedMinorCut
+    );
+
+    addReason(
+      ["yes", "2", 2].includes(
+        answerMap.excessive_post_surgery_bleeding
+      ),
+      txt.features.postSurgery
+    );
+
+    addReason(
+      ["yes", "2", 2].includes(
+        answerMap.excessive_dental_bleeding
+      ),
+      txt.features.dental
+    );
+
+    addReason(
+      ["sometimes", "often", "yes", "2", 2].includes(
+        answerMap.easy_bruising
+      ),
+      txt.features.easyBruising
+    );
+
+    addReason(
+      ["yes", "2", 2].includes(
+        answerMap.muscle_hematoma
+      ),
+      txt.features.muscleHematoma
+    );
+
+    addReason(
+      ["yes", "2", 2].includes(
+        answerMap.recurrent_joint_bleeding
+      ),
+      txt.features.recurrentJointBleeding
+    );
+
+    addReason(
+      ["yes", "2", 2].includes(
+        answerMap.joint_warmth
+      ),
+      txt.features.jointWarmth
+    );
+
+    addReason(
+      ["yes", "2", 2].includes(
+        answerMap.joint_tightness
+      ),
+      txt.features.jointTightness
+    );
+
+    addReason(
+      ["yes", "2", 2].includes(
+        answerMap.reduced_joint_mobility
+      ),
+      txt.features.reducedMobility
+    );
+
+    addReason(
+      ["yes", "2", 2].includes(
+        answerMap.hematuria
+      ),
+      txt.features.bloodUrine
+    );
+
+    addReason(
+      ["yes", "2", 2].includes(
+        answerMap.hematochezia
+      ),
+      txt.features.bloodStool
+    );
+
+    addReason(
+      ["yes", "2", 2].includes(
+        answerMap.family_history_bleeding_disorder
+      ),
+      txt.features.familyHistory
+    );
+
+    addReason(
+      ["yes", "2", 2].includes(
+        answerMap.male_relative_with_hemophilia
+      ),
+      txt.features.maleRelative
+    );
+
+    addReason(
+      ["yes", "2", 2].includes(
+        answerMap.previous_factor_test
+      ),
+      txt.features.previousFactorTest
+    );
+
+    influenceExplanations =
+      positiveReasons;
+  }
+
+  const displayInfluences =
+    influenceExplanations.length > 0
+      ? influenceExplanations.slice(0, 6)
+      : [
+          txt.noExplanation,
+        ];
+
+  const resultMeaning = {
+    0: "Your answers did not show a strong pattern associated with hemophilia in this screening assessment. This means the overall information you provided was not strongly matched to the hemophilia-related categories used by the screening system. This result does not completely rule out a medical condition.",
+    1: "Your answers were most consistent with the Mild screening category. In simple terms, the overall pattern of information you provided was closer to the Mild category used by the screening system. This does not mean that you have mild hemophilia. A healthcare professional must confirm your condition using appropriate medical evaluation and testing.",
+    2: "Your answers were most consistent with the Moderate screening category. In simple terms, the overall pattern of information you provided was closer to the Moderate category used by the screening system. This does not mean that you have moderate hemophilia. A healthcare professional must confirm your condition and severity using appropriate medical evaluation and testing.",
+    3: "Your answers were most consistent with the Severe screening category. In simple terms, the overall pattern of information you provided was closer to the Severe category used by the screening system. This does not mean that you have severe hemophilia. A healthcare professional must confirm your condition and severity using appropriate medical evaluation and testing.",
+  };
+
+  // =========================================================
   // DOWNLOAD PDF
   // =========================================================
 
@@ -2273,6 +2590,114 @@ export default function Report() {
 
         </div>
 
+        <style>{`
+          .contact-section {
+            margin-top: 8px;
+          }
+
+          .contact-section .section-intro {
+            margin: 8px 0 16px;
+            color: #53657a;
+            line-height: 1.6;
+          }
+
+          .contact-details {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+          }
+
+          .contact-action {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 68px;
+            padding: 12px 16px;
+            border: 1px solid #d7e7f4;
+            border-radius: 12px;
+            background: #f7fbff;
+            color: #123f63;
+            text-decoration: none;
+            transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+          }
+
+          .contact-action:hover {
+            transform: translateY(-1px);
+            border-color: #1683c4;
+            box-shadow: 0 5px 16px rgba(22, 131, 196, .10);
+          }
+
+          .contact-action-icon {
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #e6f5ff;
+            color: #0877b8;
+            font-size: 17px;
+            font-weight: 700;
+          }
+
+          .contact-action-content {
+            min-width: 0;
+          }
+
+          .contact-action-label {
+            display: block;
+            margin-bottom: 3px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            color: #718399;
+          }
+
+          .contact-action-value {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #0b69a1;
+            overflow-wrap: anywhere;
+          }
+
+          .contact-address {
+            grid-column: 1 / -1;
+            align-items: flex-start;
+          }
+
+          .contact-address-value {
+            display: block;
+            font-size: 13px;
+            line-height: 1.55;
+            font-weight: 600;
+            color: #31556f;
+            overflow-wrap: anywhere;
+          }
+
+          .contact-hours {
+            grid-column: 1 / -1;
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: #f1f8fc;
+            border: 1px solid #e0edf5;
+            color: #4d657b;
+            font-size: 13px;
+            text-align: center;
+          }
+
+          @media (max-width: 700px) {
+            .contact-details {
+              grid-template-columns: 1fr;
+            }
+
+            .contact-hours {
+              grid-column: auto;
+            }
+          }
+        `}</style>
 
         {/* =================================================
             REPORT CONTENT
@@ -2465,6 +2890,44 @@ export default function Report() {
 
             </div>
 
+          </section>
+
+          {/* =================================================
+              WHAT DOES THIS RESULT MEAN?
+          ================================================= */}
+
+          <section className="report-section result-meaning-section">
+            <div className="section-heading">
+              <span className="section-icon">💡</span>
+              <h3>{txt.resultMeaningTitle}</h3>
+            </div>
+
+            <div className="result-meaning-card">
+              <strong>{mlLabel}</strong>
+              <p>
+                {resultMeaning[predictionNumber] ||
+                  "The screening result is based on the information provided during the assessment."}
+              </p>
+            </div>
+          </section>
+
+          {/* =================================================
+              SCREENING SUMMARY
+          ================================================= */}
+
+          <section className="report-section">
+            <div className="section-heading">
+              <span className="section-icon">📋</span>
+              <h3>{txt.screeningSummary}</h3>
+            </div>
+
+            <div className="summary-card">
+              <p>
+                {txt.summaryConfidence}{" "}
+                <strong>{mlLabel}</strong>{" "}
+                {txt.summaryWithConfidence}
+              </p>
+            </div>
           </section>
 
 
@@ -2719,6 +3182,69 @@ export default function Report() {
 
           )}
 
+          {/* =================================================
+              CONTACT / NEXT STEP
+          ================================================= */}
+
+          <section className="report-section contact-section">
+            <div className="section-heading">
+              <span className="section-icon">📞</span>
+              <h3>{txt.contactTitle}</h3>
+            </div>
+
+            <p className="section-intro">
+              {txt.contactText}
+            </p>
+
+            <div className="contact-details">
+              <a
+                href={`tel:${txt.contactPhone.replace(/[^+\d]/g, "")}`}
+                className="contact-action"
+              >
+                <span className="contact-action-icon">☎</span>
+                <span className="contact-action-content">
+                  <span className="contact-action-label">
+                    Phone
+                  </span>
+                  <span className="contact-action-value">
+                    {txt.contactPhone}
+                  </span>
+                </span>
+              </a>
+
+              <a
+                href={`mailto:${txt.contactEmail}`}
+                className="contact-action"
+              >
+                <span className="contact-action-icon">✉</span>
+                <span className="contact-action-content">
+                  <span className="contact-action-label">
+                    Email
+                  </span>
+                  <span className="contact-action-value">
+                    {txt.contactEmail}
+                  </span>
+                </span>
+              </a>
+
+              <div className="contact-action contact-address">
+                <span className="contact-action-icon">📍</span>
+                <span className="contact-action-content">
+                  <span className="contact-action-label">
+                    Address
+                  </span>
+                  <span className="contact-address-value">
+                    {txt.contactAddress}
+                  </span>
+                </span>
+              </div>
+
+              <div className="contact-hours">
+                🕘&nbsp; {txt.contactHours}
+              </div>
+            </div>
+          </section>
+
 
           {/* =================================================
               IMPORTANT MEDICAL NOTICE
@@ -2781,7 +3307,7 @@ export default function Report() {
           <button
             className="back-button"
             onClick={() =>
-              navigate("/chatbbot")
+              navigate("/chatbot")
             }
           >
             🔙 {txt.backToChat}

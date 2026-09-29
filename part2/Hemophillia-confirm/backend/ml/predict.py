@@ -1,3 +1,4 @@
+
 import sys
 import json
 import os
@@ -13,9 +14,10 @@ BASE_DIR = os.path.dirname(
     os.path.abspath(__file__)
 )
 
+# NEW: Calibrated model
 MODEL_PATH = os.path.join(
     BASE_DIR,
-    "hemophilia_chatbot_model.pkl"
+    "hemophilia_chatbot_calibrated_model.pkl"
 )
 
 FEATURE_INFO_PATH = os.path.join(
@@ -37,7 +39,7 @@ CLASS_LABELS = {
 
 
 # ============================================================
-# LOAD MODEL
+# LOAD CALIBRATED MODEL
 # ============================================================
 
 try:
@@ -52,7 +54,7 @@ except Exception as error:
         json.dumps({
             "success": False,
             "error":
-                f"Unable to load ML model: {str(error)}"
+                f"Unable to load calibrated ML model: {str(error)}"
         })
     )
 
@@ -119,8 +121,10 @@ if FEATURES != EXPECTED_FEATURES:
             "success": False,
             "error":
                 "ML model feature order does not match the expected chatbot feature order.",
-            "modelFeatures": FEATURES,
-            "expectedFeatures": EXPECTED_FEATURES
+            "modelFeatures":
+                FEATURES,
+            "expectedFeatures":
+                EXPECTED_FEATURES
         })
     )
 
@@ -170,6 +174,10 @@ def normalize_text(value):
     return str(value).strip().lower()
 
 
+# ============================================================
+# ENCODE SEX
+# ============================================================
+
 def encode_sex(value):
 
     value = normalize_text(value)
@@ -202,6 +210,10 @@ def encode_sex(value):
     return 0
 
 
+# ============================================================
+# ENCODE BINARY
+# ============================================================
+
 def encode_binary(value):
 
     value = normalize_text(value)
@@ -226,6 +238,10 @@ def encode_binary(value):
 
     return 0
 
+
+# ============================================================
+# ENCODE ORDINAL
+# ============================================================
 
 def encode_ordinal(value):
 
@@ -285,6 +301,8 @@ except Exception:
     age = 0
 
 
+# Keep age within a reasonable range
+
 if age < 0:
     age = 0
 
@@ -309,7 +327,9 @@ features["sex"] = encode_sex(
 # ============================================================
 
 ordinal_features = [
+
     "prolonged_bleeding_minor_cut",
+
     "easy_bruising"
 ]
 
@@ -374,7 +394,7 @@ input_dataframe = pd.DataFrame(
 
 
 # ============================================================
-# PREDICTION
+# CALIBRATED PREDICTION
 # ============================================================
 
 try:
@@ -440,10 +460,13 @@ for class_value, probability in zip(
 
 
 # ============================================================
-# HIGHEST PROBABILITY
+# PREDICTION CONFIDENCE
+#
+# Confidence = calibrated probability of the
+# predicted class.
 # ============================================================
 
-prediction_probability = (
+prediction_confidence = (
     probability_result
     .get(
         str(prediction),
@@ -460,13 +483,14 @@ result = {
 
     "success": True,
 
-    "prediction": prediction,
+    "prediction":
+        prediction,
 
     "predictionLabel":
         prediction_label,
 
-    "predictionProbability":
-        prediction_probability,
+    "predictionConfidence":
+        prediction_confidence,
 
     "probabilities":
         probability_result,

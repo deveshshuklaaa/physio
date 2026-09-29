@@ -1,0 +1,53 @@
+{
+    "model_name": "XGBoost",
+    "model_format": "xgboost_native_json",
+    "target": "recommended_exercise",
+    "exercise_classes": [
+        "Heel slides",
+        "Mini squats",
+        "Seated knee extensions",
+        "Straight leg raises",
+        "Terminal knee extensions"
+    ],
+    "num_classes": 5,
+    "features": [
+        "current_bleeding",
+        "days_since_last_bleed_or_current_phase_day",
+        "phase",
+        "bleeding_pattern",
+        "bleed_frequency",
+        "affected_joint",
+        "currently_undergoing_physiotherapy",
+        "physiotherapy_location",
+        "sessions_per_week",
+        "session_duration",
+        "current_treatment",
+        "equipment_used",
+        "physiotherapy_helping",
+        "exercise_problem"
+    ],
+    "categorical_features": [
+        "current_bleeding",
+        "phase",
+        "bleeding_pattern",
+        "bleed_frequency",
+        "affected_joint",
+        "currently_undergoing_physiotherapy",
+        "physiotherapy_location",
+        "session_duration",
+        "current_treatment",
+        "equipment_used",
+        "physiotherapy_helping",
+        "exercise_problem"
+    ],
+    "numerical_features": [
+        "days_since_last_bleed_or_current_phase_day",
+        "sessions_per_week"
+    ],
+    "dataset_rows": 5000,
+    "train_rows": 4000,
+    "test_rows": 1000,
+    "sklearn_version": "1.8.0",
+    "xgboost_version": "3.4.1",
+    "warning": "This dataset and model are for research/demo purposes and are not clinically validated. Exercise recommendations require doctor/physiotherapist review."
+}

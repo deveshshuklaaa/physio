@@ -2063,6 +2063,7 @@ require("./models/Assessment");
 require("./models/FHIRResource");
 require("./models/ScreeningSession");
 require("./models/DoctorChangeRequest");
+require("./models/PasswordResetOTP");
 
 
 // ============================================================
@@ -2113,6 +2114,9 @@ const adminPatientResearchRoutes =
 
   const doctorPatientRoutes =
   require("./routes/doctorPatients");
+
+const passwordResetRoutes =
+  require("./routes/passwordReset");
 
 
 // ============================================================
@@ -2231,6 +2235,16 @@ connectDB()
     app.use(
       "/api/auth",
       otpAuthRoutes
+    );
+
+
+    // ========================================================
+    // PASSWORD RESET
+    // ========================================================
+
+    app.use(
+      "/api/password-reset",
+      passwordResetRoutes
     );
 
     app.use(

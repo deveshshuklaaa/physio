@@ -183,7 +183,7 @@
 //         <Route element={<Layout />}>
 
 //           <Route
-//             path="/chatbbot"
+//             path="/chatbot"
 //             element={<Chatbot />}
 //           />
 
@@ -331,7 +331,7 @@ import ExercisePlan from "./pages/ExercisePlan";
 //         <Route element={<Layout />}>
 
 //           <Route
-//             path="/chatbbot"
+//             path="/chatbot"
 //             element={<Chatbot />}
 //           />
 
@@ -433,6 +433,7 @@ import AdminManagement from "./pages/AdminManagement.jsx";
 import AdminProfile from "./pages/AdminProfile.jsx";
 
 import OTPVerification from "./pages/OTPVerification";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
@@ -542,6 +543,15 @@ function App() {
         element={<AdminLogin />}
       />
 
+      {/* =========================
+          PASSWORD RESET
+      ========================= */}
+
+      <Route
+        path="/forgot-password"
+        element={<ForgotPassword />}
+      />
+
 
       {/* =========================
           ADMIN DASHBOARD
@@ -571,7 +581,7 @@ function App() {
         <Route element={<Layout />}>
 
           <Route
-            path="/chatbbot"
+            path="/chatbot"
             element={<Chatbot />}
           />
 
