@@ -74,6 +74,8 @@ services:
   hemo-frontend:
     build:
       context: ./part2/Hemophillia-confirm/frontend
+      args:
+        VITE_GOOGLE_CLIENT_ID: "889563848205-594fg6vth8pb3a9v09suf2qgjvstoiaq.apps.googleusercontent.com"
     depends_on:
       - hemo-backend
     # No host port. Reached through nginx at /.

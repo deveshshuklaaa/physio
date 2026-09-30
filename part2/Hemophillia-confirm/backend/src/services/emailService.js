@@ -965,6 +965,473 @@ Hemophilia Care Administration
   return transporter.sendMail(mailOptions);
 }
 
+// =====================================================
+// SEND PATIENT REGISTRATION EMAIL
+// =====================================================
+
+async function sendPatientRegistrationEmail({
+  patientName,
+  patientEmail,
+  patientId,
+}) {
+
+  if (!patientEmail) {
+    throw new Error(
+      "Patient email is required"
+    );
+  }
+
+  if (!patientId) {
+    throw new Error(
+      "Patient ID is required"
+    );
+  }
+
+  const mailOptions = {
+
+    from:
+      `"Hemophilia Care" <${process.env.EMAIL_USER}>`,
+
+    to:
+      patientEmail,
+
+    subject:
+      "Hemophilia Care - Patient Registration Successful",
+
+    text: `
+Dear ${patientName},
+
+Your patient registration with Hemophilia Care has been completed successfully.
+
+Patient Registration Details
+----------------------------
+Patient Name: ${patientName}
+Patient ID: ${patientId}
+
+Please keep your Patient ID safe. It may be required when accessing your medical profile or when communicating with your Hemophilia Care treatment team.
+
+Your patient profile has been successfully registered in the Hemophilia Care system.
+
+Regards,
+Hemophilia Care Team
+    `.trim(),
+
+    html: `
+      <div style="
+        font-family: Arial, sans-serif;
+        background: #f5f8fc;
+        padding: 40px 20px;
+      ">
+
+        <div style="
+          max-width: 600px;
+          margin: 0 auto;
+          background: #ffffff;
+          border-radius: 18px;
+          padding: 36px;
+          border: 1px solid #e1e8f0;
+        ">
+
+          <div style="
+            text-align: center;
+            margin-bottom: 28px;
+          ">
+
+            <div style="
+              display: inline-flex;
+              width: 58px;
+              height: 58px;
+              border-radius: 50%;
+              align-items: center;
+              justify-content: center;
+              background: #eaf0fe;
+              color: #2c5ce0;
+              font-size: 28px;
+              font-weight: bold;
+            ">
+              +
+            </div>
+
+            <h2 style="
+              margin: 15px 0 5px;
+              color: #10233f;
+            ">
+              Hemophilia Care
+            </h2>
+
+            <p style="
+              margin: 0;
+              color: #71839b;
+              font-size: 14px;
+            ">
+              Patient Registration
+            </p>
+
+          </div>
+
+          <h3 style="
+            color: #10233f;
+            margin-bottom: 12px;
+          ">
+            Registration Successful
+          </h3>
+
+          <p style="
+            color: #30445f;
+            font-size: 15px;
+            line-height: 1.7;
+          ">
+            Dear <strong>${patientName}</strong>,
+          </p>
+
+          <p style="
+            color: #30445f;
+            font-size: 15px;
+            line-height: 1.7;
+          ">
+            Your patient registration with
+            <strong>Hemophilia Care</strong>
+            has been completed successfully.
+          </p>
+
+          <div style="
+            background: #f4f7fb;
+            border: 1px solid #dce5f0;
+            border-radius: 14px;
+            padding: 20px;
+            margin: 25px 0;
+          ">
+
+            <p style="
+              margin: 0 0 10px;
+              color: #71839b;
+              font-size: 13px;
+            ">
+              Your Patient ID
+            </p>
+
+            <p style="
+              margin: 0;
+              color: #2c5ce0;
+              font-size: 25px;
+              font-weight: 800;
+              letter-spacing: 1px;
+            ">
+              ${patientId}
+            </p>
+
+          </div>
+
+          <p style="
+            color: #5f728c;
+            font-size: 14px;
+            line-height: 1.7;
+          ">
+            Please keep your Patient ID safe. It may be required
+            when accessing your medical profile or communicating
+            with your Hemophilia Care treatment team.
+          </p>
+
+          <p style="
+            color: #5f728c;
+            font-size: 14px;
+            line-height: 1.7;
+          ">
+            Your patient profile has been successfully registered
+            in the Hemophilia Care system.
+          </p>
+
+          <div style="
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e7edf4;
+            color: #8a9ab0;
+            font-size: 12px;
+            text-align: center;
+          ">
+            Regards,<br>
+            <strong>Hemophilia Care Team</strong>
+          </div>
+
+        </div>
+
+      </div>
+    `,
+  };
+
+  const info =
+    await transporter.sendMail(
+      mailOptions
+    );
+
+  console.log(
+    "================================="
+  );
+
+  console.log(
+    "✅ PATIENT REGISTRATION EMAIL SENT"
+  );
+
+  console.log(
+    "Patient:",
+    patientName
+  );
+
+  console.log(
+    "Patient ID:",
+    patientId
+  );
+
+  console.log(
+    "To:",
+    patientEmail
+  );
+
+  console.log(
+    "Message ID:",
+    info.messageId
+  );
+
+  console.log(
+    "================================="
+  );
+
+  return info;
+}
+
+
+// =====================================================
+// SEND PATIENT PROFILE UPDATE EMAIL
+// =====================================================
+
+async function sendPatientProfileUpdateEmail({
+  patientName,
+  patientEmail,
+  patientId,
+}) {
+
+  if (!patientEmail) {
+    throw new Error(
+      "Patient email is required"
+    );
+  }
+
+  if (!patientId) {
+    throw new Error(
+      "Patient ID is required"
+    );
+  }
+
+  const mailOptions = {
+
+    from:
+      `"Hemophilia Care" <${process.env.EMAIL_USER}>`,
+
+    to:
+      patientEmail,
+
+    subject:
+      "Hemophilia Care - Patient Profile Updated Successfully",
+
+    text: `
+Dear ${patientName},
+
+Your patient profile has been updated successfully in the Hemophilia Care system.
+
+Profile Details
+---------------
+Patient Name: ${patientName}
+Patient ID: ${patientId}
+
+Your updated information has been successfully saved.
+
+If you did not make this change, please contact the Hemophilia Care administration immediately.
+
+Regards,
+Hemophilia Care Team
+    `.trim(),
+
+    html: `
+      <div style="
+        font-family: Arial, sans-serif;
+        background: #f5f8fc;
+        padding: 40px 20px;
+      ">
+
+        <div style="
+          max-width: 600px;
+          margin: 0 auto;
+          background: #ffffff;
+          border-radius: 18px;
+          padding: 36px;
+          border: 1px solid #e1e8f0;
+        ">
+
+          <div style="
+            text-align: center;
+            margin-bottom: 28px;
+          ">
+
+            <div style="
+              display: inline-flex;
+              width: 58px;
+              height: 58px;
+              border-radius: 50%;
+              align-items: center;
+              justify-content: center;
+              background: #eaf0fe;
+              color: #2c5ce0;
+              font-size: 28px;
+              font-weight: bold;
+            ">
+              +
+            </div>
+
+            <h2 style="
+              margin: 15px 0 5px;
+              color: #10233f;
+            ">
+              Hemophilia Care
+            </h2>
+
+            <p style="
+              margin: 0;
+              color: #71839b;
+              font-size: 14px;
+            ">
+              Patient Profile
+            </p>
+
+          </div>
+
+          <h3 style="
+            color: #10233f;
+            margin-bottom: 12px;
+          ">
+            Profile Updated Successfully
+          </h3>
+
+          <p style="
+            color: #30445f;
+            font-size: 15px;
+            line-height: 1.7;
+          ">
+            Dear <strong>${patientName}</strong>,
+          </p>
+
+          <p style="
+            color: #30445f;
+            font-size: 15px;
+            line-height: 1.7;
+          ">
+            Your patient profile has been updated successfully
+            in the <strong>Hemophilia Care</strong> system.
+          </p>
+
+          <div style="
+            background: #f4f7fb;
+            border: 1px solid #dce5f0;
+            border-radius: 14px;
+            padding: 20px;
+            margin: 25px 0;
+          ">
+
+            <p style="
+              margin: 0 0 10px;
+              color: #71839b;
+              font-size: 13px;
+            ">
+              Patient ID
+            </p>
+
+            <p style="
+              margin: 0;
+              color: #2c5ce0;
+              font-size: 25px;
+              font-weight: 800;
+              letter-spacing: 1px;
+            ">
+              ${patientId}
+            </p>
+
+          </div>
+
+          <p style="
+            color: #5f728c;
+            font-size: 14px;
+            line-height: 1.7;
+          ">
+            Your updated information has been successfully saved
+            and is now associated with your patient profile.
+          </p>
+
+          <p style="
+            color: #5f728c;
+            font-size: 14px;
+            line-height: 1.7;
+          ">
+            If you did not make this change, please contact the
+            Hemophilia Care administration immediately.
+          </p>
+
+          <div style="
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e7edf4;
+            color: #8a9ab0;
+            font-size: 12px;
+            text-align: center;
+          ">
+            Regards,<br>
+            <strong>Hemophilia Care Team</strong>
+          </div>
+
+        </div>
+
+      </div>
+    `,
+  };
+
+  const info =
+    await transporter.sendMail(
+      mailOptions
+    );
+
+  console.log(
+    "================================="
+  );
+
+  console.log(
+    "✅ PATIENT PROFILE UPDATE EMAIL SENT"
+  );
+
+  console.log(
+    "Patient:",
+    patientName
+  );
+
+  console.log(
+    "Patient ID:",
+    patientId
+  );
+
+  console.log(
+    "To:",
+    patientEmail
+  );
+
+  console.log(
+    "Message ID:",
+    info.messageId
+  );
+
+  console.log(
+    "================================="
+  );
+
+  return info;
+}
+
 module.exports = {
   transporter,
   verifyEmailConnection,
@@ -972,4 +1439,6 @@ module.exports = {
   sendAdminCredentials,
   sendLoginOTP,
   sendDoctorRejectionEmail,
+  sendPatientRegistrationEmail,
+  sendPatientProfileUpdateEmail,
 };

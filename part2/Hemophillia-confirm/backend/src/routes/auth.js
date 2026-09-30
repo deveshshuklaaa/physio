@@ -7,6 +7,10 @@ const {
 } = require("../services/otpService");
 const router = express.Router();
 
+const { OAuth2Client } = require("google-auth-library");
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const googleClient = GOOGLE_CLIENT_ID ? new OAuth2Client(GOOGLE_CLIENT_ID) : null;
+
 // Use env JWT secret if available, otherwise a safe fallback so login/register still work
 const JWT_SECRET =
   process.env.JWT_SECRET || "hemo_fallback_secret_change_in_production";
@@ -223,6 +227,125 @@ router.post("/login", async (req, res) => {
     return res.status(500).json({
       message:
         "Server error during login",
+    });
+  }
+});
+
+// =====================================================
+// GOOGLE LOGIN / REGISTRATION - PATIENT ONLY
+// =====================================================
+
+router.post("/google/patient", async (req, res) => {
+  try {
+    const { credential } = req.body;
+
+    if (!credential) {
+      return res.status(400).json({
+        success: false,
+        message: "Google credential is required.",
+      });
+    }
+
+    if (!GOOGLE_CLIENT_ID || !googleClient) {
+      console.error("GOOGLE_CLIENT_ID is missing from backend environment.");
+      return res.status(500).json({
+        success: false,
+        message: "Google authentication is not configured.",
+      });
+    }
+
+    const ticket = await googleClient.verifyIdToken({
+      idToken: credential,
+      audience: GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    if (!payload) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid Google authentication.",
+      });
+    }
+
+    const googleId = payload.sub;
+    const googleEmail = payload.email;
+    const emailVerified = payload.email_verified;
+    const googleName = payload.name;
+
+    if (!googleId || !googleEmail) {
+      return res.status(401).json({
+        success: false,
+        message: "Google account information is incomplete.",
+      });
+    }
+
+    if (!emailVerified) {
+      return res.status(401).json({
+        success: false,
+        message: "Your Google email address could not be verified.",
+      });
+    }
+
+    let user = await User.findOne({ googleId: googleId });
+
+    if (user) {
+      if (user.role !== "patient") {
+        return res.status(403).json({
+          success: false,
+          message: "Google Sign-In is available only for patients.",
+        });
+      }
+    }
+
+    if (!user) {
+      user = await User.findOne({ email: googleEmail });
+
+      if (user) {
+        if (user.role !== "patient") {
+          return res.status(403).json({
+            success: false,
+            message: "Google Sign-In is available only for patients.",
+          });
+        }
+        user.googleId = googleId;
+        await user.save();
+      }
+    }
+
+    if (!user) {
+      user = await User.create({
+        fullName: googleName || googleEmail.split("@")[0],
+        email: googleEmail,
+        googleId: googleId,
+        authProvider: "google",
+        role: "patient",
+        accountStatus: "APPROVED",
+      });
+    }
+
+    const token = jwt.sign(
+      { userId: user._id, role: "patient" },
+      JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Google authentication successful.",
+      token,
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error("Google authentication error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error during Google authentication.",
     });
   }
 });

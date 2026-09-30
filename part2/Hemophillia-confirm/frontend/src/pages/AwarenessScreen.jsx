@@ -74,7 +74,7 @@
 //             {/* NO */}
 //             <button
 //               className="choice-btn"
-//               onClick={() => navigate("/chatbbot")}
+//               onClick={() => navigate("/chatbot")}
 //             >
 //               <div className="choice-icon">
 //                 ?
@@ -1292,7 +1292,7 @@
 //             {/* NO */}
 //             <button
 //               className="choice-btn"
-//               onClick={() => navigate("/chatbbot")}
+//               onClick={() => navigate("/chatbot")}
 //             >
 //               <div className="choice-icon">
 //                 ?
@@ -2548,7 +2548,7 @@
 //             {/* NO */}
 //             <button
 //               className="choice-btn"
-//               onClick={() => navigate("/chatbbot")}
+//               onClick={() => navigate("/chatbot")}
 //             >
 //               <div className="choice-icon">
 //                 ?
@@ -3835,7 +3835,7 @@ const AwarenessScreen = () => {
             {/* NO */}
             <button
               className="choice-btn"
-              onClick={() => navigate("/chatbbot")}
+              onClick={() => navigate("/chatbot")}
             >
               <div className="choice-icon">
                 ?

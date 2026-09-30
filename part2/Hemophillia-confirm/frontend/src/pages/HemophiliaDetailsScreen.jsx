@@ -17041,6 +17041,9 @@ const HemophiliaDetailsScreen = () => {
   const [error, setError] =
     useState("");
 
+  const [missingFields, setMissingFields] =
+    useState([]);
+
     // =====================================================
 // DOCTOR ASSIGNMENT / CHANGE REQUEST STATE
 // =====================================================
@@ -17253,6 +17256,9 @@ const handleDoctorChangeRequest =
       ...prev,
       [field]: value,
     }));
+    setMissingFields((prev) =>
+      prev.filter((f) => f !== field)
+    );
   };
 
   // =====================================================
@@ -17317,93 +17323,54 @@ const handleDoctorChangeRequest =
 
   const handleSubmit = async () => {
     setError("");
+    setMissingFields([]);
 
-    if (
-      !form.type ||
-      !form.severity ||
-      !form.bleedingPattern ||
-      !form.bleedFrequency ||
-      !form.consultingDoctorId ||
-      form.underPhysiotherapy === ""
-    ) {
-      setError(
-        txt.errorRequired
-      );
+    const missing = [];
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+    if (!form.type) missing.push("type");
+    if (!form.severity) missing.push("severity");
+    if (!form.bleedingPattern) missing.push("bleedingPattern");
+    if (!form.bleedFrequency) missing.push("bleedFrequency");
+    if (!form.consultingDoctorId) missing.push("consultingDoctorId");
+    if (form.underPhysiotherapy === "") missing.push("underPhysiotherapy");
 
-      return;
+    if (form.underPhysiotherapy === true) {
+      if (!form.physiotherapyLocation) missing.push("physiotherapyLocation");
+      if (!form.physiotherapySessions) missing.push("physiotherapySessions");
+      if (!form.physiotherapyDuration) missing.push("physiotherapyDuration");
+      if (!form.physiotherapyBodyPart) missing.push("physiotherapyBodyPart");
+      if (!form.physiotherapyTreatment) missing.push("physiotherapyTreatment");
+      if (!form.physiotherapyEquipment) missing.push("physiotherapyEquipment");
+      if (!form.physiotherapyHelping) missing.push("physiotherapyHelping");
     }
 
-    // -----------------------------------------------
-    // IF CURRENTLY IN PHYSIOTHERAPY
-    // -----------------------------------------------
-
-    if (
-      form.underPhysiotherapy === true
-    ) {
+    if (form.underPhysiotherapy === false) {
+      if (form.previousPhysiotherapy === "") missing.push("previousPhysiotherapy");
       if (
-        !form.physiotherapyLocation ||
-        !form.physiotherapySessions ||
-        !form.physiotherapyDuration ||
-        !form.physiotherapyBodyPart ||
-        !form.physiotherapyTreatment ||
-        !form.physiotherapyEquipment ||
-        !form.physiotherapyHelping
-      ) {
-        setError(
-          txt.errorRequired
-        );
-
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-
-        return;
-      }
-    }
-
-    // -----------------------------------------------
-    // IF NOT CURRENTLY IN PHYSIO
-    // -----------------------------------------------
-
-    if (
-      form.underPhysiotherapy === false &&
-      form.previousPhysiotherapy === ""
-    ) {
-      setError(
-        txt.errorRequired
-      );
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-
-      return;
-    }
-
-    if (
-      form.underPhysiotherapy === false &&
-      form.previousPhysiotherapy === true &&
-      (
-        !form.physiotherapyStoppedDate ||
+        form.previousPhysiotherapy === true &&
+        !form.physiotherapyStoppedDate
+      ) missing.push("physiotherapyStoppedDate");
+      if (
+        form.previousPhysiotherapy === true &&
         !form.physiotherapyStoppedReason
-      )
-    ) {
-      setError(
-        txt.errorRequired
+      ) missing.push("physiotherapyStoppedReason");
+    }
+
+    if (missing.length > 0) {
+      setError(txt.errorRequired);
+      setMissingFields(missing);
+
+      const firstEl = document.querySelector(
+        `[data-field="${missing[0]}"]`
       );
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-
+      if (firstEl) {
+        firstEl.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
       return;
     }
 
@@ -17610,6 +17577,8 @@ const handleDoctorChangeRequest =
               </label>
 
               <select
+                data-field="type"
+                className={missingFields.includes("type") ? "field-error" : ""}
                 value={form.type}
                 onChange={(e) =>
                   updateField(
@@ -17652,6 +17621,8 @@ const handleDoctorChangeRequest =
               </label>
 
               <select
+                data-field="severity"
+                className={missingFields.includes("severity") ? "field-error" : ""}
                 value={form.severity}
                 onChange={(e) =>
                   updateField(
@@ -17947,6 +17918,8 @@ const handleDoctorChangeRequest =
               </label>
 
               <select
+                data-field="bleedingPattern"
+                className={missingFields.includes("bleedingPattern") ? "field-error" : ""}
                 value={
                   form.bleedingPattern
                 }
@@ -17999,6 +17972,8 @@ const handleDoctorChangeRequest =
               </label>
 
               <select
+                data-field="bleedFrequency"
+                className={missingFields.includes("bleedFrequency") ? "field-error" : ""}
                 value={
                   form.bleedFrequency
                 }
@@ -18246,6 +18221,8 @@ const handleDoctorChangeRequest =
             </label>
 
             <select
+              data-field="underPhysiotherapy"
+              className={missingFields.includes("underPhysiotherapy") ? "field-error" : ""}
               value={
                 form.underPhysiotherapy === ""
                   ? ""
@@ -18319,6 +18296,8 @@ const handleDoctorChangeRequest =
                   </label>
 
                   <select
+                    data-field="physiotherapyLocation"
+                    className={missingFields.includes("physiotherapyLocation") ? "field-error" : ""}
                     value={
                       form.physiotherapyLocation
                     }
@@ -18364,6 +18343,8 @@ const handleDoctorChangeRequest =
                   </label>
 
                   <select
+                    data-field="physiotherapySessions"
+                    className={missingFields.includes("physiotherapySessions") ? "field-error" : ""}
                     value={
                       form.physiotherapySessions
                     }
@@ -18405,6 +18386,8 @@ const handleDoctorChangeRequest =
                   </label>
 
                   <select
+                    data-field="physiotherapyDuration"
+                    className={missingFields.includes("physiotherapyDuration") ? "field-error" : ""}
                     value={
                       form.physiotherapyDuration
                     }
@@ -18450,6 +18433,8 @@ const handleDoctorChangeRequest =
                   </label>
 
                   <select
+                    data-field="physiotherapyBodyPart"
+                    className={missingFields.includes("physiotherapyBodyPart") ? "field-error" : ""}
                     value={
                       form.physiotherapyBodyPart
                     }
@@ -18494,6 +18479,8 @@ const handleDoctorChangeRequest =
                 </label>
 
                 <select
+                  data-field="physiotherapyTreatment"
+                  className={missingFields.includes("physiotherapyTreatment") ? "field-error" : ""}
                   value={
                     form.physiotherapyTreatment
                   }
@@ -18547,6 +18534,8 @@ const handleDoctorChangeRequest =
                 </label>
 
                 <select
+                  data-field="physiotherapyEquipment"
+                  className={missingFields.includes("physiotherapyEquipment") ? "field-error" : ""}
                   value={
                     form.physiotherapyEquipment
                   }
@@ -18600,6 +18589,8 @@ const handleDoctorChangeRequest =
                 </label>
 
                 <select
+                  data-field="physiotherapyHelping"
+                  className={missingFields.includes("physiotherapyHelping") ? "field-error" : ""}
                   value={
                     form.physiotherapyHelping
                   }
@@ -18731,6 +18722,8 @@ const handleDoctorChangeRequest =
                 </label>
 
                 <select
+                  data-field="previousPhysiotherapy"
+                  className={missingFields.includes("previousPhysiotherapy") ? "field-error" : ""}
                   value={
                     form.previousPhysiotherapy === ""
                       ? ""
@@ -18741,8 +18734,9 @@ const handleDoctorChangeRequest =
                   onChange={(e) =>
                     updateField(
                       "previousPhysiotherapy",
-                      e.target.value ===
-                        "Yes"
+                      e.target.value === ""
+                        ? ""
+                        : e.target.value === "Yes"
                     )
                   }
                 >
@@ -18777,6 +18771,8 @@ const handleDoctorChangeRequest =
 
                     <input
                       type="date"
+                      data-field="physiotherapyStoppedDate"
+                      className={missingFields.includes("physiotherapyStoppedDate") ? "field-error" : ""}
                       value={
                         form.physiotherapyStoppedDate
                       }
@@ -18798,6 +18794,8 @@ const handleDoctorChangeRequest =
                     </label>
 
                     <select
+                      data-field="physiotherapyStoppedReason"
+                      className={missingFields.includes("physiotherapyStoppedReason") ? "field-error" : ""}
                       value={
                         form.physiotherapyStoppedReason
                       }
@@ -19028,6 +19026,8 @@ const handleDoctorChangeRequest =
             </label>
 
             <select
+              data-field="consultingDoctorId"
+              className={missingFields.includes("consultingDoctorId") ? "field-error" : ""}
               value={
                 form.consultingDoctorId
               }
@@ -19570,6 +19570,11 @@ const handleDoctorChangeRequest =
           font-size: 8px;
 
           line-height: 1.4;
+        }
+
+        .field-error {
+          border-color: #e53935 !important;
+          box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.18);
         }
 
         .field input,

@@ -83,7 +83,7 @@
 //         <Route element={<Layout />}>
 
 //           <Route
-//             path="/chatbbot"
+//             path="/chatbot"
 //             element={<Chatbot />}
 //           />
 
@@ -319,7 +319,7 @@ function App() {
         <Route element={<Layout />}>
 
           <Route
-            path="/chatbbot"
+            path="/chatbot"
             element={<Chatbot />}
           />
 

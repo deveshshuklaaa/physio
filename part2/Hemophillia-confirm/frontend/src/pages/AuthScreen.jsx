@@ -1,10 +1,14 @@
 
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import api from "../apiClient";
 
-const AuthScreen = () => {
+const PASSWORD_REGEX =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+
+const PatientAuthScreen = () => {
   const [mode, setMode] = useState("login");
 
   const [fullName, setFullName] = useState("");
@@ -14,9 +18,119 @@ const AuthScreen = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+
+  const isPasswordValid = PASSWORD_REGEX.test(password);
+
+  const requirements = useMemo(
+    () => [
+      { label: "At least 8 characters", valid: password.length >= 8 },
+      { label: "One uppercase letter", valid: /[A-Z]/.test(password) },
+      { label: "One lowercase letter", valid: /[a-z]/.test(password) },
+      { label: "One number", valid: /\d/.test(password) },
+      { label: "One special character", valid: /[^A-Za-z0-9]/.test(password) },
+    ],
+    [password]
+  );
+
+  // =========================================================
+  // GOOGLE LOGIN / REGISTRATION - PATIENT ONLY
+  // =========================================================
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setError("");
+    setGoogleLoading(true);
+
+    try {
+      if (!credentialResponse?.credential) {
+        throw new Error("Google authentication credential is missing.");
+      }
+
+      const response = await api.post("/auth/google/patient", {
+        credential: credentialResponse.credential,
+      });
+
+      if (!response.data?.success || !response.data?.token) {
+        throw new Error(response.data?.message || "Google authentication failed.");
+      }
+
+      const token = response.data.token;
+      const googleUser = response.data.user;
+
+      localStorage.setItem("authToken", token);
+
+      if (googleUser) {
+        localStorage.setItem("user", JSON.stringify(googleUser));
+      }
+
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+      // Follow the same patient onboarding flow as normal login.
+      try {
+        const profileResponse = await api.get("/profile/patient-profile");
+        const profile = profileResponse.data || {};
+
+        const consentCompleted =
+          profile.consentDataCollection === true &&
+          profile.consentAI === true &&
+          profile.consentVideoMonitoring === true &&
+          profile.privacyAccepted === true &&
+          profile.termsAccepted === true &&
+          !!profile.consentTimestamp;
+
+        if (!consentCompleted) {
+          navigate("/consent", { replace: true });
+          return;
+        }
+
+        const profileCompleted =
+          typeof profile.fullName === "string" && profile.fullName.trim().length > 0 &&
+          typeof profile.gender === "string" && profile.gender.trim().length > 0 &&
+          !!profile.dob &&
+          typeof profile.bloodGroup === "string" && profile.bloodGroup.trim().length > 0 &&
+          typeof profile.mobile === "string" && /^\d{10}$/.test(profile.mobile.trim()) &&
+          typeof profile.state === "string" && profile.state.trim().length > 0 &&
+          typeof profile.city === "string" && profile.city.trim().length > 0 &&
+          typeof profile.pinCode === "string" && /^\d{6}$/.test(profile.pinCode.trim()) &&
+          typeof profile.emergencyName === "string" && profile.emergencyName.trim().length > 0 &&
+          typeof profile.emergencyRelationship === "string" && profile.emergencyRelationship.trim().length > 0 &&
+          typeof profile.emergencyPhone === "string" && /^\d{10}$/.test(profile.emergencyPhone.trim());
+
+        if (!profileCompleted) {
+          navigate("/register/profile", { replace: true });
+          return;
+        }
+
+        navigate("/awareness", { replace: true });
+        return;
+      } catch (profileError) {
+        if (profileError.response?.status === 404) {
+          navigate("/consent", { replace: true });
+          return;
+        }
+
+        console.error("Google patient onboarding error:", profileError);
+        setError("Google login succeeded, but we could not check your patient profile. Please try again.");
+      }
+    } catch (err) {
+      console.error("Google authentication error:", err);
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Google authentication failed. Please try again."
+      );
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const handleGoogleError = () => {
+    console.error("Google Sign-In failed.");
+    setError("Google Sign-In was cancelled or failed. Please try again.");
+  };
 
   // =========================================================
   // LOGIN / REGISTER
@@ -26,6 +140,12 @@ const AuthScreen = () => {
     e.preventDefault();
 
     setError("");
+
+    if (mode === "register" && !isPasswordValid) {
+      setError("Password must be at least 8 characters and contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -372,8 +492,38 @@ if (mode === "login") {
 
                 </div>
 
+              {mode === "register" && password.length > 0 && (
+                <div className="patient-password-requirements">
+                  <div className="patient-req-title">Password must contain:</div>
+                  {requirements.map((item) => (
+                    <div
+                      key={item.label}
+                      className="patient-req-item"
+                      style={{ color: item.valid ? "#16805c" : "#65758b" }}
+                    >
+                      {item.valid ? "✓" : "○"} {item.label}
+                    </div>
+                  ))}
+                </div>
+              )}
+
               </div>
 
+
+              {mode === "login" && (
+                <div style={{textAlign: "right", marginTop: "-8px", marginBottom: "8px"}}>
+                  <a
+                    href="/forgot-password"
+                    style={{
+                      fontSize: "13px",
+                      color: "var(--accent, #4a90d9)",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Forgot Password?
+                  </a>
+                </div>
+              )}
 
               {/* ===============================================
                   ERROR
@@ -401,9 +551,9 @@ if (mode === "login") {
               =============================================== */}
 
               <button
-                className="patient-main-button"
+                className={`patient-main-button${mode === "register" && !isPasswordValid ? " patient-main-button-disabled" : ""}`}
                 type="submit"
-                disabled={loading}
+                disabled={loading || googleLoading || (mode === "register" && !isPasswordValid)}
               >
 
                 {loading
@@ -415,6 +565,37 @@ if (mode === "login") {
               </button>
 
             </form>
+
+            {/* =================================================
+                GOOGLE SIGN-IN
+            ================================================= */}
+
+            <div className="patient-google-section">
+              <div className="patient-google-divider">
+                <span></span>
+                <p>OR</p>
+                <span></span>
+              </div>
+
+              <div className="patient-google-button">
+                {googleLoading ? (
+                  <div className="patient-google-loading">
+                    Signing in with Google...
+                  </div>
+                ) : (
+                  <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={handleGoogleError}
+                    useOneTap={false}
+                    theme="outline"
+                    size="large"
+                    width="100%"
+                    text="continue_with"
+                    shape="rectangular"
+                  />
+                )}
+              </div>
+            </div>
 
 
             {/* =================================================
@@ -1257,6 +1438,70 @@ if (mode === "login") {
           cursor:
             not-allowed;
 
+        }
+
+        .patient-password-requirements {
+          background: #f5f8fc;
+          border: 1px solid #e0e7f0;
+          border-radius: 10px;
+          padding: 10px 13px;
+          margin-top: 6px;
+        }
+
+        .patient-req-title {
+          color: #40536d;
+          font-size: 11px;
+          font-weight: 700;
+          margin-bottom: 4px;
+        }
+
+        .patient-req-item {
+          font-size: 11px;
+          line-height: 1.8;
+        }
+
+
+        /* =====================================================
+           GOOGLE SIGN-IN
+        ===================================================== */
+
+        .patient-google-section {
+          width: 100%;
+          margin-top: 18px;
+        }
+
+        .patient-google-divider {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          width: 100%;
+          margin-bottom: 15px;
+        }
+
+        .patient-google-divider span {
+          flex: 1;
+          height: 1px;
+          background: #e1e8f2;
+        }
+
+        .patient-google-divider p {
+          margin: 0;
+          font-size: 11px;
+          font-weight: 600;
+          color: #91a5bc;
+        }
+
+        .patient-google-button {
+          width: 100%;
+          min-height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .patient-google-loading {
+          font-size: 13px;
+          color: #91a5bc;
         }
 
 
@@ -2113,6 +2358,20 @@ if (mode === "login") {
       `}</style>
 
     </div>
+  );
+};
+
+const AuthScreen = () => {
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+  if (!googleClientId) {
+    console.error("VITE_GOOGLE_CLIENT_ID is missing from the frontend .env file.");
+  }
+
+  return (
+    <GoogleOAuthProvider clientId={googleClientId || ""}>
+      <PatientAuthScreen />
+    </GoogleOAuthProvider>
   );
 };
 

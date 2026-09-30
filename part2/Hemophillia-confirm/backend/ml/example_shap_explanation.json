@@ -1,0 +1,164 @@
+{
+    "prediction": 0,
+    "predictionLabel": "Healthy",
+    "predictionConfidence": 0.867929,
+    "supportingFactors": [
+        {
+            "feature": "prolonged_bleeding_minor_cut",
+            "label": "Bleeding that lasts longer than usual after small cuts",
+            "shapValue": 0.175846
+        },
+        {
+            "feature": "previous_factor_test",
+            "label": "Previous clotting-factor testing",
+            "shapValue": 0.149537
+        },
+        {
+            "feature": "sex",
+            "label": "Gender",
+            "shapValue": 0.143328
+        }
+    ],
+    "reducingFactors": [
+        {
+            "feature": "muscle_hematoma",
+            "label": "Unexplained deep muscle swelling, pain, or tenderness",
+            "shapValue": -0.131814
+        },
+        {
+            "feature": "easy_bruising",
+            "label": "Frequent or unusual bruising",
+            "shapValue": -0.111769
+        }
+    ],
+    "technicalExplanation": [
+        {
+            "feature": "prolonged_bleeding_minor_cut",
+            "patient_value": 0,
+            "shap_value": 0.17584570895993487,
+            "absolute_shap": 0.17584570895993487,
+            "direction": "supporting",
+            "patient_friendly_name": "Bleeding that lasts longer than usual after small cuts"
+        },
+        {
+            "feature": "previous_factor_test",
+            "patient_value": 0,
+            "shap_value": 0.14953708964869444,
+            "absolute_shap": 0.14953708964869444,
+            "direction": "supporting",
+            "patient_friendly_name": "Previous clotting-factor testing"
+        },
+        {
+            "feature": "sex",
+            "patient_value": 1,
+            "shap_value": 0.14332777915486253,
+            "absolute_shap": 0.14332777915486253,
+            "direction": "supporting",
+            "patient_friendly_name": "Gender"
+        },
+        {
+            "feature": "muscle_hematoma",
+            "patient_value": 1,
+            "shap_value": -0.13181414779421868,
+            "absolute_shap": 0.13181414779421868,
+            "direction": "reducing",
+            "patient_friendly_name": "Unexplained deep muscle swelling, pain, or tenderness"
+        },
+        {
+            "feature": "easy_bruising",
+            "patient_value": 1,
+            "shap_value": -0.11176915477399188,
+            "absolute_shap": 0.11176915477399188,
+            "direction": "reducing",
+            "patient_friendly_name": "Frequent or unusual bruising"
+        },
+        {
+            "feature": "family_history_bleeding_disorder",
+            "patient_value": 0,
+            "shap_value": 0.06160241590228465,
+            "absolute_shap": 0.06160241590228465,
+            "direction": "supporting",
+            "patient_friendly_name": "Family history of bleeding problems"
+        },
+        {
+            "feature": "excessive_dental_bleeding",
+            "patient_value": 0,
+            "shap_value": 0.05459183003798593,
+            "absolute_shap": 0.05459183003798593,
+            "direction": "supporting",
+            "patient_friendly_name": "Heavy bleeding after dental treatment"
+        },
+        {
+            "feature": "excessive_post_surgery_bleeding",
+            "patient_value": 0,
+            "shap_value": 0.04102364989817683,
+            "absolute_shap": 0.04102364989817683,
+            "direction": "supporting",
+            "patient_friendly_name": "Heavy bleeding after surgery or stitches"
+        },
+        {
+            "feature": "recurrent_joint_bleeding",
+            "patient_value": 0,
+            "shap_value": 0.04057873557151109,
+            "absolute_shap": 0.04057873557151109,
+            "direction": "supporting",
+            "patient_friendly_name": "Repeated bleeding or swelling around joints"
+        },
+        {
+            "feature": "male_relative_with_hemophilia",
+            "patient_value": 0,
+            "shap_value": 0.02188859275273443,
+            "absolute_shap": 0.02188859275273443,
+            "direction": "supporting",
+            "patient_friendly_name": "Male family member diagnosed with hemophilia"
+        },
+        {
+            "feature": "age",
+            "patient_value": 43,
+            "shap_value": 0.014037229867289945,
+            "absolute_shap": 0.014037229867289945,
+            "direction": "supporting",
+            "patient_friendly_name": "Age"
+        },
+        {
+            "feature": "joint_warmth",
+            "patient_value": 0,
+            "shap_value": 0.009074587987140925,
+            "absolute_shap": 0.009074587987140925,
+            "direction": "supporting",
+            "patient_friendly_name": "Warmth around an affected joint"
+        },
+        {
+            "feature": "reduced_joint_mobility",
+            "patient_value": 0,
+            "shap_value": 0.007461837166148488,
+            "absolute_shap": 0.007461837166148488,
+            "direction": "supporting",
+            "patient_friendly_name": "Difficulty moving an affected joint"
+        },
+        {
+            "feature": "joint_tightness",
+            "patient_value": 0,
+            "shap_value": 0.0022559008823798085,
+            "absolute_shap": 0.0022559008823798085,
+            "direction": "supporting",
+            "patient_friendly_name": "Tightness around an affected joint"
+        },
+        {
+            "feature": "hematuria",
+            "patient_value": 0,
+            "shap_value": 0.0003553338597645037,
+            "absolute_shap": 0.0003553338597645037,
+            "direction": "supporting",
+            "patient_friendly_name": "Blood noticed in urine"
+        },
+        {
+            "feature": "hematochezia",
+            "patient_value": 0,
+            "shap_value": 3.8276195190132284e-05,
+            "absolute_shap": 3.8276195190132284e-05,
+            "direction": "supporting",
+            "patient_friendly_name": "Blood noticed in stool"
+        }
+    ]
+}
