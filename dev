@@ -21,6 +21,8 @@ usage() {
   shell <svc>      open a shell inside a container
   test             run the backend + frontend test suites
   otp              print the most recent DEV OTP from the backend log
+  health           show healthcheck status for all services
+  stats            show CPU / memory usage per container
 
 Code changes need `rebuild`, not `restart`: the images COPY the source in, so
 a restart just runs the same baked code again.
@@ -48,5 +50,7 @@ case "${1:-}" in
       done )
     ( cd frontend && node --test 'tests/**/*.test.mjs' 2>&1 | grep -E 'ℹ (pass|fail)' ) ;;
   otp)     docker compose logs --tail=200 hemo-backend | grep "DEV OTP" | tail -3 ;;
+  health)  docker compose ps --format '{{.Service}}\t{{.State}}\t{{.Health}}' ;;
+  stats)   docker stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.MemPerc}}' ;;
   *)       usage ;;
 esac

@@ -1,1568 +1,3 @@
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import api from "../apiClient";
-
-// const DoctorRegistration = () => {
-//   const navigate = useNavigate();
-
-//   // =========================================================
-//   // FORM DATA
-//   // =========================================================
-
-//   const [formData, setFormData] = useState({
-//     fullName: "",
-//     email: "",
-//     mobileNumber: "",
-//     medicalRegistrationNumber: "",
-//     medicalCouncil: "",
-//     qualification: "",
-//     specialization: "",
-//     yearsOfExperience: "",
-//     hospitalName: "",
-//     city: "",
-//   });
-
-//   // =========================================================
-//   // DOCUMENTS
-//   // =========================================================
-
-//   const [documents, setDocuments] = useState({
-//     registrationCertificate: null,
-//     professionalIdDocument: null,
-//   });
-
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState("");
-//   const [submitted, setSubmitted] = useState(false);
-
-//   // =========================================================
-//   // HANDLE INPUT CHANGES
-//   // =========================================================
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-
-//     setFormData((prev) => ({
-//       ...prev,
-//       [name]: value,
-//     }));
-//   };
-
-//   // =========================================================
-//   // HANDLE FILE CHANGES
-//   // =========================================================
-
-//   const handleFileChange = (e) => {
-//     const { name, files } = e.target;
-
-//     if (!files || files.length === 0) {
-//       return;
-//     }
-
-//     setDocuments((prev) => ({
-//       ...prev,
-//       [name]: files[0],
-//     }));
-//   };
-
-//   // =========================================================
-//   // SUBMIT REGISTRATION
-//   // =========================================================
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     setError("");
-
-//     // =======================================================
-//     // BASIC VALIDATION
-//     // =======================================================
-
-//     if (!formData.fullName.trim()) {
-//       setError("Please enter your full name.");
-//       return;
-//     }
-
-//     if (!formData.email.trim()) {
-//       setError("Please enter your email address.");
-//       return;
-//     }
-
-//     if (!formData.mobileNumber.trim()) {
-//       setError("Please enter your mobile number.");
-//       return;
-//     }
-
-//     if (!formData.medicalRegistrationNumber.trim()) {
-//       setError("Please enter your medical registration number.");
-//       return;
-//     }
-
-//     if (!formData.medicalCouncil.trim()) {
-//       setError("Please enter your medical council.");
-//       return;
-//     }
-
-//     if (!formData.qualification.trim()) {
-//       setError("Please enter your qualification.");
-//       return;
-//     }
-
-//     if (!formData.specialization.trim()) {
-//       setError("Please enter your specialization.");
-//       return;
-//     }
-
-//     if (!formData.hospitalName.trim()) {
-//       setError("Please enter your hospital / organization.");
-//       return;
-//     }
-
-//     if (!formData.city.trim()) {
-//       setError("Please enter your city.");
-//       return;
-//     }
-
-//     if (!documents.registrationCertificate) {
-//       setError("Please upload your medical registration certificate.");
-//       return;
-//     }
-
-//     if (!documents.professionalIdDocument) {
-//       setError("Please upload your professional ID document.");
-//       return;
-//     }
-
-//     // =======================================================
-//     // FILE SIZE VALIDATION
-//     // Backend limit = 5 MB
-//     // =======================================================
-
-//     const MAX_FILE_SIZE = 5 * 1024 * 1024;
-
-//     if (documents.registrationCertificate.size > MAX_FILE_SIZE) {
-//       setError(
-//         "Medical registration certificate must be smaller than 5 MB."
-//       );
-//       return;
-//     }
-
-//     if (documents.professionalIdDocument.size > MAX_FILE_SIZE) {
-//       setError(
-//         "Professional ID document must be smaller than 5 MB."
-//       );
-//       return;
-//     }
-
-//     // =======================================================
-//     // FILE TYPE VALIDATION
-//     // =======================================================
-
-//     const allowedTypes = [
-//       "application/pdf",
-//       "image/jpeg",
-//       "image/png",
-//       "image/jpg",
-//     ];
-
-//     if (
-//       !allowedTypes.includes(
-//         documents.registrationCertificate.type
-//       )
-//     ) {
-//       setError(
-//         "Medical registration certificate must be a PDF, JPG, JPEG or PNG file."
-//       );
-//       return;
-//     }
-
-//     if (
-//       !allowedTypes.includes(
-//         documents.professionalIdDocument.type
-//       )
-//     ) {
-//       setError(
-//         "Professional ID document must be a PDF, JPG, JPEG or PNG file."
-//       );
-//       return;
-//     }
-
-//     // =======================================================
-//     // START LOADING
-//     // =======================================================
-
-//     setLoading(true);
-
-//     try {
-//       const data = new FormData();
-
-//       // =====================================================
-//       // TEXT FIELDS
-//       // THESE NAMES MUST MATCH THE BACKEND
-//       // =====================================================
-
-//       data.append(
-//         "fullName",
-//         formData.fullName.trim()
-//       );
-
-//       data.append(
-//         "email",
-//         formData.email.trim().toLowerCase()
-//       );
-
-//       data.append(
-//         "mobileNumber",
-//         formData.mobileNumber.trim()
-//       );
-
-//       data.append(
-//         "medicalRegistrationNumber",
-//         formData.medicalRegistrationNumber.trim().toUpperCase()
-//       );
-
-//       data.append(
-//         "medicalCouncil",
-//         formData.medicalCouncil.trim()
-//       );
-
-//       data.append(
-//         "qualification",
-//         formData.qualification.trim()
-//       );
-
-//       data.append(
-//         "specialization",
-//         formData.specialization.trim()
-//       );
-
-//       data.append(
-//         "yearsOfExperience",
-//         formData.yearsOfExperience.trim()
-//       );
-
-//       data.append(
-//         "hospitalName",
-//         formData.hospitalName.trim()
-//       );
-
-//       data.append(
-//         "city",
-//         formData.city.trim()
-//       );
-
-//       // Backend requires this field.
-//       // There is currently no checkbox in the UI,
-//       // so we send true after the user submits the form.
-//       data.append(
-//         "declarationAccepted",
-//         "true"
-//       );
-
-//       // =====================================================
-//       // DOCUMENTS
-//       //
-//       // VERY IMPORTANT:
-//       // These names MUST exactly match upload.fields()
-//       // in the backend.
-//       // =====================================================
-
-//       data.append(
-//         "registrationCertificate",
-//         documents.registrationCertificate
-//       );
-
-//       data.append(
-//         "professionalIdDocument",
-//         documents.professionalIdDocument
-//       );
-
-//       // =====================================================
-//       // DEBUG LOG
-//       // =====================================================
-
-//       console.log(
-//         "Submitting doctor registration..."
-//       );
-
-//       for (const [key, value] of data.entries()) {
-//         if (value instanceof File) {
-//           console.log(
-//             key,
-//             "=>",
-//             value.name,
-//             value.type,
-//             value.size
-//           );
-//         } else {
-//           console.log(
-//             key,
-//             "=>",
-//             value
-//           );
-//         }
-//       }
-
-//       // =====================================================
-//       // SEND APPLICATION
-//       // =====================================================
-
-//       await api.post(
-//         "/doctor/register",
-//         data,
-//         {
-//           headers: {
-//             "Content-Type": "multipart/form-data",
-//           },
-//         }
-//       );
-
-//       // =====================================================
-//       // IMPORTANT
-//       //
-//       // DO NOT LOGIN THE DOCTOR HERE.
-//       //
-//       // Registration only creates a PENDING request.
-//       // Credentials are created after admin approval.
-//       // =====================================================
-
-//       setSubmitted(true);
-
-//       window.scrollTo({
-//         top: 0,
-//         behavior: "smooth",
-//       });
-//     } catch (err) {
-//       console.error(
-//         "Doctor registration error:",
-//         err
-//       );
-
-//       console.error(
-//         "Server response:",
-//         err.response?.data
-//       );
-
-//       setError(
-//         err.response?.data?.message ||
-//           "Unable to submit your registration. Please try again."
-//       );
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   // =========================================================
-//   // SUCCESS / CONFIRMATION PAGE
-//   // =========================================================
-
-//   if (submitted) {
-//     return (
-//       <div className="doctor-register-page">
-//         <div className="success-card">
-
-//           <div className="success-icon">
-//             ✓
-//           </div>
-
-//           <h1>
-//             Registration Submitted
-//           </h1>
-
-//           <p className="success-main">
-//             Your doctor registration details have been
-//             submitted successfully.
-//           </p>
-
-//           <p className="success-text">
-//             Your application is now waiting for
-//             administrator verification and approval.
-//           </p>
-
-//           <div className="info-box">
-
-//             <div className="info-icon">
-//               ✉
-//             </div>
-
-//             <div>
-//               <strong>
-//                 What happens next?
-//               </strong>
-
-//               <p>
-//                 Once your application is approved,
-//                 your Doctor / Clinician ID and temporary
-//                 password will be sent to your registered
-//                 email address.
-//               </p>
-//             </div>
-
-//           </div>
-
-//           <p className="login-note">
-//             You can use those credentials to log in
-//             through the Doctor / Clinician Login page.
-//           </p>
-
-//           <button
-//             className="main-btn success-btn"
-//             onClick={() => navigate("/doctor-login")}
-//           >
-//             Go to Doctor Login
-//           </button>
-
-//           <button
-//             className="back-btn"
-//             onClick={() => navigate("/")}
-//           >
-//             ← Back to Patient Login
-//           </button>
-
-//         </div>
-
-//         <style>{`
-
-//           .doctor-register-page {
-//             min-height: 100vh;
-//             width: 100%;
-//             display: flex;
-//             align-items: center;
-//             justify-content: center;
-
-//             padding: 40px 20px;
-//             box-sizing: border-box;
-
-//             background-image:
-//               url('/images/login-bg.png');
-
-//             background-size: cover;
-//             background-position: center;
-//             background-repeat: no-repeat;
-//           }
-
-//           .success-card {
-//             width: 600px;
-//             max-width: 100%;
-
-//             background: rgba(255,255,255,0.98);
-
-//             border-radius: 28px;
-
-//             padding: 55px 55px;
-
-//             box-sizing: border-box;
-
-//             text-align: center;
-
-//             box-shadow:
-//               0 40px 120px rgba(0,0,0,0.15);
-//           }
-
-//           .success-icon {
-//             width: 70px;
-//             height: 70px;
-
-//             margin: 0 auto 25px;
-
-//             display: flex;
-//             align-items: center;
-//             justify-content: center;
-
-//             border-radius: 50%;
-
-//             background: #e8f7ee;
-
-//             color: #218838;
-
-//             font-size: 36px;
-//             font-weight: 700;
-//           }
-
-//           .success-card h1 {
-//             color: #163b63;
-
-//             font-size: 28px;
-//             font-weight: 600;
-
-//             margin: 0 0 15px;
-//           }
-
-//           .success-main {
-//             color: #345a7d;
-
-//             font-size: 16px;
-//             line-height: 1.6;
-
-//             margin: 0 auto 10px;
-//           }
-
-//           .success-text {
-//             color: #6c8aa8;
-
-//             font-size: 14px;
-//             line-height: 1.6;
-
-//             margin: 0 auto 25px;
-//           }
-
-//           .info-box {
-//             display: flex;
-
-//             align-items: flex-start;
-
-//             gap: 14px;
-
-//             text-align: left;
-
-//             background: #f3f8ff;
-
-//             border: 1px solid #d8e6f7;
-
-//             border-radius: 12px;
-
-//             padding: 18px;
-
-//             margin-bottom: 20px;
-//           }
-
-//           .info-icon {
-//             width: 38px;
-//             height: 38px;
-
-//             flex-shrink: 0;
-
-//             display: flex;
-//             align-items: center;
-//             justify-content: center;
-
-//             border-radius: 50%;
-
-//             background: #e0ecff;
-
-//             color: #4a7dfc;
-
-//             font-size: 18px;
-//           }
-
-//           .info-box strong {
-//             display: block;
-
-//             color: #163b63;
-
-//             font-size: 14px;
-
-//             margin-bottom: 5px;
-//           }
-
-//           .info-box p {
-//             margin: 0;
-
-//             color: #6c8aa8;
-
-//             font-size: 13px;
-
-//             line-height: 1.6;
-//           }
-
-//           .login-note {
-//             color: #6c8aa8;
-
-//             font-size: 13px;
-
-//             line-height: 1.5;
-
-//             margin-bottom: 25px;
-//           }
-
-//           .success-btn {
-//             width: 100%;
-//             max-width: 320px;
-//           }
-
-//           .back-btn {
-//             display: block;
-
-//             margin: 20px auto 0;
-
-//             background: transparent;
-
-//             border: none;
-
-//             color: #4a7dfc;
-
-//             font-size: 13px;
-
-//             font-weight: 600;
-
-//             cursor: pointer;
-//           }
-
-//           .back-btn:hover {
-//             text-decoration: underline;
-//           }
-
-//           @media (max-width: 600px) {
-
-//             .doctor-register-page {
-//               padding: 20px 15px;
-//               align-items: flex-start;
-//             }
-
-//             .success-card {
-//               margin: auto 0;
-
-//               padding: 40px 25px;
-
-//               border-radius: 22px;
-//             }
-
-//             .success-card h1 {
-//               font-size: 25px;
-//             }
-
-//             .success-main {
-//               font-size: 15px;
-//             }
-
-//             .success-text {
-//               font-size: 13px;
-//             }
-
-//             .info-box {
-//               padding: 15px;
-//             }
-
-//           }
-
-//         `}</style>
-//       </div>
-//     );
-//   }
-
-//   // =========================================================
-//   // REGISTRATION FORM
-//   // =========================================================
-
-//   return (
-//     <div className="doctor-register-page">
-
-//       <div className="registration-card">
-
-//         {/* =================================================
-//             HEADER
-//         ================================================= */}
-
-//         <div className="registration-header">
-
-//           <button
-//             className="top-back-btn"
-//             onClick={() => navigate("/doctor-login")}
-//             type="button"
-//           >
-//             ← Doctor Login
-//           </button>
-
-//           <h1>
-//             Doctor / Clinician Registration
-//           </h1>
-
-//           <p>
-//             Submit your professional details for
-//             verification and approval.
-//           </p>
-
-//         </div>
-
-//         {/* =================================================
-//             FORM
-//         ================================================= */}
-
-//         <form onSubmit={handleSubmit}>
-
-//           {/* =================================================
-//               PERSONAL INFORMATION
-//           ================================================= */}
-
-//           <div className="section">
-
-//             <h2>
-//               Personal Information
-//             </h2>
-
-//             <div className="form-grid">
-
-//               {/* FULL NAME */}
-
-//               <div className="field full-width">
-
-//                 <label>
-//                   Full Name
-//                   <span>*</span>
-//                 </label>
-
-//                 <input
-//                   type="text"
-//                   name="fullName"
-//                   placeholder="Enter your full name"
-//                   value={formData.fullName}
-//                   onChange={handleChange}
-//                   required
-//                 />
-
-//               </div>
-
-//               {/* EMAIL */}
-
-//               <div className="field">
-
-//                 <label>
-//                   Email Address
-//                   <span>*</span>
-//                 </label>
-
-//                 <input
-//                   type="email"
-//                   name="email"
-//                   placeholder="Enter your email"
-//                   value={formData.email}
-//                   onChange={handleChange}
-//                   required
-//                 />
-
-//               </div>
-
-//               {/* MOBILE */}
-
-//               <div className="field">
-
-//                 <label>
-//                   Mobile Number
-//                   <span>*</span>
-//                 </label>
-
-//                 <input
-//                   type="tel"
-//                   name="mobileNumber"
-//                   placeholder="Enter 10-digit mobile number"
-//                   value={formData.mobileNumber}
-//                   onChange={handleChange}
-//                   maxLength="10"
-//                   inputMode="numeric"
-//                   required
-//                 />
-
-//               </div>
-
-//               {/* CITY */}
-
-//               <div className="field">
-
-//                 <label>
-//                   City
-//                   <span>*</span>
-//                 </label>
-
-//                 <input
-//                   type="text"
-//                   name="city"
-//                   placeholder="Enter your city"
-//                   value={formData.city}
-//                   onChange={handleChange}
-//                   required
-//                 />
-
-//               </div>
-
-//             </div>
-
-//           </div>
-
-//           {/* =================================================
-//               PROFESSIONAL INFORMATION
-//           ================================================= */}
-
-//           <div className="section">
-
-//             <h2>
-//               Professional Information
-//             </h2>
-
-//             <div className="form-grid">
-
-//               {/* MEDICAL REGISTRATION NUMBER */}
-
-//               <div className="field">
-
-//                 <label>
-//                   Medical Registration Number
-//                   <span>*</span>
-//                 </label>
-
-//                 <input
-//                   type="text"
-//                   name="medicalRegistrationNumber"
-//                   placeholder="Enter registration number"
-//                   value={
-//                     formData.medicalRegistrationNumber
-//                   }
-//                   onChange={handleChange}
-//                   required
-//                 />
-
-//               </div>
-
-//               {/* MEDICAL COUNCIL */}
-
-//               <div className="field">
-
-//                 <label>
-//                   Medical Council
-//                   <span>*</span>
-//                 </label>
-
-//                 <input
-//                   type="text"
-//                   name="medicalCouncil"
-//                   placeholder="e.g. Maharashtra Medical Council"
-//                   value={formData.medicalCouncil}
-//                   onChange={handleChange}
-//                   required
-//                 />
-
-//               </div>
-
-//               {/* QUALIFICATION */}
-
-//               <div className="field">
-
-//                 <label>
-//                   Qualification
-//                   <span>*</span>
-//                 </label>
-
-//                 <input
-//                   type="text"
-//                   name="qualification"
-//                   placeholder="e.g. MBBS, MD"
-//                   value={formData.qualification}
-//                   onChange={handleChange}
-//                   required
-//                 />
-
-//               </div>
-
-//               {/* SPECIALIZATION */}
-
-//               <div className="field">
-
-//                 <label>
-//                   Specialization
-//                   <span>*</span>
-//                 </label>
-
-//                 <input
-//                   type="text"
-//                   name="specialization"
-//                   placeholder="e.g. Hematology"
-//                   value={formData.specialization}
-//                   onChange={handleChange}
-//                   required
-//                 />
-
-//               </div>
-
-//               {/* HOSPITAL */}
-
-//               <div className="field">
-
-//                 <label>
-//                   Hospital / Organization
-//                   <span>*</span>
-//                 </label>
-
-//                 <input
-//                   type="text"
-//                   name="hospitalName"
-//                   placeholder="Hospital / Organization"
-//                   value={formData.hospitalName}
-//                   onChange={handleChange}
-//                   required
-//                 />
-
-//               </div>
-
-//               {/* EXPERIENCE */}
-
-//               <div className="field">
-
-//                 <label>
-//                   Years of Experience
-//                 </label>
-
-//                 <input
-//                   type="number"
-//                   name="yearsOfExperience"
-//                   placeholder="e.g. 5"
-//                   min="0"
-//                   value={formData.yearsOfExperience}
-//                   onChange={handleChange}
-//                 />
-
-//               </div>
-
-//             </div>
-
-//           </div>
-
-//           {/* =================================================
-//               DOCUMENTS
-//           ================================================= */}
-
-//           <div className="section">
-
-//             <h2>
-//               Professional Documents
-//             </h2>
-
-//             <p className="section-description">
-//               Upload valid documents for administrator
-//               verification. Maximum file size is 5 MB.
-//             </p>
-
-//             <div className="documents-grid">
-
-//               {/* REGISTRATION CERTIFICATE */}
-
-//               <div className="file-box">
-
-//                 <label>
-//                   Medical Registration Certificate
-//                   <span>*</span>
-//                 </label>
-
-//                 <input
-//                   type="file"
-//                   name="registrationCertificate"
-//                   accept=".pdf,.jpg,.jpeg,.png"
-//                   onChange={handleFileChange}
-//                   required
-//                 />
-
-//                 {documents.registrationCertificate && (
-//                   <div className="file-name">
-//                     ✓{" "}
-//                     {documents.registrationCertificate.name}
-//                   </div>
-//                 )}
-
-//               </div>
-
-//               {/* PROFESSIONAL ID */}
-
-//               <div className="file-box">
-
-//                 <label>
-//                   Professional ID Document
-//                   <span>*</span>
-//                 </label>
-
-//                 <input
-//                   type="file"
-//                   name="professionalIdDocument"
-//                   accept=".pdf,.jpg,.jpeg,.png"
-//                   onChange={handleFileChange}
-//                   required
-//                 />
-
-//                 {documents.professionalIdDocument && (
-//                   <div className="file-name">
-//                     ✓{" "}
-//                     {documents.professionalIdDocument.name}
-//                   </div>
-//                 )}
-
-//               </div>
-
-//             </div>
-
-//           </div>
-
-//           {/* =================================================
-//               INFORMATION NOTICE
-//           ================================================= */}
-
-//           <div className="notice">
-
-//             <div className="notice-icon">
-//               i
-//             </div>
-
-//             <div>
-
-//               <strong>
-//                 Verification Process
-//               </strong>
-
-//               <p>
-//                 Your registration will be reviewed by
-//                 the administrator. No login credentials
-//                 are created at this stage. If approved,
-//                 your Doctor / Clinician ID and temporary
-//                 password will be sent to your registered
-//                 email address.
-//               </p>
-
-//             </div>
-
-//           </div>
-
-//           {/* =================================================
-//               ERROR
-//           ================================================= */}
-
-//           {error && (
-//             <div className="error">
-//               {error}
-//             </div>
-//           )}
-
-//           {/* =================================================
-//               SUBMIT
-//           ================================================= */}
-
-//           <button
-//             className="submit-btn"
-//             type="submit"
-//             disabled={loading}
-//           >
-//             {loading
-//               ? "Submitting Application..."
-//               : "Submit Registration"}
-//           </button>
-
-//           <p className="required-note">
-//             * Required fields
-//           </p>
-
-//         </form>
-
-//       </div>
-
-//       <style>{`
-
-//         /* =====================================================
-//            PAGE
-//         ===================================================== */
-
-//         .doctor-register-page {
-//           min-height: 100vh;
-//           width: 100%;
-
-//           padding: 40px 20px;
-
-//           box-sizing: border-box;
-
-//           display: flex;
-//           justify-content: center;
-
-//           background-image:
-//             url('/images/login-bg.png');
-
-//           background-size: cover;
-//           background-position: center;
-//           background-repeat: no-repeat;
-//         }
-
-//         /* =====================================================
-//            CARD
-//         ===================================================== */
-
-//         .registration-card {
-//           width: 950px;
-//           max-width: 100%;
-
-//           background: rgba(255,255,255,0.98);
-
-//           border-radius: 28px;
-
-//           padding: 40px 50px;
-
-//           box-sizing: border-box;
-
-//           box-shadow:
-//             0 40px 120px rgba(0,0,0,0.15);
-//         }
-
-//         /* =====================================================
-//            HEADER
-//         ===================================================== */
-
-//         .registration-header {
-//           text-align: center;
-
-//           margin-bottom: 35px;
-//         }
-
-//         .top-back-btn {
-//           display: block;
-
-//           margin-bottom: 25px;
-
-//           background: transparent;
-
-//           border: none;
-
-//           color: #4a7dfc;
-
-//           font-size: 13px;
-
-//           font-weight: 600;
-
-//           cursor: pointer;
-//         }
-
-//         .top-back-btn:hover {
-//           text-decoration: underline;
-//         }
-
-//         .registration-header h1 {
-//           color: #163b63;
-
-//           font-size: 28px;
-
-//           font-weight: 600;
-
-//           margin: 0 0 10px;
-//         }
-
-//         .registration-header p {
-//           color: #6c8aa8;
-
-//           font-size: 14px;
-
-//           margin: 0;
-//         }
-
-//         /* =====================================================
-//            SECTIONS
-//         ===================================================== */
-
-//         .section {
-//           margin-bottom: 32px;
-
-//           padding-bottom: 28px;
-
-//           border-bottom: 1px solid #e8eef6;
-//         }
-
-//         .section h2 {
-//           color: #163b63;
-
-//           font-size: 18px;
-
-//           font-weight: 600;
-
-//           margin: 0 0 20px;
-//         }
-
-//         .section-description {
-//           color: #6c8aa8;
-
-//           font-size: 13px;
-
-//           margin-top: -10px;
-
-//           margin-bottom: 20px;
-//         }
-
-//         /* =====================================================
-//            FORM GRID
-//         ===================================================== */
-
-//         .form-grid {
-//           display: grid;
-
-//           grid-template-columns:
-//             repeat(2, minmax(0, 1fr));
-
-//           gap: 20px;
-//         }
-
-//         .field {
-//           display: flex;
-
-//           flex-direction: column;
-//         }
-
-//         .full-width {
-//           grid-column: 1 / -1;
-//         }
-
-//         .field label,
-//         .file-box label {
-//           color: #345a7d;
-
-//           font-size: 13px;
-
-//           font-weight: 600;
-
-//           margin-bottom: 8px;
-//         }
-
-//         .field label span,
-//         .file-box label span {
-//           color: #d93025;
-
-//           margin-left: 3px;
-//         }
-
-//         .field input,
-//         .field textarea {
-//           width: 100%;
-
-//           padding: 13px 14px;
-
-//           box-sizing: border-box;
-
-//           border-radius: 8px;
-
-//           border: 1px solid #d8e3f2;
-
-//           background: #f9fbff;
-
-//           color: #163b63;
-
-//           font-size: 13px;
-
-//           outline: none;
-
-//           transition: 0.2s ease;
-
-//           font-family: inherit;
-//         }
-
-//         .field input:focus,
-//         .field textarea:focus {
-//           border-color: #4a7dfc;
-
-//           background: #ffffff;
-
-//           box-shadow:
-//             0 0 0 3px rgba(74,125,252,0.08);
-//         }
-
-//         /* =====================================================
-//            DOCUMENTS
-//         ===================================================== */
-
-//         .documents-grid {
-//           display: grid;
-
-//           grid-template-columns:
-//             repeat(2, minmax(0, 1fr));
-
-//           gap: 20px;
-//         }
-
-//         .file-box {
-//           padding: 20px;
-
-//           border-radius: 12px;
-
-//           border: 1px dashed #c8d8eb;
-
-//           background: #f8fbff;
-//         }
-
-//         .file-box input[type="file"] {
-//           width: 100%;
-
-//           box-sizing: border-box;
-
-//           padding: 10px;
-
-//           border-radius: 8px;
-
-//           border: 1px solid #d8e3f2;
-
-//           background: white;
-
-//           color: #6c8aa8;
-
-//           font-size: 12px;
-//         }
-
-//         .file-name {
-//           margin-top: 10px;
-
-//           padding: 8px 10px;
-
-//           border-radius: 7px;
-
-//           background: #eaf6ef;
-
-//           color: #218838;
-
-//           font-size: 11px;
-
-//           word-break: break-word;
-//         }
-
-//         /* =====================================================
-//            NOTICE
-//         ===================================================== */
-
-//         .notice {
-//           display: flex;
-
-//           align-items: flex-start;
-
-//           gap: 12px;
-
-//           padding: 16px;
-
-//           margin-bottom: 20px;
-
-//           border-radius: 10px;
-
-//           background: #f3f8ff;
-
-//           border: 1px solid #d8e6f7;
-//         }
-
-//         .notice-icon {
-//           width: 28px;
-//           height: 28px;
-
-//           flex-shrink: 0;
-
-//           display: flex;
-//           align-items: center;
-//           justify-content: center;
-
-//           border-radius: 50%;
-
-//           background: #e0ecff;
-
-//           color: #4a7dfc;
-
-//           font-size: 15px;
-
-//           font-weight: 700;
-//         }
-
-//         .notice strong {
-//           display: block;
-
-//           color: #163b63;
-
-//           font-size: 13px;
-
-//           margin-bottom: 4px;
-//         }
-
-//         .notice p {
-//           margin: 0;
-
-//           color: #6c8aa8;
-
-//           font-size: 12px;
-
-//           line-height: 1.6;
-//         }
-
-//         /* =====================================================
-//            ERROR
-//         ===================================================== */
-
-//         .error {
-//           color: #d93025;
-
-//           background: #fff1f1;
-
-//           border: 1px solid #ffd1d1;
-
-//           padding: 11px;
-
-//           border-radius: 8px;
-
-//           font-size: 13px;
-
-//           margin-bottom: 15px;
-
-//           text-align: center;
-//         }
-
-//         /* =====================================================
-//            SUBMIT BUTTON
-//         ===================================================== */
-
-//         .submit-btn {
-//           width: 100%;
-
-//           padding: 15px;
-
-//           border-radius: 9px;
-
-//           font-size: 14px;
-
-//           font-weight: 600;
-
-//           background:
-//             linear-gradient(
-//               90deg,
-//               #4a7dfc,
-//               #5f8dff
-//             );
-
-//           border: none;
-
-//           color: white;
-
-//           cursor: pointer;
-
-//           transition: 0.2s ease;
-//         }
-
-//         .submit-btn:hover {
-//           transform: translateY(-2px);
-
-//           box-shadow:
-//             0 10px 25px
-//             rgba(74,125,252,0.3);
-//         }
-
-//         .submit-btn:disabled {
-//           opacity: 0.7;
-
-//           cursor: not-allowed;
-
-//           transform: none;
-
-//           box-shadow: none;
-//         }
-
-//         .required-note {
-//           text-align: center;
-
-//           color: #8aa0b8;
-
-//           font-size: 11px;
-
-//           margin: 12px 0 0;
-//         }
-
-//         /* =====================================================
-//            SUCCESS PAGE
-//         ===================================================== */
-
-//         .success-card {
-//           width: 600px;
-//           max-width: 100%;
-
-//           background: rgba(255,255,255,0.98);
-
-//           border-radius: 28px;
-
-//           padding: 55px;
-
-//           box-sizing: border-box;
-
-//           text-align: center;
-
-//           box-shadow:
-//             0 40px 120px rgba(0,0,0,0.15);
-//         }
-
-//         /* =====================================================
-//            MOBILE
-//         ===================================================== */
-
-//         @media (max-width: 700px) {
-
-//           .doctor-register-page {
-//             padding: 20px 12px;
-//           }
-
-//           .registration-card {
-//             padding: 30px 20px;
-
-//             border-radius: 22px;
-//           }
-
-//           .registration-header h1 {
-//             font-size: 24px;
-
-//             line-height: 1.3;
-//           }
-
-//           .registration-header p {
-//             font-size: 13px;
-
-//             line-height: 1.5;
-//           }
-
-//           .form-grid {
-//             grid-template-columns: 1fr;
-
-//             gap: 18px;
-//           }
-
-//           .full-width {
-//             grid-column: auto;
-//           }
-
-//           .documents-grid {
-//             grid-template-columns: 1fr;
-
-//             gap: 15px;
-//           }
-
-//           .section {
-//             margin-bottom: 25px;
-
-//             padding-bottom: 22px;
-//           }
-
-//           .section h2 {
-//             font-size: 17px;
-//           }
-
-//           .field input,
-//           .field textarea {
-//             font-size: 14px;
-
-//             padding: 14px;
-//           }
-
-//           .notice {
-//             padding: 14px;
-//           }
-
-//           .notice p {
-//             font-size: 11px;
-//           }
-
-//           .success-card {
-//             padding: 40px 24px;
-
-//             border-radius: 22px;
-//           }
-
-//           .success-card h1 {
-//             font-size: 25px;
-//           }
-
-//         }
-
-//       `}</style>
-
-//     </div>
-//   );
-// };
-
-// export default DoctorRegistration;
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Country, State, City } from "country-state-city";
@@ -1580,8 +15,9 @@ const DoctorRegistration = () => {
     email: "",
     mobileNumber: "",
 
-    country: "",
-    countryCode: "",
+    // India-only registration
+    country: "India",
+    countryCode: "IN",
 
     stateProvince: "",
     stateCode: "",
@@ -1620,9 +56,14 @@ const DoctorRegistration = () => {
   // COUNTRIES
   // =========================================================
 
+  // =========================================================
+  // COUNTRY
+  // India only
+  // =========================================================
+
   const countries = useMemo(() => {
-    return Country.getAllCountries().sort((a, b) =>
-      a.name.localeCompare(b.name)
+    return Country.getAllCountries().filter(
+      (country) => country.isoCode === "IN"
     );
   }, []);
 
@@ -1990,6 +431,16 @@ const DoctorRegistration = () => {
       full: "Master of Surgery",
     },
     {
+      short : "BPT",
+      full : "Bachelor of Physiotherapy",
+    },{
+      short : "MPT",
+      full : "Master of Physiotherapy",
+    },{
+      short : "DPT",
+      full :"Doctor of Physical Therapy",
+    },
+    {
       short: "DNB",
       full: "Diplomate of National Board",
     },
@@ -2146,6 +597,20 @@ const DoctorRegistration = () => {
     ];
 
   // =========================================================
+  // FORMAT FULL NAME
+  // Capitalize the first letter of every name word.
+  // Applied when the user leaves the Full Name field.
+  // =========================================================
+
+  const formatFullName = (name) => {
+    return name
+      .trim()
+      .replace(/\s+/g, " ")
+      .toLowerCase()
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
+  // =========================================================
   // HANDLE INPUT CHANGES
   // =========================================================
 
@@ -2154,6 +619,7 @@ const DoctorRegistration = () => {
 
     // -------------------------------------------------------
     // COUNTRY
+    // India only
     // -------------------------------------------------------
 
     if (name === "countryCode") {
@@ -2165,9 +631,9 @@ const DoctorRegistration = () => {
         ...prev,
 
         country:
-          selectedCountry?.name || "",
+          selectedCountry?.name || "India",
 
-        countryCode: value,
+        countryCode: value || "IN",
 
         stateProvince: "",
         stateCode: "",
@@ -2206,6 +672,25 @@ const DoctorRegistration = () => {
     }
 
     // -------------------------------------------------------
+    // MOBILE NUMBER
+    // Only digits, maximum 10 digits
+    // -------------------------------------------------------
+
+    if (name === "mobileNumber") {
+      const digitsOnly = value
+        .replace(/\D/g, "")
+        .slice(0, 10);
+
+      setFormData((prev) => ({
+        ...prev,
+        mobileNumber: digitsOnly,
+      }));
+
+      setError("");
+      return;
+    }
+
+    // -------------------------------------------------------
     // NORMAL INPUT
     // -------------------------------------------------------
 
@@ -2215,6 +700,21 @@ const DoctorRegistration = () => {
     }));
 
     setError("");
+  };
+
+  // =========================================================
+  // HANDLE FIELD BLUR
+  // =========================================================
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "fullName") {
+      setFormData((prev) => ({
+        ...prev,
+        fullName: formatFullName(value),
+      }));
+    }
   };
 
   // =========================================================
@@ -2303,12 +803,12 @@ const DoctorRegistration = () => {
     }
 
     if (
-      !/^[0-9]{7,15}$/.test(
+      !/^[0-9]{10}$/.test(
         formData.mobileNumber.trim()
       )
     ) {
       setError(
-        "Please enter a valid mobile number."
+        "Please enter a valid 10-digit Indian mobile number."
       );
       return;
     }
@@ -2905,7 +1405,7 @@ const DoctorRegistration = () => {
             }
             type="button"
           >
-            ← Doctor Login
+            ← Back to Login
           </button>
 
           <div className="header-icon">
@@ -2913,7 +1413,7 @@ const DoctorRegistration = () => {
           </div>
 
           <h1>
-            Doctor / Clinician Registration
+            physiotherapist Registration
           </h1>
 
           <p>
@@ -2970,6 +1470,7 @@ const DoctorRegistration = () => {
                   placeholder="Enter your full name"
                   value={formData.fullName}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   autoComplete="name"
                   required
                 />
@@ -3009,11 +1510,12 @@ const DoctorRegistration = () => {
                 <input
                   type="tel"
                   name="mobileNumber"
-                  placeholder="Enter mobile number"
+                  placeholder="Enter 10-digit mobile number"
                   value={formData.mobileNumber}
                   onChange={handleChange}
                   inputMode="numeric"
-                  maxLength="15"
+                  maxLength={10}
+                  pattern="[0-9]{10}"
                   autoComplete="tel"
                   required
                 />
@@ -3035,20 +1537,9 @@ const DoctorRegistration = () => {
                   onChange={handleChange}
                   required
                 >
-
-                  <option value="">
-                    Select your country
+                  <option value="IN">
+                    India
                   </option>
-
-                  {countries.map((country) => (
-                    <option
-                      key={country.isoCode}
-                      value={country.isoCode}
-                    >
-                      {country.name}
-                    </option>
-                  ))}
-
                 </select>
 
               </div>
@@ -3661,64 +2152,51 @@ const DoctorRegistration = () => {
       </div>
 
       <style>{`
-
         /* =====================================================
-           GLOBAL PAGE
+           REGISTRATION PAGE
         ===================================================== */
 
         .doctor-register-page {
           min-height: 100vh;
           width: 100%;
-
-          padding: 45px 20px;
-
+          padding: 38px 22px 55px;
           box-sizing: border-box;
 
           display: flex;
           justify-content: center;
+          align-items: flex-start;
 
           background:
             radial-gradient(
-              circle at 8% 8%,
-              rgba(74,125,252,0.14),
-              transparent 30%
+              circle at 8% 5%,
+              rgba(74,125,252,0.12),
+              transparent 28%
             ),
             radial-gradient(
-              circle at 92% 90%,
-              rgba(99,102,241,0.12),
-              transparent 30%
+              circle at 92% 95%,
+              rgba(99,102,241,0.09),
+              transparent 28%
             ),
-            linear-gradient(
-              135deg,
-              #f7faff 0%,
-              #eef5ff 50%,
-              #f8faff 100%
-            );
+            #f4f8fe;
         }
 
         /* =====================================================
-           CARD
+           REGISTRATION CARD
         ===================================================== */
 
         .registration-card {
-          width: 1050px;
-          max-width: 100%;
+          width: min(1080px, 100%);
+          margin: 0 auto;
 
-          background: rgba(255,255,255,0.98);
+          background: #ffffff;
+          border: 1px solid #e1eaf5;
+          border-radius: 24px;
 
-          border-radius: 28px;
-
-          padding: 42px 50px;
-
+          padding: 42px 52px 46px;
           box-sizing: border-box;
 
           box-shadow:
-            0 30px 90px
-            rgba(45,76,120,0.13);
-
-          border:
-            1px solid
-            rgba(214,226,244,0.9);
+            0 22px 65px rgba(40,75,120,0.12);
         }
 
         /* =====================================================
@@ -3726,84 +2204,81 @@ const DoctorRegistration = () => {
         ===================================================== */
 
         .registration-header {
+          position: relative;
           text-align: center;
-
-          margin-bottom: 42px;
+          padding-top: 2px;
+          margin-bottom: 38px;
         }
 
         .top-back-btn {
-          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
 
-          margin: 0 auto 25px;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
 
-          background: transparent;
+          padding: 8px 11px;
 
-          border: none;
+          background: #f5f8ff;
+          border: 1px solid #dce7f5;
+          border-radius: 8px;
 
-          color: #4a7dfc;
-
-          font-size: 13px;
-
-          font-weight: 600;
+          color: #426fcf;
+          font-size: 12px;
+          font-weight: 650;
 
           cursor: pointer;
-
           transition: 0.2s ease;
         }
 
         .top-back-btn:hover {
-          color: #315fd1;
-
+          background: #edf3ff;
+          border-color: #c7d8f0;
           transform: translateX(-2px);
         }
 
         .header-icon {
           width: 58px;
           height: 58px;
-
-          margin: 0 auto 16px;
+          margin: 0 auto 15px;
 
           display: flex;
           align-items: center;
           justify-content: center;
 
-          border-radius: 17px;
+          border-radius: 16px;
 
           background:
             linear-gradient(
               135deg,
               #4a7dfc,
-              #6b96ff
+              #638bff
             );
 
-          color: white;
-
-          font-size: 28px;
+          color: #ffffff;
+          font-size: 27px;
 
           box-shadow:
-            0 12px 28px
-            rgba(74,125,252,0.25);
+            0 10px 25px rgba(74,125,252,0.22);
         }
 
         .registration-header h1 {
+          margin: 0 0 8px;
+
           color: #163b63;
-
-          font-size: 29px;
-
+          font-size: 30px;
+          line-height: 1.25;
           font-weight: 700;
-
-          margin: 0 0 10px;
-
-          letter-spacing: -0.3px;
+          letter-spacing: -0.4px;
         }
 
         .registration-header p {
-          color: #6c8aa8;
-
-          font-size: 14px;
-
           margin: 0;
 
+          color: #718aa4;
+          font-size: 13px;
           line-height: 1.6;
         }
 
@@ -3812,62 +2287,51 @@ const DoctorRegistration = () => {
         ===================================================== */
 
         .section {
-          margin-bottom: 32px;
+          margin-bottom: 28px;
+          padding-bottom: 28px;
 
-          padding-bottom: 32px;
-
-          border-bottom:
-            1px solid #e8eef6;
+          border-bottom: 1px solid #e8eef6;
         }
 
         .section-heading {
           display: flex;
-
           align-items: center;
+          gap: 12px;
 
-          gap: 13px;
-
-          margin-bottom: 24px;
+          margin-bottom: 21px;
         }
 
         .section-number {
-          width: 35px;
-          height: 35px;
-
+          width: 34px;
+          height: 34px;
           flex-shrink: 0;
 
           display: flex;
           align-items: center;
           justify-content: center;
 
-          border-radius: 10px;
+          border-radius: 9px;
 
           background: #edf3ff;
-
           color: #4a7dfc;
 
-          font-size: 14px;
-
+          font-size: 13px;
           font-weight: 700;
         }
 
         .section-heading h2 {
-          color: #163b63;
-
-          font-size: 18px;
-
-          font-weight: 700;
-
           margin: 0 0 3px;
+
+          color: #183f65;
+          font-size: 17px;
+          font-weight: 700;
         }
 
         .section-heading p {
-          color: #8aa0b8;
-
-          font-size: 12px;
-
           margin: 0;
 
+          color: #8aa0b8;
+          font-size: 11px;
           line-height: 1.5;
         }
 
@@ -3877,18 +2341,13 @@ const DoctorRegistration = () => {
 
         .form-grid {
           display: grid;
-
-          grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-          gap: 20px;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 18px 20px;
         }
 
         .field {
           display: flex;
-
           flex-direction: column;
-
           min-width: 0;
         }
 
@@ -3902,66 +2361,59 @@ const DoctorRegistration = () => {
 
         .field label,
         .file-box label {
+          margin-bottom: 7px;
+
           color: #345a7d;
-
-          font-size: 13px;
-
+          font-size: 12px;
+          line-height: 1.4;
           font-weight: 650;
-
-          margin-bottom: 8px;
         }
 
         .field label span,
         .file-box label span {
           color: #d93025;
-
           margin-left: 3px;
         }
 
         /* =====================================================
-           INPUTS
+           INPUTS / SELECTS
         ===================================================== */
 
         .field input,
         .field select {
           width: 100%;
-
-          height: 48px;
+          height: 49px;
 
           padding: 0 14px;
-
           box-sizing: border-box;
 
-          border-radius: 10px;
+          border: 1px solid #d7e2ef;
+          border-radius: 9px;
 
-          border: 1px solid #d8e3f2;
-
-          background: #f9fbff;
-
+          background: #f9fbfe;
           color: #163b63;
 
+          font-family: inherit;
           font-size: 13px;
 
           outline: none;
-
-          transition: 0.2s ease;
-
-          font-family: inherit;
+          transition:
+            border-color 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease;
         }
 
         .field input::placeholder {
-          color: #a4b4c5;
+          color: #a1b1c2;
         }
 
         .field input:focus,
         .field select:focus {
+          background: #ffffff;
           border-color: #4a7dfc;
 
-          background: #ffffff;
-
           box-shadow:
-            0 0 0 3px
-            rgba(74,125,252,0.08);
+            0 0 0 3px rgba(74,125,252,0.08);
         }
 
         .field select {
@@ -3970,51 +2422,37 @@ const DoctorRegistration = () => {
 
         .field select:disabled {
           background: #f0f3f7;
-
           color: #9aaabd;
-
           cursor: not-allowed;
         }
 
         .field select option {
           color: #163b63;
-
-          background: white;
+          background: #ffffff;
         }
 
         /* =====================================================
-           HINT
+           HINT / SELECTED INFO
         ===================================================== */
 
         .field-hint {
-          margin-top: 7px;
+          margin-top: 6px;
 
           color: #8aa0b8;
-
-          font-size: 11px;
-
+          font-size: 10px;
           line-height: 1.4;
         }
 
-        /* =====================================================
-           QUALIFICATION INFO
-        ===================================================== */
-
         .selected-info {
-          margin-top: 8px;
-
-          padding: 9px 11px;
+          margin-top: 7px;
+          padding: 8px 10px;
 
           border-radius: 8px;
-
           background: #f3f8ff;
-
           border: 1px solid #dce9f8;
 
           color: #6c8aa8;
-
-          font-size: 11px;
-
+          font-size: 10px;
           line-height: 1.5;
         }
 
@@ -4028,134 +2466,107 @@ const DoctorRegistration = () => {
 
         .documents-grid {
           display: grid;
-
-          grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-          gap: 20px;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 18px;
         }
 
         .file-box {
-          padding: 20px;
+          min-width: 0;
+          padding: 18px;
 
-          border-radius: 14px;
-
-          border:
-            1px dashed #c8d8eb;
+          border: 1px dashed #c7d7ea;
+          border-radius: 13px;
 
           background: #f8fbff;
-
           transition: 0.2s ease;
         }
 
         .file-box:hover {
-          border-color: #9db9e8;
-
-          background: #f6faff;
+          background: #f5f9ff;
+          border-color: #9eb9e4;
         }
 
         .file-header {
           display: flex;
-
           align-items: flex-start;
+          gap: 11px;
 
-          gap: 12px;
-
-          margin-bottom: 15px;
+          margin-bottom: 13px;
         }
 
         .file-icon {
-          width: 40px;
-          height: 40px;
-
+          width: 38px;
+          height: 38px;
           flex-shrink: 0;
 
           display: flex;
           align-items: center;
           justify-content: center;
 
-          border-radius: 10px;
-
+          border-radius: 9px;
           background: #eaf1ff;
 
-          font-size: 19px;
+          font-size: 18px;
         }
 
         .file-header label {
           display: block;
-
-          margin-bottom: 4px;
+          margin-bottom: 3px;
         }
 
         .file-header p {
-          color: #8aa0b8;
-
-          font-size: 11px;
-
-          line-height: 1.5;
-
           margin: 0;
+
+          color: #8aa0b8;
+          font-size: 10px;
+          line-height: 1.5;
         }
 
         .file-box input[type="file"] {
           width: 100%;
+          padding: 9px;
 
           box-sizing: border-box;
 
-          padding: 10px;
-
+          border: 1px solid #d8e3f2;
           border-radius: 8px;
 
-          border: 1px solid #d8e3f2;
-
-          background: white;
-
+          background: #ffffff;
           color: #6c8aa8;
 
-          font-size: 12px;
-
+          font-size: 11px;
           cursor: pointer;
         }
 
-        .file-box
-        input[type="file"]::file-selector-button {
-          margin-right: 10px;
-
-          padding: 7px 11px;
+        .file-box input[type="file"]::file-selector-button {
+          margin-right: 9px;
+          padding: 6px 10px;
 
           border: none;
-
           border-radius: 6px;
 
           background: #eaf1ff;
-
           color: #4a7dfc;
 
-          font-size: 11px;
-
-          font-weight: 600;
+          font-size: 10px;
+          font-weight: 650;
 
           cursor: pointer;
         }
 
         .file-name {
-          margin-top: 10px;
+          margin-top: 9px;
+          padding: 8px 9px;
 
-          padding: 9px 10px;
+          display: flex;
+          align-items: center;
+          gap: 7px;
 
           border-radius: 7px;
-
           background: #eaf6ef;
 
           color: #218838;
-
-          font-size: 11px;
-
-          display: flex;
-
-          gap: 7px;
-
-          align-items: center;
+          font-size: 10px;
         }
 
         .file-name span:last-child {
@@ -4164,40 +2575,33 @@ const DoctorRegistration = () => {
 
         .file-box small {
           display: block;
-
-          margin-top: 8px;
+          margin-top: 7px;
 
           color: #9aabba;
-
-          font-size: 10px;
+          font-size: 9px;
         }
 
         /* =====================================================
-           NOTICE
+           VERIFICATION NOTICE
         ===================================================== */
 
         .notice {
           display: flex;
-
           align-items: flex-start;
+          gap: 11px;
 
-          gap: 12px;
-
-          padding: 17px;
-
-          margin-bottom: 18px;
-
-          border-radius: 12px;
-
-          background: #f3f8ff;
+          padding: 15px;
+          margin-bottom: 17px;
 
           border: 1px solid #d8e6f7;
+          border-radius: 11px;
+
+          background: #f3f8ff;
         }
 
         .notice-icon {
-          width: 30px;
-          height: 30px;
-
+          width: 29px;
+          height: 29px;
           flex-shrink: 0;
 
           display: flex;
@@ -4205,34 +2609,27 @@ const DoctorRegistration = () => {
           justify-content: center;
 
           border-radius: 50%;
-
           background: #e0ecff;
 
           color: #4a7dfc;
-
-          font-size: 14px;
-
+          font-size: 13px;
           font-weight: 700;
         }
 
         .notice strong {
           display: block;
+          margin-bottom: 4px;
 
           color: #163b63;
-
-          font-size: 13px;
-
-          margin-bottom: 5px;
+          font-size: 12px;
         }
 
         .notice p {
           margin: 0;
 
           color: #6c8aa8;
-
-          font-size: 12px;
-
-          line-height: 1.65;
+          font-size: 11px;
+          line-height: 1.6;
         }
 
         /* =====================================================
@@ -4240,46 +2637,38 @@ const DoctorRegistration = () => {
         ===================================================== */
 
         .declaration-box {
-          margin-bottom: 18px;
-
-          padding: 16px;
-
-          border-radius: 12px;
-
-          background: #fbfcff;
+          margin-bottom: 16px;
+          padding: 14px;
 
           border: 1px solid #e0e8f3;
+          border-radius: 11px;
+
+          background: #fbfcff;
         }
 
         .declaration-label {
           display: flex;
-
           align-items: flex-start;
-
-          gap: 11px;
+          gap: 10px;
 
           cursor: pointer;
         }
 
         .declaration-label input {
-          width: 17px;
-          height: 17px;
-
+          width: 16px;
+          height: 16px;
           flex-shrink: 0;
 
           margin-top: 2px;
 
           accent-color: #4a7dfc;
-
           cursor: pointer;
         }
 
         .declaration-label span {
           color: #5e7895;
-
-          font-size: 12px;
-
-          line-height: 1.65;
+          font-size: 11px;
+          line-height: 1.6;
         }
 
         /* =====================================================
@@ -4288,48 +2677,41 @@ const DoctorRegistration = () => {
 
         .error {
           display: flex;
-
           align-items: center;
-
           justify-content: center;
-
           gap: 8px;
 
-          color: #d93025;
-
-          background: #fff1f1;
+          margin-bottom: 14px;
+          padding: 11px;
 
           border: 1px solid #ffd1d1;
-
-          padding: 12px;
-
           border-radius: 9px;
 
-          font-size: 13px;
+          background: #fff1f1;
+          color: #d93025;
 
-          margin-bottom: 15px;
-
-          text-align: center;
-
+          font-size: 12px;
           line-height: 1.5;
+          text-align: center;
         }
 
         /* =====================================================
-           SUBMIT
+           SUBMIT BUTTON
         ===================================================== */
 
         .submit-btn {
           width: 100%;
+          min-height: 52px;
 
-          min-height: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
 
-          padding: 14px 18px;
+          padding: 13px 18px;
 
+          border: none;
           border-radius: 10px;
-
-          font-size: 14px;
-
-          font-weight: 650;
 
           background:
             linear-gradient(
@@ -4338,44 +2720,31 @@ const DoctorRegistration = () => {
               #5f8dff
             );
 
-          border: none;
+          color: #ffffff;
 
-          color: white;
+          font-size: 13px;
+          font-weight: 650;
 
           cursor: pointer;
-
           transition: 0.2s ease;
-
-          display: flex;
-
-          align-items: center;
-
-          justify-content: center;
-
-          gap: 10px;
         }
 
-        .submit-btn:hover {
-          transform: translateY(-2px);
+        .submit-btn:hover:not(:disabled) {
+          transform: translateY(-1px);
 
           box-shadow:
-            0 10px 25px
-            rgba(74,125,252,0.3);
+            0 9px 22px rgba(74,125,252,0.25);
         }
 
         .submit-btn:disabled {
           opacity: 0.7;
-
           cursor: not-allowed;
-
           transform: none;
-
           box-shadow: none;
         }
 
         .arrow {
-          font-size: 18px;
-
+          font-size: 17px;
           line-height: 1;
         }
 
@@ -4383,10 +2752,8 @@ const DoctorRegistration = () => {
           width: 15px;
           height: 15px;
 
-          border: 2px solid
-            rgba(255,255,255,0.4);
-
-          border-top-color: white;
+          border: 2px solid rgba(255,255,255,0.4);
+          border-top-color: #ffffff;
 
           border-radius: 50%;
 
@@ -4395,21 +2762,17 @@ const DoctorRegistration = () => {
         }
 
         @keyframes doctorSpin {
-
           to {
             transform: rotate(360deg);
           }
-
         }
 
         .required-note {
-          text-align: center;
+          margin: 10px 0 0;
 
           color: #8aa0b8;
-
-          font-size: 11px;
-
-          margin: 12px 0 0;
+          font-size: 10px;
+          text-align: center;
         }
 
         .required-note span {
@@ -4417,30 +2780,26 @@ const DoctorRegistration = () => {
         }
 
         /* =====================================================
-           SUCCESS
+           SUCCESS CARD
         ===================================================== */
 
         .success-card {
-          width: 600px;
+          width: min(600px, 100%);
           max-width: 100%;
 
-          background: rgba(255,255,255,0.98);
-
-          border-radius: 28px;
-
-          padding: 55px;
+          padding: 52px;
 
           box-sizing: border-box;
 
           text-align: center;
 
-          box-shadow:
-            0 30px 90px
-            rgba(45,76,120,0.15);
+          background: #ffffff;
 
-          border:
-            1px solid
-            rgba(214,226,244,0.9);
+          border: 1px solid #e1eaf5;
+          border-radius: 24px;
+
+          box-shadow:
+            0 25px 70px rgba(45,76,120,0.13);
         }
 
         /* =====================================================
@@ -4450,90 +2809,75 @@ const DoctorRegistration = () => {
         @media (max-width: 750px) {
 
           .doctor-register-page {
-            padding: 20px 12px;
+            padding: 20px 12px 35px;
           }
 
           .registration-card {
-            padding: 30px 20px;
-
-            border-radius: 22px;
+            padding: 30px 22px 34px;
+            border-radius: 20px;
           }
 
           .registration-header {
+            padding-top: 48px;
             margin-bottom: 30px;
           }
 
-          .registration-header h1 {
-            font-size: 24px;
+          .top-back-btn {
+            left: 0;
+            top: 0;
+          }
 
+          .registration-header h1 {
+            font-size: 25px;
             line-height: 1.3;
           }
 
           .registration-header p {
-            font-size: 13px;
+            font-size: 12px;
           }
 
-          .form-grid {
+          .form-grid,
+          .documents-grid {
             grid-template-columns: 1fr;
-
-            gap: 18px;
           }
 
           .full-width {
             grid-column: auto;
           }
 
-          .documents-grid {
-            grid-template-columns: 1fr;
-
-            gap: 15px;
-          }
-
           .section {
-            margin-bottom: 25px;
-
+            margin-bottom: 24px;
             padding-bottom: 24px;
-          }
-
-          .section-heading {
-            margin-bottom: 18px;
           }
 
           .field input,
           .field select {
-            height: 49px;
-
-            font-size: 14px;
+            height: 50px;
+            font-size: 13px;
           }
 
           .notice {
-            padding: 14px;
+            padding: 13px;
           }
 
           .notice p {
-            font-size: 11px;
+            font-size: 10px;
           }
 
           .success-card {
             padding: 40px 24px;
-
-            border-radius: 22px;
+            border-radius: 20px;
           }
 
           .success-card h1 {
-            font-size: 25px;
+            font-size: 24px;
           }
-
         }
-
-        /* =====================================================
-           VERY SMALL SCREENS
-        ===================================================== */
 
         @media (max-width: 400px) {
 
           .registration-card {
-            padding: 25px 15px;
+            padding: 24px 15px 30px;
           }
 
           .registration-header h1 {
@@ -4549,17 +2893,18 @@ const DoctorRegistration = () => {
             height: 30px;
 
             border-radius: 8px;
-
             font-size: 12px;
           }
 
           .file-box {
-            padding: 15px;
+            padding: 14px;
           }
 
+          .top-back-btn {
+            font-size: 11px;
+          }
         }
-
-      `}</style>
+`}</style>
 
     </div>
   );

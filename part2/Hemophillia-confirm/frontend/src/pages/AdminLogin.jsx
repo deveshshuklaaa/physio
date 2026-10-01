@@ -273,6 +273,19 @@ if (response.data?.requiresOtp) {
                 </div>
               )}
 
+              {/* FORGOT PASSWORD */}
+
+              <button
+                type="button"
+                className="forgot-password-button"
+                onClick={() =>
+                  navigate("/forgot-password?role=admin")
+                }
+                disabled={loading}
+              >
+                Forgot Password?
+              </button>
+
               {/* LOGIN */}
 
               <button
@@ -773,6 +786,23 @@ if (response.data?.requiresOtp) {
           font-size: 12.5px;
 
           line-height: 1.5;
+        }
+
+        .forgot-password-button {
+          display: block;
+          width: 100%;
+          margin: 0 0 14px;
+          border: none;
+          background: transparent;
+          color: #3f65c8;
+          font-size: 12px;
+          font-weight: 700;
+          text-align: right;
+          cursor: pointer;
+        }
+
+        .forgot-password-button:hover {
+          text-decoration: underline;
         }
 
         .admin-login-button {

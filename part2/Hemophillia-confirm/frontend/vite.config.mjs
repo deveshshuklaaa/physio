@@ -1,5 +1,9 @@
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Everything is same-origin in production: nginx serves this SPA at / and
 // proxies /api to Express, /engine and /ws to the FastAPI engine (G2-A, D1).
@@ -13,6 +17,7 @@ import react from "@vitejs/plugin-react";
 const GATEWAY = process.env.VITE_GATEWAY || "http://localhost";
 
 export default defineConfig({
+  envDir: resolve(__dirname, "../../.."),
   plugins: [react()],
   server: {
     port: 5173,

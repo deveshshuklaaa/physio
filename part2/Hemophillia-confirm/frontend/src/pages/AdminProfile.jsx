@@ -150,7 +150,10 @@ export default function AdminProfile() {
         </div><button style={s.primary} disabled={saving}>{saving?"Saving...":"Save Information"}</button></form>
     </div>
     <div style={s.card}><h2 style={s.section}>Login Email</h2><p style={s.sub}>Your email receives login OTPs. A new email must be verified before it becomes your login email.</p><div style={s.current}>Current email: <b>{email||"—"}</b></div><div style={s.emailRow}><input style={s.input} type="email" value={newEmail} onChange={e=>setNewEmail(e.target.value)} placeholder="New email address" disabled={!!challenge}/>{!challenge?<button style={s.primarySmall} onClick={requestEmail} disabled={emailSaving}>{emailSaving?"Sending...":"Verify New Email"}</button>:<><input style={{...s.input,width:150}} value={otp} onChange={e=>setOtp(e.target.value.replace(/\D/g,"").slice(0,6))} placeholder="6-digit OTP"/><button style={s.primarySmall} onClick={verifyEmail}>Confirm Email</button></>}</div></div>
-    <div style={s.card}><h2 style={s.section}>Security</h2><p style={s.sub}>Change your administrator login password whenever needed.</p><button style={s.secondary} onClick={()=>navigate("/admin-change-password")}>Change Password →</button></div>
+    {/* <div style={s.card}><h2 style={s.section}>Security</h2>
+    <p style={s.sub}>Change your administrator login password whenever needed.</p>
+    <button style={s.secondary} onClick={()=>navigate("/admin-change-password")}>
+      Change Password →</button></div> */}
   </div>
 }
 function Field({label,value,onChange,placeholder}){return <label style={s.field}><span>{label}</span><input style={s.input} value={value||""} onChange={e=>onChange(e.target.value)} placeholder={placeholder}/></label>}

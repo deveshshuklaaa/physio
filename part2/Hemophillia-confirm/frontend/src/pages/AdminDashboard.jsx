@@ -7581,11 +7581,12 @@ const AdminDashboard = () => {
 
             <div className="admin-sidebar-user-info">
 
+
               <strong>
-                {admin.adminLevel === "SUPER_ADMIN"
-                ? "Super Admin"
-                : "Assistant Admin"}
+                {admin.fullName}
               </strong>
+
+              
 
               <span>
                 {admin.adminLevel === "SUPER_ADMIN"
@@ -7635,37 +7636,35 @@ const AdminDashboard = () => {
 
             <div className="admin-top-user">
 
-              <div className="admin-avatar">
+              {/* <div className="admin-avatar">
                 {(
                   admin.fullName ||
                   "A"
                 )
                   .charAt(0)
                   .toUpperCase()}
-              </div>
+              </div> */}
 
               <div>
-                <strong>
-                  {admin.adminLevel === "SUPER_ADMIN"
-                  ? "Super Admin"
-                  : "Assistant Admin"}
+                {/* <strong>
+                  {admin.fullName}
                 </strong>
 
                 <span>
                   {admin.adminLevel === "SUPER_ADMIN"
                   ? "Super Admin"
                   : "Assistant Admin"}
-                </span>
+                </span> */}
               </div>
 
             </div>
 
-            <button
+            {/* <button
               className="topbar-logout"
               onClick={handleLogout}
             >
               Logout
-            </button>
+            </button> */}
 
           </div>
 

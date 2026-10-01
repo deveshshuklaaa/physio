@@ -22,12 +22,8 @@ services:
       # nothing -- this worked before only because Flask ran on the host, not in
       # compose. TCP 5000 stays unpublished (D27).
       - "8888:8888/udp"
-      # D29 TEMPORARY -- 2026-09-22 demo only. Operator access to
-      # history.html / playback.html / progress.html, which have no auth (S2)
-      # and no patient scoping (S12). Bound to 127.0.0.1 deliberately: the
-      # demo machine can reach it, the LAN cannot.
-      # REVERT AFTER THE DEMO by deleting the next line:
-      - "127.0.0.1:5000:5000"
+    restart: unless-stopped
+    mem_limit: 512m
 
   backend:
     build:
@@ -37,14 +33,25 @@ services:
     # Both come from their .env, and both fail loudly at import if unset --
     # the backend will not boot without this file.
     env_file:
-      - ./part2/Hemophillia-confirm/backend/.env
+      - ./.env
     environment:
       # K2 -- compose hostname, not localhost. localhost inside this
       # container is the backend itself.
       EMG_SERVICE_URL: "http://emg-service:5000"
+    volumes:
+      - ./data/trained_models:/app/ml/trained_models
+      - ./data/backend_logs:/app/logs
     depends_on:
       - emg-service
     # G2-A3: no host port. Reached through nginx at /engine/* and /ws/*.
+    restart: unless-stopped
+    mem_limit: 2g
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
 
   frontend:
     build:
@@ -52,12 +59,14 @@ services:
     depends_on:
       - backend
     # G2-A3: no host port. Reached through nginx at /dist/*, /src/*, /assets/*.
+    restart: unless-stopped
+    mem_limit: 256m
 
   hemo-backend:
     build:
       context: ./part2/Hemophillia-confirm/backend
     env_file:
-      - ./part2/Hemophillia-confirm/backend/.env
+      - ./.env
     environment:
       # G2-A CSFLE: mount path below must match this. Same tarball referenced
       # in docs/09g_g2_0_resolutions.md, now an x86_64 build (that doc's
@@ -70,6 +79,14 @@ services:
     # database nothing reads from. §1 of the plan lists mongo:27017; skipped
     # deliberately, not an oversight.
     # No host port. Reached through nginx at /api/*.
+    restart: unless-stopped
+    mem_limit: 4g
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:5000/api/health', r => process.exit(r.statusCode === 200 ? 0 : 1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   hemo-frontend:
     build:
@@ -79,6 +96,8 @@ services:
     depends_on:
       - hemo-backend
     # No host port. Reached through nginx at /.
+    restart: unless-stopped
+    mem_limit: 256m
 
   nginx:
     image: nginx:1.27-alpine
@@ -87,7 +106,13 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - backend
-      - frontend
-      - hemo-backend
-      - hemo-frontend
+      hemo-backend:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+      frontend:
+        condition: service_started
+      hemo-frontend:
+        condition: service_started
+    restart: unless-stopped
+    mem_limit: 128m

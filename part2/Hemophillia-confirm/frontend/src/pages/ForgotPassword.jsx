@@ -490,7 +490,7 @@ export default function ForgotPassword() {
 
             <button
               type="submit"
-              style={loading ? styles.primaryButtonDisabled : styles.primaryButton}
+              style={styles.primaryButton}
               disabled={loading}
             >
               {loading
@@ -538,7 +538,7 @@ export default function ForgotPassword() {
 
             <button
               type="submit"
-              style={(loading || otp.length !== 6) ? styles.primaryButtonDisabled : styles.primaryButton}
+              style={styles.primaryButton}
               disabled={
                 loading ||
                 otp.length !== 6
@@ -677,7 +677,7 @@ export default function ForgotPassword() {
 
             <button
               type="submit"
-              style={(loading || !isPasswordValid || newPassword !== confirmPassword) ? styles.primaryButtonDisabled : styles.primaryButton}
+              style={styles.primaryButton}
               disabled={
                 loading ||
                 !isPasswordValid ||
@@ -874,20 +874,6 @@ const styles = {
     fontWeight: 800,
     cursor: "pointer",
     marginTop: "5px",
-  },
-
-  primaryButtonDisabled: {
-    width: "100%",
-    height: "48px",
-    border: "none",
-    borderRadius: "10px",
-    background: "#a8bce6",
-    color: "#ffffff",
-    fontSize: "14px",
-    fontWeight: 800,
-    cursor: "not-allowed",
-    marginTop: "5px",
-    opacity: 0.7,
   },
 
   backButton: {

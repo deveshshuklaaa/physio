@@ -2,7 +2,7 @@
  * Reset one staff account's password. Password from env, never hardcoded (D24).
  *   DOC_PROF_ID=DOC002 NEW_PASSWORD='...' node scripts/resetStaffPassword.js
  */
-require("dotenv").config();
+require("dotenv").config({ path: require("path").resolve(__dirname, "../../../../.env") });
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const connectDB = require("../config/db");

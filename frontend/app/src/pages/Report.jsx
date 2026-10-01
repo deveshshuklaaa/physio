@@ -230,23 +230,22 @@ export default function Report() {
       className="flex h-screen w-screen flex-col overflow-hidden bg-[var(--color-clin-canvas)] text-[var(--color-clin-ink)]"
       style={{ fontFamily: "var(--font-body)" }}
     >
-      <header className="flex shrink-0 items-center justify-between border-b border-[var(--color-clin-border)] bg-[var(--color-clin-card)] px-8 py-4">
-        <div className="flex items-baseline gap-4">
+      <header className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-[var(--color-clin-border)] bg-[var(--color-clin-card)] px-4 py-3 sm:px-8 sm:py-4">
+        <div className="flex items-baseline gap-3">
           <h1
-            className="text-2xl font-bold tracking-tight text-[var(--color-clin-heading)]"
+            className="text-lg font-bold tracking-tight text-[var(--color-clin-heading)] sm:text-2xl"
             style={{ fontFamily: "var(--font-heading)" }}
           >
             Session Report
           </h1>
-
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <StatePill phase={phase} />
           <Button
-            className="h-11 rounded-xl border border-[var(--color-clin-border)] bg-white px-6 text-base font-semibold text-[var(--color-clin-ink)] shadow-none hover:bg-[var(--color-clin-canvas)] focus-visible:ring-[3px] focus-visible:ring-[var(--color-clin-blue-ring)]"
+            className="h-9 rounded-xl border border-[var(--color-clin-border)] bg-white px-3 text-sm font-semibold text-[var(--color-clin-ink)] shadow-none hover:bg-[var(--color-clin-canvas)] focus-visible:ring-[3px] focus-visible:ring-[var(--color-clin-blue-ring)] sm:h-11 sm:px-6 sm:text-base"
             onClick={() => (location.href = PLAN_URL)}
           >
-            Back to your plan
+            Back to plan
           </Button>
         </div>
       </header>
@@ -264,44 +263,44 @@ export default function Report() {
         </div>
       )}
 
-      <main className="flex min-h-0 flex-1 flex-col gap-5 overflow-auto p-6">
+      <main className="flex min-h-0 flex-1 flex-col gap-4 overflow-auto p-4 sm:gap-5 sm:p-6">
         {/* Counts first, always, as soon as the row loads -- never blocked on
             the report text (D8: summary is written synchronously; the
             report is async and may still be generating or may fail). */}
         <section
           data-testid="summary-panel"
-          className="flex flex-col gap-4 rounded-2xl border border-[var(--color-clin-blue)] bg-[var(--color-clin-blue)] p-6 shadow-[0_10px_15px_-3px_rgba(37,99,235,0.12),0_4px_6px_-4px_rgba(37,99,235,0.08)]"
+          className="flex flex-col gap-2 rounded-xl border border-[var(--color-clin-blue)] bg-[var(--color-clin-blue)] p-3 shadow-[0_10px_15px_-3px_rgba(37,99,235,0.12),0_4px_6px_-4px_rgba(37,99,235,0.08)] sm:gap-3 sm:rounded-2xl sm:p-4"
             style={{color:"#B2CFD3"}}
         >
           <h2
-            className="text-lg font-semibold text-white"
+            className="text-sm font-semibold text-white sm:text-base"
             style={{ fontFamily: "var(--font-heading)" }}
           >
             Session summary
           </h2>
           {session ? (
-            <div className="grid grid-cols-3 gap-3">
-              <div className="rounded-xl border border-[var(--color-clin-border)] bg-[var(--color-clin-canvas)] p-4">
-                <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-clin-muted)]">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              <div className="rounded-lg border border-[var(--color-clin-border)] bg-[var(--color-clin-canvas)] p-2 sm:rounded-xl sm:p-3">
+                <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--color-clin-muted)] sm:text-[11px]">
                   Exercise
                 </div>
-                <div className="mt-1 text-[15px] font-bold tabular-nums text-[var(--color-clin-ink)]">
+                <div className="mt-0.5 truncate text-[13px] font-bold text-[var(--color-clin-ink)] sm:mt-1 sm:text-[15px]">
                   {session.engineExercise || "—"}
                 </div>
               </div>
-              <div className="rounded-xl border border-[var(--color-clin-border)] bg-[var(--color-clin-canvas)] p-4">
-                <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-clin-muted)]">
+              <div className="rounded-lg border border-[var(--color-clin-border)] bg-[var(--color-clin-canvas)] p-2 sm:rounded-xl sm:p-3">
+                <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--color-clin-muted)] sm:text-[11px]">
                   Reps
                 </div>
-                <div className="mt-1 text-[15px] font-bold tabular-nums text-[var(--color-clin-ink)]">
+                <div className="mt-0.5 text-[13px] font-bold tabular-nums text-[var(--color-clin-ink)] sm:mt-1 sm:text-[15px]">
                   {session.repCount ?? "—"}
                 </div>
               </div>
-              <div className="rounded-xl border border-[var(--color-clin-border)] bg-[var(--color-clin-canvas)] p-4">
-                <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-clin-muted)]">
+              <div className="rounded-lg border border-[var(--color-clin-border)] bg-[var(--color-clin-canvas)] p-2 sm:rounded-xl sm:p-3">
+                <div className="text-[10px] font-semibold uppercase tracking-wide text-[var(--color-clin-muted)] sm:text-[11px]">
                   Clean reps
                 </div>
-                <div className="mt-1 text-[15px] font-bold tabular-nums text-[var(--color-clin-ink)]">
+                <div className="mt-0.5 text-[13px] font-bold tabular-nums text-[var(--color-clin-ink)] sm:mt-1 sm:text-[15px]">
                   {session.cleanReps ?? "—"}
                 </div>
               </div>
@@ -311,11 +310,11 @@ export default function Report() {
           ) : (
             // The row is still on its way. Show the shape of what is coming
             // rather than a bare word, so the page does not look stalled.
-            <div data-testid="summary-skeleton" className="grid grid-cols-3 gap-3">
+            <div data-testid="summary-skeleton" className="grid grid-cols-3 gap-2 sm:gap-3">
               {["Exercise", "Reps", "Clean reps"].map((label) => (
                 <div
                   key={label}
-                  className="flex flex-col gap-2 rounded-xl border border-[var(--color-clin-border)] bg-[var(--color-clin-canvas)] p-4"
+                  className="flex flex-col gap-1.5 rounded-lg border border-[var(--color-clin-border)] bg-[var(--color-clin-canvas)] p-2 sm:gap-2 sm:rounded-xl sm:p-3"
                 >
                   <div className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-clin-muted)]">
                     {label}
@@ -331,7 +330,7 @@ export default function Report() {
             a diagnosis, not a model assessment (§8). */}
         <section
           data-testid="notes-panel"
-          className="flex min-h-0 flex-1 flex-col gap-3 overflow-auto rounded-2xl border border-[var(--color-clin-border)] bg-[var(--color-clin-card)] p-6 shadow-[0_1px_3px_0_rgba(0,0,0,0.05),0_1px_2px_-1px_rgba(0,0,0,0.05)]"
+          className="flex min-h-0 flex-1 flex-col gap-3 overflow-auto rounded-2xl border border-[var(--color-clin-border)] bg-[var(--color-clin-card)] p-4 shadow-[0_1px_3px_0_rgba(0,0,0,0.05),0_1px_2px_-1px_rgba(0,0,0,0.05)] sm:p-6"
         >
           <h2
             className="text-lg font-semibold text-[var(--color-clin-ink)]"

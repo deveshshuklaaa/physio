@@ -27,7 +27,7 @@ const ScreeningResultScreen = () => {
   }, [id]);
 
   const handleDownload = () => {
-    const url = `http://localhost:5000/api/reports/screening/${id}/pdf`;
+    const url = `/api/reports/screening/${id}/pdf`;
     window.open(url, "_blank");
   };
 

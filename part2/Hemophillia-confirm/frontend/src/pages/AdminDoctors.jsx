@@ -292,9 +292,7 @@ const AdminDoctors = () => {
                   {adminName}
                 </strong>
 
-                <span>
-                  Administrator
-                </span>
+                
               </div>
             </div>
 
@@ -412,11 +410,7 @@ const AdminDoctors = () => {
 
             <nav className="sidebar-nav">
               <button
-                onClick={() =>
-                  navigate(
-                    "/admin-dashboard"
-                  )
-                }
+                onClick={() => navigate("/admin/dashboard")}
                 className="sidebar-item"
               >
                 <span>⌂</span>
@@ -528,11 +522,7 @@ const AdminDoctors = () => {
           <nav className="sidebar-nav">
 
             <button
-              onClick={() =>
-                navigate(
-                  "/admin-dashboard"
-                )
-              }
+              onClick={() => navigate("/admin/dashboard")}
               className="sidebar-item"
             >
               <span>⌂</span>
@@ -571,6 +561,8 @@ const AdminDoctors = () => {
             </button>
 
           </nav>
+
+          
 
           <button
             className="logout-button"
@@ -620,17 +612,15 @@ const AdminDoctors = () => {
               </button>
 
               <div className="admin-badge">
-                <div className="admin-badge-avatar">
+                {/* <div className="admin-badge-avatar">
                   {getInitials(adminName)}
-                </div>
+                </div> */}
 
                 <div>
-                  <strong>
-                    {adminName}
-                  </strong>
+                  
 
                   <span>
-                    Admin
+                    
                   </span>
                 </div>
               </div>

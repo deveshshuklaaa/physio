@@ -10112,13 +10112,14 @@ const downloadPatientPDF = async () => {
               description="Recorded EMG sessions and their dashboard, served by the EMG service."
             />
 
+            {/* EMG links commented out — EMG service being removed
             <div className="pr-card exercise-research-card">
-              {/* D29 TEMPORARY -- 2026-09-22 demo; open the Flask EMG pages directly (no iframe), loopback only. */}
               <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
                 <a className="pr-btn" href="http://127.0.0.1:5000/progress.html" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",padding:"10px 18px",borderRadius:10,background:"#1d4ed8",color:"#fff",textDecoration:"none",fontWeight:600}}>Open EMG dashboard</a>
                 <a className="pr-btn" href="http://127.0.0.1:5000/history.html" target="_blank" rel="noopener noreferrer" style={{display:"inline-block",padding:"10px 18px",borderRadius:10,background:"#1d4ed8",color:"#fff",textDecoration:"none",fontWeight:600}}>Open EMG recordings</a>
               </div>
             </div>
+            */}
 
             {/* =================================================
                 DEMOGRAPHICS

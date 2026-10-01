@@ -5,12 +5,22 @@ import api from "../apiClient";
 const DoctorLogin = () => {
   const [doctorId, setDoctorId] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-
 
   const navigate = useNavigate();
+
+  // =========================================================
+  // FORMAT PHYSIOTHERAPIST ID
+  // =========================================================
+
+  const formatProfessionalId = (value) => {
+    return value
+      .trim()
+      .replace(/\s+/g, "")
+      .toUpperCase();
+  };
 
   // =========================================================
   // LOGIN
@@ -22,49 +32,56 @@ const DoctorLogin = () => {
     setError("");
     setLoading(true);
 
+    // Make sure the ID is formatted before login
+    const formattedDoctorId =
+      formatProfessionalId(doctorId);
+
+    setDoctorId(formattedDoctorId);
+
     try {
       const res = await api.post("/doctor/login", {
-        professionalId: doctorId.trim(),
+        professionalId: formattedDoctorId,
         password,
       });
 
+      // =====================================================
+      // OTP VERIFICATION
+      // =====================================================
+
       if (res.data?.requiresOtp) {
-  navigate(
-    "/verify-otp",
-    {
-      state: {
-        challengeId:
-          res.data.challengeId,
+        navigate("/verify-otp", {
+          state: {
+            challengeId: res.data.challengeId,
+            role: res.data.role || "doctor",
+            maskedEmail: res.data.maskedEmail,
+            user: res.data.user || null,
+          },
+          replace: true,
+        });
 
-        role:
-          res.data.role ||
-          "doctor",
-
-        maskedEmail:
-          res.data.maskedEmail,
-
-        user:
-          res.data.user || null,
-      },
-
-      replace: true,
-    }
-  );
-
-  return;
-}
+        return;
+      }
 
       const { token, user } = res.data;
 
-      // Save authentication
-      localStorage.setItem("staffAuthToken", token);
+      // =====================================================
+      // SAVE AUTHENTICATION
+      // =====================================================
+
+      localStorage.setItem(
+        "staffAuthToken",
+        token
+      );
 
       localStorage.setItem(
         "staffUser",
         JSON.stringify(user)
       );
 
-      // Set authorization header
+      // =====================================================
+      // SET AUTHORIZATION HEADER
+      // =====================================================
+
       api.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${token}`;
@@ -76,10 +93,11 @@ const DoctorLogin = () => {
       if (user.mustChangePassword === true) {
         localStorage.setItem(
           "professionalId",
-          doctorId.trim()
+          formattedDoctorId
         );
 
         navigate("/doctor-change-password");
+
         return;
       }
 
@@ -90,23 +108,26 @@ const DoctorLogin = () => {
       navigate("/doctor-dashboard");
 
     } catch (err) {
-      console.error("Doctor login error:", err);
+      console.error(
+        "Doctor login error:",
+        err
+      );
 
       setError(
         err.response?.data?.message ||
-          "Invalid Doctor ID or password"
+          "Invalid Physiotherapist ID or password"
       );
     } finally {
       setLoading(false);
     }
   };
 
+  // =========================================================
+  // UI
+  // =========================================================
+
   return (
     <div className="doctor-login-page">
-
-      {/* =====================================================
-          MAIN CARD
-      ===================================================== */}
 
       <div className="doctor-login-card">
 
@@ -116,7 +137,9 @@ const DoctorLogin = () => {
 
         <div className="doctor-login-left">
 
-          {/* Logo */}
+          {/* =================================================
+              BRAND
+          ================================================= */}
 
           <div className="login-brand">
 
@@ -125,13 +148,23 @@ const DoctorLogin = () => {
             </div>
 
             <div className="brand-text">
-              <h3>Hemophilia Care</h3>
-              <span>Clinical Platform</span>
+
+              <h3>
+                Somaiya Hemophysio App
+              </h3>
+
+              <span>
+                Clinical Platform
+              </span>
+
             </div>
 
           </div>
 
-          {/* Heading */}
+
+          {/* =================================================
+              HEADING
+          ================================================= */}
 
           <div className="login-heading">
 
@@ -146,13 +179,16 @@ const DoctorLogin = () => {
 
           </div>
 
+
           {/* =================================================
               LOGIN FORM
           ================================================= */}
 
           <form onSubmit={handleSubmit}>
 
-            {/* Doctor ID */}
+            {/* =================================================
+                PHYSIOTHERAPIST ID
+            ================================================= */}
 
             <div className="form-group">
 
@@ -171,54 +207,105 @@ const DoctorLogin = () => {
                   placeholder="Enter your professional ID"
                   value={doctorId}
                   onChange={(e) =>
-                    setDoctorId(e.target.value)
+                    setDoctorId(
+                      e.target.value
+                    )
+                  }
+                  onBlur={() =>
+                    setDoctorId(
+                      formatProfessionalId(
+                        doctorId
+                      )
+                    )
                   }
                   required
+                  autoComplete="username"
                 />
 
               </div>
 
             </div>
 
-            {/* Password */}
+
+            {/* =================================================
+                PASSWORD
+            ================================================= */}
 
             <div className="form-group">
 
-  <label>
-    Password
-  </label>
+              <label>
+                Password
+              </label>
 
-  <div className="input-container">
+              <div className="input-container">
 
-    <div className="input-symbol password-symbol">
-      ●
-    </div>
+                <div className="input-symbol password-symbol">
+                  ●
+                </div>
 
-    <input
-      type={showPassword ? "text" : "password"}
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      placeholder="Enter password"
-      minLength={8}
-      required
-      autoComplete="new-password"
-    />
+                <input
+                  type={
+                    showPassword
+                      ? "text"
+                      : "password"
+                  }
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) =>
+                    setPassword(
+                      e.target.value
+                    )
+                  }
+                  required
+                  autoComplete="current-password"
+                />
 
-    <button
-      type="button"
-      className="show-password-btn"
-      onClick={() => setShowPassword(!showPassword)}
-    >
-      {showPassword ? "Hide" : "Show"}
-    </button>
+                <button
+                  type="button"
+                  className="password-toggle-button"
+                  onClick={() =>
+                    setShowPassword(
+                      (previous) =>
+                        !previous
+                    )
+                  }
+                  aria-label={
+                    showPassword
+                      ? "Hide password"
+                      : "Show password"
+                  }
+                >
+                  {showPassword
+                    ? "Hide"
+                    : "Show"}
+                </button>
 
-  </div>
+              </div>
 
-  
+            </div>
 
-</div>
 
-            {/* Error */}
+            {/* =================================================
+                FORGOT PASSWORD
+            ================================================= */}
+
+            <button
+              type="button"
+              className="forgot-password-button"
+              onClick={() =>
+                navigate(
+                  "/forgot-password?role=doctor"
+                )
+              }
+              disabled={loading}
+            >
+              Forgot Password?
+            </button>
+
+
+            {/* =================================================
+                ERROR
+            ================================================= */}
 
             {error && (
               <div className="login-error">
@@ -234,7 +321,10 @@ const DoctorLogin = () => {
               </div>
             )}
 
-            {/* Login */}
+
+            {/* =================================================
+                LOGIN BUTTON
+            ================================================= */}
 
             <button
               type="submit"
@@ -250,6 +340,7 @@ const DoctorLogin = () => {
               ) : (
                 <>
                   Sign In
+
                   <span className="button-arrow">
                     →
                   </span>
@@ -260,6 +351,7 @@ const DoctorLogin = () => {
 
           </form>
 
+
           {/* =================================================
               SIGN UP
           ================================================= */}
@@ -267,23 +359,37 @@ const DoctorLogin = () => {
           <div className="signup-area">
 
             <div className="signup-divider">
+
               <span></span>
-              <p>New Physiotherapist?</p>
+
+              <p>
+                New Physiotherapist?
+              </p>
+
               <span></span>
+
             </div>
+
 
             <button
               type="button"
               className="register-button"
               onClick={() =>
-                navigate("/doctor-registration")
+                navigate(
+                  "/doctor-registration"
+                )
               }
             >
               Register for an Account
-              <span>→</span>
+
+              <span>
+                →
+              </span>
+
             </button>
 
           </div>
+
 
           {/* =================================================
               BACK TO PATIENT
@@ -292,123 +398,12 @@ const DoctorLogin = () => {
           <button
             type="button"
             className="patient-back-button"
-            onClick={() => navigate("/")}
+            onClick={() =>
+              navigate("/")
+            }
           >
             ← Back to Patient Login
           </button>
-
-        </div>
-
-
-        {/* ===================================================
-            RIGHT SIDE - VISUAL PANEL
-        =================================================== */}
-
-        <div className="doctor-login-right">
-
-          {/* Decorative circles */}
-
-          <div className="decor-circle circle-one"></div>
-          <div className="decor-circle circle-two"></div>
-          <div className="decor-circle circle-three"></div>
-
-          {/* Medical cross */}
-
-          <div className="large-cross">
-            +
-          </div>
-
-          {/* Content */}
-
-          <div className="right-panel-content">
-
-            <div className="secure-tag">
-              <span className="secure-dot">
-                ✓
-              </span>
-
-              Secure Clinical Access
-            </div>
-
-            <h2>
-              Caring for Patients.
-              <br />
-              <span>Connecting Care.</span>
-            </h2>
-
-            <p>
-              Access patient information, clinical
-              insights and healthcare tools through
-              one secure platform.
-            </p>
-
-            {/* Features */}
-
-            <div className="feature-list">
-
-              <div className="feature-item">
-
-                <div className="feature-icon">
-                  ✓
-                </div>
-
-                <div>
-                  <strong>
-                    Secure Access
-                  </strong>
-
-                  <span>
-                    Protected clinical information
-                  </span>
-                </div>
-
-              </div>
-
-
-              <div className="feature-item">
-
-                <div className="feature-icon">
-                  ✓
-                </div>
-
-                <div>
-                  <strong>
-                    Patient Care
-                  </strong>
-
-                  <span>
-                    Manage connected patient care
-                  </span>
-                </div>
-
-              </div>
-
-
-              <div className="feature-item">
-
-                <div className="feature-icon">
-                  ✓
-                </div>
-
-                <div>
-                  <strong>
-                    Clinical Workspace
-                  </strong>
-
-                  <span>
-                    Tools designed for healthcare teams
-                  </span>
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          {/* Bottom decoration */}
-
-          <div className="bottom-wave"></div>
 
         </div>
 
@@ -421,9 +416,9 @@ const DoctorLogin = () => {
 
       <style>{`
 
-        /* ===================================================
+        /* =====================================================
            PAGE
-        =================================================== */
+        ===================================================== */
 
         .doctor-login-page {
           min-height: 100vh;
@@ -437,13 +432,7 @@ const DoctorLogin = () => {
 
           box-sizing: border-box;
 
-          background:
-            linear-gradient(
-              135deg,
-              #f3f7ff 0%,
-              #edf3ff 45%,
-              #f7f9ff 100%
-            );
+          background: #edf3ff;
 
           font-family:
             Inter,
@@ -451,44 +440,46 @@ const DoctorLogin = () => {
             BlinkMacSystemFont,
             "Segoe UI",
             sans-serif;
+
+          color: #163b63;
         }
 
 
-        /* ===================================================
-           CARD
-        =================================================== */
+        /* =====================================================
+           MAIN CARD
+        ===================================================== */
 
         .doctor-login-card {
           width: 100%;
-          max-width: 980px;
+          max-width: 720px;
 
-          min-height: 570px;
+          min-height: 620px;
 
           display: flex;
 
           overflow: hidden;
 
-          background: white;
+          background: #ffffff;
 
-          border-radius: 24px;
+          border-radius: 22px;
 
           box-shadow:
-            0 25px 80px
-            rgba(42, 73, 125, 0.14);
+            0 25px 70px
+            rgba(45, 82, 145, 0.16);
 
           border:
             1px solid #e5edf8;
         }
 
 
-        /* ===================================================
-           LEFT
-        =================================================== */
+        /* =====================================================
+           LEFT SIDE ONLY
+        ===================================================== */
 
         .doctor-login-left {
-          width: 55%;
+          width: 100%;
 
-          padding: 45px 55px;
+          padding: 52px 68px;
 
           box-sizing: border-box;
 
@@ -496,78 +487,33 @@ const DoctorLogin = () => {
 
           flex-direction: column;
 
-          justify-content: center;
+          justify-content: flex-start;
 
-          background: white;
+          background: #ffffff;
         }
 
-        .input-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
 
-.input-container input {
-  width: 100%;
-  padding-right: 70px;
-}
-
-.show-password-btn {
-  position: absolute;
-  right: 12px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.password-requirements {
-  margin-top: 8px;
-  font-size: 12px;
-}
-
-.password-requirements small {
-  font-weight: 600;
-}
-
-.password-requirements ul {
-  margin: 5px 0 0 18px;
-  padding: 0;
-}
-
-.password-requirements li {
-  margin-bottom: 3px;
-}
-
-.password-requirements li.valid {
-  color: green;
-}
-
-.password-requirements li.valid::before {
-  content: "✓ ";
-}
-
-
-        /* ===================================================
+        /* =====================================================
            BRAND
-        =================================================== */
+        ===================================================== */
 
         .login-brand {
           display: flex;
 
           align-items: center;
 
-          gap: 11px;
+          gap: 12px;
 
-          margin-bottom: 35px;
+          margin-bottom: 42px;
         }
 
+
         .brand-logo {
-          width: 39px;
-          height: 39px;
+          width: 44px;
+          height: 44px;
 
           display: flex;
+
           align-items: center;
           justify-content: center;
 
@@ -576,20 +522,21 @@ const DoctorLogin = () => {
           background:
             linear-gradient(
               135deg,
-              #4b7cfb,
-              #657fff
+              #4b78f5,
+              #5c82ff
             );
 
-          color: white;
+          color: #ffffff;
 
-          font-size: 25px;
+          font-size: 27px;
 
           font-weight: 400;
 
           box-shadow:
-            0 8px 20px
-            rgba(75,124,251,0.22);
+            0 8px 18px
+            rgba(75,120,245,0.20);
         }
+
 
         .brand-text h3 {
           margin: 0;
@@ -601,89 +548,100 @@ const DoctorLogin = () => {
           font-weight: 700;
         }
 
+
         .brand-text span {
           display: block;
 
-          margin-top: 2px;
+          margin-top: 4px;
 
           color: #91a4ba;
 
-          font-size: 8px;
+          font-size: 9px;
 
           font-weight: 600;
 
-          letter-spacing: 1.1px;
+          letter-spacing: 1.5px;
 
           text-transform: uppercase;
         }
 
 
-        /* ===================================================
+        /* =====================================================
            HEADING
-        =================================================== */
+        ===================================================== */
 
         .login-heading {
-          margin-bottom: 27px;
+          margin-bottom: 31px;
         }
 
+
         .login-heading h1 {
-          margin: 0 0 7px;
+          margin: 0 0 9px;
 
           color: #163b63;
 
-          font-size: 29px;
+          font-size: 36px;
+
+          line-height: 1.15;
 
           font-weight: 650;
 
-          letter-spacing: -0.5px;
+          letter-spacing: -0.8px;
         }
+
 
         .login-heading p {
           margin: 0;
 
           color: #7890a9;
 
-          font-size: 12px;
+          font-size: 14px;
 
           line-height: 1.6;
 
-          max-width: 360px;
+          max-width: 480px;
         }
 
 
-        /* ===================================================
+        /* =====================================================
            FORM
-        =================================================== */
+        ===================================================== */
 
         .form-group {
-          margin-bottom: 17px;
+          margin-bottom: 20px;
         }
+
 
         .form-group label {
           display: block;
 
-          margin-bottom: 7px;
+          margin-bottom: 8px;
 
           color: #345a7d;
 
-          font-size: 11px;
+          font-size: 13px;
 
           font-weight: 600;
         }
 
+
+        /* =====================================================
+           INPUT CONTAINER
+        ===================================================== */
+
         .input-container {
           width: 100%;
 
-          height: 47px;
+          height: 54px;
 
           display: flex;
 
           align-items: center;
 
           border:
-            1px solid #dbe5f1;
+            1px solid #d5e1f0;
 
-          border-radius: 8px;
+          border-radius: 9px;
 
           background: #f9fbff;
 
@@ -695,31 +653,40 @@ const DoctorLogin = () => {
           box-sizing: border-box;
         }
 
+
         .input-container:focus-within {
-          background: white;
+          background: #ffffff;
 
           border-color: #4a7dfc;
 
           box-shadow:
             0 0 0 3px
-            rgba(74,125,252,0.08);
+            rgba(74,125,252,0.09);
         }
 
+
+        /* =====================================================
+           LEFT INPUT SYMBOL
+        ===================================================== */
+
         .input-symbol {
-          width: 43px;
+          width: 45px;
 
           flex-shrink: 0;
 
           display: flex;
+
           align-items: center;
+
           justify-content: center;
 
           color: #7894b0;
 
-          font-size: 9px;
+          font-size: 10px;
 
           font-weight: 700;
         }
+
 
         .password-symbol {
           font-size: 8px;
@@ -727,8 +694,16 @@ const DoctorLogin = () => {
           letter-spacing: 1px;
         }
 
+
+        /* =====================================================
+           INPUT
+        ===================================================== */
+
         .input-container input {
           width: 100%;
+
+          min-width: 0;
+
           height: 100%;
 
           border: none;
@@ -739,34 +714,112 @@ const DoctorLogin = () => {
 
           color: #163b63;
 
-          font-size: 12px;
+          font-size: 14px;
 
           padding: 0 14px 0 0;
 
           box-sizing: border-box;
         }
 
+
         .input-container input::placeholder {
           color: #a4b4c6;
         }
 
 
-        /* ===================================================
+        /* =====================================================
+           PASSWORD SHOW / HIDE
+        ===================================================== */
+
+        .password-toggle-button {
+          flex-shrink: 0;
+
+          height: 100%;
+
+          min-width: 65px;
+
+          padding: 0 14px;
+
+          border: none;
+
+          background: transparent;
+
+          color: #4a7dfc;
+
+          font-size: 12px;
+
+          font-weight: 700;
+
+          cursor: pointer;
+
+          white-space: nowrap;
+        }
+
+
+        .password-toggle-button:hover {
+          color: #315fd4;
+        }
+
+
+        .password-toggle-button:disabled {
+          opacity: 0.6;
+
+          cursor: not-allowed;
+        }
+
+
+        /* =====================================================
+           FORGOT PASSWORD
+        ===================================================== */
+
+        .forgot-password-button {
+          display: block;
+
+          width: 100%;
+
+          margin: -5px 0 17px;
+
+          padding: 0;
+
+          border: none;
+
+          background: transparent;
+
+          color: #3f65c8;
+
+          font-size: 13px;
+
+          font-weight: 700;
+
+          text-align: right;
+
+          cursor: pointer;
+        }
+
+
+        .forgot-password-button:disabled {
+          opacity: 0.6;
+
+          cursor: not-allowed;
+        }
+
+
+        /* =====================================================
            ERROR
-        =================================================== */
+        ===================================================== */
 
         .login-error {
           display: flex;
 
           align-items: center;
 
-          gap: 8px;
+          gap: 9px;
 
-          margin-bottom: 12px;
+          margin-bottom: 14px;
 
-          padding: 10px 11px;
+          padding: 11px 13px;
 
-          border-radius: 7px;
+          border-radius: 8px;
 
           background: #fff4f4;
 
@@ -774,26 +827,30 @@ const DoctorLogin = () => {
 
           color: #c62828;
 
-          font-size: 11px;
+          font-size: 12px;
 
           line-height: 1.4;
         }
 
+
         .error-circle {
-          width: 17px;
-          height: 17px;
+          width: 18px;
+
+          height: 18px;
 
           flex-shrink: 0;
 
           display: flex;
+
           align-items: center;
+
           justify-content: center;
 
           border-radius: 50%;
 
           background: #d93025;
 
-          color: white;
+          color: #ffffff;
 
           font-size: 10px;
 
@@ -801,14 +858,14 @@ const DoctorLogin = () => {
         }
 
 
-        /* ===================================================
+        /* =====================================================
            LOGIN BUTTON
-        =================================================== */
+        ===================================================== */
 
         .login-button {
           width: 100%;
 
-          height: 47px;
+          height: 54px;
 
           display: flex;
 
@@ -820,7 +877,7 @@ const DoctorLogin = () => {
 
           border: none;
 
-          border-radius: 8px;
+          border-radius: 9px;
 
           background:
             linear-gradient(
@@ -829,9 +886,9 @@ const DoctorLogin = () => {
               #5f82ff
             );
 
-          color: white;
+          color: #ffffff;
 
-          font-size: 12px;
+          font-size: 14px;
 
           font-weight: 600;
 
@@ -840,13 +897,15 @@ const DoctorLogin = () => {
           transition: 0.2s ease;
         }
 
-        .login-button:hover {
+
+        .login-button:hover:not(:disabled) {
           transform: translateY(-1px);
 
           box-shadow:
             0 9px 22px
             rgba(74,125,252,0.25);
         }
+
 
         .login-button:disabled {
           opacity: 0.7;
@@ -858,32 +917,35 @@ const DoctorLogin = () => {
           box-shadow: none;
         }
 
+
         .button-arrow {
-          font-size: 16px;
+          font-size: 17px;
 
           line-height: 1;
         }
 
 
-        /* ===================================================
+        /* =====================================================
            LOADING
-        =================================================== */
+        ===================================================== */
 
         .loading-spinner {
-          width: 14px;
-          height: 14px;
+          width: 15px;
+
+          height: 15px;
 
           border:
             2px solid
             rgba(255,255,255,0.4);
 
-          border-top-color: white;
+          border-top-color: #ffffff;
 
           border-radius: 50%;
 
           animation:
             doctor-spin 0.7s linear infinite;
         }
+
 
         @keyframes doctor-spin {
           to {
@@ -892,23 +954,25 @@ const DoctorLogin = () => {
         }
 
 
-        /* ===================================================
+        /* =====================================================
            SIGN UP
-        =================================================== */
+        ===================================================== */
 
         .signup-area {
-          margin-top: 20px;
+          margin-top: 26px;
         }
+
 
         .signup-divider {
           display: flex;
 
           align-items: center;
 
-          gap: 9px;
+          gap: 11px;
 
-          margin-bottom: 11px;
+          margin-bottom: 12px;
         }
+
 
         .signup-divider span {
           flex: 1;
@@ -918,20 +982,22 @@ const DoctorLogin = () => {
           background: #e8edf4;
         }
 
+
         .signup-divider p {
           margin: 0;
 
           color: #94a5b7;
 
-          font-size: 9px;
+          font-size: 11px;
 
           white-space: nowrap;
         }
 
+
         .register-button {
           width: 100%;
 
-          height: 42px;
+          height: 46px;
 
           display: flex;
 
@@ -939,18 +1005,18 @@ const DoctorLogin = () => {
 
           justify-content: center;
 
-          gap: 8px;
+          gap: 9px;
 
           border:
             1px solid #d8e4f4;
 
-          border-radius: 8px;
+          border-radius: 9px;
 
           background: #f8faff;
 
           color: #4a7dfc;
 
-          font-size: 11px;
+          font-size: 13px;
 
           font-weight: 600;
 
@@ -959,9 +1025,11 @@ const DoctorLogin = () => {
           transition: 0.2s ease;
         }
 
+
         .register-button span {
-          font-size: 15px;
+          font-size: 16px;
         }
+
 
         .register-button:hover {
           background: #f0f5ff;
@@ -972,14 +1040,14 @@ const DoctorLogin = () => {
         }
 
 
-        /* ===================================================
+        /* =====================================================
            PATIENT LOGIN
-        =================================================== */
+        ===================================================== */
 
         .patient-back-button {
           align-self: center;
 
-          margin-top: 17px;
+          margin-top: 18px;
 
           border: none;
 
@@ -987,12 +1055,13 @@ const DoctorLogin = () => {
 
           color: #8195aa;
 
-          font-size: 10px;
+          font-size: 12px;
 
           cursor: pointer;
 
           transition: 0.2s ease;
         }
+
 
         .patient-back-button:hover {
           color: #4a7dfc;
@@ -1001,377 +1070,143 @@ const DoctorLogin = () => {
         }
 
 
-        /* ===================================================
-           RIGHT PANEL
-        =================================================== */
-
-        .doctor-login-right {
-          width: 45%;
-
-          position: relative;
-
-          overflow: hidden;
-
-          display: flex;
-
-          align-items: center;
-
-          justify-content: center;
-
-          background:
-            linear-gradient(
-              145deg,
-              #416ff0 0%,
-              #526ff4 45%,
-              #716de9 100%
-            );
-
-          color: white;
-        }
-
-
-        /* ===================================================
-           DECORATIVE CIRCLES
-        =================================================== */
-
-        .decor-circle {
-          position: absolute;
-
-          border-radius: 50%;
-
-          border:
-            1px solid
-            rgba(255,255,255,0.16);
-        }
-
-        .circle-one {
-          width: 380px;
-          height: 380px;
-
-          top: -170px;
-          right: -130px;
-        }
-
-        .circle-two {
-          width: 280px;
-          height: 280px;
-
-          bottom: -130px;
-          left: -120px;
-        }
-
-        .circle-three {
-          width: 170px;
-          height: 170px;
-
-          bottom: 60px;
-          right: -75px;
-
-          background:
-            rgba(255,255,255,0.035);
-        }
-
-
-        /* ===================================================
-           LARGE MEDICAL CROSS
-        =================================================== */
-
-        .large-cross {
-          position: absolute;
-
-          right: 35px;
-          top: 25px;
-
-          color:
-            rgba(255,255,255,0.09);
-
-          font-size: 150px;
-
-          line-height: 1;
-
-          font-weight: 200;
-
-          transform: rotate(-10deg);
-        }
-
-
-        /* ===================================================
-           RIGHT CONTENT
-        =================================================== */
-
-        .right-panel-content {
-          position: relative;
-
-          z-index: 3;
-
-          width: 100%;
-
-          max-width: 300px;
-
-          padding: 40px;
-
-          box-sizing: border-box;
-        }
-
-
-        /* ===================================================
-           SECURE TAG
-        =================================================== */
-
-        .secure-tag {
-          display: inline-flex;
-
-          align-items: center;
-
-          gap: 7px;
-
-          padding: 7px 11px;
-
-          border-radius: 20px;
-
-          background:
-            rgba(255,255,255,0.14);
-
-          border:
-            1px solid
-            rgba(255,255,255,0.16);
-
-          color: rgba(255,255,255,0.95);
-
-          font-size: 9px;
-
-          font-weight: 600;
-
-          backdrop-filter: blur(5px);
-        }
-
-        .secure-dot {
-          width: 16px;
-          height: 16px;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          border-radius: 50%;
-
-          background: rgba(255,255,255,0.95);
-
-          color: #4a75ef;
-
-          font-size: 9px;
-        }
-
-
-        /* ===================================================
-           RIGHT HEADING
-        =================================================== */
-
-        .right-panel-content h2 {
-          margin: 23px 0 12px;
-
-          color: white;
-
-          font-size: 27px;
-
-          line-height: 1.25;
-
-          font-weight: 650;
-
-          letter-spacing: -0.4px;
-        }
-
-        .right-panel-content h2 span {
-          color: #dce6ff;
-        }
-
-        .right-panel-content > p {
-          margin: 0;
-
-          color:
-            rgba(255,255,255,0.78);
-
-          font-size: 11px;
-
-          line-height: 1.7;
-        }
-
-
-        /* ===================================================
-           FEATURES
-        =================================================== */
-
-        .feature-list {
-          margin-top: 27px;
-
-          display: flex;
-
-          flex-direction: column;
-
-          gap: 15px;
-        }
-
-        .feature-item {
-          display: flex;
-
-          align-items: center;
-
-          gap: 11px;
-        }
-
-        .feature-icon {
-          width: 27px;
-          height: 27px;
-
-          flex-shrink: 0;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          border-radius: 8px;
-
-          background:
-            rgba(255,255,255,0.14);
-
-          border:
-            1px solid
-            rgba(255,255,255,0.12);
-
-          color: white;
-
-          font-size: 10px;
-
-          font-weight: 700;
-        }
-
-        .feature-item strong {
-          display: block;
-
-          color: white;
-
-          font-size: 10px;
-
-          font-weight: 600;
-
-          margin-bottom: 2px;
-        }
-
-        .feature-item span {
-          display: block;
-
-          color:
-            rgba(255,255,255,0.62);
-
-          font-size: 9px;
-        }
-
-
-        /* ===================================================
-           BOTTOM DECORATION
-        =================================================== */
-
-        .bottom-wave {
-          position: absolute;
-
-          bottom: -130px;
-          left: -40px;
-
-          width: 430px;
-          height: 220px;
-
-          border-radius: 50%;
-
-          background:
-            rgba(255,255,255,0.055);
-
-          transform: rotate(-8deg);
-        }
-
-
-        /* ===================================================
+        /* =====================================================
            TABLET
-        =================================================== */
+        ===================================================== */
 
-        @media (max-width: 850px) {
+        @media (max-width: 760px) {
 
           .doctor-login-page {
-            padding: 20px;
+            padding: 25px;
           }
+
 
           .doctor-login-card {
-            max-width: 560px;
-
-            min-height: auto;
+            max-width: 650px;
           }
+
 
           .doctor-login-left {
-            width: 100%;
-
-            padding: 45px;
+            padding: 45px 50px;
           }
 
-          .doctor-login-right {
-            display: none;
+
+          .login-heading h1 {
+            font-size: 34px;
           }
 
         }
 
 
-        /* ===================================================
+        /* =====================================================
            MOBILE
-        =================================================== */
+        ===================================================== */
 
-        @media (max-width: 550px) {
+        @media (max-width: 600px) {
 
           .doctor-login-page {
-            min-height: 100vh;
+            min-height: 100dvh;
 
-            padding: 12px;
+            padding: 15px;
 
             align-items: flex-start;
           }
 
-          .doctor-login-card {
-            margin: auto 0;
 
-            border-radius: 20px;
+          .doctor-login-card {
+            width: 100%;
+
+            max-width: 500px;
+
+            min-height: auto;
+
+            margin: auto;
+
+            border-radius: 18px;
           }
+
 
           .doctor-login-left {
-            padding: 32px 22px;
+            width: 100%;
+
+            padding: 34px 27px 30px;
           }
+
 
           .login-brand {
-            margin-bottom: 29px;
+            margin-bottom: 31px;
           }
+
 
           .login-heading h1 {
-            font-size: 27px;
+            font-size: 30px;
           }
 
+
           .login-heading p {
-            font-size: 11px;
+            font-size: 13px;
           }
+
+
+          .input-container {
+            height: 52px;
+          }
+
+
+          .input-container input {
+            font-size: 14px;
+          }
+
+
+          .login-button {
+            height: 52px;
+
+            font-size: 14px;
+          }
+
+
+          .register-button {
+            height: 46px;
+
+            font-size: 13px;
+          }
+
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 380px) {
+
+          .doctor-login-page {
+            padding: 8px;
+          }
+
+
+          .doctor-login-left {
+            padding: 28px 18px 25px;
+          }
+
+
+          .login-brand {
+            margin-bottom: 25px;
+          }
+
+
+          .login-heading h1 {
+            font-size: 28px;
+          }
+
 
           .input-container {
             height: 49px;
           }
 
-          .input-container input {
-            font-size: 13px;
-          }
 
           .login-button {
             height: 49px;
-
-            font-size: 13px;
-          }
-
-          .register-button {
-            height: 45px;
-
-            font-size: 11px;
           }
 
         }

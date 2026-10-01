@@ -20,10 +20,10 @@ const resources = {
           "Yes, I have been diagnosed",
 
         yesDescription:
-          "Continue with your clinical information",
+          "Continue ",
 
         noTitle:
-          "No, I have not been diagnosed / I'm not sure",
+          "No, I have not been diagnosed ",
 
         noDescription:
           "Start a guided screening assessment",

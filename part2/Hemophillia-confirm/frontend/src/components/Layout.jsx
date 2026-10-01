@@ -10,6 +10,40 @@ const Layout = () => {
   const [profile, setProfile] = useState({});
 
   // =====================================================
+  // CLOSE MOBILE MENU WHEN CLICKING OUTSIDE
+  // =====================================================
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!menuOpen) return;
+
+      const clickedInsideMenu =
+        event.target.closest(".mobile-menu");
+
+      const clickedMenuButton =
+        event.target.closest(".mobile-menu-icon");
+
+      // Keep the menu open when clicking inside it
+      // or when clicking the hamburger button.
+      if (!clickedInsideMenu && !clickedMenuButton) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    );
+
+    return () => {
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+    };
+  }, [menuOpen]);
+
+  // =====================================================
   // FETCH PATIENT PROFILE
   // =====================================================
 
@@ -97,7 +131,7 @@ const Layout = () => {
           <div className="nav-title-block">
 
             <div className="nav-title">
-              Hemophilia Diagnosis Application
+              Somaiya Hemophysio App
             </div>
 
             <div className="nav-subtitle">

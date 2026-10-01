@@ -1,4 +1,4 @@
-// // require("dotenv").config();
+// // require("dotenv").config({ path: require("path").resolve(__dirname, "../../../../.env") });
 
 // // const express = require("express");
 // // 
@@ -480,7 +480,7 @@
 // //     process.exit(1);
 // //   });
 
-// require("dotenv").config();
+// require("dotenv").config({ path: require("path").resolve(__dirname, "../../../../.env") });
 
 // const express = require("express");
 // const cors = require("cors");
@@ -807,7 +807,7 @@
 //   });
 
 
-// require("dotenv").config();
+// require("dotenv").config({ path: require("path").resolve(__dirname, "../../../../.env") });
 
 // const express = require("express");
 // const cors = require("cors");
@@ -1231,7 +1231,7 @@
 
 
 
-// // require("dotenv").config();
+// // require("dotenv").config({ path: require("path").resolve(__dirname, "../../../../.env") });
 
 // // const express = require("express");
 // // const cors = require("cors");
@@ -1715,7 +1715,7 @@ const exerciseRecommendationRoutes = require("./routes/exerciseRecommendations")
 // //     process.exit(1);
 // //   });
 
-// require("dotenv").config();
+// require("dotenv").config({ path: require("path").resolve(__dirname, "../../../../.env") });
 
 // const express = require("express");
 // const cors = require("cors");
@@ -2042,7 +2042,7 @@ const exerciseRecommendationRoutes = require("./routes/exerciseRecommendations")
 //   });
 
 
-require("dotenv").config();
+require("dotenv").config({ path: require("path").resolve(__dirname, "../../../../.env") });
 
 const express = require("express");
 
