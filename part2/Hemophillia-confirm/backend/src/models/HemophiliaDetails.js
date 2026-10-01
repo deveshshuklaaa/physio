@@ -52,8 +52,8 @@ const hemophiliaDetailsSchema = new mongoose.Schema(
 
     geneticTestingDone: encryptedString,
 
-    // Current treatment
-    currentFactorTherapy: encryptedString,
+    // Current treatment - MULTIPLE values
+    currentFactorTherapy: encryptedStringArray,
 
     otherCurrentTreatment: encryptedString,
 
@@ -114,6 +114,9 @@ const hemophiliaDetailsSchema = new mongoose.Schema(
     mobilityLimitation: encryptedString,
 
     assistiveDevices: encryptedString,
+
+    // Free-text notes from the patient
+    patientNotes: encryptedString,
   },
   {
     timestamps: true,

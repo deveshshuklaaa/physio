@@ -175,5 +175,3 @@ zipp==4.1.0
 
 
 
-seperate issue. whe I created new patient through google oauth, then logged in to respective doctor account to assign
-    exercises, the new account dosn't show up.

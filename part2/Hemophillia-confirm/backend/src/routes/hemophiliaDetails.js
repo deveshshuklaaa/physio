@@ -1581,6 +1581,9 @@ router.get(
         assistiveDevices:
           details.assistiveDevices,
 
+        patientNotes:
+          details.patientNotes,
+
         consultingDoctor:
           consultingDoctor
             ? {

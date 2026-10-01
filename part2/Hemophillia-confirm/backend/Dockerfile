@@ -9,8 +9,10 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-venv python3-pip make g++ \
     && rm -rf /var/lib/apt/lists/*
 
+COPY ml/requirements.txt /tmp/ml-requirements.txt
 RUN python3 -m venv /opt/ml-venv \
-    && /opt/ml-venv/bin/pip install --no-cache-dir joblib scikit-learn pandas xgboost
+    && /opt/ml-venv/bin/pip install --no-cache-dir -r /tmp/ml-requirements.txt \
+    && rm /tmp/ml-requirements.txt
 
 ENV PYTHON_EXECUTABLE=/opt/ml-venv/bin/python3
 

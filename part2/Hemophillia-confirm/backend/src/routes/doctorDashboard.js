@@ -1163,6 +1163,7 @@ router.get("/dashboard", staffAuth, async (req, res) => {
           currentFactorTherapy: record.currentFactorTherapy ?? null,
           underPhysiotherapy: record.underPhysiotherapy ?? null,
           mobilityLimitation: record.mobilityLimitation ?? null,
+          patientNotes: record.patientNotes ?? null,
           latestAssessment: latestAssessment
             ? {
                 id: latestAssessment._id,

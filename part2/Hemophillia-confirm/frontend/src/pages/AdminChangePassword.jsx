@@ -1,37 +1,3 @@
-// import React,{useState} from "react";
-// import {useNavigate} from "react-router-dom";
-// import api from "../apiClient";
-// export default function AdminChangePassword(){const nav=useNavigate();const [f,setF]=useState({currentPassword:"",newPassword:"",confirmPassword:""});const [error,setError]=useState("");const [msg,setMsg]=useState("");const [saving,setSaving]=useState(false);const token=localStorage.getItem("adminToken");const submit=async e=>{e.preventDefault();setError("");setMsg("");if(!token)return nav("/admin-login",{replace:true});try{setSaving(true);const r=await api.post("/admin/change-password",f,{headers:{Authorization:`Bearer ${token}`}});setMsg(r.data.message||"Password changed successfully.");setF({currentPassword:"",newPassword:"",confirmPassword:""});setTimeout(()=>nav("/admin/dashboard",{replace:true}),700);}catch(e){if([401,403].includes(e.response?.status)){localStorage.removeItem("adminToken");localStorage.removeItem("admin");return nav("/admin-login",{replace:true});}setError(e.response?.data?.message||"Unable to change password.");}finally{setSaving(false);}};return <div style={s.page}><div style={s.card}><button style={s.back} onClick={()=>nav("/admin/dashboard")}>← Dashboard</button><div style={s.icon}>🔐</div><h1>Change Administrator Password</h1><p style={s.sub}>Create a new password for your administrator account.</p>{msg&&<div style={s.success}>{msg}</div>}{error&&<div style={s.error}>{error}</div>}<form onSubmit={submit}>{[["currentPassword","Current Password"],["newPassword","New Password"],["confirmPassword","Confirm New Password"]].map(([k,l])=><label style={s.label} key={k}>{l}<input style={s.input} type="password" value={f[k]} onChange={e=>setF(p=>({...p,[k]:e.target.value}))}/></label>)}<p style={s.hint}>Password must contain at least 8 characters.</p><button style={s.primary} disabled={saving}>{saving?"Saving...":"Change Password"}</button></form></div></div>}
-// const s={page:{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#f4f6fa",padding:24,fontFamily:"Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif",color:"#172033"},card:{width:"100%",maxWidth:500,background:"white",padding:30,borderRadius:16,border:"1px solid #e2e6ef",boxShadow:"0 8px 28px rgba(30,45,80,.08)"},back:{border:"1px solid #d8deea",background:"white",borderRadius:9,padding:"8px 12px",cursor:"pointer"},icon:{fontSize:34,marginTop:28},sub:{color:"#68738a",fontSize:14,lineHeight:1.5},label:{display:"block",fontSize:13,fontWeight:700,margin:"17px 0"},input:{display:"block",width:"100%",boxSizing:"border-box",marginTop:7,border:"1px solid #d7ddea",borderRadius:9,padding:12},hint:{fontSize:12,color:"#707b91"},primary:{width:"100%",border:0,borderRadius:9,padding:12,background:"#2f45a0",color:"white",fontWeight:800},success:{padding:12,borderRadius:9,background:"#e9f8ef",color:"#166534"},error:{padding:12,borderRadius:9,background:"#fff0f0",color:"#b42318"}}
-
-
-
-// import React,{useState} from "react";
-// import {useNavigate} from "react-router-dom";
-// import api from "../apiClient";
-// export default function AdminChangePassword()
-// {const nav=useNavigate();
-//     const [f,setF]=useState({currentPassword:"",newPassword:"",confirmPassword:""});
-//     const [error,setError]=useState("");
-//     const [msg,setMsg]=useState("");
-//     const [saving,setSaving]=useState(false);
-//     const token=localStorage.getItem("adminToken");
-//     const submit=async e=>{e.preventDefault();setError("");setMsg("");if(!token)return nav("/admin-login",{replace:true});try{setSaving(true);const r=await api.post("/admin/change-password",f,{headers:{Authorization:`Bearer ${token}`}});setMsg(r.data.message||"Password changed successfully.");setF({currentPassword:"",newPassword:"",confirmPassword:""});setTimeout(()=>nav("/admin/dashboard",{replace:true}),700);}catch(e){if([401,403].includes(e.response?.status)){localStorage.removeItem("adminToken");localStorage.removeItem("admin");return nav("/admin-login",{replace:true});}setError(e.response?.data?.message||"Unable to change password.");}finally{setSaving(false);}};return <div style={s.page}><div style={s.card}><button style={s.back} onClick={()=>nav("/admin/dashboard")}>← Dashboard</button><div style={s.icon}>🔐</div><h1>Change Administrator Password</h1><p style={s.sub}>Create a new password for your administrator account.</p>{msg&&<div style={s.success}>{msg}</div>}{error&&<div style={s.error}>{error}</div>}<form onSubmit={submit}>{[["currentPassword","Current Password"],["newPassword","New Password"],["confirmPassword","Confirm New Password"]].map(([k,l])=><label style={s.label} key={k}>{l}<input style={s.input} type="password" value={f[k]} onChange={e=>setF(p=>({...p,[k]:e.target.value}))}/></label>)}<p style={s.hint}>Password must contain at least 8 characters.</p><button style={s.primary} disabled={saving}>{saving?"Saving...":"Change Password"}</button></form></div></div>}
-// const s={page:{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#f4f6fa",padding:24,fontFamily:"Inter,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif",color:"#172033"},card:{width:"100%",maxWidth:500,background:"white",padding:30,borderRadius:16,border:"1px solid #e2e6ef",boxShadow:"0 8px 28px rgba(30,45,80,.08)"},back:{border:"1px solid #d8deea",background:"white",borderRadius:9,padding:"8px 12px",cursor:"pointer"},icon:{fontSize:34,marginTop:28},sub:{color:"#68738a",fontSize:14,lineHeight:1.5},label:{display:"block",fontSize:13,fontWeight:700,margin:"17px 0"},input:{display:"block",width:"100%",boxSizing:"border-box",marginTop:7,border:"1px solid #d7ddea",borderRadius:9,padding:12},hint:{fontSize:12,color:"#707b91"},primary:{width:"100%",border:0,borderRadius:9,padding:12,background:"#2f45a0",color:"white",fontWeight:800},success:{padding:12,borderRadius:9,background:"#e9f8ef",color:"#166534"},error:{padding:12,borderRadius:9,background:"#fff0f0",color:"#b42318"}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../apiClient";
