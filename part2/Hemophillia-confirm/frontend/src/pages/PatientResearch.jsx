@@ -1417,6 +1417,22 @@ const downloadPatientPDF = async () => {
 
 
             {/* =================================================
+                PATIENT NOTES
+            ================================================= */}
+
+            <div className="pr-card">
+
+              <InfoCard
+                label="Patient Notes"
+                value={
+                  hemophilia.patientNotes
+                }
+              />
+
+            </div>
+
+
+            {/* =================================================
                 EXERCISE RECOMMENDATIONS
                 Full exercise record belongs inside Patient Research.
             ================================================= */}
