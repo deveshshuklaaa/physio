@@ -28,8 +28,14 @@ const OTPVerification = () => {
   const [resendLoading, setResendLoading] =
     useState(false);
 
+  const [resendCooldown, setResendCooldown] =
+    useState(30);
+
   const [secondsLeft, setSecondsLeft] =
-    useState(300);
+    useState(180);
+
+  const [info, setInfo] =
+    useState("");
 
   // =====================================================
   // READ LOGIN INFORMATION
@@ -38,10 +44,13 @@ const OTPVerification = () => {
   const loginData =
     location.state || {};
 
-  const challengeId =
-    loginData.challengeId ||
-    sessionStorage.getItem(
-      "otpChallengeId"
+  // A resend issues a NEW challengeId, so this has to be state, not a const.
+  const [challengeId, setChallengeId] =
+    useState(
+      loginData.challengeId ||
+        sessionStorage.getItem(
+          "otpChallengeId"
+        )
     );
 
   const role =
@@ -135,6 +144,109 @@ const OTPVerification = () => {
     return () =>
       clearInterval(timer);
   }, [secondsLeft]);
+
+  // =====================================================
+  // RESEND COOLDOWN
+  // =====================================================
+
+  useEffect(() => {
+    if (resendCooldown <= 0) {
+      return;
+    }
+
+    const timer =
+      setInterval(() => {
+        setResendCooldown(
+          (previous) =>
+            Math.max(
+              previous - 1,
+              0
+            )
+        );
+      }, 1000);
+
+    return () =>
+      clearInterval(timer);
+  }, [resendCooldown]);
+
+  // =====================================================
+  // RESEND OTP
+  // =====================================================
+
+  const handleResend = async () => {
+    if (
+      resendCooldown > 0 ||
+      resendLoading ||
+      !challengeId
+    ) {
+      return;
+    }
+
+    setError("");
+    setInfo("");
+    setResendLoading(true);
+
+    try {
+      const response =
+        await api.post(
+          "/auth/resend-otp",
+          { challengeId }
+        );
+
+      const newChallengeId =
+        response.data?.challengeId;
+
+      if (newChallengeId) {
+        setChallengeId(
+          newChallengeId
+        );
+
+        sessionStorage.setItem(
+          "otpChallengeId",
+          newChallengeId
+        );
+      }
+
+      setOtp("");
+
+      setSecondsLeft(
+        response.data
+          ?.expiresInSeconds || 180
+      );
+
+      setResendCooldown(30);
+
+      setInfo(
+        "A new verification code has been sent."
+      );
+    } catch (err) {
+      // Expired challenge -- the only path back is a fresh login.
+      if (
+        err.response?.status === 410
+      ) {
+        setError(
+          "Your verification session has expired. Please login again."
+        );
+      } else {
+        setError(
+          err.response?.data?.message ||
+            "Unable to resend the verification code."
+        );
+      }
+
+      if (
+        err.response?.data
+          ?.remainingSeconds
+      ) {
+        setResendCooldown(
+          err.response.data
+            .remainingSeconds
+        );
+      }
+    } finally {
+      setResendLoading(false);
+    }
+  };
 
   // =====================================================
   // FORMAT TIME
@@ -583,6 +695,12 @@ const OTPVerification = () => {
             </div>
           )}
 
+          {info && !error && (
+            <div className="otp-info">
+              {info}
+            </div>
+          )}
+
           <button
             type="submit"
             disabled={
@@ -603,6 +721,22 @@ const OTPVerification = () => {
             {formatTime()}
           </strong>
         </div>
+
+        <button
+          type="button"
+          className="otp-resend"
+          onClick={handleResend}
+          disabled={
+            resendLoading ||
+            resendCooldown > 0
+          }
+        >
+          {resendLoading
+            ? "Sending..."
+            : resendCooldown > 0
+            ? `Resend code in ${resendCooldown}s`
+            : "Resend code"}
+        </button>
 
         <button
           type="button"
@@ -840,12 +974,54 @@ const OTPVerification = () => {
           font-size: 13px;
         }
 
+        .otp-info {
+          margin-top: 12px;
+
+          padding: 11px 13px;
+
+          border-radius: 10px;
+
+          background: #eef7f0;
+
+          color: #2c7a4b;
+
+          font-size: 13px;
+        }
+
         .otp-timer {
           margin-top: 20px;
 
           color: #71839b;
 
           font-size: 13px;
+        }
+
+        .otp-resend {
+          margin-top: 14px;
+
+          width: 100%;
+          height: 46px;
+
+          border: 1px solid #d7e0eb;
+          border-radius: 12px;
+
+          background: #ffffff;
+
+          color: #2c5ce0;
+
+          font-size: 13px;
+          font-weight: 800;
+
+          cursor: pointer;
+        }
+
+        .otp-resend:disabled {
+          color: #8ca0bb;
+          cursor: not-allowed;
+        }
+
+        .otp-resend:not(:disabled):hover {
+          background: #f6f9ff;
         }
 
         .otp-timer strong {

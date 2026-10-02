@@ -14,6 +14,8 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../apiClient";
 
+const reportLink = (sessionId) =>
+  `/dist/report.html?session_id=${encodeURIComponent(sessionId)}&api=${encodeURIComponent("/engine")}`;
 
 export default function PatientResearch() {
 
@@ -450,6 +452,21 @@ const downloadPatientPDF = async () => {
       v === ""
     ) {
       return fallback;
+    }
+
+    // Multi-value fields (targetJoint, jointsAffected, ...) would otherwise
+    // render as run-together React children, and [] would render as nothing.
+    if (Array.isArray(v)) {
+      const items = v.filter(
+        (item) =>
+          item !== null &&
+          item !== undefined &&
+          item !== ""
+      );
+
+      return items.length > 0
+        ? items.join(", ")
+        : fallback;
     }
 
     return v;
@@ -1694,6 +1711,10 @@ const downloadPatientPDF = async () => {
             />
 
             <div className="pr-card exercise-research-card">
+              <div className="exercise-section-head">
+                <span />
+                <span className="exercise-count">{pastSessions.length}</span>
+              </div>
               {sessionsLoading ? (
                 <div className="exercise-research-empty">
                   <strong>Loading session history…</strong>
@@ -1708,10 +1729,29 @@ const downloadPatientPDF = async () => {
                   <span>This patient has not run a camera-assessed exercise session.</span>
                 </div>
               ) : (
-                <div className="exercise-research-list">
-                  {pastSessions.map((s) => (
-                    <SessionHistoryItem key={s.sessionId} session={s} />
-                  ))}
+                <div className="past-sessions-table">
+                  <div className="past-sessions-row past-sessions-head">
+                    <span>Date</span>
+                    <span>Exercise</span>
+                    <span>Reps</span>
+                    <span>Clean rate</span>
+                    <span />
+                  </div>
+                  {pastSessions.map((s) => {
+                    const reps = s.repCount ?? 0;
+                    const clean = s.cleanReps ?? 0;
+                    const cleanRate = reps > 0 ? `${Math.round((clean / reps) * 100)}%` : "—";
+                    const started = s.startedAt ? new Date(s.startedAt).toLocaleDateString() : "—";
+                    return (
+                      <div className="past-sessions-row" key={s.sessionId}>
+                        <span>{started}</span>
+                        <span>{s.engineExercise || s.exerciseId || "—"}</span>
+                        <span>{reps}</span>
+                        <span>{cleanRate}</span>
+                        <a href={reportLink(s.sessionId)} target="_blank" rel="noopener noreferrer">View report</a>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -4657,86 +4697,12 @@ const downloadPatientPDF = async () => {
         .session-history-notes--pending { color:#8b98aa; font-size:12px; background:transparent; border:none; padding:6px 0; }
         .session-history-video { display:block; margin-top:10px; max-width:320px; border-radius:9px; }
         .session-history-video-unavailable { margin-top:10px; font-size:11px; color:#8b98aa; font-style:italic; }
-        @media(max-width:720px){ .exercise-research-item{flex-direction:column}.exercise-research-actions{align-items:flex-start}.exercise-review-buttons{width:100%}.exercise-approve-btn,.exercise-remove-btn{flex:1}.doctor-exercise-toolbar{flex-direction:column;align-items:flex-start}.doctor-add-exercise-btn{width:100%}.doctor-exercise-form-grid{grid-template-columns:1fr}.doctor-form-wide{grid-column:auto}.doctor-add-actions{flex-direction:column}.doctor-cancel-btn,.doctor-save-exercise-btn{width:100%} }
+        .exercise-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.exercise-count{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#edf3ff;color:#315dd0;font-weight:800}
+        .past-sessions-table{display:flex;flex-direction:column;gap:2px}.past-sessions-row{display:grid;grid-template-columns:1fr 1.4fr .7fr .8fr .9fr;gap:8px;align-items:center;padding:10px 8px;border-bottom:1px solid #eef1f6;font-size:12px;color:#34445f}.past-sessions-head{color:#8b98aa;font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;border-bottom:2px solid #e5eaf1}.past-sessions-row a{color:#356fd3;font-weight:700;text-decoration:none;justify-self:end}.past-sessions-row a:hover{text-decoration:underline}
+        @media(max-width:720px){ .exercise-research-item{flex-direction:column}.exercise-research-actions{align-items:flex-start}.exercise-review-buttons{width:100%}.exercise-approve-btn,.exercise-remove-btn{flex:1}.doctor-exercise-toolbar{flex-direction:column;align-items:flex-start}.doctor-add-exercise-btn{width:100%}.doctor-exercise-form-grid{grid-template-columns:1fr}.doctor-form-wide{grid-column:auto}.doctor-add-actions{flex-direction:column}.doctor-cancel-btn,.doctor-save-exercise-btn{width:100%}.past-sessions-row{grid-template-columns:1fr}.past-sessions-row a{justify-self:start}}
       `}
 </style>
 
-    </div>
-  );
-}
-
-// =========================================================
-// G2-G4: one row of the doctor's Session History list.
-//
-// Video gate, non-negotiable per the task brief: playable ONLY when
-// clinical.video.consentVideoMonitoring is true AND the file has not been
-// swept (deletedAt is null). A session with consent=false, or one whose
-// video already aged out of the 30-day retention window (video_retention.py),
-// shows "not available" -- never a broken player, never a silent guess.
-//
-// KNOWN GAP (named, not fixed here -- report.py is out of this agent's
-// ownership): there is no GET route yet to actually stream the file bytes.
-// This assumes the natural counterpart to the existing
-// `POST /session/{id}/video` upload route -- `GET /engine/session/{id}/video`
-// -- and renders a <video> tag pointed at it once the two consent/deletion
-// conditions pass. Until that GET route exists on the backend, the element
-// will 404 in the browser network tab even though the gate itself is
-// correct; the fix is one route in report.py, not a UI change here.
-function SessionHistoryItem({ session }) {
-  const video = session.clinical?.video || {};
-  const report = session.clinical?.report || {};
-  const videoPlayable = !!video.consentVideoMonitoring && !video.deletedAt && !!video.path;
-
-  const reps = session.repCount ?? 0;
-  const clean = session.cleanReps ?? 0;
-  const cleanRate = reps > 0 ? `${Math.round((clean / reps) * 100)}%` : "—";
-  const started = session.startedAt ? new Date(session.startedAt).toLocaleString() : "—";
-
-  return (
-    <div className="exercise-research-item session-history-item">
-      <div className="exercise-research-main">
-        <div className="exercise-research-icon">◔</div>
-        <div>
-          <h3>{session.engineExercise || session.exerciseId || "Session"}</h3>
-          <div className="exercise-research-meta">
-            <span>{started}</span>
-            <span>{reps} reps</span>
-            <span>{cleanRate} clean</span>
-            <span>{session.status || "—"}</span>
-          </div>
-
-          {report.text ? (
-            <div className="session-history-notes">
-              <strong>Coaching notes</strong>
-              <p>{report.text}</p>
-            </div>
-          ) : report.error ? (
-            <div className="session-history-notes session-history-notes--error">
-              <strong>Coaching notes unavailable</strong>
-              <p>{report.error}</p>
-            </div>
-          ) : (
-            <div className="session-history-notes session-history-notes--pending">
-              <span>Coaching notes not generated yet.</span>
-            </div>
-          )}
-
-          {videoPlayable ? (
-            <video
-              className="session-history-video"
-              controls
-              preload="none"
-              src={`/engine/session/${encodeURIComponent(session.sessionId)}/video`}
-            />
-          ) : (
-            <div className="session-history-video-unavailable">
-              {video.consentVideoMonitoring
-                ? "Video no longer available (retention period passed)."
-                : "Video not available — patient did not consent to video monitoring."}
-            </div>
-          )}
-        </div>
-      </div>
     </div>
   );
 }

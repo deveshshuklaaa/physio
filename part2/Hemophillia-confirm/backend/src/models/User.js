@@ -370,15 +370,15 @@ const userSchema = new mongoose.Schema(
       },
       canManageDoctors: {
         type: Boolean,
-        default: true,
+        default: false,
       },
       canViewPatients: {
         type: Boolean,
-        default: true,
+        default: false,
       },
       canManageDoctorRequests: {
         type: Boolean,
-        default: true,
+        default: false,
       },
     },
 

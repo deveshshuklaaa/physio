@@ -3,7 +3,7 @@ import ExercisePlan from "./pages/ExercisePlan";
 
 
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import AuthScreen from "./pages/AuthScreen";
 import ConsentScreen from "./pages/ConsentScreen";
@@ -16,8 +16,11 @@ import CareGuidanceScreen from "./pages/CareGuidanceScreen";
 import InfoChatbotScreen from "./pages/InfoChatbotScreen";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
+import RequireStaffAuth from "./components/RequireStaffAuth";
 import Report from "./pages/Report";
 import Chatbot from "./pages/HemophiliaChatbot";
+import NotFound from "./pages/NotFound";
+import PermissionDenied from "./pages/PermissionDenied";
 
 import DoctorLogin from "./pages/DoctorLogin";
 import DoctorChangePassword from "./pages/DoctorChangePassword";
@@ -94,9 +97,21 @@ function App() {
           DOCTOR DASHBOARD
       ========================= */}
 
+      <Route element={<RequireStaffAuth />}>
+        <Route
+          path="/doctor-dashboard"
+          element={<DoctorDashboard />}
+        />
+
+        <Route
+          path="/doctor/patient-research"
+          element={<PatientResearch />}
+        />
+      </Route>
+
       <Route
-        path="/doctor-dashboard"
-        element={<DoctorDashboard />}
+        path="/permission-denied"
+        element={<PermissionDenied />}
       />
 
 
@@ -128,11 +143,6 @@ function App() {
       <Route
         path="/register/profile"
         element={<ProfileStepper />}
-      />
-
-      <Route
-        path="/doctor/patient-research"
-        element={<PatientResearch />}
       />
 
 
@@ -234,12 +244,7 @@ function App() {
 
       <Route
         path="*"
-        element={
-          <Navigate
-            to="/"
-            replace
-          />
-        }
+        element={<NotFound />}
       />
 
     </Routes>

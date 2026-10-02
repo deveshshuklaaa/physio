@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 
 const {
+  resendLoginOTP,
   verifyLoginOTP,
 } = require("../services/otpService");
 
@@ -97,6 +98,72 @@ router.post(
         message:
           err.message ||
           "Unable to verify OTP",
+      });
+    }
+  }
+);
+
+// =====================================================
+// POST /api/auth/resend-otp
+// =====================================================
+
+router.post(
+  "/resend-otp",
+  async (req, res) => {
+    try {
+      const {
+        challengeId,
+      } = req.body || {};
+
+      if (!challengeId) {
+        return res.status(400).json({
+          success: false,
+          message:
+            "Challenge ID is required",
+        });
+      }
+
+      const result =
+        await resendLoginOTP({
+          challengeId,
+        });
+
+      return res.status(200).json({
+        success: true,
+        message:
+          "A new verification code has been sent to your registered email address.",
+        challengeId:
+          result.challengeId,
+        maskedEmail:
+          result.maskedEmail,
+        expiresInSeconds:
+          result.expiresInSeconds,
+      });
+    } catch (err) {
+      console.error(
+        "OTP resend error:",
+        err.message
+      );
+
+      if (err.code === "OTP_COOLDOWN") {
+        return res.status(429).json({
+          success: false,
+          message: err.message,
+          remainingSeconds:
+            err.remainingSeconds,
+        });
+      }
+
+      const status =
+        err.code === "OTP_NOT_FOUND"
+          ? 410
+          : 400;
+
+      return res.status(status).json({
+        success: false,
+        message:
+          err.message ||
+          "Unable to resend the verification code",
       });
     }
   }

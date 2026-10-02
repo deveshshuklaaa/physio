@@ -67,7 +67,8 @@ const hemophiliaDetailsSchema = new mongoose.Schema(
 
     jointsAffected: encryptedStringArray,
 
-    targetJoint: encryptedString,
+    // MULTIPLE values -- a patient can have more than one target joint.
+    targetJoint: encryptedStringArray,
 
     bleedFrequency: encryptedString,
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import api from "../apiClient";
 
 const DoctorLogin = () => {
@@ -7,9 +8,75 @@ const DoctorLogin = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+
+  // =========================================================
+  // GO TO OTP STEP
+  // =========================================================
+
+  const goToOtp = (data) => {
+    navigate("/verify-otp", {
+      state: {
+        challengeId: data.challengeId,
+        role: data.role || "doctor",
+        maskedEmail: data.maskedEmail,
+        user: data.user || null,
+      },
+      replace: true,
+    });
+  };
+
+  // =========================================================
+  // GOOGLE LOGIN - EXISTING DOCTOR ACCOUNTS ONLY
+  // =========================================================
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setError("");
+    setGoogleLoading(true);
+
+    try {
+      if (!credentialResponse?.credential) {
+        throw new Error(
+          "Google authentication credential is missing."
+        );
+      }
+
+      const res = await api.post("/doctor/google", {
+        credential: credentialResponse.credential,
+      });
+
+      // Google sign-in still goes through the email OTP step, same as
+      // password login -- staff 2FA is not bypassed.
+      if (res.data?.requiresOtp) {
+        goToOtp(res.data);
+        return;
+      }
+
+      throw new Error(
+        res.data?.message ||
+          "Unable to complete Google sign-in."
+      );
+    } catch (err) {
+      console.error("Doctor Google login error:", err);
+
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Google sign-in failed. Please try again."
+      );
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const handleGoogleError = () => {
+    setError(
+      "Google sign-in was cancelled or could not be completed."
+    );
+  };
 
   // =========================================================
   // FORMAT PHYSIOTHERAPIST ID
@@ -49,15 +116,7 @@ const DoctorLogin = () => {
       // =====================================================
 
       if (res.data?.requiresOtp) {
-        navigate("/verify-otp", {
-          state: {
-            challengeId: res.data.challengeId,
-            role: res.data.role || "doctor",
-            maskedEmail: res.data.maskedEmail,
-            user: res.data.user || null,
-          },
-          replace: true,
-        });
+        goToOtp(res.data);
 
         return;
       }
@@ -208,13 +267,8 @@ const DoctorLogin = () => {
                   value={doctorId}
                   onChange={(e) =>
                     setDoctorId(
-                      e.target.value
-                    )
-                  }
-                  onBlur={() =>
-                    setDoctorId(
                       formatProfessionalId(
-                        doctorId
+                        e.target.value
                       )
                     )
                   }
@@ -350,6 +404,45 @@ const DoctorLogin = () => {
             </button>
 
           </form>
+
+
+          {/* =================================================
+              GOOGLE SIGN-IN
+          ================================================= */}
+
+          <div className="doctor-google-section">
+
+            <div className="doctor-google-divider">
+              <span></span>
+              <p>OR</p>
+              <span></span>
+            </div>
+
+            <div className="doctor-google-button">
+              {googleLoading ? (
+                <div className="doctor-google-loading">
+                  Signing in with Google...
+                </div>
+              ) : (
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={handleGoogleError}
+                  useOneTap={false}
+                  theme="outline"
+                  size="large"
+                  width="100%"
+                  text="continue_with"
+                  shape="rectangular"
+                />
+              )}
+            </div>
+
+            <p className="doctor-google-note">
+              Use the Google account registered with your
+              Physiotherapist ID.
+            </p>
+
+          </div>
 
 
           {/* =================================================
@@ -958,6 +1051,76 @@ const DoctorLogin = () => {
            SIGN UP
         ===================================================== */
 
+        .doctor-google-section {
+          margin-top: 22px;
+        }
+
+
+        .doctor-google-divider {
+          display: flex;
+
+          align-items: center;
+
+          gap: 11px;
+
+          margin-bottom: 14px;
+        }
+
+
+        .doctor-google-divider span {
+          flex: 1;
+
+          height: 1px;
+
+          background: #e8edf4;
+        }
+
+
+        .doctor-google-divider p {
+          margin: 0;
+
+          color: #94a5b7;
+
+          font-size: 11px;
+
+          white-space: nowrap;
+        }
+
+
+        .doctor-google-button {
+          display: flex;
+
+          justify-content: center;
+        }
+
+
+        .doctor-google-loading {
+          height: 46px;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          color: #617691;
+
+          font-size: 13px;
+          font-weight: 700;
+        }
+
+
+        .doctor-google-note {
+          margin: 10px 0 0;
+
+          text-align: center;
+
+          color: #94a5b7;
+
+          font-size: 11px;
+
+          line-height: 1.5;
+        }
+
+
         .signup-area {
           margin-top: 26px;
         }
@@ -1217,4 +1380,23 @@ const DoctorLogin = () => {
   );
 };
 
-export default DoctorLogin;
+const DoctorLoginScreen = () => {
+  const googleClientId =
+    import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+  if (!googleClientId) {
+    console.error(
+      "VITE_GOOGLE_CLIENT_ID is missing from the frontend .env file."
+    );
+  }
+
+  return (
+    <GoogleOAuthProvider
+      clientId={googleClientId || ""}
+    >
+      <DoctorLogin />
+    </GoogleOAuthProvider>
+  );
+};
+
+export default DoctorLoginScreen;

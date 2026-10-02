@@ -974,17 +974,21 @@ router.get("/dashboard", staffAuth, async (req, res) => {
         });
       }
 
-      // Target joint
-      if (record.targetJoint) {
-        const targetJoint = String(
-          record.targetJoint
-        ).trim();
+      // Target joint -- multi-value. Older records hold a single string.
+      const targetJoints = Array.isArray(record.targetJoint)
+        ? record.targetJoint
+        : [record.targetJoint];
 
-        if (targetJoint) {
-          jointCounts[targetJoint] =
-            (jointCounts[targetJoint] || 0) + 1;
-        }
-      }
+      targetJoints.forEach((joint) => {
+        if (!joint) return;
+
+        const normalizedJoint = String(joint).trim();
+
+        if (!normalizedJoint) return;
+
+        jointCounts[normalizedJoint] =
+          (jointCounts[normalizedJoint] || 0) + 1;
+      });
     });
 
     const jointDistribution = Object.entries(
@@ -1286,10 +1290,14 @@ router.get("/dashboard", staffAuth, async (req, res) => {
     // -------------------------------------------------
 
     const patientsWithTargetJoint =
-      hemophiliaRecords.filter(
-        (record) =>
-          record.targetJoint &&
-          String(record.targetJoint).trim() !== ""
+      hemophiliaRecords.filter((record) =>
+        (Array.isArray(record.targetJoint)
+          ? record.targetJoint
+          : [record.targetJoint]
+        ).some(
+          (joint) =>
+            joint && String(joint).trim() !== ""
+        )
       ).length;
 
     if (patientsWithTargetJoint > 0) {

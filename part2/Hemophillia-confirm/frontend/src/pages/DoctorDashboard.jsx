@@ -1882,7 +1882,14 @@ if (error) {
                           </span>
                         </td>
                         <td>{patient.lastBleedDate ? new Date(patient.lastBleedDate).toLocaleDateString() : "Not recorded"}</td>
-                        <td>{patient.targetJoint || "None recorded"}</td>
+                        <td>
+                          {(Array.isArray(patient.targetJoint)
+                            ? patient.targetJoint
+                            : [patient.targetJoint]
+                          )
+                            .filter(Boolean)
+                            .join(", ") || "None recorded"}
+                        </td>
                         <td>
                           {assessment ? (
                             <span className={`clinical-pill risk-${String(assessment.riskLevel || "unknown").toLowerCase()}`}>

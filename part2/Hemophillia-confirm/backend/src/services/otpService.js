@@ -9,9 +9,9 @@ const { sendLoginOTP } = require("./emailService");
 // =====================================================
 
 const OTP_LENGTH = 6;
-const OTP_EXPIRY_MINUTES = 5;
+const OTP_EXPIRY_MINUTES = 3;
 const MAX_ATTEMPTS = 5;
-const RESEND_COOLDOWN_SECONDS = 60;
+const RESEND_COOLDOWN_SECONDS = 30;
 
 // =====================================================
 // GENERATE SECURE 6-DIGIT OTP
@@ -401,8 +401,50 @@ async function verifyLoginOTP({
   };
 }
 
+// =====================================================
+// RESEND LOGIN OTP
+//
+// The password is never stored client-side, so a resend cannot re-run the
+// login route. The pending challenge already holds everything needed
+// (userId/email/role/authPayload/userData), so re-issue from that record.
+// challengeId is 32 random bytes, so holding it is the proof of possession;
+// createLoginOTP still enforces RESEND_COOLDOWN_SECONDS.
+// =====================================================
+
+async function resendLoginOTP({ challengeId }) {
+  if (!challengeId) {
+    const error = new Error("Challenge ID is required");
+    error.code = "INVALID_CHALLENGE";
+    throw error;
+  }
+
+  const existing = await LoginOTP.findOne({
+    challengeId: String(challengeId),
+    verified: false,
+  });
+
+  if (!existing) {
+    const error = new Error(
+      "Your verification session has expired. Please login again."
+    );
+    error.code = "OTP_NOT_FOUND";
+    throw error;
+  }
+
+  // createLoginOTP deletes the previous unverified OTPs for this user and
+  // returns a fresh challengeId, so the caller must replace the old one.
+  return createLoginOTP({
+    userId: existing.userId,
+    email: existing.email,
+    role: existing.role,
+    authPayload: existing.authPayload,
+    userData: existing.userData,
+  });
+}
+
 module.exports = {
   createLoginOTP,
+  resendLoginOTP,
   verifyLoginOTP,
   maskEmail,
 };

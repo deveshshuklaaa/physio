@@ -1,10 +1,12 @@
+# syntax=docker/dockerfile:1
 FROM python:3.12-slim
 
 WORKDIR /app
 
 COPY requirements.txt .
-RUN python3 -m venv /opt/backend-venv \
-    && /opt/backend-venv/bin/pip install --no-cache-dir -r requirements.txt
+RUN --mount=type=cache,target=/root/.cache/pip \
+    python3 -m venv /opt/backend-venv \
+    && /opt/backend-venv/bin/pip install -r requirements.txt
 
 ENV PATH="/opt/backend-venv/bin:${PATH}"
 

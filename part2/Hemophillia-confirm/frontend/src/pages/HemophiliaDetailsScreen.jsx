@@ -407,6 +407,12 @@ const HemophiliaDetailsScreen = () => {
       targetJoint:
         "Target Joint",
 
+      targetJointHelp:
+        "Select every joint that bleeds repeatedly. At least one is required.",
+
+      noTargetJointSelected:
+        "No target joint selected",
+
       selectTargetJoint:
         "Select target joint",
 
@@ -869,6 +875,12 @@ const HemophiliaDetailsScreen = () => {
 
       targetJoint:
         "टारगेट जोड़",
+
+      targetJointHelp:
+        "बार-बार रक्तस्राव वाले सभी जोड़ चुनें। कम से कम एक आवश्यक है।",
+
+      noTargetJointSelected:
+        "कोई टारगेट जोड़ चयनित नहीं है",
 
       selectTargetJoint:
         "टारगेट जोड़ चुनें",
@@ -1333,6 +1345,12 @@ const HemophiliaDetailsScreen = () => {
       targetJoint:
         "टार्गेट सांधा",
 
+      targetJointHelp:
+        "वारंवार रक्तस्त्राव होणारे सर्व सांधे निवडा. किमान एक आवश्यक आहे.",
+
+      noTargetJointSelected:
+        "कोणताही टार्गेट सांधा निवडलेला नाही",
+
       selectTargetJoint:
         "टार्गेट सांधा निवडा",
 
@@ -1672,7 +1690,7 @@ const HemophiliaDetailsScreen = () => {
 
   bleedingPattern: "",
   jointsAffected: [],
-  targetJoint: "",
+  targetJoint: [],
   bleedFrequency: "",
   lastBleedDate: "",
   otherBleedingDetails: "",
@@ -1968,6 +1986,40 @@ const handleDoctorChangeRequest =
   };
 
   // =====================================================
+  // TOGGLE TARGET JOINT
+  // =====================================================
+
+  const toggleTargetJoint = (
+    joint
+  ) => {
+    setForm((prev) => {
+      const current =
+        Array.isArray(prev.targetJoint)
+          ? prev.targetJoint
+          : [];
+
+      const exists =
+        current.includes(joint);
+
+      return {
+        ...prev,
+
+        targetJoint: exists
+          ? current.filter(
+              (j) => j !== joint
+            )
+          : [...current, joint],
+      };
+    });
+
+    setMissingFields((prev) =>
+      prev.filter(
+        (f) => f !== "targetJoint"
+      )
+    );
+  };
+
+  // =====================================================
   // TOGGLE PHYSIO PROBLEM
   // =====================================================
 
@@ -2009,6 +2061,10 @@ const handleDoctorChangeRequest =
     if (!form.severity) missing.push("severity");
     if (!form.bleedingPattern) missing.push("bleedingPattern");
     if (!form.bleedFrequency) missing.push("bleedFrequency");
+    if (
+      !Array.isArray(form.targetJoint) ||
+      form.targetJoint.length === 0
+    ) missing.push("targetJoint");
     if (!form.consultingDoctorId) missing.push("consultingDoctorId");
     if (form.underPhysiotherapy === "") missing.push("underPhysiotherapy");
 
@@ -2703,53 +2759,74 @@ const handleDoctorChangeRequest =
           </div>
 
 
-          {/* TARGET JOINT + LAST BLEED */}
+          {/* TARGET JOINT - MULTI SELECT, REQUIRED */}
 
-          <div className="form-grid two-columns">
+          <div
+            className="field joint-field"
+            data-field="targetJoint"
+          >
 
-            <div className="field">
+            <label>
+              {txt.targetJoint}
+              <span className="target-joint-required"> *</span>
+            </label>
 
-              <label>
-                {txt.targetJoint}
-              </label>
+            <p className="field-help">
+              {txt.targetJointHelp}
+            </p>
 
-              <select
-                value={
-                  form.targetJoint
-                }
-                onChange={(e) =>
-                  updateField(
-                    "targetJoint",
-                    e.target.value
-                  )
-                }
-              >
+            <div
+              className={`joint-grid ${
+                missingFields.includes("targetJoint")
+                  ? "joint-grid-error"
+                  : ""
+              }`}
+            >
+              {joints.map((joint) => {
+                const selected =
+                  Array.isArray(form.targetJoint) &&
+                  form.targetJoint.includes(joint.value);
 
-                <option value="">
-                  {txt.selectTargetJoint}
-                </option>
-
-                <option value="">
-                  {txt.none}
-                </option>
-
-                {joints.map(
-                  (joint) => (
-                    <option
-                      key={joint.value}
-                      value={
-                        joint.value
-                      }
-                    >
-                      {joint.label}
-                    </option>
-                  )
-                )}
-
-              </select>
-
+                return (
+                  <button
+                    key={joint.value}
+                    type="button"
+                    className={`joint-chip ${
+                      selected ? "active" : ""
+                    }`}
+                    onClick={() =>
+                      toggleTargetJoint(joint.value)
+                    }
+                    aria-pressed={selected}
+                  >
+                    <span className="joint-check">
+                      {selected ? "✓" : ""}
+                    </span>
+                    {joint.label}
+                  </button>
+                );
+              })}
             </div>
 
+            <p className="field-help selected-joints-help">
+              {Array.isArray(form.targetJoint) &&
+              form.targetJoint.length > 0
+                ? `${txt.selectedJoints}: ${form.targetJoint
+                    .map(
+                      (value) =>
+                        joints.find((joint) => joint.value === value)?.label ||
+                        value
+                    )
+                    .join(", ")}`
+                : txt.noTargetJointSelected}
+            </p>
+
+          </div>
+
+
+          {/* LAST BLEED */}
+
+          <div className="form-grid two-columns">
 
             <div className="field">
 
@@ -4255,6 +4332,18 @@ const handleDoctorChangeRequest =
         .field-error {
           border-color: #e53935 !important;
           box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.18);
+        }
+
+        .joint-grid-error {
+          border: 1px solid #e53935;
+          border-radius: 10px;
+          padding: 8px;
+          box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.18);
+        }
+
+        .target-joint-required {
+          color: #e53935;
+          font-weight: 700;
         }
 
         .field input,

@@ -61,9 +61,9 @@ const validateFullName = (name) => {
 
   const nameParts = cleanedName.split(" ");
 
-  // Must have First + Middle + Last name
-  if (nameParts.length !== 3) {
-    return "Please enter your full name in the format: First Name Middle Name Last Name.";
+  // First + Last required, Middle name optional
+  if (nameParts.length < 2 || nameParts.length > 3) {
+    return "Please enter your full name in the format: First Name Middle Name (optional) Last Name.";
   }
 
   // Allow letters, hyphen and apostrophe
@@ -396,7 +396,7 @@ const validateFullName = (name) => {
                     onBlur={() => {
                       setFullName(formatFullName(fullName));
                     }}
-                    placeholder="First Name Middle Name Last Name"
+                    placeholder="First Name Middle Name (optional) Last Name"
                     autoComplete="name"
                     disabled={loading || googleLoading}
                     required

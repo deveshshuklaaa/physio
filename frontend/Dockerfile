@@ -1,9 +1,10 @@
 # Build context is frontend/ (contains both the React source under app/ and
 # the vanilla live-session page under src/, built in Phase G/J).
+# syntax=docker/dockerfile:1
 FROM node:20-alpine AS build
 WORKDIR /build
 COPY app/package.json app/package-lock.json ./
-RUN npm ci
+RUN --mount=type=cache,target=/root/.npm npm ci
 COPY app/ ./
 RUN npm run build
 # vite.config.js outDir is "../dist" relative to /build -> /dist

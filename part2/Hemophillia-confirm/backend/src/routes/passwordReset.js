@@ -10,9 +10,9 @@ const {
 
 const router = express.Router();
 
-const OTP_EXPIRY_MINUTES = 5;
+const OTP_EXPIRY_MINUTES = 3;
 const MAX_ATTEMPTS = 5;
-const RESEND_COOLDOWN_SECONDS = 60;
+const RESEND_COOLDOWN_SECONDS = 30;
 const RESET_TOKEN_MINUTES = 10;
 
 const passwordRegex =

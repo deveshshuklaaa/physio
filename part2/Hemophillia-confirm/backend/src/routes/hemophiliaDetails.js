@@ -1120,9 +1120,42 @@ router.post(
       const data =
         req.body || {};
 
-        // =====================================================
-// CHECK EXISTING DOCTOR ASSIGNMENT
-// =====================================================
+      // =====================================================
+      // TARGET JOINT -- REQUIRED, MULTI-VALUE
+      //
+      // Accepts an array, and still accepts a single string so an older
+      // client (or a record saved before this field became multi-value)
+      // does not break. Normalized to a de-duplicated array either way.
+      // =====================================================
+
+      const normalizedTargetJoint = (
+        Array.isArray(data.targetJoint)
+          ? data.targetJoint
+          : [data.targetJoint]
+      )
+        .map((value) =>
+          typeof value === "string"
+            ? value.trim()
+            : ""
+        )
+        .filter(Boolean);
+
+      const uniqueTargetJoint = [
+        ...new Set(normalizedTargetJoint),
+      ];
+
+      if (uniqueTargetJoint.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message:
+            "At least one target joint is required.",
+          field: "targetJoint",
+        });
+      }
+
+      // =====================================================
+      // CHECK EXISTING DOCTOR ASSIGNMENT
+      // =====================================================
 
       const existingDetails =
         await HemophiliaDetails.findOne({
@@ -1251,6 +1284,8 @@ router.post(
   consultingDoctorId: consultingDoctor
     ? consultingDoctor._id
     : null,
+
+  targetJoint: uniqueTargetJoint,
 
   // ---------------------------------------------
   // PHYSIOTHERAPY BOOLEAN VALUES

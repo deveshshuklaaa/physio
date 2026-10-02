@@ -80,6 +80,12 @@ export default function ForgotPassword() {
   const [secondsLeft, setSecondsLeft] =
     useState(0);
 
+  const [resendCooldown, setResendCooldown] =
+    useState(0);
+
+  const [resendLoading, setResendLoading] =
+    useState(false);
+
   const [loading, setLoading] =
     useState(false);
 
@@ -147,6 +153,26 @@ export default function ForgotPassword() {
       clearInterval(timer);
   }, [secondsLeft]);
 
+  useEffect(() => {
+    if (resendCooldown <= 0) {
+      return undefined;
+    }
+
+    const timer =
+      setInterval(() => {
+        setResendCooldown(
+          (previous) =>
+            Math.max(
+              previous - 1,
+              0
+            )
+        );
+      }, 1000);
+
+    return () =>
+      clearInterval(timer);
+  }, [resendCooldown]);
+
   const formatTime = () => {
     const minutes =
       Math.floor(secondsLeft / 60);
@@ -157,6 +183,79 @@ export default function ForgotPassword() {
     return `${minutes}:${String(
       seconds
     ).padStart(2, "0")}`;
+  };
+
+  const requestOTP = async (
+    value,
+    { isResend = false } = {}
+  ) => {
+    try {
+      isResend
+        ? setResendLoading(true)
+        : setLoading(true);
+
+      const payload =
+        role === "doctor"
+          ? {
+              role,
+              professionalId:
+                value,
+            }
+          : {
+              role,
+              email: value,
+            };
+
+      const response =
+        await api.post(
+          "/password-reset/request",
+          payload
+        );
+
+      if (
+        response.data?.success &&
+        response.data?.challengeId
+      ) {
+        setChallengeId(
+          response.data.challengeId
+        );
+
+        setMaskedEmail(
+          response.data.maskedEmail ||
+            ""
+        );
+
+        setSecondsLeft(
+          response.data
+            .expiresInSeconds ||
+            180
+        );
+
+        setResendCooldown(30);
+        setStep("otp");
+
+        if (isResend) {
+          setSuccess(
+            "A new verification code has been sent."
+          );
+        }
+        return;
+      }
+
+      setSuccess(
+        response.data?.message ||
+          "If the account exists, a verification code has been sent."
+      );
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          "Unable to send the verification code. Please try again."
+      );
+    } finally {
+      isResend
+        ? setResendLoading(false)
+        : setLoading(false);
+    }
   };
 
   const handleRequestOTP =
@@ -190,63 +289,25 @@ export default function ForgotPassword() {
         return;
       }
 
-      try {
-        setLoading(true);
-
-        const payload =
-          role === "doctor"
-            ? {
-                role,
-                professionalId:
-                  value,
-              }
-            : {
-                role,
-                email: value,
-              };
-
-        const response =
-          await api.post(
-            "/password-reset/request",
-            payload
-          );
-
-        if (
-          response.data?.success &&
-          response.data?.challengeId
-        ) {
-          setChallengeId(
-            response.data.challengeId
-          );
-
-          setMaskedEmail(
-            response.data.maskedEmail ||
-              ""
-          );
-
-          setSecondsLeft(
-            response.data
-              .expiresInSeconds ||
-              300
-          );
-
-          setStep("otp");
-          return;
-        }
-
-        setSuccess(
-          response.data?.message ||
-            "If the account exists, a verification code has been sent."
-        );
-      } catch (err) {
-        setError(
-          err.response?.data?.message ||
-            "Unable to send the verification code. Please try again."
-        );
-      } finally {
-        setLoading(false);
-      }
+      await requestOTP(value);
     };
+
+  const handleResendOTP = async () => {
+    if (
+      resendCooldown > 0 ||
+      resendLoading
+    ) {
+      return;
+    }
+
+    setError("");
+    setSuccess("");
+
+    await requestOTP(
+      identifier.trim(),
+      { isResend: true }
+    );
+  };
 
   const handleVerifyOTP =
     async (event) => {
@@ -555,6 +616,22 @@ export default function ForgotPassword() {
                 {formatTime()}
               </strong>
             </div>
+
+            <button
+              type="button"
+              style={styles.primaryButton}
+              onClick={handleResendOTP}
+              disabled={
+                resendCooldown > 0 ||
+                resendLoading
+              }
+            >
+              {resendLoading
+                ? "Resending..."
+                : resendCooldown > 0
+                ? `Resend code in ${resendCooldown}s`
+                : "Resend code"}
+            </button>
           </form>
         )}
 

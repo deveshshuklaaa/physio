@@ -640,7 +640,17 @@ const toFHIRObservations = (assessment, details) => {
         // Target Joint
         // -----------------------------------------------
 
-        if (details.targetJoint) {
+        // Multi-value. FHIR valueString is a single string, so the joints
+        // are joined -- older records hold a single string already.
+        const targetJointText = (
+            Array.isArray(details.targetJoint)
+                ? details.targetJoint
+                : [details.targetJoint]
+        )
+            .filter(Boolean)
+            .join(", ");
+
+        if (targetJointText) {
 
             observations.push(
                 createObservation({
@@ -650,7 +660,7 @@ const toFHIRObservations = (assessment, details) => {
                         "Target Joint",
 
                     valueString:
-                        details.targetJoint,
+                        targetJointText,
 
                     patientId,
 

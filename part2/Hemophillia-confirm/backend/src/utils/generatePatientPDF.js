@@ -1151,7 +1151,12 @@ const generatePatientReport = (data, res) => {
     },
     {
       label: "Target Joint",
-      value: bleeding.targetJoint,
+      value: (Array.isArray(bleeding.targetJoint)
+        ? bleeding.targetJoint
+        : [bleeding.targetJoint]
+      )
+        .filter(Boolean)
+        .join(", ") || "None recorded",
     },
   ]);
 

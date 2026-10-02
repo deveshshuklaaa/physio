@@ -307,6 +307,21 @@ const downloadPatientPDF = async () => {
       return fallback;
     }
 
+    // Multi-value fields (targetJoint, jointsAffected, ...) would otherwise
+    // render as run-together React children, and [] would render as nothing.
+    if (Array.isArray(v)) {
+      const items = v.filter(
+        (item) =>
+          item !== null &&
+          item !== undefined &&
+          item !== ""
+      );
+
+      return items.length > 0
+        ? items.join(", ")
+        : fallback;
+    }
+
     return v;
   };
 

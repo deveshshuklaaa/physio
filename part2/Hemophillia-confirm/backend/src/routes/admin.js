@@ -5841,6 +5841,7 @@ router.get(
 router.post(
   "/doctor-requests/:requestId/approve",
   adminAuth,
+  adminAuth.requirePermission("canManageDoctorRequests"),
   async (req, res) => {
 
     try {
@@ -6197,6 +6198,7 @@ router.post(
 router.post(
   "/doctor-requests/:requestId/reject",
   adminAuth,
+  adminAuth.requirePermission("canManageDoctorRequests"),
   async (req, res) => {
 
     try {
