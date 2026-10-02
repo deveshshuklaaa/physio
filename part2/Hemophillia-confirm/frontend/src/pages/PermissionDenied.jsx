@@ -1,8 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { homePath } from "../apiClient";
 
 const PermissionDenied = () => {
   const navigate = useNavigate();
+  const home = homePath();
 
   return (
     <div className="status-page">
@@ -21,9 +23,9 @@ const PermissionDenied = () => {
         <button
           type="button"
           className="status-btn"
-          onClick={() => navigate("/")}
+          onClick={() => navigate(home)}
         >
-          Back to login
+          {home === "/" ? "Back to login" : "Back to home"}
         </button>
       </div>
 

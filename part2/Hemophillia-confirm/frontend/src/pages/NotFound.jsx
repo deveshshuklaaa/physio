@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { homePath } from "../apiClient";
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const NotFound = () => {
         <button
           type="button"
           className="status-btn"
-          onClick={() => navigate("/")}
+          onClick={() => navigate(homePath())}
         >
           Back to home
         </button>

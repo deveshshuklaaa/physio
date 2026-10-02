@@ -51,4 +51,15 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Home route for whoever is currently signed in, from the tokens the login
+// flows already store. Returns "/" (patient login) when nobody is signed in.
+export const homePath = () =>
+  localStorage.getItem("adminToken")
+    ? "/admin/dashboard"
+    : localStorage.getItem("staffAuthToken")
+    ? "/doctor-dashboard"
+    : localStorage.getItem("authToken")
+    ? "/awareness"
+    : "/";
+
 export default api;
