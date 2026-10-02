@@ -484,3 +484,87 @@ Flagged so the difference is on the record, not to reopen any of them:
 The `graphify-out/` snapshot used for lead generation is dated 2026-08-23 and was
 stale by roughly two weeks at audit time. Every phase verdict above rests on a
 file read or grep against the working tree, not on the graph alone.
+
+## Plan — richer dynamic exercise prescription (added 2026-10-03, not built)
+
+Goal: a doctor prescribes reps and sets, target joint angles, and frequency
+(times per day / per week); the engine checks against them; adherence is tracked.
+
+### What exists today
+
+- `patientexerciserecommendations` (`backend/src/models/PatientExerciseRecommendation.js`)
+  already has `sets` (Number), `repetitionsOrDuration` (String, free text),
+  `frequency` (String, free text, default "as advised") and `schedule`.
+- **`schedule` is declared and accepted by `POST /doctor/patient/:id/add`
+  (`routes/exerciseRecommendations.js`) but is null on all 35 existing documents
+  and read by nothing. Unused field.**
+- `sets` / `repetitionsOrDuration` / `frequency` are display-only on
+  `ExercisePlan.jsx`. Nothing in the engine reads them. `repetitionsOrDuration`
+  being a string means it cannot be compared to `physiosessions.repCount`.
+- Engine thresholds come only from `backend/app/config/exercises.json`
+  (`rep_trigger.enter_angle`, `exit_angle`, `depth_target`; isometric
+  `hold_min_angle` / `hold_max_angle`), served by `GET /exercises` and compiled
+  into checks by `frontend/src/lib/rules.js` + `frontend/src/lib/checks/*.js`.
+  The same values for every patient.
+- `physiosessions` (`backend/app/models/session_doc.py`) already stores
+  `recommendationId`, `patientUserId`, `startedAt`, `repCount`, `cleanReps`,
+  `status`, and indexes `(patientUserId, startedAt)`. Adherence needs no new
+  session fields.
+
+### Schema changes (add, do not rename; keep the string fields for old rows)
+
+- `targetSets` Number, `targetReps` Number (validated ints, 1..100 / 1..20),
+  `targetHoldSeconds` Number|null for isometrics. Legacy strings stay for display.
+- `targetAngles`: `{ enterAngle, exitAngle, depthTarget, holdMinAngle, holdMaxAngle }`,
+  all Number|null, null = use engine default.
+- `frequencyPerDay` Number|null, `frequencyPerWeek` Number|null; replace free-text
+  `frequency` as the source of truth. Use the already-present `schedule` only if
+  weekday selection is wanted (e.g. "MON,WED,FRI"); otherwise delete it.
+- Server-side validation is strict: integer ranges, angles within the
+  exercise's clinical min/max, `enter` vs `exit` ordering per `direction`.
+  Client checks format only.
+
+### Routes and UI
+
+- Backend: extend `POST .../doctor/patient/:id/add` and add
+  `PATCH .../doctor/recommendation/:recId` (currently no edit path, only
+  add/remove) in `routes/exerciseRecommendations.js`; return the new fields from the
+  patient list route. Reuse `verifyAssignedDoctor`.
+- Doctor UI: form fields in the add-exercise dialog on `PatientResearch.jsx`
+  (owned by another stream, coordinate before touching).
+- Patient UI: `ExercisePlan.jsx` shows "3 x 10, twice daily" and today's progress.
+
+### Angles reaching the engine
+
+1. `ExerciseSelect.jsx` already receives `?rec=<recId>` and passes
+   `recommendationId` into the session (`session_doc.py`).
+2. Engine session start (`backend/app/routes/session.py`) loads the
+   recommendation by id (patient must own it), validates `targetAngles` again
+   against `exercises.json` bounds, and returns an override block
+   with the session.
+3. The browser merges override over the `GET /exercises` record before
+   `rules.js` builds its checks; no client-held numbers except what the server sent.
+   Snapshot the effective thresholds into `physiosessions.clinical` so a report
+   is judged against what was applied.
+4. Clinical sign-off: `exercises.json` values are marked "NOT clinician-signed";
+   doctor overrides need bounds the clinician approves first.
+5. Out of scope here and still open: auto-ending a session at the prescribed rep count.
+
+### Adherence tracking
+
+- Count `physiosessions` where `recommendationId` matches, `status` in
+  (`ended`, `reported`), and `cleanReps >= targetReps * targetSets` (or a
+  doctor-set completion ratio), grouped by local day / ISO week of `startedAt`.
+- Endpoint: `GET /api/exercise-recommendations/adherence?patientUserId=...`
+  (staff) and `/me` for the patient. Mongo aggregation, no new collection.
+- Timezone: store days in a clinic timezone (IST) or adherence flips at UTC midnight.
+- Rows with no `recommendationId` (self-started) are shown but not counted.
+
+### Build order
+
+1. Schema + strict validation + migration script (backfill targets from the
+   legacy strings where parseable; leave others null).
+2. Doctor form + patient display (reps/sets/frequency only; no engine change).
+3. Adherence aggregation + patient/doctor views.
+4. Angle overrides: engine session start, `rules.js` merge, threshold snapshot.
+   Last, because it is the only clinically risky step and needs sign-off.

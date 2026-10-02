@@ -23,7 +23,8 @@ const patientExerciseRecommendationSchema = new mongoose.Schema(
       // G2-C6: "RULE" is the new deterministic source. "ML" and
       // "RULE_FALLBACK" are kept -- not retired -- because existing rows
       // still carry them; retire only after those rows are migrated.
-      enum: ["ML", "DOCTOR", "RULE_FALLBACK", "RULE"],
+        // Future comment : above comment has been done, fallback will be removed
+      enum: ["ML", "DOCTOR", "RULE"],
       required: true,
     },
     status: {

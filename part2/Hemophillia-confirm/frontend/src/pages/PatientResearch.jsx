@@ -50,6 +50,7 @@ export default function PatientResearch() {
   // =========================================================
   const [exerciseCatalog, setExerciseCatalog] = useState([]);
   const [showAddExercise, setShowAddExercise] = useState(false);
+  const [addMsg, setAddMsg] = useState(null); // {ok, text} shown in add panel
   const [addingExercise, setAddingExercise] = useState(false);
   const [manualExercise, setManualExercise] = useState({
     exerciseId: "",
@@ -63,6 +64,12 @@ export default function PatientResearch() {
     frequency: "3 times/week",
     doctorNote: "",
   });
+
+  // =========================================================
+  // EXERCISE REMOVAL CONFIRMATION
+  // =========================================================
+  const [exerciseToRemove, setExerciseToRemove] = useState(null);
+  const [removingExercise, setRemovingExercise] = useState(false);
 
 
   // =========================================================
@@ -105,6 +112,48 @@ export default function PatientResearch() {
 
     navigate("/doctor-login");
   };
+
+  const openExerciseRemovalModal = (exercise) => {
+    setError("");
+    setExerciseToRemove(exercise);
+  };
+
+  const closeExerciseRemovalModal = () => {
+    if (removingExercise) return;
+    setExerciseToRemove(null);
+  };
+
+  const confirmRemoveExercise = async () => {
+    if (!exerciseToRemove || removingExercise) return;
+
+    try {
+      setRemovingExercise(true);
+      setError("");
+
+      const token = localStorage.getItem("staffAuthToken");
+      await api.post(
+        `/exercise-recommendations/doctor/${exerciseToRemove._id}/remove`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setExerciseToRemove(null);
+      await searchPatient(undefined, profile.patientId || patientId);
+    } catch (err) {
+      setError(err.response?.data?.message || "Unable to remove exercise.");
+      setExerciseToRemove(null);
+    } finally {
+      setRemovingExercise(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!exerciseToRemove) return;
+    const onKey = (e) => {
+      if (e.key === "Escape" && !removingExercise) closeExerciseRemovalModal();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [exerciseToRemove, removingExercise]);
 
 
   // =========================================================
@@ -251,6 +300,7 @@ export default function PatientResearch() {
   };
 
   const openManualExercise = async () => {
+    setAddMsg(null);
     setShowAddExercise(true);
     if (exerciseCatalog.length === 0) {
       await loadExerciseCatalog();
@@ -299,22 +349,23 @@ export default function PatientResearch() {
     ).trim().toUpperCase();
 
     if (!targetPatientId) {
-      setError("Search for a patient before adding an exercise.");
+      setAddMsg({ ok: false, text: "Search for a patient before adding an exercise." });
       return;
     }
 
     if (!manualExercise.exerciseId) {
-      setError("Please select an exercise.");
+      setAddMsg({ ok: false, text: "Please select an exercise." });
       return;
     }
 
     try {
       setAddingExercise(true);
       setError("");
+      setAddMsg(null);
 
       const token = localStorage.getItem("staffAuthToken");
 
-      await api.post(
+      const res = await api.post(
         `/exercise-recommendations/doctor/patient/${targetPatientId}/add`,
         manualExercise,
         { headers: { Authorization: `Bearer ${token}` } }
@@ -333,17 +384,20 @@ export default function PatientResearch() {
         doctorNote: "",
       });
 
-      setShowAddExercise(false);
+      // panel stays open so the doctor sees the result message
+      setAddMsg({ ok: true, text: res.data?.message || "Exercise prescribed." });
 
       // Reload the complete Patient Research record so the new
       // doctor-prescribed exercise immediately appears here.
       await searchPatient(undefined, targetPatientId);
     } catch (err) {
       console.error("Manual exercise add error:", err);
-      setError(
-        err.response?.data?.message ||
-          "Unable to add exercise to the patient's plan."
-      );
+      setAddMsg({
+        ok: false,
+        text:
+          err.response?.data?.message ||
+          "Unable to add exercise to the patient's plan.",
+      });
     } finally {
       setAddingExercise(false);
     }
@@ -1448,247 +1502,6 @@ const downloadPatientPDF = async () => {
 
             </div>
 
-
-            {/* =================================================
-                EXERCISE RECOMMENDATIONS
-                Full exercise record belongs inside Patient Research.
-            ================================================= */}
-
-            <SectionHeader
-              eyebrow="Personalised Rehabilitation"
-              title="Exercise Recommendations"
-              description="Review ML predictions and explicitly prescribe additional exercises when needed."
-            />
-
-            <div className="pr-card exercise-research-card">
-              <div className="doctor-exercise-toolbar">
-                <div>
-                  <strong>Doctor-controlled exercise plan</strong>
-                  <span>ML recommendations require approval. Doctor-added exercises become active immediately.</span>
-                </div>
-                <button
-                  type="button"
-                  className="doctor-add-exercise-btn"
-                  onClick={openManualExercise}
-                >
-                  Add Exercise
-                </button>
-              </div>
-
-              {showAddExercise && (
-                <div className="doctor-add-exercise-panel">
-                  <div className="doctor-add-exercise-head">
-                    <div>
-                      <strong>Add exercise to patient plan</strong>
-                      <span>This exercise will be saved as ACTIVE and will appear in the patient's My Exercise Plan.</span>
-                    </div>
-                    <button
-                      type="button"
-                      className="doctor-add-close"
-                      onClick={() => setShowAddExercise(false)}
-                    >
-                      ×
-                    </button>
-                  </div>
-
-                  <div className="doctor-exercise-form-grid">
-                    <label>
-                      <span>Exercise</span>
-                      <select
-                        value={manualExercise.exerciseId}
-                        onChange={(e) => handleExerciseSelection(e.target.value)}
-                      >
-                        <option value="">Select exercise</option>
-                        {exerciseCatalog.map((exercise) => (
-                          <option key={exercise.exerciseId} value={exercise.exerciseId}>
-                            {exercise.exerciseName} — {exercise.category}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-
-                    <label>
-                      <span>Type</span>
-                      <select
-                        value={manualExercise.type}
-                        onChange={(e) => handleManualExerciseChange("type", e.target.value)}
-                      >
-                        <option value="JOINT">Joint-specific</option>
-                        <option value="GENERAL">General</option>
-                      </select>
-                    </label>
-
-                    <label>
-                      <span>Joint</span>
-                      <select
-                        value={manualExercise.joint}
-                        onChange={(e) => handleManualExerciseChange("joint", e.target.value)}
-                        disabled={manualExercise.type === "GENERAL"}
-                      >
-                        <option value="">No specific joint</option>
-                        <option value="knee">Knee</option>
-                        <option value="ankle">Ankle</option>
-                        <option value="elbow">Elbow</option>
-                        <option value="shoulder">Shoulder</option>
-                        <option value="hip">Hip</option>
-                        <option value="wrist">Wrist</option>
-                      </select>
-                    </label>
-
-                    <label>
-                      <span>Sets</span>
-                      <input
-                        type="number"
-                        min="1"
-                        max="20"
-                        value={manualExercise.sets}
-                        onChange={(e) => handleManualExerciseChange("sets", e.target.value)}
-                      />
-                    </label>
-
-                    <label>
-                      <span>Reps / Duration</span>
-                      <input
-                        type="text"
-                        value={manualExercise.repetitionsOrDuration}
-                        onChange={(e) => handleManualExerciseChange("repetitionsOrDuration", e.target.value)}
-                        placeholder="10-15 or 5 minutes"
-                      />
-                    </label>
-
-                    <label>
-                      <span>Frequency</span>
-                      <input
-                        type="text"
-                        value={manualExercise.frequency}
-                        onChange={(e) => handleManualExerciseChange("frequency", e.target.value)}
-                        placeholder="3 times/week"
-                      />
-                    </label>
-
-                    <label className="doctor-form-wide">
-                      <span>Purpose</span>
-                      <input
-                        type="text"
-                        value={manualExercise.purpose}
-                        onChange={(e) => handleManualExerciseChange("purpose", e.target.value)}
-                        placeholder="Purpose of the exercise"
-                      />
-                    </label>
-
-                    <label className="doctor-form-wide">
-                      <span>Doctor Note</span>
-                      <textarea
-                        value={manualExercise.doctorNote}
-                        onChange={(e) => handleManualExerciseChange("doctorNote", e.target.value)}
-                        placeholder="Optional note for this prescription"
-                        rows="3"
-                      />
-                    </label>
-                  </div>
-
-                  <div className="doctor-add-actions">
-                    <button
-                      type="button"
-                      className="doctor-cancel-btn"
-                      onClick={() => setShowAddExercise(false)}
-                      disabled={addingExercise}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="button"
-                      className="doctor-save-exercise-btn"
-                      onClick={addManualExercise}
-                      disabled={addingExercise || !manualExercise.exerciseId}
-                    >
-                      {addingExercise ? "Adding…" : "Add to Patient Plan"}
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {exerciseRecommendations.length === 0 ? (
-                <div className="exercise-research-empty">
-                  <strong>No exercise recommendations recorded.</strong>
-                  <span>Use Add Exercise to explicitly prescribe an exercise for this patient.</span>
-                </div>
-              ) : (
-                <div className="exercise-research-list">
-                  {exerciseRecommendations.map((item) => (
-                    <div className="exercise-research-item" key={String(item._id)}>
-                      <div className="exercise-research-main">
-                        <div className="exercise-research-icon">✦</div>
-                        <div>
-                          <h3>{item.exerciseName || "Exercise"}</h3>
-                          <p>{item.purpose || "Personalised rehabilitation exercise."}</p>
-                          <div className="exercise-research-meta">
-                            <span>{item.joint ? `Joint: ${item.joint}` : `Category: ${item.category || "General"}`}</span>
-                            <span>{item.sets ?? "—"} sets</span>
-                            <span>{item.repetitionsOrDuration || "—"}</span>
-                            <span>{item.frequency || "As advised"}</span>
-                            <span>{item.source === "DOCTOR" ? "Doctor prescribed" : "ML prediction"}</span>
-                          </div>
-                          {item.mlConfidence != null && (
-                            <small>ML confidence: {Math.round(Number(item.mlConfidence) * 100)}%</small>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="exercise-research-actions">
-                        <span className={`exercise-research-status ${item.status === "ACTIVE" ? "active" : item.status === "REMOVED" ? "removed" : "pending"}`}>
-                          {item.status === "ACTIVE" ? "ACTIVE" : item.status === "REMOVED" ? "REMOVED" : "PENDING REVIEW"}
-                        </span>
-
-                        {item.status === "PENDING_DOCTOR_REVIEW" && (
-                          <div className="exercise-review-buttons">
-                            <button
-                              type="button"
-                              className="exercise-approve-btn"
-                              onClick={async () => {
-                                try {
-                                  const token = localStorage.getItem("staffAuthToken");
-                                  await api.post(
-                                    `/exercise-recommendations/doctor/${item._id}/approve`,
-                                    {},
-                                    { headers: { Authorization: `Bearer ${token}` } }
-                                  );
-                                  await searchPatient(undefined, profile.patientId || patientId);
-                                } catch (err) {
-                                  setError(err.response?.data?.message || "Unable to approve exercise.");
-                                }
-                              }}
-                            >
-                              Approve
-                            </button>
-
-                            <button
-                              type="button"
-                              className="exercise-remove-btn"
-                              onClick={async () => {
-                                try {
-                                  const token = localStorage.getItem("staffAuthToken");
-                                  await api.post(
-                                    `/exercise-recommendations/doctor/${item._id}/remove`,
-                                    {},
-                                    { headers: { Authorization: `Bearer ${token}` } }
-                                  );
-                                  await searchPatient(undefined, profile.patientId || patientId);
-                                } catch (err) {
-                                  setError(err.response?.data?.message || "Unable to remove exercise.");
-                                }
-                              }}
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
 
             {/* =================================================
                 G2-G4: SESSION HISTORY -- our physiosessions collection.
@@ -2952,6 +2765,246 @@ const downloadPatientPDF = async () => {
 
 
             {/* =================================================
+                EXERCISE RECOMMENDATIONS
+                Full exercise record belongs inside Patient Research.
+            ================================================= */}
+
+            <SectionHeader
+              eyebrow="Personalised Rehabilitation"
+              title="Exercise Recommendations"
+              description="Review ML predictions and explicitly prescribe additional exercises when needed."
+            />
+
+            <div className="pr-card exercise-research-card">
+              <div className="doctor-exercise-toolbar">
+                <div>
+                  <strong>Doctor-controlled exercise plan</strong>
+                  <span>ML recommendations require approval. Doctor-added exercises become active immediately.</span>
+                </div>
+                <button
+                  type="button"
+                  className="doctor-add-exercise-btn"
+                  onClick={openManualExercise}
+                >
+                  Add Exercise
+                </button>
+              </div>
+
+              {showAddExercise && (
+                <div className="doctor-add-exercise-panel">
+                  <div className="doctor-add-exercise-head">
+                    <div>
+                      <strong>Add exercise to patient plan</strong>
+                      <span>This exercise will be saved as ACTIVE and will appear in the patient's My Exercise Plan.</span>
+                    </div>
+                    <button
+                      type="button"
+                      className="doctor-add-close"
+                      onClick={() => setShowAddExercise(false)}
+                    >
+                      ×
+                    </button>
+                  </div>
+
+                  <div className="doctor-exercise-form-grid">
+                    <label>
+                      <span>Exercise</span>
+                      <select
+                        value={manualExercise.exerciseId}
+                        onChange={(e) => handleExerciseSelection(e.target.value)}
+                      >
+                        <option value="">Select exercise</option>
+                        {exerciseCatalog.map((exercise) => (
+                          <option key={exercise.exerciseId} value={exercise.exerciseId}>
+                            {exercise.exerciseName} — {exercise.category}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+
+                    <label>
+                      <span>Type</span>
+                      <select
+                        value={manualExercise.type}
+                        onChange={(e) => handleManualExerciseChange("type", e.target.value)}
+                      >
+                        <option value="JOINT">Joint-specific</option>
+                        <option value="GENERAL">General</option>
+                      </select>
+                    </label>
+
+                    <label>
+                      <span>Joint</span>
+                      <select
+                        value={manualExercise.joint}
+                        onChange={(e) => handleManualExerciseChange("joint", e.target.value)}
+                        disabled={manualExercise.type === "GENERAL"}
+                      >
+                        <option value="">No specific joint</option>
+                        <option value="knee">Knee</option>
+                        <option value="ankle">Ankle</option>
+                        <option value="elbow">Elbow</option>
+                        <option value="shoulder">Shoulder</option>
+                        <option value="hip">Hip</option>
+                        <option value="wrist">Wrist</option>
+                      </select>
+                    </label>
+
+                    <label>
+                      <span>Sets</span>
+                      <input
+                        type="number"
+                        min="1"
+                        max="20"
+                        value={manualExercise.sets}
+                        onChange={(e) => handleManualExerciseChange("sets", e.target.value)}
+                      />
+                    </label>
+
+                    <label>
+                      <span>Reps / Duration</span>
+                      <input
+                        type="text"
+                        value={manualExercise.repetitionsOrDuration}
+                        onChange={(e) => handleManualExerciseChange("repetitionsOrDuration", e.target.value)}
+                        placeholder="10-15 or 5 minutes"
+                      />
+                    </label>
+
+                    <label>
+                      <span>Frequency</span>
+                      <input
+                        type="text"
+                        value={manualExercise.frequency}
+                        onChange={(e) => handleManualExerciseChange("frequency", e.target.value)}
+                        placeholder="3 times/week"
+                      />
+                    </label>
+
+                    <label className="doctor-form-wide">
+                      <span>Purpose</span>
+                      <input
+                        type="text"
+                        value={manualExercise.purpose}
+                        onChange={(e) => handleManualExerciseChange("purpose", e.target.value)}
+                        placeholder="Purpose of the exercise"
+                      />
+                    </label>
+
+                    <label className="doctor-form-wide">
+                      <span>Doctor Note</span>
+                      <textarea
+                        value={manualExercise.doctorNote}
+                        onChange={(e) => handleManualExerciseChange("doctorNote", e.target.value)}
+                        placeholder="Optional note for this prescription"
+                        rows="3"
+                      />
+                    </label>
+                  </div>
+
+                  {addMsg && (
+                    <div
+                      className="pr-error"
+                      style={addMsg.ok ? { background: "#ECFDF3", borderColor: "#ABEFC6", color: "#067647" } : undefined}
+                    >
+                      {addMsg.text}
+                    </div>
+                  )}
+
+                  <div className="doctor-add-actions">
+                    <button
+                      type="button"
+                      className="doctor-cancel-btn"
+                      onClick={() => setShowAddExercise(false)}
+                      disabled={addingExercise}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      className="doctor-save-exercise-btn"
+                      onClick={addManualExercise}
+                      disabled={addingExercise || !manualExercise.exerciseId}
+                    >
+                      {addingExercise ? "Adding…" : "Add to Patient Plan"}
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {exerciseRecommendations.length === 0 ? (
+                <div className="exercise-research-empty">
+                  <strong>No exercise recommendations recorded.</strong>
+                  <span>Use Add Exercise to explicitly prescribe an exercise for this patient.</span>
+                </div>
+              ) : (
+                <div className="exercise-research-list">
+                  {exerciseRecommendations.map((item) => (
+                    <div className="exercise-research-item" key={String(item._id)}>
+                      <div className="exercise-research-main">
+                        <div className="exercise-research-icon">✦</div>
+                        <div>
+                          <h3>{item.exerciseName || "Exercise"}</h3>
+                          <p>{item.purpose || "Personalised rehabilitation exercise."}</p>
+                          <div className="exercise-research-meta">
+                            <span>{item.joint ? `Joint: ${item.joint}` : `Category: ${item.category || "General"}`}</span>
+                            <span>{item.sets ?? "—"} sets</span>
+                            <span>{item.repetitionsOrDuration || "—"}</span>
+                            <span>{item.frequency || "As advised"}</span>
+                            <span>{item.source === "DOCTOR" ? "Doctor prescribed" : "ML prediction"}</span>
+                          </div>
+                          {item.mlConfidence != null && (
+                            <small>ML confidence: {Math.round(Number(item.mlConfidence) * 100)}%</small>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="exercise-research-actions">
+                        <span className={`exercise-research-status ${item.status === "ACTIVE" ? "active" : item.status === "REMOVED" ? "removed" : "pending"}`}>
+                          {item.status === "ACTIVE" ? "ACTIVE" : item.status === "REMOVED" ? "REMOVED" : "PENDING REVIEW"}
+                        </span>
+
+                        {item.status !== "REMOVED" && !item.doctorRemoved && (
+                          <div className="exercise-review-buttons">
+                            {item.status === "PENDING_DOCTOR_REVIEW" && (
+                            <button
+                              type="button"
+                              className="exercise-approve-btn"
+                              onClick={async () => {
+                                try {
+                                  const token = localStorage.getItem("staffAuthToken");
+                                  await api.post(
+                                    `/exercise-recommendations/doctor/${item._id}/approve`,
+                                    {},
+                                    { headers: { Authorization: `Bearer ${token}` } }
+                                  );
+                                  await searchPatient(undefined, profile.patientId || patientId);
+                                } catch (err) {
+                                  setError(err.response?.data?.message || "Unable to approve exercise.");
+                                }
+                              }}
+                            >
+                              Approve
+                            </button>
+                            )}
+
+                            <button
+                              type="button"
+                              className="exercise-remove-btn"
+                              onClick={() => openExerciseRemovalModal(item)}
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* =================================================
                 TIMELINE
             ================================================= */}
 
@@ -3054,6 +3107,56 @@ const downloadPatientPDF = async () => {
 
       </main>
 
+      {/* =====================================================
+          EXERCISE REMOVAL CONFIRMATION MODAL
+      ===================================================== */}
+
+      {exerciseToRemove && (
+        <div
+          className="exercise-removal-modal-overlay"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget && !removingExercise) {
+              closeExerciseRemovalModal();
+            }
+          }}
+        >
+          <div
+            className="exercise-removal-modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="exercise-removal-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <div className="exercise-removal-modal-icon">!</div>
+            <h3 id="exercise-removal-title">Remove this exercise?</h3>
+            <p>Are you sure you want to remove this exercise from the patient's plan?</p>
+
+            <div className="exercise-removal-modal-exercise">
+              <strong>{exerciseToRemove.exerciseName || "Exercise"}</strong>
+            </div>
+
+            <div className="exercise-removal-modal-actions">
+              <button
+                type="button"
+                className="exercise-removal-modal-cancel"
+                onClick={closeExerciseRemovalModal}
+                disabled={removingExercise}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="exercise-removal-modal-confirm"
+                onClick={confirmRemoveExercise}
+                disabled={removingExercise}
+              >
+                {removingExercise ? "Removing..." : "Yes, Remove"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* =====================================================
           CSS
@@ -4699,6 +4802,22 @@ const downloadPatientPDF = async () => {
         .session-history-video-unavailable { margin-top:10px; font-size:11px; color:#8b98aa; font-style:italic; }
         .exercise-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.exercise-count{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#edf3ff;color:#315dd0;font-weight:800}
         .past-sessions-table{display:flex;flex-direction:column;gap:2px}.past-sessions-row{display:grid;grid-template-columns:1fr 1.4fr .7fr .8fr .9fr;gap:8px;align-items:center;padding:10px 8px;border-bottom:1px solid #eef1f6;font-size:12px;color:#34445f}.past-sessions-head{color:#8b98aa;font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;border-bottom:2px solid #e5eaf1}.past-sessions-row a{color:#356fd3;font-weight:700;text-decoration:none;justify-self:end}.past-sessions-row a:hover{text-decoration:underline}
+        /* Exercise Removal Modal */
+        .exercise-removal-modal-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,0.48);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);animation:exerciseRemovalOverlayIn 0.18s ease-out}
+        .exercise-removal-modal-card{width:min(460px,100%);background:#ffffff;border:1px solid #E4EAF2;border-radius:18px;box-shadow:0 24px 70px rgba(15,23,42,0.22);padding:28px;animation:exerciseRemovalModalIn 0.2s ease-out}
+        .exercise-removal-modal-icon{width:52px;height:52px;margin:0 auto 16px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#FFF5E8;border:1px solid #F0D7A5;color:#9A6200;font-size:25px;font-weight:800}
+        .exercise-removal-modal-card h3{margin:0;text-align:center;color:#172033;font-size:20px;line-height:1.3}
+        .exercise-removal-modal-card>p{margin:10px auto 0;max-width:370px;text-align:center;color:#667085;font-size:13px;line-height:1.6}
+        .exercise-removal-modal-exercise{margin:20px 0;padding:13px 14px;border:1px solid #E6EBF2;border-radius:11px;background:#F8FAFC;text-align:center}
+        .exercise-removal-modal-exercise strong{display:block;color:#172033;font-size:14px}
+        .exercise-removal-modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+        .exercise-removal-modal-cancel,.exercise-removal-modal-confirm{min-width:112px;height:40px;padding:0 16px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer;transition:0.15s ease;border:1px solid #D9E0E9;background:#ffffff;color:#5D6879}
+        .exercise-removal-modal-confirm{border:1px solid #B96D6D;background:#A83A3A;color:#ffffff}
+        .exercise-removal-modal-cancel:hover:not(:disabled){background:#F7F9FC}
+        .exercise-removal-modal-confirm:hover:not(:disabled){background:#922F2F}
+        .exercise-removal-modal-cancel:disabled,.exercise-removal-modal-confirm:disabled{opacity:0.6;cursor:not-allowed}
+        @keyframes exerciseRemovalOverlayIn{from{opacity:0}to{opacity:1}}
+        @keyframes exerciseRemovalModalIn{from{opacity:0;transform:translateY(8px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
         @media(max-width:720px){ .exercise-research-item{flex-direction:column}.exercise-research-actions{align-items:flex-start}.exercise-review-buttons{width:100%}.exercise-approve-btn,.exercise-remove-btn{flex:1}.doctor-exercise-toolbar{flex-direction:column;align-items:flex-start}.doctor-add-exercise-btn{width:100%}.doctor-exercise-form-grid{grid-template-columns:1fr}.doctor-form-wide{grid-column:auto}.doctor-add-actions{flex-direction:column}.doctor-cancel-btn,.doctor-save-exercise-btn{width:100%}.past-sessions-row{grid-template-columns:1fr}.past-sessions-row a{justify-self:start}}
       `}
 </style>

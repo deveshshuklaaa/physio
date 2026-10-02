@@ -200,6 +200,50 @@ const [releaseSuccess, setReleaseSuccess] = useState("");
 const [recentExercisePredictions, setRecentExercisePredictions] = useState([]);
 const [exercisePredictionLoading, setExercisePredictionLoading] = useState(true);
 const [exercisePredictionError, setExercisePredictionError] = useState("");
+const [exerciseToRemove, setExerciseToRemove] = useState(null);
+const [removingExercise, setRemovingExercise] = useState(false);
+
+const openExerciseRemovalModal = (exercise) => {
+  setError("");
+  setExerciseToRemove(exercise);
+};
+
+const closeExerciseRemovalModal = () => {
+  if (removingExercise) return;
+  setExerciseToRemove(null);
+};
+
+const confirmRemoveExercise = async () => {
+  if (!exerciseToRemove || removingExercise) return;
+
+  try {
+    setRemovingExercise(true);
+    setExercisePredictionError("");
+
+    const token = localStorage.getItem("staffAuthToken");
+    await api.post(
+      `/exercise-recommendations/doctor/${exerciseToRemove._id}/remove`,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    setExerciseToRemove(null);
+    await fetchRecentExercisePredictions();
+  } catch (err) {
+    setExercisePredictionError(err.response?.data?.message || "Unable to remove exercise.");
+    setExerciseToRemove(null);
+  } finally {
+    setRemovingExercise(false);
+  }
+};
+
+useEffect(() => {
+  if (!exerciseToRemove) return;
+  const onKey = (e) => {
+    if (e.key === "Escape" && !removingExercise) closeExerciseRemovalModal();
+  };
+  document.addEventListener("keydown", onKey);
+  return () => document.removeEventListener("keydown", onKey);
+}, [exerciseToRemove, removingExercise]);
 
 const fetchRecentExercisePredictions = async () => {
   try {
@@ -1750,6 +1794,22 @@ if (error) {
         .recent-exercise-empty{padding:24px;text-align:center;display:flex;flex-direction:column;gap:5px;color:#71839a;font-size:12px}
         .recent-exercise-empty strong{color:#2b405f}
         .recent-exercise-error{color:#a54848}
+        /* Exercise Removal Modal */
+        .exercise-removal-modal-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,0.48);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);animation:exerciseRemovalOverlayIn 0.18s ease-out}
+        .exercise-removal-modal-card{width:min(460px,100%);background:#ffffff;border:1px solid #E4EAF2;border-radius:18px;box-shadow:0 24px 70px rgba(15,23,42,0.22);padding:28px;animation:exerciseRemovalModalIn 0.2s ease-out}
+        .exercise-removal-modal-icon{width:52px;height:52px;margin:0 auto 16px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#FFF5E8;border:1px solid #F0D7A5;color:#9A6200;font-size:25px;font-weight:800}
+        .exercise-removal-modal-card h3{margin:0;text-align:center;color:#172033;font-size:20px;line-height:1.3}
+        .exercise-removal-modal-card>p{margin:10px auto 0;max-width:370px;text-align:center;color:#667085;font-size:13px;line-height:1.6}
+        .exercise-removal-modal-exercise{margin:20px 0;padding:13px 14px;border:1px solid #E6EBF2;border-radius:11px;background:#F8FAFC;text-align:center}
+        .exercise-removal-modal-exercise strong{display:block;color:#172033;font-size:14px}
+        .exercise-removal-modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+        .exercise-removal-modal-cancel,.exercise-removal-modal-confirm{min-width:112px;height:40px;padding:0 16px;border-radius:9px;font-size:12px;font-weight:800;cursor:pointer;transition:0.15s ease;border:1px solid #D9E0E9;background:#ffffff;color:#5D6879}
+        .exercise-removal-modal-confirm{border:1px solid #B96D6D;background:#A83A3A;color:#ffffff}
+        .exercise-removal-modal-cancel:hover:not(:disabled){background:#F7F9FC}
+        .exercise-removal-modal-confirm:hover:not(:disabled){background:#922F2F}
+        .exercise-removal-modal-cancel:disabled,.exercise-removal-modal-confirm:disabled{opacity:0.6;cursor:not-allowed}
+        @keyframes exerciseRemovalOverlayIn{from{opacity:0}to{opacity:1}}
+        @keyframes exerciseRemovalModalIn{from{opacity:0;transform:translateY(8px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
         @media(max-width:720px){.recent-exercise-row{align-items:flex-start;flex-wrap:wrap}.recent-exercise-record-btn{width:100%}}
       `}
 </style>
@@ -1770,7 +1830,7 @@ if (error) {
             Patient Research
           </button>
           <div className="dd-doctor-block">
-            <div className="dd-avatar font-display">{initials}</div>
+            <button className="dd-avatar font-display" onClick={() => navigate("/doctor/profile")} title="My profile" aria-label="My profile" style={{border:0,background:"transparent",padding:0,cursor:"pointer"}}>{initials}</button>
             <div>
               {/* BACKEND: doctorName comes from authenticated session — see top of file */}
               <div className="dd-doctor-name">{doctorName || "--"}</div>
@@ -1965,6 +2025,15 @@ if (error) {
                       {item.mlConfidence != null ? ` · ML confidence ${Math.round(Number(item.mlConfidence) * 100)}%` : ""}
                     </span>
                   </div>
+                  {!item.doctorRemoved && item.status !== "REMOVED" && (
+                    <button
+                      type="button"
+                      className="recent-exercise-record-btn"
+                      onClick={() => openExerciseRemovalModal(item)}
+                    >
+                      Remove
+                    </button>
+                  )}
                   <button
                     type="button"
                     className="recent-exercise-record-btn"
@@ -2403,6 +2472,53 @@ if (error) {
                 disabled={releaseLoading}
               >
                 {releaseLoading ? "Releasing..." : "Yes, Release"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {exerciseToRemove && (
+        <div
+          className="exercise-removal-modal-overlay"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget && !removingExercise) {
+              closeExerciseRemovalModal();
+            }
+          }}
+        >
+          <div
+            className="exercise-removal-modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="exercise-removal-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <div className="exercise-removal-modal-icon">!</div>
+            <h3 id="exercise-removal-title">Remove this exercise?</h3>
+            <p>Are you sure you want to remove this exercise from the patient's plan?</p>
+
+            <div className="exercise-removal-modal-exercise">
+              <strong>{exerciseToRemove.exerciseName || "Exercise"}</strong>
+            </div>
+
+            <div className="exercise-removal-modal-actions">
+              <button
+                type="button"
+                className="exercise-removal-modal-cancel"
+                onClick={closeExerciseRemovalModal}
+                disabled={removingExercise}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="exercise-removal-modal-confirm"
+                onClick={confirmRemoveExercise}
+                disabled={removingExercise}
+              >
+                {removingExercise ? "Removing..." : "Yes, Remove"}
               </button>
             </div>
           </div>

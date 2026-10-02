@@ -5,6 +5,7 @@ const {
   createLoginOTP,
 } = require("../services/otpService");
 const User = require("../models/User");
+const { staffAuth } = require("../middleware/roleMiddleware");
 
 const { OAuth2Client } = require("google-auth-library");
 
@@ -579,6 +580,80 @@ router.post("/change-password", async (req, res) => {
     return res.status(500).json({
       message: "Server error while changing password",
     });
+  }
+});
+
+// =====================================================
+// GET/PUT /api/doctor/me/profile  (own document only; id from verified token)
+// =====================================================
+
+const PROFILE_FIELDS = {
+  fullName: /^[\p{L}][\p{L} .'-]{1,99}$/u,
+  mobile: /^\d{10}$/,
+  alternateMobile: /^\d{10}$/,
+  designation: /^[\p{L}\p{N} .,&()\/'-]{1,100}$/u,
+  hospitalName: /^[\p{L}\p{N} .,&()\/'-]{1,150}$/u,
+  department: /^[\p{L}\p{N} .,&()\/'-]{1,100}$/u,
+  hospitalAddress: /^[\p{L}\p{N} .,&()\/#'\n-]{1,300}$/u,
+  city: /^[\p{L} .'-]{1,80}$/u,
+  state: /^[\p{L} .'-]{1,80}$/u,
+  pinCode: /^\d{6}$/,
+  employeeId: /^[A-Za-z0-9\/_-]{1,40}$/,
+};
+const REQUIRED = ["fullName"]; // others may be blank
+const READONLY = ["email", "professionalId", "role", "accountStatus"];
+
+const findSelf = (req) =>
+  User.findOne({
+    _id: req.userId,
+    role: { $in: ["doctor", "clinician"] },
+  });
+
+const profileView = (u) => {
+  const o = {};
+  [...Object.keys(PROFILE_FIELDS), ...READONLY].forEach((k) => {
+    o[k] = u[k] ?? "";
+  });
+  return o;
+};
+
+router.get("/me/profile", staffAuth, async (req, res) => {
+  try {
+    const user = await findSelf(req);
+    if (!user) return res.status(404).json({ message: "Profile not found" });
+    return res.json({ profile: profileView(user) });
+  } catch (err) {
+    console.error("Doctor profile load error:", err);
+    return res.status(500).json({ message: "Failed to load profile" });
+  }
+});
+
+router.put("/me/profile", staffAuth, async (req, res) => {
+  try {
+    const body = req.body || {};
+    const clean = {};
+    for (const k of Object.keys(PROFILE_FIELDS)) {
+      if (!Object.prototype.hasOwnProperty.call(body, k)) continue;
+      if (typeof body[k] !== "string") {
+        return res.status(400).json({ message: `${k} must be text` });
+      }
+      const v = body[k].trim();
+      if (!v && REQUIRED.includes(k)) {
+        return res.status(400).json({ message: `${k} is required` });
+      }
+      if (v && !PROFILE_FIELDS[k].test(v)) {
+        return res.status(400).json({ message: `Invalid ${k}` });
+      }
+      clean[k] = v;
+    }
+    const user = await findSelf(req);
+    if (!user) return res.status(404).json({ message: "Profile not found" });
+    Object.assign(user, clean);
+    await user.save();
+    return res.json({ message: "Profile updated", profile: profileView(user) });
+  } catch (err) {
+    console.error("Doctor profile update error:", err);
+    return res.status(500).json({ message: "Failed to update profile" });
   }
 });
 

@@ -9,6 +9,7 @@ const empty = { fullName:"", mobile:"", alternateMobile:"", designation:"", hosp
 export default function AdminProfile() {
   const navigate = useNavigate();
   const [admin,setAdmin]=useState(empty);
+  const [saved,setSaved]=useState(empty);
   const [email,setEmail]=useState("");
   const [newEmail,setNewEmail]=useState("");
   const [otp,setOtp]=useState("");
@@ -21,10 +22,10 @@ export default function AdminProfile() {
   const headers={headers:{Authorization:`Bearer ${token}`}};
 
   useEffect(()=>{ if(!token) navigate("/admin-login",{replace:true}); else load(); },[]);
-  const load=async()=>{ try { const r=await api.get("/admin/me",headers); const a=r.data?.admin||{}; setAdmin({...empty,...a}); setEmail(a.email||""); } catch(e){ handleAuth(e); } };
+  const load=async()=>{ try { const r=await api.get("/admin/me",headers); const a=r.data?.admin||{}; setAdmin({...empty,...a}); setSaved({...empty,...a}); setEmail(a.email||""); } catch(e){ handleAuth(e); } };
   const handleAuth=(e)=>{ if([401,403].includes(e.response?.status)){localStorage.removeItem("adminToken");localStorage.removeItem("admin");navigate("/admin-login",{replace:true});} else setError(e.response?.data?.message||"Unable to load information."); };
   const update=(k,v)=>{if(["mobile","alternateMobile","pinCode"].includes(k)&&!/^(\d*)$/.test(v))return; if(k==="mobile"||k==="alternateMobile"){if(v.length>10)return;} if(k==="pinCode"&&v.length>6)return; setAdmin(p=>({...p,[k]:v}));};
-  const save=async(e)=>{e.preventDefault();setError("");setMessage("");try{setSaving(true);const r=await api.put("/admin/me",admin,headers);setAdmin({...empty,...r.data.admin});localStorage.setItem("admin",JSON.stringify({...JSON.parse(localStorage.getItem("admin")||"{}"),...r.data.admin}));setMessage("Your information has been updated successfully.");}catch(e){handleAuth(e);}finally{setSaving(false);}};
+  const save=async(e)=>{e.preventDefault();setError("");setMessage("");try{setSaving(true);const r=await api.put("/admin/me",admin,headers);setAdmin({...empty,...r.data.admin});setSaved({...empty,...r.data.admin});localStorage.setItem("admin",JSON.stringify({...JSON.parse(localStorage.getItem("admin")||"{}"),...r.data.admin}));setMessage("Your information has been updated successfully.");}catch(e){handleAuth(e);}finally{setSaving(false);}};
   const requestEmail=async()=>{setError("");setMessage("");try{setEmailSaving(true);const r=await api.post("/admin/me/email/request",{newEmail},headers);setChallenge(r.data);setMessage(`Verification code sent to ${r.data.maskedEmail}.`);}catch(e){setError(e.response?.data?.message||"Unable to send verification code.");}finally{setEmailSaving(false);}};
   const verifyEmail=async()=>{setError("");try{const r=await api.post("/admin/me/email/verify",{challengeId:challenge.challengeId,otp},headers);setEmail(r.data.email);setNewEmail("");setOtp("");setChallenge(null);const stored=JSON.parse(localStorage.getItem("admin")||"{}");localStorage.setItem("admin",JSON.stringify({...stored,email:r.data.email}));setMessage("Email address verified and updated successfully.");}catch(e){setError(e.response?.data?.message||"Unable to verify email.");}};
 
@@ -39,7 +40,7 @@ export default function AdminProfile() {
         </div>
         <h2 style={s.section}>Hospital / Organization</h2><div style={s.grid}>
           <Field label="Hospital / Institution Name" value={admin.hospitalName} onChange={v=>update("hospitalName",v)}/><Field label="Department" value={admin.department} onChange={v=>update("department",v)}/><Field label="Employee ID" value={admin.employeeId} onChange={v=>update("employeeId",v)}/><Field label="City" value={admin.city} onChange={v=>update("city",v)}/><Field label="State" value={admin.state} onChange={v=>update("state",v)}/><Field label="PIN Code" value={admin.pinCode} onChange={v=>update("pinCode",v)} placeholder="6 digits"/><div style={{gridColumn:"1/-1"}}><Field label="Hospital Address" value={admin.hospitalAddress} onChange={v=>update("hospitalAddress",v)}/></div>
-        </div><button style={s.primary} disabled={saving}>{saving?"Saving...":"Save Information"}</button></form>
+        </div><button style={s.primary} disabled={saving}>{saving?"Saving...":"Save Information"}</button> <button type="button" style={{...s.secondary,marginTop:22,marginLeft:10}} onClick={()=>{setAdmin(saved);setError("");setMessage("");}}>Cancel</button></form>
     </div>
     <div style={s.card}><h2 style={s.section}>Login Email</h2><p style={s.sub}>Your email receives login OTPs. A new email must be verified before it becomes your login email.</p><div style={s.current}>Current email: <b>{email||"—"}</b></div><div style={s.emailRow}><input style={s.input} type="email" value={newEmail} onChange={e=>setNewEmail(e.target.value)} placeholder="New email address" disabled={!!challenge}/>{!challenge?<button style={s.primarySmall} onClick={requestEmail} disabled={emailSaving}>{emailSaving?"Sending...":"Verify New Email"}</button>:<><input style={{...s.input,width:150}} value={otp} onChange={e=>setOtp(e.target.value.replace(/\D/g,"").slice(0,6))} placeholder="6-digit OTP"/><button style={s.primarySmall} onClick={verifyEmail}>Confirm Email</button></>}</div></div>
     {/* <div style={s.card}><h2 style={s.section}>Security</h2>

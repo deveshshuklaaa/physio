@@ -35,6 +35,7 @@ import AdminDoctors from "./pages/AdminDoctors";
 import AdminPatientResearch from "./pages/AdminPatientResearch";
 import AdminManagement from "./pages/AdminManagement.jsx";
 import AdminProfile from "./pages/AdminProfile.jsx";
+import DoctorProfile from "./pages/DoctorProfile.jsx";
 import AdminChangePassword from "./pages/AdminChangePassword.jsx";
 
 import OTPVerification from "./pages/OTPVerification";
@@ -109,6 +110,11 @@ function App() {
         <Route
           path="/doctor/patient-research"
           element={<PatientResearch />}
+        />
+
+        <Route
+          path="/doctor/profile"
+          element={<DoctorProfile />}
         />
 
         {/* Reached straight after login when mustChangePassword is true,

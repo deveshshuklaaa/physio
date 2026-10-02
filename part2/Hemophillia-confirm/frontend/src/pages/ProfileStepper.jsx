@@ -102,6 +102,8 @@ const ProfileStepper = () => {
   const [profile, setProfile] =
     useState(emptyProfile);
 
+  const [saved, setSaved] = useState(null);
+
   const [loading, setLoading] =
     useState(false);
 
@@ -168,8 +170,8 @@ const ProfileStepper = () => {
       // SET PROFILE
       // ==========================================
 
-      setProfile((prev) => ({
-        ...prev,
+      const next = {
+        ...emptyProfile,
 
         // Load database fields
         ...existing,
@@ -186,7 +188,10 @@ const ProfileStepper = () => {
         dob: existing.dob
           ? existing.dob.substring(0, 10)
           : "",
-      }));
+      };
+
+      setProfile(next);
+      if (existing.fullName) setSaved(next);
 
     } catch (err) {
       console.log(
@@ -1410,6 +1415,19 @@ const ProfileStepper = () => {
           ================================================= */}
 
           <div className="btn-row">
+
+            {saved && (
+              <button
+                className="secondary"
+                onClick={() => {
+                  setProfile(saved);
+                  setError("");
+                  navigate("/awareness");
+                }}
+              >
+                Cancel
+              </button>
+            )}
 
             <button
               className="secondary"
