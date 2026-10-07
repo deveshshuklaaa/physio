@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../apiClient";
 
-const empty = { fullName:"", mobile:"", alternateMobile:"", designation:"", hospitalName:"", department:"", hospitalAddress:"", city:"", state:"", pinCode:"", employeeId:"" };
+const empty = { firstName:"", middleName:"", lastName:"", mobile:"", alternateMobile:"", designation:"", hospitalName:"", department:"", hospitalAddress:"", city:"", state:"", pinCode:"", employeeId:"" };
 
 export default function DoctorProfile() {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function DoctorProfile() {
   const load=async()=>{ try { const r=await api.get("/doctor/me/profile",headers); apply(r.data?.profile||{}); } catch(e){ handleAuth(e); } };
   const handleAuth=(e)=>{ if([401,403].includes(e.response?.status)){localStorage.removeItem("staffAuthToken");navigate("/doctor-login",{replace:true});} else setError(e.response?.data?.message||"Unable to load information."); };
   const update=(k,v)=>{if(["mobile","alternateMobile","pinCode"].includes(k)&&!/^(\d*)$/.test(v))return; if(k==="mobile"||k==="alternateMobile"){if(v.length>10)return;} if(k==="pinCode"&&v.length>6)return; setDoc(p=>({...p,[k]:v}));};
-  const save=async(e)=>{e.preventDefault();setError("");setMessage("");try{setSaving(true);const r=await api.put("/doctor/me/profile",doc,headers);apply(r.data.profile);setMessage("Your information has been updated successfully.");}catch(e){if([401,403].includes(e.response?.status))handleAuth(e);else setError(e.response?.data?.message||"Unable to save.");}finally{setSaving(false);}};
+  const save=async(e)=>{e.preventDefault();setError("");setMessage("");try{setSaving(true);const r=await api.put("/doctor/me/profile",Object.fromEntries(Object.keys(empty).map(k=>[k,doc[k]??""])),headers);apply(r.data.profile);setMessage("Your information has been updated successfully.");}catch(e){if([401,403].includes(e.response?.status))handleAuth(e);else setError(e.response?.data?.message||"Unable to save.");}finally{setSaving(false);}};
 
   return <div style={s.page}>
     <div style={s.header}><div><div style={s.eyebrow}>MY ACCOUNT</div><h1 style={s.title}>My Information</h1><p style={s.sub}>Update your personal and hospital information.</p></div><button style={s.back} onClick={()=>navigate("/doctor-dashboard")}>← Dashboard</button></div>
@@ -29,7 +29,7 @@ export default function DoctorProfile() {
       <div style={s.account}><div><b>{ro.professionalId||"—"}</b><span> {ro.email||""}</span></div><span style={s.active}>{ro.accountStatus||"APPROVED"}</span></div>
       <form onSubmit={save}>
         <h2 style={s.section}>Personal Information</h2><div style={s.grid}>
-          <Field label="Full Name" value={doc.fullName} onChange={v=>update("fullName",v)}/><Field label="Mobile Number" value={doc.mobile} onChange={v=>update("mobile",v)} placeholder="10 digits"/><Field label="Alternate Mobile" value={doc.alternateMobile} onChange={v=>update("alternateMobile",v)} placeholder="10 digits"/><Field label="Designation" value={doc.designation} onChange={v=>update("designation",v)}/>
+          <Field label="First Name" value={doc.firstName} onChange={v=>update("firstName",v)}/><Field label="Middle Name (optional)" value={doc.middleName} onChange={v=>update("middleName",v)}/><Field label="Last Name" value={doc.lastName} onChange={v=>update("lastName",v)}/><Field label="Mobile Number" value={doc.mobile} onChange={v=>update("mobile",v)} placeholder="10 digits"/><Field label="Alternate Mobile" value={doc.alternateMobile} onChange={v=>update("alternateMobile",v)} placeholder="10 digits"/><Field label="Designation" value={doc.designation} onChange={v=>update("designation",v)}/>
         </div>
         <h2 style={s.section}>Hospital / Organization</h2><div style={s.grid}>
           <Field label="Hospital / Institution Name" value={doc.hospitalName} onChange={v=>update("hospitalName",v)}/><Field label="Department" value={doc.department} onChange={v=>update("department",v)}/><Field label="Employee ID" value={doc.employeeId} onChange={v=>update("employeeId",v)}/><Field label="City" value={doc.city} onChange={v=>update("city",v)}/><Field label="State" value={doc.state} onChange={v=>update("state",v)}/><Field label="PIN Code" value={doc.pinCode} onChange={v=>update("pinCode",v)} placeholder="6 digits"/><div style={{gridColumn:"1/-1"}}><Field label="Hospital Address" value={doc.hospitalAddress} onChange={v=>update("hospitalAddress",v)}/></div>

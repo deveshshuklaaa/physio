@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const connectDB = require("../config/db");
 
 const User = require("../src/models/User");
+const { displayName, splitName } = require("../src/utils/displayName");
 
 // =====================================================
 // CREATE DOCTOR / CLINICIAN ACCOUNT
@@ -69,7 +70,7 @@ const createStaffAccount = async () => {
     // ==========================================
 
     const staff = await User.create({
-      fullName,
+      ...splitName(fullName),
       email,
       professionalId,
       passwordHash,
@@ -88,7 +89,7 @@ const createStaffAccount = async () => {
     console.log("=================================");
 
     console.log("Professional ID:", staff.professionalId);
-    console.log("Name:", staff.fullName);
+    console.log("Name:", displayName(staff));
     console.log("Role:", staff.role);
 
     console.log("---------------------------------");

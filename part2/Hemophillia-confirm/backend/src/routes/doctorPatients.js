@@ -1,4 +1,5 @@
 const express = require("express");
+const { displayName } = require("../utils/displayName");
 
 const {
   staffAuth,
@@ -229,7 +230,7 @@ router.get(
           hemophilia.userId
         )
           .select(
-            "_id fullName email professionalId role"
+            "_id firstName middleName lastName email professionalId role"
           )
           .lean();
 
@@ -253,7 +254,7 @@ router.get(
         success: true,
 
         patient: {
-          user,
+          user: { ...user, fullName: displayName(user) },
           profile,
           hemophiliaDetails:
             hemophilia,
@@ -306,12 +307,15 @@ router.get(
             path:
               "patientUserId",
             select:
-              "fullName email",
+              "firstName middleName lastName email",
           })
           .sort({
             createdAt: -1,
           })
           .lean();
+
+      for (const r of requests)
+        if (r.patientUserId) r.patientUserId.fullName = displayName(r.patientUserId);
 
       return res.json({
         success: true,

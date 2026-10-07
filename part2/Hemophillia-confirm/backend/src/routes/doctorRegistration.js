@@ -7,7 +7,17 @@ const DoctorRegistrationRequest = require(
   "../models/DoctorRegistrationRequest"
 );
 
-const { allow } = require("../utils/allow");
+const { allow, check } = require("../utils/allow");
+
+// Maxes are chosen, not schema-derived: email 254 (RFC 5321), mobile 10 digits, names/places 100, hospital 150.
+const T = (max) => ({ type: "string", max });
+const DOCTOR_SPEC = {
+  firstName: T(100), middleName: T(100), lastName: T(100), email: T(254), mobileNumber: T(10),
+  medicalRegistrationNumber: T(50), medicalCouncil: T(150), qualification: T(150), specialization: T(150),
+  yearsOfExperience: { type: "string", max: 6, re: /^\d{1,3}(\.\d{1,2})?$/ },
+  hospitalName: T(150), country: T(100), stateProvince: T(100), city: T(100),
+  declarationAccepted: { type: "string", max: 5, re: /^(true|false)$/ },
+};
 
 const router = express.Router();
 
@@ -59,17 +69,16 @@ const upload = multer({
 router.post(
   "/register",
 
-  upload.fields([
-    {
-      name: "registrationCertificate",
-      maxCount: 1,
-    },
-
-    {
-      name: "professionalIdDocument",
-      maxCount: 1,
-    },
-  ]),
+  // multer failures (bad mimetype, too big, unexpected file) are client errors, never 500
+  (req, res, next) =>
+    upload.fields([
+      { name: "registrationCertificate", maxCount: 1 },
+      { name: "professionalIdDocument", maxCount: 1 },
+    ])(req, res, (err) =>
+      err
+        ? res.status(err instanceof multer.MulterError && err.code === "LIMIT_FILE_SIZE" ? 413 : 400).json({ success: false, message: err.message })
+        : next()
+    ),
 
   async (req, res) => {
     try {
@@ -89,14 +98,17 @@ router.post(
       // =================================================
 
       allow(req.body, [
-        "fullName", "email", "mobileNumber",
+        "firstName", "middleName", "lastName", "email", "mobileNumber",
         "medicalRegistrationNumber", "medicalCouncil", "qualification", "specialization",
         "yearsOfExperience", "hospitalName", "country", "stateProvince", "city",
         "declarationAccepted",
       ]);
+      check(req.body, DOCTOR_SPEC);
 
       const {
-        fullName,
+        firstName,
+        middleName,
+        lastName,
         email,
         mobileNumber,
 
@@ -119,7 +131,7 @@ router.post(
         city,
 
         declarationAccepted,
-      } = req.body || {};
+      } = req.body;
 
       // =================================================
       // FILES
@@ -138,7 +150,8 @@ router.post(
       // =================================================
 
       if (
-        !fullName ||
+        !firstName?.trim() ||
+        !lastName?.trim() ||
         !email ||
         !mobileNumber ||
 
@@ -210,8 +223,9 @@ router.post(
       // CLEAN VALUES
       // =================================================
 
-      const cleanFullName =
-        String(fullName).trim();
+      const cleanFirstName = firstName.trim();
+      const cleanMiddleName = (middleName || "").trim();
+      const cleanLastName = lastName.trim();
 
       const cleanEmail =
         String(email)
@@ -366,8 +380,9 @@ router.post(
           // PERSONAL
           // =============================================
 
-          fullName:
-            cleanFullName,
+          firstName: cleanFirstName,
+          middleName: cleanMiddleName,
+          lastName: cleanLastName,
 
           email:
             cleanEmail,
@@ -470,11 +485,6 @@ router.post(
       console.log(
         "Request ID:",
         request._id
-      );
-
-      console.log(
-        "Doctor:",
-        cleanFullName
       );
 
       console.log(

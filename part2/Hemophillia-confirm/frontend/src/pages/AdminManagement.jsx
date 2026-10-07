@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import api from "../apiClient";
 
 const emptyForm = {
-  fullName: "",
+  firstName: "",
+  middleName: "",
+  lastName: "",
   email: "",
   adminLevel: "ADMIN",
   canManageAdmins: false,
@@ -61,8 +63,11 @@ export default function AdminManagement() {
 
   const submit = async (e) => {
     e.preventDefault(); setError(""); setMessage("");
-    if (!form.fullName.trim() || !form.email.trim()) {
-      setError("Full name and email are required."); return;
+    if (!form.firstName.trim() || !form.lastName.trim() || !form.email.trim()) {
+      setError("First name, last name and email are required."); return;
+    }
+    if ([form.firstName, form.middleName, form.lastName].some((n) => n.trim().length > 100)) {
+      setError("Each name part must be 100 characters or fewer."); return;
     }
     if (form.adminLevel === "SUPER_ADMIN" && !isSuper) {
       setError("Only a Super Admin can create another Super Admin."); return;
@@ -70,7 +75,9 @@ export default function AdminManagement() {
     try {
       setSaving(true);
       const res = await api.post("/admin/management/create", {
-        fullName: form.fullName.trim(),
+        firstName: form.firstName.trim(),
+        middleName: form.middleName.trim(),
+        lastName: form.lastName.trim(),
         email: form.email.trim().toLowerCase(),
         adminLevel: form.adminLevel,
         mobile: form.mobile,
@@ -111,8 +118,12 @@ export default function AdminManagement() {
           <h2 style={styles.cardTitle}>Add Administrator</h2>
           <p style={styles.muted}>A secure temporary password will be generated and emailed to the new administrator.</p>
           <form onSubmit={submit}>
-            <label style={styles.label}>Full Name</label>
-            <input style={styles.input} value={form.fullName} onChange={(e) => update("fullName", e.target.value)} placeholder="Administrator name" />
+            <label style={styles.label}>First Name</label>
+            <input style={styles.input} value={form.firstName} maxLength={100} onChange={(e) => update("firstName", e.target.value)} placeholder="First Name" />
+            <label style={styles.label}>Middle Name (optional)</label>
+            <input style={styles.input} value={form.middleName} maxLength={100} onChange={(e) => update("middleName", e.target.value)} placeholder="Middle Name (optional)" />
+            <label style={styles.label}>Last Name</label>
+            <input style={styles.input} value={form.lastName} maxLength={100} onChange={(e) => update("lastName", e.target.value)} placeholder="Last Name" />
             <label style={styles.label}>Email Address</label>
             <input style={styles.input} type="email" value={form.email} onChange={(e) => update("email", e.target.value)} placeholder="admin@example.com" />
             <label style={styles.label}>Mobile Number</label>

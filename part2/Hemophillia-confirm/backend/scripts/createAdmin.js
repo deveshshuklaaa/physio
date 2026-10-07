@@ -13,6 +13,7 @@ const connectDB = require("../config/db");
 // =====================================================
 
 const User = require("../src/models/User");
+const { displayName, splitName } = require("../src/utils/displayName");
 const AdminProfile = require("../src/models/AdminProfile");
 
 // =====================================================
@@ -73,7 +74,7 @@ async function createAdmin() {
 
       console.log(
         "Name:",
-        existingAdmin.fullName
+        displayName(existingAdmin)
       );
 
       console.log(
@@ -151,7 +152,7 @@ async function createAdmin() {
 
     const admin =
       await User.create({
-        fullName: ADMIN_NAME,
+        ...splitName(ADMIN_NAME),
 
         email: ADMIN_EMAIL,
 
@@ -177,7 +178,7 @@ async function createAdmin() {
 
     console.log(
       "Name:",
-      admin.fullName
+      displayName(admin)
     );
 
     console.log(

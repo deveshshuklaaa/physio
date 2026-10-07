@@ -1,20 +1,13 @@
     // src/fhir/patientMapper.js
 
-    const toFHIRPatient = (profile) => {
+    const { displayName } = require("../utils/displayName");
+
+    // `user` carries the name parts (patientprofiles holds no name).
+    const toFHIRPatient = (profile, user) => {
     if (!profile) return null;
 
-    // Split full name
-    const nameParts = profile.fullName
-        ? profile.fullName.trim().split(/\s+/)
-        : [];
-
-    const familyName =
-        nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
-
-    const givenNames =
-        nameParts.length > 1
-        ? nameParts.slice(0, -1)
-        : [profile.fullName];
+    const familyName = user?.lastName || "";
+    const givenNames = [user?.firstName, user?.middleName].filter(Boolean);
 
     return {
         resourceType: "Patient",
@@ -58,7 +51,7 @@
         {
             use: "official",
 
-            text: profile.fullName,
+            text: displayName(user),
 
             family: familyName,
 

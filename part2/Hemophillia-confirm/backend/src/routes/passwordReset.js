@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 
+const { check } = require("../utils/allow");
 const User = require("../models/User");
 const PasswordResetOTP = require("../models/PasswordResetOTP");
 const {
@@ -21,6 +22,19 @@ const RESET_TOKEN_MINUTES = 10;
 
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+
+// Body specs. Wrong type or over-long = 400 before any coercion or query. email 254 (RFC 5321);
+// role/professionalId/password maxes are chosen; challengeId/resetToken are 32 random bytes hex.
+const HEX64 = { type: "string", max: 64, re: /^[a-f0-9]{64}$/ };
+const SPEC = {
+  request: {
+    role: { type: "string", max: 30 },
+    email: { type: "string", max: 254 },
+    professionalId: { type: "string", max: 64 },
+  },
+  verify: { challengeId: HEX64, otp: { type: "string", max: 12 } },
+  reset: { challengeId: HEX64, resetToken: HEX64, newPassword: { type: "string", max: 128 } },
+};
 
 const allowedRoles = [
   "patient",
@@ -93,6 +107,7 @@ function genericSuccessMessage() {
 // ============================================================
 router.post("/request", async (req, res) => {
   try {
+    check(req.body || {}, SPEC.request);
     const role = normalizeRole(req.body?.role);
     const email = String(
       req.body?.email || ""
@@ -278,6 +293,7 @@ router.post("/request", async (req, res) => {
         OTP_EXPIRY_SECONDS,
     });
   } catch (error) {
+    if (error.status === 400) return res.status(400).json({ success: false, message: error.message });
     console.error(
       "Password reset request error:",
       error
@@ -301,6 +317,7 @@ router.post("/request", async (req, res) => {
 // ============================================================
 router.post("/verify", async (req, res) => {
   try {
+    check(req.body || {}, SPEC.verify);
     const challengeId = String(
       req.body?.challengeId || ""
     ).trim();
@@ -431,6 +448,7 @@ router.post("/verify", async (req, res) => {
         RESET_TOKEN_MINUTES * 60,
     });
   } catch (error) {
+    if (error.status === 400) return res.status(400).json({ success: false, message: error.message });
     console.error(
       "Password reset OTP verification error:",
       error
@@ -451,6 +469,7 @@ router.post("/verify", async (req, res) => {
 // ============================================================
 router.post("/reset", async (req, res) => {
   try {
+    check(req.body || {}, SPEC.reset);
     const challengeId = String(
       req.body?.challengeId || ""
     ).trim();
@@ -629,6 +648,7 @@ console.log(
         "Password reset successfully. You can now log in with your new password.",
     });
   } catch (error) {
+    if (error.status === 400) return res.status(400).json({ success: false, message: error.message });
     console.error(
       "Password reset error:",
       error

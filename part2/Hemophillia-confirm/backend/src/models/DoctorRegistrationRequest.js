@@ -44,11 +44,10 @@ const doctorRegistrationRequestSchema =
       // PERSONAL
       // ===============================================
 
-      fullName: {
-        type: String,
-        required: true,
-        trim: true,
-      },
+      // Name as submitted, in 3 parts (no fullName stored). Approval copies them to users as-is.
+      firstName: { ...encryptedString, required: true, trim: true },
+      middleName: { ...encryptedString, trim: true },
+      lastName: { ...encryptedString, required: true, trim: true },
 
       email: encryptedString,
 
@@ -141,8 +140,18 @@ const doctorRegistrationRequestSchema =
       },
       professionalId: {
         type: String,
-        default: null,
-        index: true,
+        // No `default: null` and no `index: true`.
+        //
+        // The staff ID is assigned by an admin at approval, so the field must be
+        // ABSENT until then. A `default: null` writes an explicit null, and the
+        // unique+sparse index only exempts ABSENT fields -- so every pending request
+        // held the same null and the second one collided:
+        //   E11000 duplicate key ... index: professionalId_1
+        // which blocked all new doctor registrations.
+        //
+        // The index itself is owned by migrations/phase2_indexes.js. Declaring
+        // `index: true` here races it with a PLAIN index on the same key, the same
+        // way it did on the OTP models' expiresAt.
       },
 
       // ===============================================

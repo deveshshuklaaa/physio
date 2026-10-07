@@ -91,7 +91,6 @@ router.post("/login", async (req, res) => {
 
     console.log("🔥 ADMIN FROM DATABASE:");
 console.log("ID:", admin._id.toString());
-console.log("NAME:", admin.fullName);
 
     // =================================================
     // PASSWORD IS CORRECT
@@ -127,7 +126,6 @@ console.log("NAME:", admin.fullName);
           // to frontend after OTP verification
           userData: {
             id: admin._id,
-            fullName: admin.fullName,
             email: admin.email,
             role: "admin",
             mustChangePassword: !!admin.mustChangePassword,
@@ -182,11 +180,6 @@ console.log("NAME:", admin.fullName);
 
     console.log(
       "✅ ADMIN PASSWORD VERIFIED"
-    );
-
-    console.log(
-      "Admin:",
-      admin.fullName
     );
 
     console.log(

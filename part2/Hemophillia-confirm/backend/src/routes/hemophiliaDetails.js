@@ -1,8 +1,10 @@
 const express = require("express");
-const { allow } = require("../utils/allow");
+const { allow, check } = require("../utils/allow");
 const {
   transliterateDoctorName,
 } = require("../services/doctorNameTranslationService");
+
+const { displayName } = require("../utils/displayName");
 
 const authMiddleware =
   require("../middleware/auth");
@@ -41,6 +43,21 @@ const HEMOPHILIA_FIELDS = [
   "physiotherapyProblems", "previousPhysiotherapy", "physiotherapyStoppedDate", "physiotherapyStoppedReason",
   "mobilityLimitation", "assistiveDevices", "patientNotes", "consultingDoctorId",
 ];
+// Maxes are chosen, not schema-derived (schema has none): choice labels 100, detail text 500, notes 2000, lists 50 x 200.
+const T = (max) => ({ type: "string", max });
+const L = { type: "array", max: 50, of: "string", itemMax: 200 };
+const B = { type: "bool", blank: true };
+const HEMOPHILIA_SPEC = {
+  type: T(100), severity: T(100), ageAtDiagnosis: { type: "string", max: 3, re: /^\d*$/ },
+  familyHistory: T(100), geneticTestingDone: T(100),
+  currentFactorTherapy: L, otherCurrentTreatment: T(500), otherMedications: L, otherMedicationDetails: T(500),
+  bleedingPattern: T(100), jointsAffected: L, targetJoint: L, bleedFrequency: T(100), lastBleedDate: T(40), otherBleedingDetails: T(500),
+  underPhysiotherapy: B, physiotherapyLocation: T(200), physiotherapySessions: T(100), physiotherapyDuration: T(100),
+  physiotherapyBodyPart: T(200), physiotherapyTreatment: T(500), physiotherapyEquipment: T(500), physiotherapyHelping: T(500),
+  physiotherapyProblems: L, previousPhysiotherapy: B, physiotherapyStoppedDate: T(40), physiotherapyStoppedReason: T(500),
+  mobilityLimitation: T(500), assistiveDevices: T(500), patientNotes: T(2000),
+  consultingDoctorId: { type: "string", max: 24, re: /^([a-f0-9]{24})?$/i },
+};
 const router =
   express.Router();
 
@@ -68,9 +85,15 @@ router.get(
           $in: ["doctor", "clinician"],
         },
       })
-        .select("_id fullName professionalId role nameTranslations")
-        .sort({ fullName: 1 })
+        .select("_id firstName middleName lastName professionalId role nameTranslations")
         .lean();
+
+      // CSFLE Random cannot sort server-side: decrypt, then sort in memory.
+      doctors.sort(
+        (a, b) =>
+          (a.lastName || "").localeCompare(b.lastName || "") ||
+          (a.firstName || "").localeCompare(b.firstName || "")
+      );
 
       console.log("🟢 Doctors fetched:", doctors.length);
 
@@ -89,7 +112,7 @@ router.get(
 
         if (!translations.en) {
           translations.en =
-            doctor.fullName;
+            displayName(doctor);
         }
 
         // ---------------------------------------------
@@ -101,7 +124,7 @@ router.get(
         ) {
           translations[language] =
             await transliterateDoctorName(
-              doctor.fullName,
+              displayName(doctor),
               language
             );
 
@@ -122,7 +145,7 @@ router.get(
           _id: doctor._id,
 
           fullName:
-            doctor.fullName,
+            displayName(doctor),
 
           professionalId:
             doctor.professionalId,
@@ -168,7 +191,11 @@ router.post(
     try {
 
       const data =
-        allow(req.body || {}, HEMOPHILIA_FIELDS);
+        allow(req.body, HEMOPHILIA_FIELDS);
+
+      // legacy clients send one string; wrap it so the list check applies
+      if (typeof data.targetJoint === "string") data.targetJoint = [data.targetJoint];
+      check(data, HEMOPHILIA_SPEC);
 
       // =====================================================
       // TARGET JOINT -- REQUIRED, MULTI-VALUE
@@ -408,7 +435,7 @@ if (existingDetails) {
       console.log(
         "Consulting Doctor:",
         consultingDoctor
-          ? consultingDoctor.fullName
+          ? displayName(consultingDoctor)
           : "Not selected"
       );
 
@@ -591,7 +618,9 @@ router.get(
           await User.findById(
             details.consultingDoctorId,
             {
-              fullName: 1,
+              firstName: 1,
+              middleName: 1,
+              lastName: 1,
               professionalId: 1,
             }
           ).lean();
@@ -678,7 +707,7 @@ router.get(
                   consultingDoctor._id,
 
                 fullName:
-                  consultingDoctor.fullName,
+                  displayName(consultingDoctor),
 
                 professionalId:
                   consultingDoctor.professionalId,
@@ -770,7 +799,7 @@ router.get(
             details.consultingDoctorId
           )
             .select(
-              "_id fullName professionalId role nameTranslations"
+              "_id firstName middleName lastName professionalId role nameTranslations"
             )
             .lean();
       }
@@ -791,7 +820,7 @@ router.get(
         assignedDoctor: assignedDoctor
           ? {
               _id: assignedDoctor._id,
-              fullName: assignedDoctor.fullName,
+              fullName: displayName(assignedDoctor),
               professionalId:
                 assignedDoctor.professionalId,
               role: assignedDoctor.role,

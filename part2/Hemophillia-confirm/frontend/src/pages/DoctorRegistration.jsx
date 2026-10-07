@@ -11,7 +11,9 @@ const DoctorRegistration = () => {
   // =========================================================
 
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
     email: "",
     mobileNumber: "",
 
@@ -709,10 +711,10 @@ const DoctorRegistration = () => {
   const handleBlur = (e) => {
     const { name, value } = e.target;
 
-    if (name === "fullName") {
+    if (["firstName", "middleName", "lastName"].includes(name)) {
       setFormData((prev) => ({
         ...prev,
-        fullName: formatFullName(value),
+        [name]: formatFullName(value),
       }));
     }
   };
@@ -777,8 +779,22 @@ const DoctorRegistration = () => {
     // VALIDATION
     // =======================================================
 
-    if (!formData.fullName.trim()) {
-      setError("Please enter your full name.");
+    if (!formData.firstName.trim()) {
+      setError("Please enter your first name.");
+      return;
+    }
+
+    if (!formData.lastName.trim()) {
+      setError("Please enter your last name.");
+      return;
+    }
+
+    if (
+      [formData.firstName, formData.middleName, formData.lastName].some(
+        (n) => n.trim().length > 100
+      )
+    ) {
+      setError("Each name part must be 100 characters or fewer.");
       return;
     }
 
@@ -913,10 +929,9 @@ const DoctorRegistration = () => {
       // PERSONAL INFORMATION
       // -----------------------------------------------------
 
-      data.append(
-        "fullName",
-        formData.fullName.trim()
-      );
+      data.append("firstName", formData.firstName.trim());
+      data.append("middleName", formData.middleName.trim());
+      data.append("lastName", formData.lastName.trim());
 
       data.append(
         "email",
@@ -1455,23 +1470,68 @@ const DoctorRegistration = () => {
 
             <div className="form-grid">
 
-              {/* FULL NAME */}
+              {/* FIRST NAME */}
 
-              <div className="field full-width">
+              <div className="field">
 
                 <label>
-                  Full Name
+                  First Name
                   <span>*</span>
                 </label>
 
                 <input
                   type="text"
-                  name="fullName"
-                  placeholder="Enter your full name"
-                  value={formData.fullName}
+                  name="firstName"
+                  placeholder="First Name"
+                  value={formData.firstName}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  autoComplete="name"
+                  maxLength={100}
+                  autoComplete="given-name"
+                  required
+                />
+
+              </div>
+
+              {/* MIDDLE NAME (OPTIONAL) */}
+
+              <div className="field">
+
+                <label>
+                  Middle Name (optional)
+                </label>
+
+                <input
+                  type="text"
+                  name="middleName"
+                  placeholder="Middle Name (optional)"
+                  value={formData.middleName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  maxLength={100}
+                  autoComplete="additional-name"
+                />
+
+              </div>
+
+              {/* LAST NAME */}
+
+              <div className="field">
+
+                <label>
+                  Last Name
+                  <span>*</span>
+                </label>
+
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  maxLength={100}
+                  autoComplete="family-name"
                   required
                 />
 

@@ -3,12 +3,16 @@ const authMiddleware = require("../middleware/auth");
 
 const PatientProfile = require("../models/PatientProfile");
 const FHIRResource = require("../models/FHIRResource");
+const User = require("../models/User");
+const { displayName } = require("../utils/displayName");
 
 const { toFHIRPatient } = require("../fhir/patientMapper");
-const { allow } = require("../utils/allow");
+const { allow, check } = require("../utils/allow");
 
+// Name parts are identity: written to users, never to patientprofiles.
+const NAME_FIELDS = ["firstName", "middleName", "lastName"];
 const PROFILE_FIELDS = [
-  "fullName", // -> replaced by the 3 name parts in Phase 4
+  ...NAME_FIELDS,
   "gender", "dob", "age", "bloodGroup", "photoUrl",
   "mobile", "alternateContact", "email",
   "address", "city", "state", "pinCode",
@@ -17,9 +21,32 @@ const PROFILE_FIELDS = [
   "insuranceStatus", "insuranceProvider",
   "htcName", "hematologistName", "hospitalName", "existingPatientNumber",
 ];
+// Maxes are chosen, not schema-derived (schema has none): short labels 50, names/places 100, address 300, free URL 2048.
+const S = (max) => ({ type: "string", max });
+const PROFILE_SPEC = {
+  firstName: S(100), middleName: S(100), lastName: S(100), gender: S(50), dob: S(40), age: { type: "int", max: 150 }, bloodGroup: S(10), photoUrl: S(2048),
+  mobile: S(15), alternateContact: S(15), email: S(254),
+  address: S(300), city: S(100), state: S(100), pinCode: S(10),
+  emergencyName: S(100), emergencyRelationship: S(50), emergencyPhone: S(15),
+  maritalStatus: S(50), educationLevel: S(100), occupation: S(100), annualIncome: S(50),
+  insuranceStatus: S(50), insuranceProvider: S(100),
+  htcName: S(150), hematologistName: S(100), hospitalName: S(150), existingPatientNumber: S(50),
+};
+const CONSENT_SPEC = Object.fromEntries(
+  ["consentDataCollection", "consentAI", "consentVideoMonitoring", "privacyAccepted", "termsAccepted"].map((k) => [k, { type: "bool" }])
+);
 const CONSENT_FIELDS = ["consentDataCollection", "consentAI", "consentVideoMonitoring", "privacyAccepted", "termsAccepted"];
 
 const router = express.Router();
+
+// Responses keep exposing a computed fullName (plus the parts); never stored.
+const withName = (profile, user) => ({
+  ...profile.toObject(),
+  firstName: user?.firstName ?? "",
+  middleName: user?.middleName ?? "",
+  lastName: user?.lastName ?? "",
+  fullName: displayName(user),
+});
 
 // ============================================================
 // Helper: Generate Patient ID
@@ -55,6 +82,8 @@ const generateUniquePatientId = async () => {
 router.post("/consent", authMiddleware, async (req, res) => {
   try {
     allow(req.body, CONSENT_FIELDS);
+    check(req.body, CONSENT_SPEC);
+    if (!Object.keys(req.body).length) return res.status(400).json({ message: "Consent values are required" });
     const {
       consentDataCollection,
       consentAI,
@@ -120,7 +149,7 @@ router.post("/consent", authMiddleware, async (req, res) => {
 
 router.post("/patient-profile", authMiddleware, async (req, res) => {
   try {
-    const data = allow(req.body, PROFILE_FIELDS);
+    const data = check(allow(req.body, PROFILE_FIELDS), PROFILE_SPEC);
 
     // ========================================================
     // Validation helpers
@@ -146,11 +175,19 @@ router.post("/patient-profile", authMiddleware, async (req, res) => {
 
     const requiredChecks = [
       [
-        "fullName",
+        "firstName",
         (v) =>
           typeof v === "string" &&
           v.trim().length > 0,
-        "Full Name is required",
+        "First Name is required",
+      ],
+
+      [
+        "lastName",
+        (v) =>
+          typeof v === "string" &&
+          v.trim().length > 0,
+        "Last Name is required",
       ],
 
       [
@@ -279,7 +316,7 @@ router.post("/patient-profile", authMiddleware, async (req, res) => {
     // Update profile
     // ========================================================
 
-    for (const k of PROFILE_FIELDS) if (k in data) profile[k] = data[k];
+    for (const k of PROFILE_FIELDS) if (k in data && !NAME_FIELDS.includes(k)) profile[k] = data[k];
 
     // NEVER allow frontend to change userId
     profile.userId = req.userId;
@@ -295,6 +332,12 @@ router.post("/patient-profile", authMiddleware, async (req, res) => {
 
     await profile.save();
 
+    // Name goes to users (save() so the nameTranslations hook runs; bypass keeps mononym rows saveable).
+    const user = await User.findById(req.userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    for (const k of NAME_FIELDS) if (k in data) user[k] = data[k];
+    await user.save();;
+
     console.log("✅ Patient profile saved");
     console.log("Patient ID:", profile.patientId);
 
@@ -302,7 +345,7 @@ router.post("/patient-profile", authMiddleware, async (req, res) => {
     // Convert to FHIR Patient
     // ========================================================
 
-    const fhirPatient = toFHIRPatient(profile);
+    const fhirPatient = toFHIRPatient(profile, user);
 
     console.log("✅ FHIR Patient created");
     console.log("FHIR ID:", fhirPatient.id);
@@ -332,7 +375,7 @@ router.post("/patient-profile", authMiddleware, async (req, res) => {
 
     return res.status(200).json({
       message: "Patient profile saved successfully",
-      profile,
+      profile: withName(profile, user),
       patientId: profile.patientId,
     });
   } catch (err) {
@@ -365,7 +408,8 @@ router.get("/patient-profile", authMiddleware, async (req, res) => {
       });
     }
 
-    return res.status(200).json(profile);
+    const user = await User.findById(req.userId).select("firstName middleName lastName").lean();
+    return res.status(200).json(withName(profile, user));
   } catch (err) {
     console.error("Patient profile fetch error:", err);
 

@@ -3,6 +3,7 @@ const express = require("express");
 const authMiddleware = require("../middleware/auth");
 
 const PatientProfile = require("../models/PatientProfile");
+const User = require("../models/User");
 const HemophiliaDetails = require("../models/HemophiliaDetails");
 const ScreeningSession = require("../models/ScreeningSession");
 const Assessment = require("../models/Assessment");
@@ -67,6 +68,7 @@ router.post("/save-bundle", authMiddleware, async (req, res) => {
 
     const bundle = toFHIRBundle({
       patientProfile,
+      user: await User.findById(req.userId).select("firstName middleName lastName").lean(),
       hemophiliaDetails,
       screeningSession,
       assessment,

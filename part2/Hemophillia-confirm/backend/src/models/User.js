@@ -215,6 +215,10 @@
 
 const mongoose = require("mongoose");
 const dataKeyId = require("../../config/dataKey");
+const { displayName } = require("../utils/displayName");
+const { transliterateDoctorName } = require("../services/doctorNameTranslationService");
+
+const RANDOM = { keyId: [dataKeyId], algorithm: "AEAD_AES_256_CBC_HMAC_SHA_512-Random" };
 
 // =====================================================
 // USER SCHEMA
@@ -226,10 +230,12 @@ const userSchema = new mongoose.Schema(
     // BASIC INFORMATION
     // =================================================
 
-    fullName: {
-      type: String,
-      required: true,
-    },
+    // CSFLE Random. lastName is required, but the 4 mononym users hold "" -- every
+    // re-save of them MUST pass { validateBeforeSave: false }. fullName is NOT stored;
+    // use utils/displayName.js.
+    firstName: { type: String, required: true, trim: true, encrypt: RANDOM },
+    middleName: { type: String, trim: true, encrypt: RANDOM },
+    lastName: { type: String, required: true, trim: true, encrypt: RANDOM },
 
     email: {
       type: String,
@@ -252,12 +258,10 @@ const userSchema = new mongoose.Schema(
       unique: true,
       sparse: true,
       index: true,
-    },
-
-    registrationRequestId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "DoctorRegistrationRequest",
-      default: null,
+      encrypt: {
+        keyId: [dataKeyId],
+        algorithm: "AEAD_AES_256_CBC_HMAC_SHA_512-Deterministic",
+      },
     },
 
     // =================================================
@@ -299,22 +303,12 @@ const userSchema = new mongoose.Schema(
 
       default: "patient",
     },
+    // Derived from the composed name by the pre-save hook below; callers never set it.
     nameTranslations: {
-  en: {
-    type: String,
-    default: "",
-  },
-
-  hi: {
-    type: String,
-    default: "",
-  },
-
-  mr: {
-    type: String,
-    default: "",
-  },
-},
+      en: { type: String, default: "", encrypt: RANDOM },
+      hi: { type: String, default: "", encrypt: RANDOM },
+      mr: { type: String, default: "", encrypt: RANDOM },
+    },
 
     // =================================================
     // ACCOUNT STATUS
@@ -352,92 +346,6 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-
-    // =================================================
-    // ADMIN LEVEL / PERMISSIONS
-    // =================================================
-
-    adminLevel: {
-      type: String,
-      enum: ["SUPER_ADMIN", "ADMIN"],
-      default: "ADMIN",
-    },
-
-    permissions: {
-      canManageAdmins: {
-        type: Boolean,
-        default: false,
-      },
-      canManageDoctors: {
-        type: Boolean,
-        default: false,
-      },
-      canViewPatients: {
-        type: Boolean,
-        default: false,
-      },
-      canManageDoctorRequests: {
-        type: Boolean,
-        default: false,
-      },
-    },
-
-    // Admin-specific profile / organization information
-    mobile: {
-      type: String,
-      default: "",
-    },
-
-    alternateMobile: {
-      type: String,
-      default: "",
-    },
-
-    designation: {
-      type: String,
-      default: "",
-    },
-
-    hospitalName: {
-      type: String,
-      default: "",
-    },
-
-    department: {
-      type: String,
-      default: "",
-    },
-
-    hospitalAddress: {
-      type: String,
-      default: "",
-    },
-
-    city: {
-      type: String,
-      default: "",
-    },
-
-    state: {
-      type: String,
-      default: "",
-    },
-
-    pinCode: {
-      type: String,
-      default: "",
-    },
-
-    employeeId: {
-      type: String,
-      default: "",
-    },
-
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      default: null,
-    },
   },
 
   // ===================================================
@@ -451,6 +359,19 @@ const userSchema = new mongoose.Schema(
 
   
 );
+
+// nameTranslations = transliteration of the composed name. Runs on every save() (incl. create),
+// so no write path can forget it. updateOne/$set bypass hooks -- name edits must use save().
+userSchema.pre("save", async function () {
+  if (!this.isNew && !["firstName", "middleName", "lastName"].some((k) => this.isModified(k))) return;
+  const full = displayName(this);
+  for (const l of ["en", "hi", "mr"]) this.set(`nameTranslations.${l}`, await transliterateDoctorName(full, l));
+  // Force the whole subdocument to be written even when a value is unchanged.
+  // Mongoose sends only modified paths, and CSFLE encrypts only what it writes -- so an
+  // unchanged `en`/`hi` would be left behind as CLEARTEXT while a changed `mr` got
+  // encrypted, which is exactly what happened on the first Phase 4 run.
+  this.markModified("nameTranslations");
+});
 
 // =====================================================
 // EXPORT

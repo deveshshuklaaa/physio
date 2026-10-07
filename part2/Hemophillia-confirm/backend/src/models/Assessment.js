@@ -334,14 +334,10 @@ const assessmentSchema = new mongoose.Schema(
     // PATIENT ID
     // =================================================
 
+    // Cleartext everywhere (Phase 4): the CSFLE-less FastAPI engine joins on it.
     patientId: {
       type: String,
       required: true,
-      encrypt: {
-        keyId: [DATA_KEY_ID],
-        algorithm:
-          "AEAD_AES_256_CBC_HMAC_SHA_512-Deterministic",
-      },
     },
 
     // =================================================

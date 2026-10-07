@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const connectDB = require("../config/db");
 const User = require("../src/models/User");
+const { displayName, splitName } = require("../src/utils/displayName");
 
 (async () => {
   const profId = process.env.DOC_PROF_ID;
@@ -21,6 +22,6 @@ const User = require("../src/models/User");
   u.passwordHash = await bcrypt.hash(newPw, 10);
   u.mustChangePassword = false;   // don't force a change mid-demo
   await u.save();
-  console.log(`Reset OK: ${profId} (${u.fullName}). New password NOT printed.`);
+  console.log(`Reset OK: ${profId} (${displayName(u)}). New password NOT printed.`);
 })().catch(e => { console.error("FAILED:", e.message); process.exitCode = 1; })
   .finally(async () => { if (mongoose.connection.readyState === 1) await mongoose.connection.close(); });

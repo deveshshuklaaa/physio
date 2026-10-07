@@ -1,4 +1,5 @@
 const express = require("express");
+const { displayName } = require("../utils/displayName");
 const { spawn } = require("child_process");
 const path = require("path");
 const fs = require("fs");
@@ -1304,7 +1305,7 @@ router.get(
           },
         })
         .select(
-          "_id fullName"
+          "_id firstName middleName lastName"
         )
         .lean();
 
@@ -1314,7 +1315,7 @@ router.get(
           users.map(
             (x) => [
               String(x._id),
-              x.fullName,
+              displayName(x),
             ]
           )
         );
@@ -1511,7 +1512,7 @@ router.get(
           },
         })
         .select(
-          "_id fullName"
+          "_id firstName middleName lastName"
         )
         .lean();
 
@@ -1521,7 +1522,7 @@ router.get(
           users.map(
             (x) => [
               String(x._id),
-              x.fullName,
+              displayName(x),
             ]
           )
         );

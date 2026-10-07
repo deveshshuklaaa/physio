@@ -5,6 +5,7 @@ const { staffAuth, allowRoles } = require("../middleware/roleMiddleware");
 
 const PatientProfile = require("../models/PatientProfile");
 const User = require("../models/User");
+const { displayName } = require("../utils/displayName");
 const HemophiliaDetails = require("../models/HemophiliaDetails");
 const Assessment = require("../models/Assessment");
 const PatientExerciseRecommendation = require("../models/PatientExerciseRecommendation");
@@ -1511,7 +1512,7 @@ console.log(
             profile.patientId,
 
           fullName:
-            profile.fullName,
+            displayName(user),
 
           age:
             profile.age,
@@ -1833,10 +1834,7 @@ router.get(
           profile.userId,
 
         fullName:
-          firstAvailable(
-            profile.fullName,
-            user?.fullName
-          ),
+          displayName(user),
 
         gender:
           firstAvailable(

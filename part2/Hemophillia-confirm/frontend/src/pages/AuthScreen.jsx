@@ -14,7 +14,9 @@ import api from "../apiClient";
 const PatientAuthScreen = () => {
   const [mode, setMode] = useState("login");
 
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -51,34 +53,26 @@ const formatFullName = (value) => {
 
 
 // =========================================================
-// FULL NAME VALIDATION
+// NAME VALIDATION (format only; server is the authority)
 // =========================================================
 
-const validateFullName = (name) => {
-  const cleanedName = name
-    .trim()
-    .replace(/\s+/g, " ");
-
-  const nameParts = cleanedName.split(" ");
-
-  // First + Last required, Middle name optional
-  if (nameParts.length < 2 || nameParts.length > 3) {
-    return "Please enter your full name in the format: First Name Middle Name (optional) Last Name.";
+const validateNameParts = (first, middle, last) => {
+  if (!first || !last) {
+    return "First name and last name are required.";
   }
 
   // Allow letters, hyphen and apostrophe
   const nameRegex = /^[A-Za-z]+(?:[-'][A-Za-z]+)*$/;
 
-  for (const part of nameParts) {
-    if (!nameRegex.test(part)) {
-      return "Full name should contain letters only. Numbers and special characters are not allowed.";
-    }
-  }
+  for (const part of [first, middle, last]) {
+    if (!part) continue; // middle name optional
 
-  // Check first letter of every name
-  for (const part of nameParts) {
-    if (part.charAt(0) !== part.charAt(0).toUpperCase()) {
-      return "First letter of your first, middle, and last name must be capitalized.";
+    if (part.length > 100) {
+      return "Each name part must be 100 characters or fewer.";
+    }
+
+    if (!nameRegex.test(part)) {
+      return "Names should contain letters only. Numbers and special characters are not allowed.";
     }
   }
 
@@ -196,16 +190,20 @@ const validateFullName = (name) => {
   // FORMAT FULL NAME
   // =====================================================
 
-  const formattedName = formatFullName(fullName);
+  const first = formatFullName(firstName);
+  const middle = formatFullName(middleName);
+  const last = formatFullName(lastName);
 
-  setFullName(formattedName);
+  setFirstName(first);
+  setMiddleName(middle);
+  setLastName(last);
 
 
   // =====================================================
   // VALIDATE FULL NAME
   // =====================================================
 
-  const nameError = validateFullName(formattedName);
+  const nameError = validateNameParts(first, middle, last);
 
   if (nameError) {
     setError(nameError);
@@ -243,7 +241,9 @@ const validateFullName = (name) => {
               password,
             }
           : {
-              fullName,
+              firstName: first,
+              middleName: middle,
+              lastName: last,
               email,
               password,
             };
@@ -380,29 +380,82 @@ const validateFullName = (name) => {
               =============================================== */}
 
               {mode === "register" && (
+                <>
                 <div className="patient-field">
 
-                  <label htmlFor="fullName">
-                    Full Name
+                  <label htmlFor="firstName">
+                    First Name
                   </label>
 
                   <input
-                    id="fullName"
+                    id="firstName"
                     type="text"
-                    value={fullName}
+                    value={firstName}
                     onChange={(e) =>
-                      setFullName(e.target.value)
+                      setFirstName(e.target.value)
                     }
                     onBlur={() => {
-                      setFullName(formatFullName(fullName));
+                      setFirstName(formatFullName(firstName));
                     }}
-                    placeholder="First Name Middle Name (optional) Last Name"
-                    autoComplete="name"
+                    placeholder="First Name"
+                    maxLength={100}
+                    autoComplete="given-name"
                     disabled={loading || googleLoading}
                     required
                   />
 
                 </div>
+
+                <div className="patient-field">
+
+                  <label htmlFor="middleName">
+                    Middle Name (optional)
+                  </label>
+
+                  <input
+                    id="middleName"
+                    type="text"
+                    value={middleName}
+                    onChange={(e) =>
+                      setMiddleName(e.target.value)
+                    }
+                    onBlur={() => {
+                      setMiddleName(formatFullName(middleName));
+                    }}
+                    placeholder="Middle Name (optional)"
+                    maxLength={100}
+                    autoComplete="additional-name"
+                    disabled={loading || googleLoading}
+                    
+                  />
+
+                </div>
+
+                <div className="patient-field">
+
+                  <label htmlFor="lastName">
+                    Last Name
+                  </label>
+
+                  <input
+                    id="lastName"
+                    type="text"
+                    value={lastName}
+                    onChange={(e) =>
+                      setLastName(e.target.value)
+                    }
+                    onBlur={() => {
+                      setLastName(formatFullName(lastName));
+                    }}
+                    placeholder="Last Name"
+                    maxLength={100}
+                    autoComplete="family-name"
+                    disabled={loading || googleLoading}
+                    required
+                  />
+
+                </div>
+                </>
               )}
 
               {/* ===============================================

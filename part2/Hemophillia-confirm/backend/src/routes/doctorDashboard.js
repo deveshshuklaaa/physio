@@ -1,5 +1,6 @@
 
 const express = require("express");
+const { displayName } = require("../utils/displayName");
 
 const User = require("../models/User");
 const PatientProfile = require("../models/PatientProfile");
@@ -23,7 +24,7 @@ router.get("/dashboard", staffAuth, async (req, res) => {
     // =================================================
 
     const doctor = await User.findById(req.userId).select(
-      "fullName professionalId role"
+      "firstName middleName lastName professionalId role"
     );
 
     if (!doctor) {
@@ -60,7 +61,7 @@ router.get("/dashboard", staffAuth, async (req, res) => {
       _id: { $in: patientUserIds },
       role: 'patient',
     })
-      .select('_id fullName professionalId role')
+      .select('_id firstName middleName lastName professionalId role')
       .lean();
 
     const profileMap = new Map(
@@ -416,7 +417,7 @@ router.get("/dashboard", staffAuth, async (req, res) => {
     })
       .populate({
         path: 'patientUserId',
-        select: '_id fullName',
+        select: '_id firstName middleName lastName',
       })
       .sort({ createdAt: -1 })
       .lean();
@@ -432,7 +433,7 @@ router.get("/dashboard", staffAuth, async (req, res) => {
         return {
           patientId: record.patientId || null,
           userId: record.userId,
-          fullName: user.fullName || null,
+          fullName: displayName(user) || null,
           age: profile.age ?? null,
           gender: profile.gender ?? profile.sex ?? null,
           type: record.type ?? null,
@@ -668,7 +669,7 @@ router.get("/dashboard", staffAuth, async (req, res) => {
     return res.status(200).json({
       doctor: {
         id: doctor._id,
-        fullName: doctor.fullName,
+        fullName: displayName(doctor),
         professionalId: doctor.professionalId,
         role: doctor.role,
       },
@@ -764,7 +765,7 @@ router.get("/dashboard", staffAuth, async (req, res) => {
       changeRequests: changeRequests.map((request) => ({
         id: request._id,
         patientId: request.patientId,
-        patientName: request.patientUserId?.fullName || null,
+        patientName: displayName(request.patientUserId) || null,
         reason: request.reason || null,
         requestedAt: request.requestedAt || request.createdAt || null,
       })),

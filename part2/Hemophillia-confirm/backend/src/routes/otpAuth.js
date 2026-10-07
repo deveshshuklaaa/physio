@@ -1,4 +1,5 @@
 const express = require("express");
+const { check } = require("../utils/allow");
 const jwt = require("jsonwebtoken");
 
 const {
@@ -6,9 +7,17 @@ const {
   verifyLoginOTP,
 } = require("../services/otpService");
 const AdminProfile = require("../models/AdminProfile");
+const User = require("../models/User");
+const { displayName } = require("../utils/displayName");
 const { resolveAdminAuthz } = require("../utils/adminAuthz");
 
 const router = express.Router();
+
+// challengeId is 32 random bytes hex (generateChallengeId); otp is 6 digits.
+const OTP_SPEC = {
+  challengeId: { type: "string", max: 64, re: /^[a-f0-9]{64}$/ },
+  otp: { type: "string", max: 12 },
+};
 
 const JWT_SECRET =
   process.env.JWT_SECRET ||
@@ -22,6 +31,7 @@ router.post(
   "/verify-otp",
   async (req, res) => {
     try {
+      check(req.body || {}, OTP_SPEC);
       const {
         challengeId,
         otp,
@@ -52,6 +62,10 @@ router.post(
           challengeId,
           otp,
         });
+
+      // fullName is not stored in the OTP record; compose it fresh from users
+      const nameUser = await User.findById(result.authPayload.userId).select("firstName middleName lastName").lean();
+      const userData = { ...userData, fullName: displayName(nameUser) };
 
       // =================================================
       // CREATE FINAL JWT
@@ -86,7 +100,7 @@ router.post(
                   })
                 ),
               }
-            : result.userData,
+            : userData,
         role:
           result.role,
       });
@@ -123,6 +137,7 @@ router.post(
   "/resend-otp",
   async (req, res) => {
     try {
+      check(req.body || {}, { challengeId: OTP_SPEC.challengeId });
       const {
         challengeId,
       } = req.body || {};

@@ -4,6 +4,7 @@ const authMiddleware = require("../middleware/auth");
 
 const Assessment = require("../models/Assessment");
 const PatientProfile = require("../models/PatientProfile");
+const User = require("../models/User");
 const HemophiliaDetails = require("../models/HemophiliaDetails");
 
 const saveFHIRBundle = require("../utils/saveFHIRBundle");
@@ -1495,6 +1496,9 @@ router.post(
 
           patientProfile:
             profile,
+
+          user:
+            await User.findById(req.userId).select("firstName middleName lastName").lean(),
 
           hemophiliaDetails:
             hemophiliaDetails,

@@ -6,6 +6,7 @@ const { toFHIRQuestionnaireResponse } = require("./questionnaireMapper");
 
 const toFHIRBundle = ({
     patientProfile,
+    user,
     hemophiliaDetails,
     screeningSession,
     assessment,
@@ -19,7 +20,7 @@ const toFHIRBundle = ({
 
     if (patientProfile) {
 
-        const patient = toFHIRPatient(patientProfile);
+        const patient = toFHIRPatient(patientProfile, user);
 
         if (patient) {
             entries.push({

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../apiClient";
 
-// Mirrors backend PROFILE_FIELDS (fullName is added from the name parts).
+// Mirrors backend PROFILE_FIELDS (the 3 name parts are added separately).
 const PROFILE_FIELDS = [
   "gender", "dob", "age", "bloodGroup", "photoUrl",
   "mobile", "alternateContact", "email",
@@ -189,9 +189,10 @@ const ProfileStepper = () => {
 
         // IMPORTANT:
         // overwrite UI name fields AFTER ...existing
-        firstName,
-        middleName,
-        lastName,
+        // Prefer server-stored parts; fall back to splitting fullName
+        firstName: existing.firstName ?? firstName,
+        middleName: existing.middleName ?? middleName,
+        lastName: existing.lastName ?? lastName,
 
         // Keep original stored full name
         fullName: existing.fullName || "",
@@ -595,13 +596,9 @@ const ProfileStepper = () => {
       const middleName = profile.middleName.trim();
       const lastName = profile.lastName.trim();
 
-      const fullName = [firstName, middleName, lastName]
-        .filter(Boolean)
-        .join(" ");
-
       // Allowlist, not a spread: state also carries _id/userId/patientId/
       // timestamps from GET + localStorage, which the server rejects (400).
-      const payload = { fullName };
+      const payload = { firstName, middleName, lastName };
       for (const k of PROFILE_FIELDS)
         if (profile[k] !== undefined) payload[k] = profile[k];
 

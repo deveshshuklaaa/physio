@@ -2,7 +2,8 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const { allow } = require("../utils/allow");
+const { displayName, splitName } = require("../utils/displayName");
+const { allow, check } = require("../utils/allow");
 const {
   createLoginOTP,
 } = require("../services/otpService");
@@ -16,16 +17,26 @@ const googleClient = GOOGLE_CLIENT_ID ? new OAuth2Client(GOOGLE_CLIENT_ID) : nul
 const JWT_SECRET =
   process.env.JWT_SECRET || "hemo_fallback_secret_change_in_production";
 
+// Maxes: email 254 (RFC 5321); name parts 100 and password 128 are chosen (bcrypt only reads 72 bytes).
+const SIGNUP_SPEC = {
+  firstName: { type: "string", max: 100 },
+  middleName: { type: "string", max: 100 },
+  lastName: { type: "string", max: 100 },
+  email: { type: "string", max: 254 },
+  password: { type: "string", max: 128 },
+};
+
 // POST /api/auth/register
 router.post("/register", async (req, res) => {
   try {
-    allow(req.body, ["fullName", "email", "password"]);
-    const { fullName, email, password } = req.body;
+    allow(req.body, ["firstName", "middleName", "lastName", "email", "password"]);
+    check(req.body, SIGNUP_SPEC);
+    const { firstName, middleName, lastName, email, password } = req.body;
 
-    if (!fullName || !email || !password) {
+    if (!firstName?.trim() || !lastName?.trim() || !email || !password) {
       return res
         .status(400)
-        .json({ message: "Name, email and password are all required" });
+        .json({ message: "First name, last name, email and password are all required" });
     }
 
     const existingUser = await User.findOne({ email });
@@ -38,7 +49,7 @@ router.post("/register", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    const user = await User.create({ fullName, email, passwordHash });
+    const user = await User.create({ firstName, middleName, lastName, email, passwordHash });
 
     const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
       expiresIn: "7d",
@@ -46,7 +57,7 @@ router.post("/register", async (req, res) => {
 
     res.status(201).json({
       token,
-      user: { id: user._id, fullName: user.fullName, email: user.email, role: user.role },
+      user: { id: user._id, fullName: displayName(user), email: user.email, role: user.role },
     });
   } catch (err) {
     if (err.status === 400) return res.status(400).json({ message: err.message });
@@ -102,6 +113,7 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
+    check(req.body || {}, { email: SIGNUP_SPEC.email, password: SIGNUP_SPEC.password });
     const {
       email,
       password,
@@ -169,8 +181,6 @@ router.post("/login", async (req, res) => {
 
           userData: {
             id: user._id,
-            fullName:
-              user.fullName,
             email: user.email,
             role: user.role,
           },
@@ -222,6 +232,7 @@ router.post("/login", async (req, res) => {
         otpResult.expiresInSeconds,
     });
   } catch (err) {
+    if (err.status === 400) return res.status(400).json({ message: err.message });
     console.error(
       "Login error:",
       err
@@ -240,6 +251,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/google/patient", async (req, res) => {
   try {
+    check(req.body || {}, { credential: { type: "string", max: 4096 } });
     const { credential } = req.body;
 
     if (!credential) {
@@ -317,14 +329,16 @@ router.post("/google/patient", async (req, res) => {
     }
 
     if (!user) {
-      user = await User.create({
-        fullName: googleName || googleEmail.split("@")[0],
+      // one free-text Google name -> parts; a one-word name is a mononym (lastName "")
+      user = new User({
+        ...splitName(googleName || googleEmail.split("@")[0]),
         email: googleEmail,
         googleId: googleId,
         authProvider: "google",
         role: "patient",
         accountStatus: "APPROVED",
       });
+      await user.save();;
     }
 
     const token = jwt.sign(
@@ -339,12 +353,13 @@ router.post("/google/patient", async (req, res) => {
       token,
       user: {
         id: user._id,
-        fullName: user.fullName,
+        fullName: displayName(user),
         email: user.email,
         role: user.role,
       },
     });
   } catch (error) {
+    if (error.status === 400) return res.status(400).json({ message: error.message });
     console.error("Google authentication error:", error);
     return res.status(500).json({
       success: false,

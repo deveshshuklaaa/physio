@@ -5,6 +5,7 @@ const {
   createLoginOTP,
 } = require("../services/otpService");
 const User = require("../models/User");
+const { displayName } = require("../utils/displayName");
 const DoctorProfile = require("../models/DoctorProfile");
 const { staffAuth } = require("../middleware/roleMiddleware");
 
@@ -132,9 +133,6 @@ router.post(
 
               professionalId:
                 user.professionalId,
-
-              fullName:
-                user.fullName,
 
               email:
                 user.email,
@@ -374,8 +372,6 @@ router.post(
 
             professionalId: user.professionalId,
 
-            fullName: user.fullName,
-
             email: user.email,
 
             role: user.role,
@@ -565,7 +561,7 @@ router.post("/change-password", async (req, res) => {
       user: {
         id: user._id,
         professionalId: user.professionalId,
-        fullName: user.fullName,
+        fullName: displayName(user),
         role: user.role,
         mustChangePassword: false,
       },
@@ -588,8 +584,11 @@ router.post("/change-password", async (req, res) => {
 // GET/PUT /api/doctor/me/profile  (own document only; id from verified token)
 // =====================================================
 
+const NAME_PART = /^[\p{L}][\p{L} .'-]{0,99}$/u;
 const PROFILE_FIELDS = {
-  fullName: /^[\p{L}][\p{L} .'-]{1,99}$/u,
+  firstName: NAME_PART,
+  middleName: NAME_PART,
+  lastName: NAME_PART,
   mobile: /^\d{10}$/,
   alternateMobile: /^\d{10}$/,
   designation: /^[\p{L}\p{N} .,&()\/'-]{1,100}$/u,
@@ -601,7 +600,8 @@ const PROFILE_FIELDS = {
   pinCode: /^\d{6}$/,
   employeeId: /^[A-Za-z0-9\/_-]{1,40}$/,
 };
-const REQUIRED = ["fullName"]; // others may be blank
+const NAME_KEYS = ["firstName", "middleName", "lastName"];
+const REQUIRED = ["firstName", "lastName"]; // others may be blank
 const READONLY = ["email", "professionalId", "role", "accountStatus"];
 
 const findSelf = (req) =>
@@ -610,12 +610,13 @@ const findSelf = (req) =>
     role: { $in: ["doctor", "clinician"] },
   });
 
-// fullName + READONLY come from users; the other PROFILE_FIELDS from doctorprofiles
+// name parts + READONLY come from users; the other PROFILE_FIELDS from doctorprofiles
 const profileView = (u, p) => {
   const o = {};
   Object.keys(PROFILE_FIELDS).forEach((k) => {
-    o[k] = (k === "fullName" ? u : p)?.[k] ?? "";
+    o[k] = (NAME_KEYS.includes(k) ? u : p)?.[k] ?? "";
   });
+  o.fullName = displayName(u); // computed for the frontend, never stored
   READONLY.forEach((k) => {
     o[k] = u[k] ?? "";
   });
@@ -657,9 +658,9 @@ router.put("/me/profile", staffAuth, async (req, res) => {
     }
     const user = await findSelf(req);
     if (!user) return res.status(404).json({ message: "Profile not found" });
-    const { fullName, ...rest } = clean;
     const profile = await findProfile(user);
-    if (fullName !== undefined) user.fullName = fullName;
+    const rest = {};
+    for (const [k, v] of Object.entries(clean)) (NAME_KEYS.includes(k) ? user : rest)[k] = v;
     Object.assign(profile, rest);
     await user.save();
     await profile.save();

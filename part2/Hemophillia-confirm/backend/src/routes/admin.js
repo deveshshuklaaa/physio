@@ -4,9 +4,21 @@ const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 
 const User = require("../models/User");
+const { displayName, withFullName } = require("../utils/displayName");
 const AdminProfile = require("../models/AdminProfile");
 const DoctorProfile = require("../models/DoctorProfile");
 const { resolveAdminAuthz } = require("../utils/adminAuthz");
+const { allow, check } = require("../utils/allow");
+
+// Maxes are chosen, not schema-derived: email 254 (RFC 5321), names/places 100, address 300, password 128.
+const S = (max) => ({ type: "string", max });
+const ADMIN_SPEC = {
+  firstName: S(100), middleName: S(100), lastName: S(100), email: S(254), adminLevel: S(20), password: S(128),
+  mobile: S(15), alternateMobile: S(15), designation: S(100), hospitalName: S(150), department: S(100),
+  hospitalAddress: S(300), city: S(100), state: S(100), pinCode: S(10), employeeId: S(50),
+};
+const PERM_KEYS = ["canManageAdmins", "canManageDoctors", "canViewPatients", "canManageDoctorRequests"];
+const badBody = (m) => { const e = new Error(m); e.status = 400; throw e; };
 
 const DoctorRegistrationRequest = require(
   "../models/DoctorRegistrationRequest"
@@ -79,7 +91,7 @@ router.get(
           })
           .limit(8)
           .select(
-            "fullName email specialization hospitalName medicalRegistrationNumber roleRequested status createdAt"
+            "firstName middleName lastName email specialization hospitalName medicalRegistrationNumber roleRequested status createdAt"
           )
           .lean();
 
@@ -127,7 +139,7 @@ router.get(
           approvedToday,
         },
 
-        recentRequests,
+        recentRequests: recentRequests.map(withFullName),
       });
 
     } catch (error) {
@@ -183,7 +195,7 @@ router.get(
           accountStatus: "APPROVED",
         })
           .select(
-            "_id fullName email professionalId role accountStatus mustChangePassword createdAt"
+            "_id firstName middleName lastName email professionalId role accountStatus mustChangePassword createdAt"
           )
           .lean();
 
@@ -196,7 +208,7 @@ router.get(
           status: "APPROVED",
         })
           .select(
-            "fullName email mobileNumber country stateProvince city medicalRegistrationNumber medicalCouncil qualification specialization yearsOfExperience hospitalName status createdAt reviewedAt reviewedBy"
+            "firstName middleName lastName email mobileNumber country stateProvince city medicalRegistrationNumber medicalCouncil qualification specialization yearsOfExperience hospitalName status createdAt reviewedAt reviewedBy"
           )
           .lean();
 
@@ -245,7 +257,7 @@ router.get(
           },
         })
           .select(
-            "_id fullName email role"
+            "_id firstName middleName lastName email role"
           )
           .lean();
 
@@ -306,8 +318,8 @@ router.get(
                 doctor._id,
 
               fullName:
-                doctor.fullName ||
-                request?.fullName ||
+                displayName(doctor) ||
+                displayName(request) ||
                 "",
 
               email:
@@ -394,7 +406,7 @@ router.get(
               // =================================================
 
               approvedBy:
-                reviewer?.fullName ||
+                displayName(reviewer) ||
                 "Administrator",
 
               // Keep reviewer ID also
@@ -506,7 +518,7 @@ router.get(
             request.reviewedBy
           )
             .select(
-              "_id fullName email role"
+              "_id firstName middleName lastName email role"
             )
             .lean();
       }
@@ -527,7 +539,7 @@ router.get(
             request._id,
 
           fullName:
-            request.fullName,
+            displayName(request),
 
           email:
             request.email,
@@ -628,7 +640,7 @@ router.get(
 
           // FULL NAME OF ADMIN WHO APPROVED/REVIEWED
           approvedBy:
-            reviewer?.fullName ||
+            displayName(reviewer) ||
             null,
 
           reviewedAt:
@@ -681,7 +693,7 @@ router.get(
             createdAt: -1,
           })
           .select(
-            "fullName email mobileNumber country stateProvince city medicalRegistrationNumber medicalCouncil qualification specialization yearsOfExperience hospitalName registrationCertificateName registrationCertificateMimeType professionalIdDocumentName professionalIdDocumentMimeType declarationAccepted status createdAt"
+            "firstName middleName lastName email mobileNumber country stateProvince city medicalRegistrationNumber medicalCouncil qualification specialization yearsOfExperience hospitalName registrationCertificateName registrationCertificateMimeType professionalIdDocumentName professionalIdDocumentMimeType declarationAccepted status createdAt"
           )
           .lean();
 
@@ -691,7 +703,7 @@ router.get(
         count:
           requests.length,
 
-        requests,
+        requests: requests.map(withFullName),
       });
     } catch (error) {
       console.error(
@@ -1033,8 +1045,10 @@ router.post(
       const doctor =
         await User.create({
 
-          fullName:
-            request.fullName,
+          // parts copied as-is from the request; no name parsing
+          firstName: request.firstName,
+          middleName: request.middleName,
+          lastName: request.lastName,
 
           email:
             request.email,
@@ -1081,7 +1095,7 @@ router.post(
         await sendDoctorCredentials({
 
           doctorName:
-            doctor.fullName,
+            displayName(doctor),
 
           doctorEmail:
             doctor.email,
@@ -1148,11 +1162,6 @@ router.post(
       );
 
       console.log(
-        "Doctor:",
-        doctor.fullName
-      );
-
-      console.log(
         "Email:",
         doctor.email
       );
@@ -1192,7 +1201,7 @@ router.post(
             doctor._id,
 
           fullName:
-            doctor.fullName,
+            displayName(doctor),
 
           email:
             doctor.email,
@@ -1381,7 +1390,7 @@ router.post(
         await sendDoctorRejectionEmail({
 
           doctorName:
-            request.fullName,
+            displayName(request),
 
           doctorEmail:
             request.email,
@@ -1433,11 +1442,6 @@ router.post(
 
       console.log(
         "❌ DOCTOR REGISTRATION REJECTED"
-      );
-
-      console.log(
-        "Doctor:",
-        request.fullName
       );
 
       console.log(
@@ -1536,7 +1540,7 @@ router.get(
   async (req, res) => {
     try {
       const admins = await User.find({ role: "admin" })
-        .select("_id fullName email accountStatus mustChangePassword createdAt updatedAt")
+        .select("_id firstName middleName lastName email accountStatus mustChangePassword createdAt updatedAt")
         .sort({ createdAt: 1 })
         .lean();
 
@@ -1547,10 +1551,10 @@ router.get(
 
       const creatorIds = profiles.map((p) => p.createdBy).filter(Boolean);
       const creators = await User.find({ _id: { $in: creatorIds } })
-        .select("_id fullName email")
+        .select("_id firstName middleName lastName email")
         .lean();
       const creatorMap = new Map(
-        creators.map((creator) => [String(creator._id), creator])
+        creators.map((creator) => [String(creator._id), withFullName(creator)])
       );
 
       return res.status(200).json({
@@ -1559,6 +1563,7 @@ router.get(
           const p = profileMap.get(String(admin._id)) || {};
           return {
             ...admin,
+            fullName: displayName(admin),
             ...resolveAdminAuthz(p),
             mobile: p.mobile || "",
             designation: p.designation || "",
@@ -1593,8 +1598,18 @@ router.post(
   adminAuth.requirePermission("canManageAdmins"),
   async (req, res) => {
     try {
+      allow(req.body, ["firstName", "middleName", "lastName", "email", "adminLevel", "permissions", "mobile", "designation", "hospitalName", "department"]);
+      check(req.body, ADMIN_SPEC);
+      if (req.body.permissions !== undefined) {
+        const pm = req.body.permissions;
+        if (!pm || typeof pm !== "object" || Array.isArray(pm)) badBody("permissions must be an object");
+        allow(pm, PERM_KEYS);
+        check(pm, Object.fromEntries(PERM_KEYS.map((k) => [k, { type: "bool" }])));
+      }
       const {
-        fullName,
+        firstName,
+        middleName = "",
+        lastName,
         email,
         adminLevel = "ADMIN",
         permissions = {},
@@ -1602,15 +1617,16 @@ router.post(
         designation = "",
         hospitalName = "",
         department = "",
-      } = req.body || {};
+      } = req.body;
 
-      const cleanName = String(fullName || "").trim();
+      const cleanFirst = String(firstName || "").trim();
+      const cleanLast = String(lastName || "").trim();
       const cleanEmail = String(email || "").trim().toLowerCase();
 
-      if (!cleanName || !cleanEmail) {
+      if (!cleanFirst || !cleanLast || !cleanEmail) {
         return res.status(400).json({
           success: false,
-          message: "Full name and email are required",
+          message: "First name, last name and email are required",
         });
       }
 
@@ -1660,7 +1676,9 @@ router.post(
       const passwordHash = await bcrypt.hash(temporaryPassword, 12);
 
       const admin = await User.create({
-        fullName: cleanName,
+        firstName: cleanFirst,
+        middleName: String(middleName).trim(),
+        lastName: cleanLast,
         email: cleanEmail,
         passwordHash,
         role: "admin",
@@ -1693,7 +1711,7 @@ router.post(
 
       try {
         await sendAdminCredentials({
-          adminName: admin.fullName,
+          adminName: displayName(admin),
           adminEmail: admin.email,
           adminLevel: profile.adminLevel,
           temporaryPassword,
@@ -1715,7 +1733,7 @@ router.post(
           "Administrator created successfully. Login credentials have been sent to the registered email address.",
         admin: {
           id: admin._id,
-          fullName: admin.fullName,
+          fullName: displayName(admin),
           email: admin.email,
           adminLevel: profile.adminLevel,
           permissions: profile.permissions,
@@ -1725,6 +1743,7 @@ router.post(
         },
       });
     } catch (error) {
+      if (error.status === 400) return res.status(400).json({ success: false, message: error.message });
       console.error("CREATE ADMIN ERROR:", error);
       return res.status(500).json({
         success: false,
@@ -1747,6 +1766,7 @@ router.get("/me", adminAuth, async (req, res) => {
       success: true,
       admin: {
         ...admin,
+        fullName: displayName(admin),
         ...(req.adminProfile?.toObject() || {}),
         _id: admin._id,
         adminLevel: req.adminLevel,
@@ -1766,7 +1786,9 @@ router.get("/me", adminAuth, async (req, res) => {
 router.put("/me", adminAuth, async (req, res) => {
   try {
     const allowedFields = [
-      "fullName",
+      "firstName",
+      "middleName",
+      "lastName",
       "mobile",
       "alternateMobile",
       "designation",
@@ -1779,12 +1801,18 @@ router.put("/me", adminAuth, async (req, res) => {
       "employeeId",
     ];
 
-    // fullName is identity (users); everything else is profile data (adminprofiles)
+    allow(req.body, allowedFields);
+    check(req.body, ADMIN_SPEC);
+
+    // name parts are identity (users); everything else is profile data (adminprofiles)
     const profile = req.adminProfile || new AdminProfile({ userId: req.admin._id });
     for (const field of allowedFields) {
       if (Object.prototype.hasOwnProperty.call(req.body || {}, field)) {
-        const v = String(req.body[field] ?? "").trim();
-        if (field === "fullName") req.admin.fullName = v;
+        const v = req.body[field].trim(); // type already verified as string by check()
+        if (field === "firstName" && !v) {
+          return res.status(400).json({ success: false, message: "First name is required" });
+        }
+        if (["firstName", "middleName", "lastName"].includes(field)) req.admin[field] = v;
         else profile[field] = v;
       }
     }
@@ -1818,6 +1846,7 @@ router.put("/me", adminAuth, async (req, res) => {
 
     const result = {
       ...req.admin.toObject(),
+      fullName: displayName(req.admin),
       ...profile.toObject(),
       _id: req.admin._id,
     };
@@ -1829,6 +1858,7 @@ router.put("/me", adminAuth, async (req, res) => {
       admin: result,
     });
   } catch (error) {
+    if (error.status === 400) return res.status(400).json({ success: false, message: error.message });
     console.error("UPDATE ADMIN PROFILE ERROR:", error);
     return res.status(500).json({
       success: false,
@@ -1965,6 +1995,11 @@ router.post("/me/email/verify", adminAuth, async (req, res) => {
 
 router.post("/change-password", adminAuth, async (req, res) => {
   try {
+    check(req.body || {}, {
+      currentPassword: ADMIN_SPEC.password,
+      newPassword: ADMIN_SPEC.password,
+      confirmPassword: ADMIN_SPEC.password,
+    });
     const { currentPassword, newPassword, confirmPassword } = req.body || {};
 
     if (!currentPassword || !newPassword || !confirmPassword) {
@@ -2016,6 +2051,7 @@ router.post("/change-password", adminAuth, async (req, res) => {
       message: "Password changed successfully",
     });
   } catch (error) {
+    if (error.status === 400) return res.status(400).json({ success: false, message: error.message });
     console.error("ADMIN PASSWORD CHANGE ERROR:", error);
     return res.status(500).json({
       success: false,
