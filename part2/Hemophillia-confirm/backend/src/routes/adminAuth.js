@@ -92,8 +92,6 @@ router.post("/login", async (req, res) => {
     console.log("🔥 ADMIN FROM DATABASE:");
 console.log("ID:", admin._id.toString());
 console.log("NAME:", admin.fullName);
-console.log("LEVEL:", admin.adminLevel);
-console.log("PERMISSIONS:", admin.permissions);
 
     // =================================================
     // PASSWORD IS CORRECT
@@ -132,8 +130,6 @@ console.log("PERMISSIONS:", admin.permissions);
             fullName: admin.fullName,
             email: admin.email,
             role: "admin",
-            adminLevel: admin.adminLevel || "ADMIN",
-            permissions: admin.permissions || {},
             mustChangePassword: !!admin.mustChangePassword,
           },
         });

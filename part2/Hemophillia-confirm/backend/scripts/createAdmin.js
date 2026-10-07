@@ -13,6 +13,7 @@ const connectDB = require("../config/db");
 // =====================================================
 
 const User = require("../src/models/User");
+const AdminProfile = require("../src/models/AdminProfile");
 
 // =====================================================
 // ADMIN DETAILS
@@ -162,6 +163,8 @@ async function createAdmin() {
 
         mustChangePassword: false,
       });
+
+    await AdminProfile.create({ userId: admin._id });
 
     // =================================================
     // SUCCESS

@@ -4,6 +4,9 @@ const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 
 const User = require("../models/User");
+const AdminProfile = require("../models/AdminProfile");
+const DoctorProfile = require("../models/DoctorProfile");
+const { resolveAdminAuthz } = require("../utils/adminAuthz");
 
 const DoctorRegistrationRequest = require(
   "../models/DoctorRegistrationRequest"
@@ -1040,9 +1043,6 @@ router.post(
 
           professionalId,
 
-          registrationRequestId:
-            request._id,
-
           role:
             "doctor",
 
@@ -1052,6 +1052,25 @@ router.post(
           mustChangePassword:
             true,
         });
+
+      // Doctor org/contact data lives in doctorprofiles (carries the
+      // submitted mobile that used to be dropped here).
+      try {
+        await DoctorProfile.create({
+          userId: doctor._id,
+          registrationRequestId: request._id,
+          mobile: request.mobileNumber,
+          hospitalName: request.hospitalName,
+          city: request.city,
+          state: request.stateProvince,
+          specialization: request.specialization,
+          qualification: request.qualification,
+          medicalRegistrationNumber: request.medicalRegistrationNumber,
+        });
+      } catch (profileError) {
+        await User.findByIdAndDelete(doctor._id);
+        throw profileError;
+      }
 
       // =================================================
       // SEND LOGIN CREDENTIALS BY EMAIL
@@ -1323,17 +1342,25 @@ router.post(
       //
       // =================================================
 
-      const existingDoctor =
-        await User.findOne({
-
+      const existingProfile =
+        await DoctorProfile.findOne({
           registrationRequestId:
             request._id,
-
-          role:
-            "doctor",
         });
 
+      const existingDoctor =
+        existingProfile
+          ? await User.findOne({
+              _id: existingProfile.userId,
+              role: "doctor",
+            })
+          : null;
+
       if (existingDoctor) {
+
+        await DoctorProfile.deleteOne({
+          _id: existingProfile._id,
+        });
 
         await User.findByIdAndDelete(
           existingDoctor._id
@@ -1509,13 +1536,16 @@ router.get(
   async (req, res) => {
     try {
       const admins = await User.find({ role: "admin" })
-        .select(
-          "_id fullName email adminLevel permissions accountStatus mustChangePassword mobile alternateMobile designation hospitalName department city state pinCode employeeId createdBy createdAt updatedAt"
-        )
+        .select("_id fullName email accountStatus mustChangePassword createdAt updatedAt")
         .sort({ createdAt: 1 })
         .lean();
 
-      const creatorIds = admins.map((a) => a.createdBy).filter(Boolean);
+      const profiles = await AdminProfile.find({
+        userId: { $in: admins.map((a) => a._id) },
+      }).lean();
+      const profileMap = new Map(profiles.map((p) => [String(p.userId), p]));
+
+      const creatorIds = profiles.map((p) => p.createdBy).filter(Boolean);
       const creators = await User.find({ _id: { $in: creatorIds } })
         .select("_id fullName email")
         .lean();
@@ -1525,20 +1555,26 @@ router.get(
 
       return res.status(200).json({
         success: true,
-        admins: admins.map((admin) => ({
-          ...admin,
-          adminLevel: admin.adminLevel || "ADMIN",
-          permissions: {
-            canManageAdmins: !!admin.permissions?.canManageAdmins,
-            canManageDoctors: admin.permissions?.canManageDoctors !== false,
-            canViewPatients: admin.permissions?.canViewPatients !== false,
-            canManageDoctorRequests:
-              admin.permissions?.canManageDoctorRequests !== false,
-          },
-          createdBy: admin.createdBy
-            ? creatorMap.get(String(admin.createdBy)) || null
-            : null,
-        })),
+        admins: admins.map((admin) => {
+          const p = profileMap.get(String(admin._id)) || {};
+          return {
+            ...admin,
+            ...resolveAdminAuthz(p),
+            mobile: p.mobile || "",
+            designation: p.designation || "",
+            hospitalName: p.hospitalName || "",
+            department: p.department || "",
+            alternateMobile: p.alternateMobile || "",
+            hospitalAddress: p.hospitalAddress || "",
+            city: p.city || "",
+            state: p.state || "",
+            pinCode: p.pinCode || "",
+            employeeId: p.employeeId || "",
+            createdBy: p.createdBy
+              ? creatorMap.get(String(p.createdBy)) || null
+              : null,
+          };
+        }),
       });
     } catch (error) {
       console.error("GET ADMIN MANAGEMENT ERROR:", error);
@@ -1612,7 +1648,7 @@ router.post(
       }
 
       // Only a SUPER_ADMIN can create another SUPER_ADMIN.
-      if (adminLevel === "SUPER_ADMIN" && req.admin?.adminLevel !== "SUPER_ADMIN") {
+      if (adminLevel === "SUPER_ADMIN" && req.adminLevel !== "SUPER_ADMIN") {
         return res.status(403).json({
           success: false,
           message: "Only a Super Admin can create another Super Admin",
@@ -1630,10 +1666,10 @@ router.post(
         role: "admin",
         accountStatus: "APPROVED",
         mustChangePassword: true,
-        mobile: String(mobile || "").trim(),
-        designation: String(designation || "").trim(),
-        hospitalName: String(hospitalName || "").trim(),
-        department: String(department || "").trim(),
+      });
+
+      const profile = await AdminProfile.create({
+        userId: admin._id,
         adminLevel,
         permissions: {
           canManageAdmins:
@@ -1645,18 +1681,26 @@ router.post(
           canManageDoctorRequests:
             permissions.canManageDoctorRequests !== false,
         },
+        mobile: String(mobile || "").trim(),
+        designation: String(designation || "").trim(),
+        hospitalName: String(hospitalName || "").trim(),
+        department: String(department || "").trim(),
         createdBy: req.userId,
+      }).catch(async (e) => {
+        await User.findByIdAndDelete(admin._id);
+        throw e;
       });
 
       try {
         await sendAdminCredentials({
           adminName: admin.fullName,
           adminEmail: admin.email,
-          adminLevel: admin.adminLevel,
+          adminLevel: profile.adminLevel,
           temporaryPassword,
         });
       } catch (emailError) {
         console.error("ADMIN CREDENTIAL EMAIL FAILED:", emailError);
+        await AdminProfile.deleteOne({ userId: admin._id });
         await User.findByIdAndDelete(admin._id);
         return res.status(500).json({
           success: false,
@@ -1673,11 +1717,11 @@ router.post(
           id: admin._id,
           fullName: admin.fullName,
           email: admin.email,
-          adminLevel: admin.adminLevel,
-          permissions: admin.permissions,
+          adminLevel: profile.adminLevel,
+          permissions: profile.permissions,
           accountStatus: admin.accountStatus,
           mustChangePassword: admin.mustChangePassword,
-          createdBy: admin.createdBy,
+          createdBy: profile.createdBy,
         },
       });
     } catch (error) {
@@ -1703,8 +1747,10 @@ router.get("/me", adminAuth, async (req, res) => {
       success: true,
       admin: {
         ...admin,
-        adminLevel: admin.adminLevel || "ADMIN",
-        permissions: admin.permissions || {},
+        ...(req.adminProfile?.toObject() || {}),
+        _id: admin._id,
+        adminLevel: req.adminLevel,
+        permissions: req.permissions,
       },
     });
   } catch (error) {
@@ -1733,13 +1779,17 @@ router.put("/me", adminAuth, async (req, res) => {
       "employeeId",
     ];
 
+    // fullName is identity (users); everything else is profile data (adminprofiles)
+    const profile = req.adminProfile || new AdminProfile({ userId: req.admin._id });
     for (const field of allowedFields) {
       if (Object.prototype.hasOwnProperty.call(req.body || {}, field)) {
-        req.admin[field] = String(req.body[field] ?? "").trim();
+        const v = String(req.body[field] ?? "").trim();
+        if (field === "fullName") req.admin.fullName = v;
+        else profile[field] = v;
       }
     }
 
-    if (req.admin.mobile && !/^\d{10}$/.test(req.admin.mobile)) {
+    if (profile.mobile && !/^\d{10}$/.test(profile.mobile)) {
       return res.status(400).json({
         success: false,
         message: "Mobile number must contain exactly 10 digits",
@@ -1747,8 +1797,8 @@ router.put("/me", adminAuth, async (req, res) => {
     }
 
     if (
-      req.admin.alternateMobile &&
-      !/^\d{10}$/.test(req.admin.alternateMobile)
+      profile.alternateMobile &&
+      !/^\d{10}$/.test(profile.alternateMobile)
     ) {
       return res.status(400).json({
         success: false,
@@ -1756,7 +1806,7 @@ router.put("/me", adminAuth, async (req, res) => {
       });
     }
 
-    if (req.admin.pinCode && !/^\d{6}$/.test(req.admin.pinCode)) {
+    if (profile.pinCode && !/^\d{6}$/.test(profile.pinCode)) {
       return res.status(400).json({
         success: false,
         message: "PIN code must contain exactly 6 digits",
@@ -1764,8 +1814,13 @@ router.put("/me", adminAuth, async (req, res) => {
     }
 
     await req.admin.save();
+    await profile.save();
 
-    const result = req.admin.toObject();
+    const result = {
+      ...req.admin.toObject(),
+      ...profile.toObject(),
+      _id: req.admin._id,
+    };
     delete result.passwordHash;
 
     return res.status(200).json({

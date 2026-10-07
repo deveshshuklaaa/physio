@@ -345,6 +345,8 @@
 
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const AdminProfile = require("../models/AdminProfile");
+const { resolveAdminAuthz } = require("../utils/adminAuthz");
 
 const JWT_SECRET =
   process.env.JWT_SECRET ||
@@ -417,8 +419,12 @@ const adminAuth = async (req, res, next) => {
     req.userId = String(admin._id);
     req.role = "admin";
     req.admin = admin;
-    req.adminLevel = admin.adminLevel || "ADMIN";
-    req.permissions = admin.permissions || {};
+    // authz comes from adminprofiles, read fresh on every request
+    const profile = await AdminProfile.findOne({ userId: admin._id });
+    const { adminLevel, permissions } = resolveAdminAuthz(profile);
+    req.adminProfile = profile;
+    req.adminLevel = adminLevel;
+    req.permissions = permissions;
 
     next();
   } catch (err) {
@@ -443,12 +449,9 @@ adminAuth.requirePermission = (permission) => {
       });
     }
 
-    const isSuperAdmin =
-      req.admin.adminLevel === "SUPER_ADMIN";
-
     const allowed =
-      isSuperAdmin ||
-      req.admin.permissions?.[permission] === true;
+      req.adminLevel === "SUPER_ADMIN" ||
+      req.permissions?.[permission] === true;
 
     if (!allowed) {
       return res.status(403).json({

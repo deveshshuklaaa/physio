@@ -5,6 +5,8 @@ const {
   resendLoginOTP,
   verifyLoginOTP,
 } = require("../services/otpService");
+const AdminProfile = require("../models/AdminProfile");
+const { resolveAdminAuthz } = require("../utils/adminAuthz");
 
 const router = express.Router();
 
@@ -74,7 +76,17 @@ router.post(
           "OTP verified successfully",
         token,
         user:
-          result.userData,
+          result.role === "admin"
+            ? {
+                ...result.userData,
+                // authz read fresh from adminprofiles at verify time, never from the OTP record
+                ...resolveAdminAuthz(
+                  await AdminProfile.findOne({
+                    userId: result.authPayload.userId,
+                  })
+                ),
+              }
+            : result.userData,
         role:
           result.role,
       });

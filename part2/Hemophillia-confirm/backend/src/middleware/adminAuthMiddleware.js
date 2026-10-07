@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const AdminProfile = require("../models/AdminProfile");
+const { resolveAdminAuthz } = require("../utils/adminAuthz");
 
 const JWT_SECRET =
   process.env.JWT_SECRET ||
@@ -59,19 +61,11 @@ const adminAuth = async (req, res, next) => {
     req.userId = decoded.userId;
     req.role = "admin";
     req.admin = admin;
-    req.adminLevel = admin.adminLevel || "ADMIN";
-    req.permissions = {
-      canManageAdmins: !!admin.permissions?.canManageAdmins,
-      canManageDoctors: admin.permissions?.canManageDoctors !== false,
-      canViewPatients: admin.permissions?.canViewPatients !== false,
-      canManageDoctorRequests:
-        admin.permissions?.canManageDoctorRequests !== false,
-    };
-
-    // A SUPER_ADMIN always retains administrator-management access.
-    if (req.adminLevel === "SUPER_ADMIN") {
-      req.permissions.canManageAdmins = true;
-    }
+    const profile = await AdminProfile.findOne({ userId: admin._id });
+    const { adminLevel, permissions } = resolveAdminAuthz(profile);
+    req.adminProfile = profile;
+    req.adminLevel = adminLevel;
+    req.permissions = permissions;
 
     next();
   } catch (err) {

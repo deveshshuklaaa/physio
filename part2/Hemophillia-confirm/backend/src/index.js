@@ -2064,6 +2064,8 @@ require("./models/FHIRResource");
 require("./models/ScreeningSession");
 require("./models/DoctorChangeRequest");
 require("./models/PasswordResetOTP");
+require("./models/AdminProfile");
+require("./models/DoctorProfile");
 
 
 // ============================================================

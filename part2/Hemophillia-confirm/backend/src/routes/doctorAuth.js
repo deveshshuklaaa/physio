@@ -5,6 +5,7 @@ const {
   createLoginOTP,
 } = require("../services/otpService");
 const User = require("../models/User");
+const DoctorProfile = require("../models/DoctorProfile");
 const { staffAuth } = require("../middleware/roleMiddleware");
 
 const { OAuth2Client } = require("google-auth-library");
@@ -609,19 +610,27 @@ const findSelf = (req) =>
     role: { $in: ["doctor", "clinician"] },
   });
 
-const profileView = (u) => {
+// fullName + READONLY come from users; the other PROFILE_FIELDS from doctorprofiles
+const profileView = (u, p) => {
   const o = {};
-  [...Object.keys(PROFILE_FIELDS), ...READONLY].forEach((k) => {
+  Object.keys(PROFILE_FIELDS).forEach((k) => {
+    o[k] = (k === "fullName" ? u : p)?.[k] ?? "";
+  });
+  READONLY.forEach((k) => {
     o[k] = u[k] ?? "";
   });
   return o;
 };
 
+const findProfile = async (user) =>
+  (await DoctorProfile.findOne({ userId: user._id })) ||
+  new DoctorProfile({ userId: user._id });
+
 router.get("/me/profile", staffAuth, async (req, res) => {
   try {
     const user = await findSelf(req);
     if (!user) return res.status(404).json({ message: "Profile not found" });
-    return res.json({ profile: profileView(user) });
+    return res.json({ profile: profileView(user, await findProfile(user)) });
   } catch (err) {
     console.error("Doctor profile load error:", err);
     return res.status(500).json({ message: "Failed to load profile" });
@@ -648,9 +657,13 @@ router.put("/me/profile", staffAuth, async (req, res) => {
     }
     const user = await findSelf(req);
     if (!user) return res.status(404).json({ message: "Profile not found" });
-    Object.assign(user, clean);
+    const { fullName, ...rest } = clean;
+    const profile = await findProfile(user);
+    if (fullName !== undefined) user.fullName = fullName;
+    Object.assign(profile, rest);
     await user.save();
-    return res.json({ message: "Profile updated", profile: profileView(user) });
+    await profile.save();
+    return res.json({ message: "Profile updated", profile: profileView(user, profile) });
   } catch (err) {
     console.error("Doctor profile update error:", err);
     return res.status(500).json({ message: "Failed to update profile" });

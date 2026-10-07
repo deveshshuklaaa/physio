@@ -54,12 +54,30 @@ function masterKey() {
   return require(path.join(root, "config/masterKey")).localMasterKey;
 }
 
+// Registered BEFORE mongoose.connect() so CSFLE builds a schemaMap for each. A model
+// registered after connect gets no schemaMap entry, so its "encrypted" fields are
+// written in CLEARTEXT while the suite still reports green. Add every new model here.
+// ClinicalRecord joins this list at Phase 7.
 const models = ["User", "PatientProfile", "HemophiliaDetails", "Assessment", "DoctorRegistrationRequest",
-  "DoctorChangeRequest", "PatientExerciseRecommendation", "LoginOTP", "PasswordResetOTP", "FHIRResource"];
+  "DoctorChangeRequest", "PatientExerciseRecommendation", "LoginOTP", "PasswordResetOTP", "FHIRResource",
+  "AdminProfile", "DoctorProfile"];
 
 async function connectEncrypted() {
   const mongoose = require("mongoose");
-  for (const m of models) require(path.join(root, "src/models", m));
+  // A model file that does not exist yet (its phase has not shipped, or the image
+  // predates it) is skipped loudly. Anything else rethrows: a model that EXISTS but
+  // fails to register would get no schemaMap entry and write cleartext.
+  for (const m of models) {
+    try {
+      require(path.join(root, "src/models", m));
+    } catch (e) {
+      if (e.code === "MODULE_NOT_FOUND" && String(e.message).includes(m)) {
+        console.warn(`helpers: model ${m} not present, skipping (its phase has not shipped here)`);
+        continue;
+      }
+      throw e;
+    }
+  }
   const { cryptSharedLibPath } = require(path.join(root, "config/cryptSharedPath"));
   await mongoose.connect(testUri, {
     dbName: TEST_DB,
