@@ -12,7 +12,7 @@ before(() => H.setup());
 after(() => H.finish());
 
 // ---------------- G2 ----------------
-test("G2 [EXPECTED-FAIL until Phase 3] doctor approval keeps mobileNumber in doctorprofiles, ciphertext on disk", async () => {
+test("G2 doctor approval keeps mobileNumber in doctorprofiles, ciphertext on disk", async () => {
   const mobile = "9" + String(Math.floor(Math.random() * 1e9)).padStart(9, "0");
   const sup = await H.mkAdmin({ level: "SUPER_ADMIN", perms: { canManageDoctorRequests: true } });
   const f = new FormData();
@@ -102,7 +102,7 @@ test("G3 canManageAdmins: false for plain admin, true for SUPER_ADMIN (live midd
   assert.strictEqual((await H.api("GET", "/api/admin/management", { token: sup.token })).status, 200, "SUPER_ADMIN denied /management");
 });
 
-test("G3 [EXPECTED-FAIL until Phase 3] middleware reads permissions from adminprofiles, not users", async () => {
+test("G3 middleware reads permissions from adminprofiles, not users", async () => {
   const a = await H.mkAdmin({ level: "ADMIN", perms: { canManageAdmins: false } });
   // flip ONLY adminprofiles (our tagged fixture); users still says false
   await H.db().collection("adminprofiles").updateOne({ userId: new ObjectId(a.id), __testRun: H.RUN }, { $set: { "permissions.canManageAdmins": true } });

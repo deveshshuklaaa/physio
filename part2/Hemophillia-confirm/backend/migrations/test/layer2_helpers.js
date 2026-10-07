@@ -80,6 +80,15 @@ async function tagUser(id) {
   ownedUsers.add(id);
   const ids = [new ObjectId(id), id];
   for (const [c, f] of USER_REFS) await tagWhere(c, { [f]: { $in: ids } });
+
+  // fhirresources has no userId -- it keys on `id` = the PAT###### business key. The
+  // app writes a Patient resource whenever a profile is created, so without this
+  // those docs stay untagged, nothing sweeps them, and the teardown count-delta
+  // assertion trips on every file that creates a profile.
+  const pids = (await db().collection("patientprofiles")
+    .find({ userId: { $in: ids } }, { projection: { patientId: 1 } }).toArray())
+    .map((d) => d.patientId).filter(Boolean);
+  if (pids.length) await tagWhere("fhirresources", { id: { $in: pids } });
 }
 
 // ---- lifecycle

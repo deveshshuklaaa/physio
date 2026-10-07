@@ -29,7 +29,7 @@ const verifyReset = (challengeId, otp) => H.api("POST", "/api/password-reset/ver
 // ---------------- G4 ----------------
 const IDENTITY = new Set(["id", "fullName", "email", "role", "mustChangePassword"]);
 
-test("G4 [EXPECTED-FAIL until Phase 3] raw admin challenge carries no adminLevel/permissions; userData is identity only", async () => {
+test("G4 raw admin challenge carries no adminLevel/permissions; userData is identity only", async () => {
   const a = await H.mkAdmin({ level: "ADMIN", perms: { canManageAdmins: true } });
   const { challengeId, coll } = await login("/api/admin/login", a);
   const raw = await H.db().collection(coll).findOne({ challengeId });
@@ -42,7 +42,7 @@ test("G4 [EXPECTED-FAIL until Phase 3] raw admin challenge carries no adminLevel
   assert.deepStrictEqual(extra, [], `userData carries non-identity keys: ${extra}`);
 });
 
-test("G4 [EXPECTED-FAIL until Phase 3] REVOCATION: permission revoked between OTP issue and verify is reflected in payload and in the next authorized request", async () => {
+test("G4 REVOCATION: permission revoked between OTP issue and verify is reflected in payload and in the next authorized request", async () => {
   const a = await H.mkAdmin({ level: "ADMIN", perms: { canManageAdmins: true } });
   // control: permission really grants access before revocation
   assert.strictEqual((await H.api("GET", "/api/admin/management", { token: a.token })).status, 200, "control failed: admin with canManageAdmins denied");

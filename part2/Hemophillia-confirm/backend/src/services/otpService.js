@@ -235,7 +235,13 @@ async function verifyLoginOTP({
   challengeId,
   otp,
 }) {
-  if (!challengeId) {
+  // SECURITY: challengeId goes straight into a Mongo filter below. Anything other
+  // than a plain 64-hex string is rejected here -- a non-string body value such as
+  // {"$ne": null} would otherwise become a QUERY OPERATOR and match an unverified
+  // challenge belonging to someone else, handing out a token for their account.
+  // generateChallengeId() is crypto.randomBytes(32).toString("hex"), so the shape is
+  // exact and there is no reason to accept anything looser.
+  if (typeof challengeId !== "string" || !/^[a-f0-9]{64}$/.test(challengeId)) {
     const error = new Error(
       "Challenge ID is required"
     );
@@ -275,7 +281,7 @@ async function verifyLoginOTP({
 
   const loginOTP =
     await LoginOTP.findOne({
-      challengeId,
+      challengeId: String(challengeId),
       verified: false,
     });
 

@@ -39,7 +39,10 @@ const passwordResetOTPSchema = new mongoose.Schema(
     expiresAt: {
       type: Date,
       required: true,
-      index: true,
+      // No `index: true` here. The TTL index below owns the `expiresAt_1` name;
+      // declaring a plain index on the same key races it, and whichever lands
+      // first wins -- which is how a fresh environment ends up with a PLAIN
+      // index and no expiry sweep at all.
     },
 
     verified: {

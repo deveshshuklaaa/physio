@@ -6,7 +6,8 @@ const assert = require("node:assert");
 const { ObjectId } = require("mongodb");
 const H = require("./layer2_helpers");
 
-const P25 = "[EXPECTED-FAIL until Phase 2.5]";
+// Phase 2.5 shipped and G13 passed 44/44 on 2026-10-07, so these are no longer
+// expected failures. A failure here now is a REGRESSION in the allowlist layer.
 const ctx = {};
 before(async () => {
   await H.setup();
@@ -47,11 +48,11 @@ async function expect400(method, url, { token, json, form }, who) {
 // ---------------- patient-profile: the one real hole (routes/profile.js Object.assign) ----------------
 const profBase = () => H.profileBody();
 for (const [k, v] of Object.entries(FORBIDDEN))
-  test(`G13 ${P25} patient-profile: "${k}" is rejected 400, nothing written`, async () => {
+  test(`G13 patient-profile: "${k}" is rejected 400, nothing written`, async () => {
     await expect400("POST", "/api/profile/patient-profile", { token: ctx.A.token, json: { ...profBase(), [k]: v } }, ctx.A);
   });
 
-test(`G13 ${P25} patient-profile: squatted PAT###### never lands in patientprofiles`, async () => {
+test(`G13 patient-profile: squatted PAT###### never lands in patientprofiles`, async () => {
   const c = await H.mkPatient();
   const r = await H.api("POST", "/api/profile/patient-profile", { token: c.token, json: { ...profBase(), patientId: "PAT999999" } });
   await H.tagUser(c.id);
@@ -59,7 +60,7 @@ test(`G13 ${P25} patient-profile: squatted PAT###### never lands in patientprofi
   assert.strictEqual(r.status, 400);
 });
 
-test(`G13 ${P25} patient-profile: forged consentTimestamp never lands`, async () => {
+test(`G13 patient-profile: forged consentTimestamp never lands`, async () => {
   const c = await H.mkPatient();
   const r = await H.api("POST", "/api/profile/patient-profile", { token: c.token, json: { ...profBase(), consentTimestamp: "2000-01-01T00:00:00.000Z" } });
   await H.tagUser(c.id);
@@ -91,7 +92,7 @@ test("G13 patient-profile: control, trimmed allowlist body is accepted and patie
 
 // ---------------- consent route: its allowlist is the five booleans only ----------------
 for (const k of ["userId", "patientId", "consentTimestamp", "createdAt", "updatedAt", "_id", "unexpected_key"])
-  test(`G13 ${P25} consent: "${k}" is rejected 400, nothing written`, async () => {
+  test(`G13 consent: "${k}" is rejected 400, nothing written`, async () => {
     await expect400("POST", "/api/profile/consent", { token: ctx.A.token, json: { consentDataCollection: true, [k]: FORBIDDEN[k] ?? "x" } }, ctx.A);
   });
 
@@ -104,14 +105,14 @@ test("G13 signup: control, base body accepted", async () => {
 });
 for (const [k, v] of Object.entries({ role: "admin", adminLevel: "SUPER_ADMIN", permissions: { canManageAdmins: true }, _id: "000000000000000000000003",
   accountStatus: "APPROVED", patientId: "PAT999998", unexpected_key: "x" }))
-  test(`G13 ${P25} signup: "${k}" is rejected 400, nothing written (today it is dropped by luck of destructuring)`, async () => {
+  test(`G13 signup: "${k}" is rejected 400, nothing written (today it is dropped by luck of destructuring)`, async () => {
     await expect400("POST", "/api/auth/register", { json: { ...regBase(), [k]: v } });
   });
 
 // ---------------- hemophilia-details (token B has a profile) ----------------
 // Base body validity is unverified: the 400 comes from the key check, so these hold regardless, but there is no accepted-control here.
 for (const [k, v] of Object.entries({ userId: "000000000000000000000001", patientId: "PAT999997", createdAt: "2000-01-01T00:00:00.000Z", _id: "000000000000000000000004", unexpected_key: "x" }))
-  test(`G13 ${P25} hemophilia-details: "${k}" is rejected 400, nothing written`, async () => {
+  test(`G13 hemophilia-details: "${k}" is rejected 400, nothing written`, async () => {
     await expect400("POST", "/api/hemophilia-details", { token: ctx.B.token, json: { targetJoint: ["Knee"], [k]: v } });
   });
 
@@ -131,6 +132,6 @@ test("G13 doctor-register: control, base form accepted", async () => {
   assert.strictEqual(r.status, 201, `${r.status} ${JSON.stringify(r.body).slice(0, 160)}`);
 });
 for (const [k, v] of Object.entries({ status: "APPROVED", role: "admin", professionalId: "DOC-HACK", reviewedBy: "000000000000000000000001", _id: "000000000000000000000005", unexpected_key: "x" }))
-  test(`G13 ${P25} doctor-register: "${k}" is rejected 400, nothing written (today it is ignored by explicit clean* vars)`, async () => {
+  test(`G13 doctor-register: "${k}" is rejected 400, nothing written (today it is ignored by explicit clean* vars)`, async () => {
     await expect400("POST", "/api/doctor/register", { form: docForm({ ...DOC(), [k]: v }) });
   });
