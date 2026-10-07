@@ -2,6 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../apiClient";
 
+// Mirrors backend PROFILE_FIELDS (fullName is added from the name parts).
+const PROFILE_FIELDS = [
+  "gender", "dob", "age", "bloodGroup", "photoUrl",
+  "mobile", "alternateContact", "email",
+  "address", "city", "state", "pinCode",
+  "emergencyName", "emergencyRelationship", "emergencyPhone",
+  "maritalStatus", "educationLevel", "occupation", "annualIncome",
+  "insuranceStatus", "insuranceProvider",
+  "htcName", "hematologistName", "hospitalName", "existingPatientNumber",
+];
+
 // =====================================================
 // DROPDOWNS
 // =====================================================
@@ -588,13 +599,11 @@ const ProfileStepper = () => {
         .filter(Boolean)
         .join(" ");
 
-      const payload = {
-        ...profile,
-        firstName,
-        middleName,
-        lastName,
-        fullName,
-      };
+      // Allowlist, not a spread: state also carries _id/userId/patientId/
+      // timestamps from GET + localStorage, which the server rejects (400).
+      const payload = { fullName };
+      for (const k of PROFILE_FIELDS)
+        if (profile[k] !== undefined) payload[k] = profile[k];
 
       const response = await api.post(
         "/profile/patient-profile",
@@ -602,6 +611,10 @@ const ProfileStepper = () => {
       );
 
       const savedProfile = {
+        ...profile,
+        firstName,
+        middleName,
+        lastName,
         ...payload,
         ...(response.data?.profile || {}),
         patientId:

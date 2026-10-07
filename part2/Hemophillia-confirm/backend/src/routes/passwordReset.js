@@ -10,9 +10,13 @@ const {
 
 const router = express.Router();
 
-const OTP_EXPIRY_MINUTES = 3;
+const {
+  OTP_EXPIRY_SECONDS,
+  OTP_EXPIRY_MINUTES,
+  RESEND_COOLDOWN_SECONDS,
+} = require("../../config/otpPolicy");
 const MAX_ATTEMPTS = 5;
-const RESEND_COOLDOWN_SECONDS = 30;
+
 const RESET_TOKEN_MINUTES = 10;
 
 const passwordRegex =
@@ -210,7 +214,7 @@ router.post("/request", async (req, res) => {
 
     const expiresAt = new Date(
       Date.now() +
-        OTP_EXPIRY_MINUTES * 60 * 1000
+        OTP_EXPIRY_SECONDS * 1000
     );
 
     await PasswordResetOTP.create({
@@ -271,7 +275,7 @@ router.post("/request", async (req, res) => {
       maskedEmail:
         maskEmail(destinationEmail),
       expiresInSeconds:
-        OTP_EXPIRY_MINUTES * 60,
+        OTP_EXPIRY_SECONDS,
     });
   } catch (error) {
     console.error(

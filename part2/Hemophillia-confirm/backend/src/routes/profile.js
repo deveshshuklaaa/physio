@@ -5,6 +5,19 @@ const PatientProfile = require("../models/PatientProfile");
 const FHIRResource = require("../models/FHIRResource");
 
 const { toFHIRPatient } = require("../fhir/patientMapper");
+const { allow } = require("../utils/allow");
+
+const PROFILE_FIELDS = [
+  "fullName", // -> replaced by the 3 name parts in Phase 4
+  "gender", "dob", "age", "bloodGroup", "photoUrl",
+  "mobile", "alternateContact", "email",
+  "address", "city", "state", "pinCode",
+  "emergencyName", "emergencyRelationship", "emergencyPhone",
+  "maritalStatus", "educationLevel", "occupation", "annualIncome",
+  "insuranceStatus", "insuranceProvider",
+  "htcName", "hematologistName", "hospitalName", "existingPatientNumber",
+];
+const CONSENT_FIELDS = ["consentDataCollection", "consentAI", "consentVideoMonitoring", "privacyAccepted", "termsAccepted"];
 
 const router = express.Router();
 
@@ -41,6 +54,7 @@ const generateUniquePatientId = async () => {
 
 router.post("/consent", authMiddleware, async (req, res) => {
   try {
+    allow(req.body, CONSENT_FIELDS);
     const {
       consentDataCollection,
       consentAI,
@@ -87,6 +101,7 @@ router.post("/consent", authMiddleware, async (req, res) => {
       patientId: profile.patientId,
     });
   } catch (err) {
+    if (err.status === 400) return res.status(400).json({ message: err.message });
     console.error("=================================");
     console.error("❌ Consent save error");
     console.error(err);
@@ -105,7 +120,7 @@ router.post("/consent", authMiddleware, async (req, res) => {
 
 router.post("/patient-profile", authMiddleware, async (req, res) => {
   try {
-    const data = req.body;
+    const data = allow(req.body, PROFILE_FIELDS);
 
     // ========================================================
     // Validation helpers
@@ -264,7 +279,7 @@ router.post("/patient-profile", authMiddleware, async (req, res) => {
     // Update profile
     // ========================================================
 
-    Object.assign(profile, data);
+    for (const k of PROFILE_FIELDS) if (k in data) profile[k] = data[k];
 
     // NEVER allow frontend to change userId
     profile.userId = req.userId;
@@ -321,6 +336,7 @@ router.post("/patient-profile", authMiddleware, async (req, res) => {
       patientId: profile.patientId,
     });
   } catch (err) {
+    if (err.status === 400) return res.status(400).json({ message: err.message });
     console.error("=================================");
     console.error("❌ Patient profile save error");
     console.error(err);

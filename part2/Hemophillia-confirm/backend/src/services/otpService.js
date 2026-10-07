@@ -9,9 +9,13 @@ const { sendLoginOTP } = require("./emailService");
 // =====================================================
 
 const OTP_LENGTH = 6;
-const OTP_EXPIRY_MINUTES = 3;
+const {
+  OTP_EXPIRY_SECONDS,
+  OTP_EXPIRY_MINUTES,
+  RESEND_COOLDOWN_SECONDS,
+} = require("../../config/otpPolicy");
 const MAX_ATTEMPTS = 5;
-const RESEND_COOLDOWN_SECONDS = 30;
+
 
 // =====================================================
 // GENERATE SECURE 6-DIGIT OTP
@@ -153,7 +157,7 @@ async function createLoginOTP({
 
   const expiresAt = new Date(
     Date.now() +
-      OTP_EXPIRY_MINUTES * 60 * 1000
+      OTP_EXPIRY_SECONDS * 1000
   );
 
   // ===================================================
@@ -219,7 +223,7 @@ async function createLoginOTP({
     challengeId,
     maskedEmail: maskEmail(email),
     expiresInSeconds:
-      OTP_EXPIRY_MINUTES * 60,
+      OTP_EXPIRY_SECONDS,
   };
 }
 

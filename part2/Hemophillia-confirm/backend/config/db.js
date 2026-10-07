@@ -1,33 +1,13 @@
 require("dotenv").config({ path: require("path").resolve(__dirname, "../../../../.env") });
 
 const mongoose = require("mongoose");
-const fs = require("fs");
-const path = require("path");
 const { Binary } = require("mongodb");
 
 // =====================================================
 // MASTER KEY
 // =====================================================
 
-const masterKeyPath = path.join(
-    __dirname,
-    "../master-key.txt"
-);
-
-const encodedKey = fs
-    .readFileSync(masterKeyPath, "utf8")
-    .trim();
-
-const localMasterKey = Buffer.from(
-    encodedKey,
-    "base64"
-);
-
-if (localMasterKey.length !== 96) {
-    throw new Error(
-        `Invalid Master Key. Expected 96 bytes but received ${localMasterKey.length} bytes.`
-    );
-}
+const { localMasterKey } = require("./masterKey");
 
 // =====================================================
 // LOCAL KMS
@@ -235,10 +215,36 @@ const doctorRegistrationSchema = {
 // SCHEMA MAP
 // =====================================================
 
-const schemaMap = {
-  "hemophilia.fhirresources": fhirSchema,
+// The database name comes from MONGO_URI, never a literal. A hardcoded "hemophilia"
+// here silently sent the staging app to production, and -- worse -- a schemaMap keyed
+// on the wrong database matches nothing, so CSFLE rules would not apply and these two
+// collections would be written in CLEARTEXT.
+//
+// Fail closed: no database in the URI means we cannot know which namespaces to
+// encrypt, so we refuse to start rather than guess.
+const DB_NAME = (() => {
+  // Parse the path, not a loose regex: a naive /([^/?]+)/ match on a URI with no
+  // database captures the host credentials as the "database name", which is worse
+  // than failing outright.
+  const raw = String(process.env.MONGO_URI || "");
+  const afterScheme = raw.replace(/^mongodb(\+srv)?:\/\//, "");
+  const slash = afterScheme.indexOf("/");
+  const name =
+    slash === -1 ? "" : afterScheme.slice(slash + 1).split("?")[0].trim();
 
-  "hemophilia.doctorregistrationrequests":
+  if (!name) {
+    throw new Error(
+      "MONGO_URI has no database path segment. Refusing to start: the CSFLE " +
+      "schemaMap is keyed by database name, and guessing it would write PHI in cleartext."
+    );
+  }
+  return decodeURIComponent(name);
+})();
+
+const schemaMap = {
+  [`${DB_NAME}.fhirresources`]: fhirSchema,
+
+  [`${DB_NAME}.doctorregistrationrequests`]:
     doctorRegistrationSchema,
 };
 
@@ -250,7 +256,7 @@ console.log("\n========== FHIR CSFLE CONFIG ==========");
 
 console.log(
     "Namespace:",
-    "hemophilia.fhirresources"
+    `${DB_NAME}.fhirresources`
 );
 
 console.log(
@@ -299,7 +305,7 @@ async function connectDB() {
         await mongoose.connect(
             process.env.MONGO_URI,
             {
-                dbName: "hemophilia",
+                dbName: DB_NAME,
 
                 // The models declare `encryptionType: "csfle"`, so mongoose
                 // refuses to connect without an autoEncryption block at all.

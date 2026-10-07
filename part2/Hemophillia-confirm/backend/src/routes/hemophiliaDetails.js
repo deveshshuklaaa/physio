@@ -1,4 +1,5 @@
 const express = require("express");
+const { allow } = require("../utils/allow");
 const {
   transliterateDoctorName,
 } = require("../services/doctorNameTranslationService");
@@ -31,6 +32,15 @@ const {
   toFHIRBundle,
 } = require("../fhir/bundleMapper");
 
+const HEMOPHILIA_FIELDS = [
+  "type", "severity", "ageAtDiagnosis", "familyHistory", "geneticTestingDone",
+  "currentFactorTherapy", "otherCurrentTreatment", "otherMedications", "otherMedicationDetails",
+  "bleedingPattern", "jointsAffected", "targetJoint", "bleedFrequency", "lastBleedDate", "otherBleedingDetails",
+  "underPhysiotherapy", "physiotherapyLocation", "physiotherapySessions", "physiotherapyDuration",
+  "physiotherapyBodyPart", "physiotherapyTreatment", "physiotherapyEquipment", "physiotherapyHelping",
+  "physiotherapyProblems", "previousPhysiotherapy", "physiotherapyStoppedDate", "physiotherapyStoppedReason",
+  "mobilityLimitation", "assistiveDevices", "patientNotes", "consultingDoctorId",
+];
 const router =
   express.Router();
 
@@ -158,7 +168,7 @@ router.post(
     try {
 
       const data =
-        req.body || {};
+        allow(req.body || {}, HEMOPHILIA_FIELDS);
 
       // =====================================================
       // TARGET JOINT -- REQUIRED, MULTI-VALUE
@@ -513,6 +523,8 @@ if (existingDetails) {
       });
 
     } catch (err) {
+
+      if (err.status === 400) return res.status(400).json({ message: err.message });
 
       console.error(
         "❌ Hemophilia details save error:"

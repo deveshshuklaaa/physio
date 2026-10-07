@@ -7,6 +7,8 @@ const DoctorRegistrationRequest = require(
   "../models/DoctorRegistrationRequest"
 );
 
+const { allow } = require("../utils/allow");
+
 const router = express.Router();
 
 // =====================================================
@@ -85,6 +87,13 @@ router.post(
       // =================================================
       // GET TEXT FIELDS
       // =================================================
+
+      allow(req.body, [
+        "fullName", "email", "mobileNumber",
+        "medicalRegistrationNumber", "medicalCouncil", "qualification", "specialization",
+        "yearsOfExperience", "hospitalName", "country", "stateProvince", "city",
+        "declarationAccepted",
+      ]);
 
       const {
         fullName,
@@ -573,6 +582,8 @@ router.post(
       });
 
     } catch (error) {
+
+      if (error.status === 400) return res.status(400).json({ success: false, message: error.message });
 
       // =================================================
       // ERROR LOG

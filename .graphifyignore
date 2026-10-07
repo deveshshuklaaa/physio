@@ -1,18 +1,50 @@
+# --- tooling / vcs ---
 .claude/
 .git/
 .gitignore
 *.md
 *yaml
 *.zip
-
-venv/
-
-graaphify-out/
-gitKeys.txt
-backend/__pycache__
-backend/venv
-/home/billa-dakait/Desktop/final_project/emg-service/venv
-/home/billa-dakait/Desktop/final_project/emg-service/.claude
-/home/billa-dakait/Desktop/final_project/emg-service/CLAUDE.md
+*.tgz
 notes/
-/home/billa-dakait/Desktop/final_project/backend/_old_physio_reference/audio/
+gitKeys.txt
+
+# --- python envs & caches ---
+venv/
+**/venv/
+**/__pycache__/
+*.pyc
+
+# --- node ---
+**/node_modules/
+
+# --- graphify's own output (was misspelled "graaphify-out/") ---
+graphify-out/
+
+# --- vendored / minified third-party bundles ---
+# These produced the `tn`/`push()`/`add()`/`n()` god nodes and ~20 bogus
+# communities (Tailwind x6, Chart.js x6, MediaPipe, Mongo Crypt).
+**/vendor/
+*.min.js
+*.min.css
+*.bundle.js
+*.bundle.mjs
+*.wasm
+mongo_crypt_shared_v1-*/
+
+# --- build output ---
+frontend/dist/
+**/dist/
+**/build/
+
+# --- stale duplicate tree: Major_iot is the live EMG source ---
+emg-service/
+
+# --- binary assets ---
+backend/_old_physio_reference/audio/
+data/
+models/
+*.pt
+*.pth
+*.task
+*.onnx

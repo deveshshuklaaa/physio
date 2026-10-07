@@ -116,3 +116,20 @@ services:
         condition: service_started
     restart: unless-stopped
     mem_limit: 128m
+
+
+
+  hemo-backend-stage:
+    build:
+      context: ./part2/Hemophillia-confirm/backend
+    env_file:
+      - ./.env
+    environment:
+      CRYPT_SHARED_LIB_PATH: /csfle/mongo_crypt_v1.so
+      MONGO_URI: ${MONGO_URI_STAGE}
+    volumes:
+      - ./mongo_crypt_shared_v1-linux-x86_64-enterprise-amazon2023-8.3.9/lib/mongo_crypt_v1.so:/csfle/mongo_crypt_v1.so:ro
+    ports:
+      - "5001:5000"
+    restart: unless-stopped
+    mem_limit: 4g

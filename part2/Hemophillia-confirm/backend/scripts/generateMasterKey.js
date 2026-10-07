@@ -1,12 +1,10 @@
 const crypto = require("crypto");
-const fs = require("fs");
-const path = require("path");
+
+// Print to stdout; do not write a key file into the repo. Paste the line below
+// into the root .env. Rotating this key requires re-wrapping the DEK in
+// encryption.__keyVault, which re-encrypts nothing on its own -- see
+// scripts/createDataKey.js.
 
 const masterKey = crypto.randomBytes(96);
 
-const outputPath = path.join(__dirname, "..", "master-key.txt");
-
-fs.writeFileSync(outputPath, masterKey.toString("base64"));
-
-console.log("Master Key generated.");
-console.log("Saved to:", outputPath);
+console.log(`CSFLE_MASTER_KEY=${masterKey.toString("base64")}`);

@@ -39,8 +39,10 @@ from app.db import make_lookup_doctor_id
 P1 = ObjectId("650000000000000000000001")   # demo patient
 P2 = ObjectId("650000000000000000000002")   # patient with NO hemophiliadetails row
 P3 = ObjectId("650000000000000000000003")   # row exists, consultingDoctorId null
+P4 = ObjectId("650000000000000000000004")   # S20: row points at a DELETED doctor
 DOC_A = ObjectId("65000000000000000000000a")  # demo doctor, linked to P1
 DOC_B = ObjectId("65000000000000000000000b")  # control doctor, linked to nobody
+DOC_GONE = ObjectId("65000000000000000000000c")  # S20: no users document exists
 
 
 class _FakeDetails:
@@ -57,15 +59,33 @@ class _FakeDetails:
         return self.rows.get(query.get("userId"))
 
 
+class _FakeUsers:
+    """Stands in for db.users. S20: the lookup validates consultingDoctorId
+    against this, so a doctor id absent here is a dangling reference."""
+
+    def __init__(self, ids):
+        self.ids = set(ids)
+        self.calls = []
+
+    async def find_one(self, query, projection=None):
+        self.calls.append(query)
+        oid = query.get("_id")
+        return {"_id": oid} if oid in self.ids else None
+
+
 class _FakeDB:
-    def __init__(self, rows):
+    def __init__(self, rows, user_ids=(DOC_A, DOC_B)):
         self.hemophiliadetails = _FakeDetails(rows)
+        self.users = _FakeUsers(user_ids)
 
 
 ROWS = {
     P1: {"_id": ObjectId(), "userId": P1, "consultingDoctorId": DOC_A},
     # P2 deliberately absent -- the fail-closed branch.
     P3: {"_id": ObjectId(), "userId": P3, "consultingDoctorId": None},
+    # S20: the shape real data already produced (PAT980086) -- a truthy
+    # ObjectId whose users document was deleted.
+    P4: {"_id": ObjectId(), "userId": P4, "consultingDoctorId": DOC_GONE},
 }
 
 _failures = []
@@ -112,6 +132,15 @@ def demo():
         "consultingDoctorId absent -> None",
     )
 
+    # 3b. S20 -- dangling consultingDoctorId. Truthy, so a lookup that only
+    # checks for null/absent returns it and fails OPEN-ish: it authorizes a
+    # doctor who cannot exist, and the patient is invisible to every real one.
+    check_eq(run(str(P4)), None, "dangling consultingDoctorId -> None (S20)")
+    check(
+        any(q.get("_id") == DOC_GONE for q in db.users.calls),
+        "the lookup actually validates the doctor reference against users",
+    )
+
     # 4. Junk ids must deny, not raise -- an exception here is a 500 on an
     # authorization path, and the caller's behaviour on a 500 is not denial.
     for junk in ("", None, "not-an-objectid", "../../etc/passwd", "0" * 100, 12345):
@@ -129,7 +158,7 @@ def demo():
     # Whole-matrix restatement of D25: for each patient, exactly the right
     # doctor (or nobody) is authorized. This is the assertion a seed script
     # regression would trip.
-    matrix = {str(P1): str(DOC_A), str(P2): None, str(P3): None}
+    matrix = {str(P1): str(DOC_A), str(P2): None, str(P3): None, str(P4): None}
     for pid, expected in matrix.items():
         resolved = run(pid)
         check_eq(resolved, expected, f"matrix: patient {pid[-1]} -> {expected}")

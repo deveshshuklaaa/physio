@@ -77,3 +77,10 @@ mongo_crypt_shared_v1-*.tgz
 
 # Local static-server scratch dir
 frontend/.serve/
+
+# DB_MIGRATION_PLAN Phase 0 dumps: real patient PHI (ciphertext + metadata).
+# Never commit.
+part2/temp/
+
+# CSFLE master key lives in the root .env as CSFLE_MASTER_KEY, never in the repo.
+part2/Hemophillia-confirm/backend/master-key.txt

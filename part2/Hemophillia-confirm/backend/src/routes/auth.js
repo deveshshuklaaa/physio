@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const { allow } = require("../utils/allow");
 const {
   createLoginOTP,
 } = require("../services/otpService");
@@ -18,6 +19,7 @@ const JWT_SECRET =
 // POST /api/auth/register
 router.post("/register", async (req, res) => {
   try {
+    allow(req.body, ["fullName", "email", "password"]);
     const { fullName, email, password } = req.body;
 
     if (!fullName || !email || !password) {
@@ -47,6 +49,7 @@ router.post("/register", async (req, res) => {
       user: { id: user._id, fullName: user.fullName, email: user.email, role: user.role },
     });
   } catch (err) {
+    if (err.status === 400) return res.status(400).json({ message: err.message });
     console.error("Register error:", err);
     res.status(500).json({ message: "Server error during registration" });
   }

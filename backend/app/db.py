@@ -88,6 +88,14 @@ def make_lookup_doctor_id(db):
     A patient with no hemophiliadetails row has no doctor -- find_one
     returning nothing must deny every doctor rather than guess (fail-closed).
     Read-only; hemophiliadetails is theirs (§1).
+
+    S20: a *dangling* consultingDoctorId (truthy ObjectId pointing at a users
+    document that does not exist) is not a doctor either. Mongo enforces no
+    referential integrity -- mongoose's ref: "User" is documentation, not a
+    constraint -- so the reference is validated here. Without this the lookup
+    fails to a doctor who cannot exist: no real doctor ever matches, the
+    patient becomes permanently invisible to their own clinician, and the
+    symptom reads as a permissions bug rather than as corrupt data.
     """
 
     async def lookup_doctor_id(patient_user_id: str) -> Optional[str]:
@@ -98,7 +106,15 @@ def make_lookup_doctor_id(db):
             {"userId": oid}, {"consultingDoctorId": 1}
         )
         doctor_id = doc.get("consultingDoctorId") if doc else None
-        return str(doctor_id) if doctor_id else None
+        if not doctor_id:
+            return None
+        # S20: resolves-to-nonexistent-user counts as no doctor. One extra
+        # indexed _id lookup per authorization check.
+        # ponytail: validated on read; an integrity sweep over
+        # hemophiliadetails would catch dangling links before a request does.
+        if not await db.users.find_one({"_id": to_object_id(doctor_id)}, {"_id": 1}):
+            return None
+        return str(doctor_id)
 
     return lookup_doctor_id
 
@@ -154,9 +170,18 @@ if __name__ == "__main__":
             uid = query.get("userId")
             return _FakeCursorResult(self._docs.get(uid))
 
+    class _FakeUsers:
+        def __init__(self, ids):
+            self._ids = set(ids)
+
+        def find_one(self, query, *_a, **_kw):
+            oid = query.get("_id")
+            return _FakeCursorResult({"_id": oid} if oid in self._ids else None)
+
     class _FakeDb:
-        def __init__(self, hemo_docs):
+        def __init__(self, hemo_docs, user_ids=()):
             self.hemophiliadetails = _FakeCollection(hemo_docs)
+            self.users = _FakeUsers(user_ids)
 
     async def _run():
         assert to_object_id("p1") == "p1", "non-ObjectId id should fall back to string"
@@ -165,11 +190,17 @@ if __name__ == "__main__":
         assert to_object_id(str(real_oid)) == real_oid
 
         doc_id = ObjectId()
-        fake_db = _FakeDb({real_oid: {"consultingDoctorId": doc_id}})
+        fake_db = _FakeDb({real_oid: {"consultingDoctorId": doc_id}}, [doc_id])
         lookup = make_lookup_doctor_id(fake_db)
         assert await lookup(str(real_oid)) == str(doc_id)
         assert await lookup("p_no_such_patient") is None, (
             "a patient with no hemophiliadetails row must deny every doctor"
+        )
+
+        # S20: dangling consultingDoctorId -- no such users document.
+        dangling_db = _FakeDb({real_oid: {"consultingDoctorId": ObjectId()}}, [])
+        assert await make_lookup_doctor_id(dangling_db)(str(real_oid)) is None, (
+            "a consultingDoctorId pointing at no user must deny every doctor"
         )
 
     asyncio.run(_run())

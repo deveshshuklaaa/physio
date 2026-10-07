@@ -1,31 +1,11 @@
 require("dotenv").config({ path: require("path").resolve(__dirname, "../../../../.env") });
 
-const fs = require("fs");
-const path = require("path");
 
 // =====================================
 // MASTER KEY
 // =====================================
 
-const masterKeyPath = path.join(
-    __dirname,
-    "../master-key.txt"
-);
-
-const encodedKey = fs
-    .readFileSync(masterKeyPath, "utf8")
-    .trim();
-
-const localMasterKey = Buffer.from(
-    encodedKey,
-    "base64"
-);
-
-if (localMasterKey.length !== 96) {
-    throw new Error(
-        `Invalid Master Key. Expected 96 bytes but received ${localMasterKey.length} bytes.`
-    );
-}
+const { localMasterKey } = require("./masterKey");
 
 // =====================================
 // LOCAL KMS PROVIDER
