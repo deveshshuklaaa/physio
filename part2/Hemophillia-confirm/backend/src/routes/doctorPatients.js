@@ -16,6 +16,7 @@ const HemophiliaDetails =
 
 const Assessment =
   require("../models/Assessment");
+const { withDerived } = require("../utils/assessmentDerive");
 
 const DoctorChangeRequest =
   require("../models/DoctorChangeRequest");
@@ -258,7 +259,7 @@ router.get(
           profile,
           hemophiliaDetails:
             hemophilia,
-          assessments,
+          assessments: assessments.map(withDerived),
         },
       });
 

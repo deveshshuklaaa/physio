@@ -282,19 +282,6 @@ const encryptedString = {
 };
 
 // =====================================================
-// ENCRYPTED STRING ARRAY
-// =====================================================
-
-const encryptedStringArray = {
-  type: [String],
-  encrypt: {
-    keyId: [DATA_KEY_ID],
-    algorithm:
-      "AEAD_AES_256_CBC_HMAC_SHA_512-Random",
-  },
-};
-
-// =====================================================
 // ASSESSMENT SCHEMA
 // =====================================================
 
@@ -340,87 +327,8 @@ const assessmentSchema = new mongoose.Schema(
       required: true,
     },
 
-    // =================================================
-    // STRUCTURED ASSESSMENT FACTORS
-    // =================================================
-    //
-    // These contain the screening information collected
-    // by the chatbot.
-    //
-    // =================================================
-
-    factors: {
-      emergencySymptoms: encryptedStringArray,
-
-      bleedMinorCuts: encryptedString,
-
-      dentalSurgeryBleeding: encryptedString,
-
-      bruises: encryptedString,
-
-      muscleSwelling: encryptedString,
-
-      jointSwelling: encryptedString,
-
-      jointsList: encryptedStringArray,
-
-      jointWarmthTightness: encryptedString,
-
-      bloodUrineStool: encryptedString,
-
-      familyHistory: encryptedString,
-
-      maleRelativeFlag: {
-        type: Boolean,
-        default: false,
-      },
-
-      heavyMenstrual: encryptedString,
-
-      previousTesting: encryptedString,
-
-      factorLow: encryptedString,
-    },
-
-    // =================================================
-    // LEGACY STRUCTURED FIELDS
-    // =================================================
-    //
-    // These are retained so existing FHIR mapping and
-    // Patient Research code can continue working.
-    //
-    // =================================================
-
-    q1EmergencySymptoms: encryptedStringArray,
-
-    q2BleedMinorCuts: encryptedString,
-
-    q3DentalSurgeryBleeding: encryptedString,
-
-    q4Bruises: encryptedString,
-
-    q5MuscleSwelling: encryptedString,
-
-    q6JointSwelling: encryptedString,
-
-    q7JointsList: encryptedStringArray,
-
-    q8JointWarmthTightness: encryptedString,
-
-    q9BloodUrineStool: encryptedString,
-
-    q10FamilyHistory: encryptedString,
-
-    q10MaleRelativeFlag: {
-      type: Boolean,
-      default: false,
-    },
-
-    q11HeavyMenstrual: encryptedString,
-
-    q12PreviousTesting: encryptedString,
-
-    q12FactorLow: encryptedString,
+    // factors + the 14 q* keys are NOT stored (Phase 6): derived from answers[]
+    // by src/utils/assessmentDerive.js.
 
     // =================================================
     // RISK LEVEL
@@ -537,24 +445,6 @@ const assessmentSchema = new mongoose.Schema(
     summaryText: {
       type: String,
       default: "",
-    },
-
-    // =================================================
-    // RECOMMENDATION
-    // =================================================
-
-    recommendation: {
-      type: String,
-      default: "",
-    },
-
-    // =================================================
-    // SUGGESTED TESTS
-    // =================================================
-
-    suggestedTests: {
-      type: [String],
-      default: [],
     },
 
     // =================================================

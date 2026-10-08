@@ -7,8 +7,13 @@
 // 2. HemophiliaDetails
 // =======================================================
 
+const { withDerived } = require("../utils/assessmentDerive");
+
 const toFHIRObservations = (assessment, details) => {
     const observations = [];
+
+    // Phase 6: factors/q* are no longer stored, derive them from answers[].
+    if (assessment) assessment = withDerived(assessment);
 
     // =====================================================
     // HELPER
@@ -564,30 +569,6 @@ const toFHIRObservations = (assessment, details) => {
 
                     valueString:
                         assessment.summaryText,
-
-                    patientId,
-
-                    effectiveDateTime
-                })
-            );
-        }
-
-
-        // =================================================
-        // RECOMMENDATION
-        // =================================================
-
-        if (assessment.recommendation) {
-
-            observations.push(
-                createObservation({
-                    id: `${assessment._id}-recommendation`,
-
-                    codeText:
-                        "Clinical Screening Recommendation",
-
-                    valueString:
-                        assessment.recommendation,
 
                     patientId,
 
