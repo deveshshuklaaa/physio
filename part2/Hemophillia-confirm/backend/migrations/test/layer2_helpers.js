@@ -119,7 +119,7 @@ async function setup() {
   baseline = await snapshot();
   // Encrypted connection ONLY for seeding admins (email is Deterministic CSFLE). Same DEK as prod; no extra handling.
   mongoose = require("mongoose");
-  for (const m of ["User", "PatientProfile", "HemophiliaDetails", "Assessment", "DoctorRegistrationRequest", "DoctorChangeRequest", "LoginOTP", "PasswordResetOTP"])
+  for (const m of ["User", "PatientProfile", "HemophiliaDetails", "Assessment", "DoctorRegistrationRequest", "DoctorChangeRequest", "OtpChallenge"])
     require(path.join(root, "src/models", m));
   await mongoose.connect(stageUri(), {
     dbName: STAGE_DB,
@@ -151,7 +151,8 @@ async function assertAppOnStaging() {
   const email = mail(), password = pw();
   const User = encMongoose.model("User");
   const seeded = await User.create({
-    fullName: "Mig Canary",
+    firstName: "Mig",
+    lastName: "Canary",
     email,
     passwordHash: await require("bcryptjs").hash(password, 10),
     role: "patient",
@@ -200,7 +201,7 @@ const pw = () => `Mig!Test9-${uid()}`;
 // Real signup route. Canary: the user must land in hemophilia_stage, else the app is not wired to staging -> abort.
 async function mkPatient() {
   const email = mail(), password = pw();
-  const r = await api("POST", "/api/auth/register", { json: { fullName: "Mig Test", email, password } });
+  const r = await api("POST", "/api/auth/register", { json: { firstName: "Mig", middleName: "", lastName: "Test", email, password } });
   assert.strictEqual(r.status, 201, `fixture signup failed: ${r.status} ${JSON.stringify(r.body).slice(0, 200)}`);
   const id = r.body.user.id;
   await tagUser(id);
@@ -209,7 +210,7 @@ async function mkPatient() {
   return { id, email, password, token: r.body.token, role: "patient" };
 }
 const profileBody = () => ({
-  fullName: "Mig Test", gender: "Male", dob: "1990-01-01", bloodGroup: "O+", mobile: "9876543210", state: "Maharashtra",
+  firstName: "Mig", middleName: "", lastName: "Test", gender: "Male", dob: "1990-01-01", bloodGroup: "O+", mobile: "9876543210", state: "Maharashtra",
   city: "Pune", pinCode: "411001", emergencyName: "Mig Contact", emergencyRelationship: "Sibling", emergencyPhone: "9876543211",
   address: "1 Test Lane", hospitalName: "Test Hospital",
 });
@@ -224,7 +225,7 @@ async function mkAdmin({ level = "ADMIN", perms = {} } = {}) {
   const User = encMongoose.model("User");
   const email = mail(), password = pw();
   const permissions = { canManageAdmins: false, canManageDoctors: false, canViewPatients: false, canManageDoctorRequests: false, ...perms };
-  const u = await User.create({ fullName: "Mig Admin", email, passwordHash: await bcrypt.hash(password, 4), role: "admin", accountStatus: "APPROVED", adminLevel: level, permissions });
+  const u = await User.create({ firstName: "Mig", lastName: "Admin", email, passwordHash: await bcrypt.hash(password, 4), role: "admin", accountStatus: "APPROVED", adminLevel: level, permissions });
   const id = String(u._id);
   await tagUser(id);
   await db().collection("adminprofiles").insertOne({ userId: u._id, adminLevel: level, permissions, __testRun: RUN });

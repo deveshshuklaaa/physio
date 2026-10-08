@@ -1,7 +1,12 @@
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 
-const LoginOTP = require("../models/LoginOTP");
+// Phase 5: loginotps and passwordresetotps are merged into otpchallenges. EVERY filter
+// below carries `...LOGIN`, because challengeId is unique across both flows now: an
+// unscoped lookup would let a password-reset challenge be redeemed for a login token,
+// and the unscoped deleteMany would wipe a user's pending password-reset challenge.
+const OtpChallenge = require("../models/OtpChallenge");
+const LOGIN = { purpose: "login" };
 const { sendLoginOTP } = require("./emailService");
 
 // =====================================================
@@ -87,7 +92,8 @@ async function createLoginOTP({
   // RESEND COOLDOWN
   // ===================================================
 
-  const recentOTP = await LoginOTP.findOne({
+  const recentOTP = await OtpChallenge.findOne({
+    ...LOGIN,
     userId: String(userId),
     verified: false,
     createdAt: {
@@ -131,7 +137,8 @@ async function createLoginOTP({
   // DELETE PREVIOUS OTPs
   // ===================================================
 
-  await LoginOTP.deleteMany({
+  await OtpChallenge.deleteMany({
+    ...LOGIN,
     userId: String(userId),
     verified: false,
   });
@@ -171,7 +178,8 @@ async function createLoginOTP({
   // SAVE OTP
   // ===================================================
 
-  await LoginOTP.create({
+  await OtpChallenge.create({
+    ...LOGIN,
     userId: String(userId),
     email,
     role,
@@ -211,7 +219,8 @@ async function createLoginOTP({
       console.warn("⚠️  OTP email send failed (dev) — use the printed code.");
     } else {
       // If email fails, remove the OTP record.
-      await LoginOTP.deleteOne({
+      await OtpChallenge.deleteOne({
+        ...LOGIN,
         challengeId,
       });
 
@@ -280,7 +289,8 @@ async function verifyLoginOTP({
   // ===================================================
 
   const loginOTP =
-    await LoginOTP.findOne({
+    await OtpChallenge.findOne({
+      ...LOGIN,
       challengeId: String(challengeId),
       verified: false,
     });
@@ -304,7 +314,7 @@ async function verifyLoginOTP({
     loginOTP.expiresAt.getTime() <
       Date.now()
   ) {
-    await LoginOTP.deleteOne({
+    await OtpChallenge.deleteOne({
       _id: loginOTP._id,
     });
 
@@ -325,7 +335,7 @@ async function verifyLoginOTP({
     loginOTP.attempts >=
     MAX_ATTEMPTS
   ) {
-    await LoginOTP.deleteOne({
+    await OtpChallenge.deleteOne({
       _id: loginOTP._id,
     });
 
@@ -379,7 +389,7 @@ async function verifyLoginOTP({
       remainingAttempts;
 
     if (remainingAttempts === 0) {
-      await LoginOTP.deleteOne({
+      await OtpChallenge.deleteOne({
         _id: loginOTP._id,
       });
     }
@@ -399,7 +409,7 @@ async function verifyLoginOTP({
   const userData =
     loginOTP.userData;
 
-  await LoginOTP.deleteOne({
+  await OtpChallenge.deleteOne({
     _id: loginOTP._id,
   });
 
@@ -428,7 +438,8 @@ async function resendLoginOTP({ challengeId }) {
     throw error;
   }
 
-  const existing = await LoginOTP.findOne({
+  const existing = await OtpChallenge.findOne({
+    ...LOGIN,
     challengeId: String(challengeId),
     verified: false,
   });

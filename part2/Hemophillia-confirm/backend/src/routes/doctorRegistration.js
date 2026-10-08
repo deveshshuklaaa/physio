@@ -12,7 +12,7 @@ const { allow, check } = require("../utils/allow");
 // Maxes are chosen, not schema-derived: email 254 (RFC 5321), mobile 10 digits, names/places 100, hospital 150.
 const T = (max) => ({ type: "string", max });
 const DOCTOR_SPEC = {
-  firstName: T(100), middleName: T(100), lastName: T(100), email: T(254), mobileNumber: T(10),
+  firstName: T(100), middleName: T(100), lastName: T(100), email: T(254), mobileNumber: { type: "string", max: 10, re: /^\d{10}$/ },
   medicalRegistrationNumber: T(50), medicalCouncil: T(150), qualification: T(150), specialization: T(150),
   yearsOfExperience: { type: "string", max: 6, re: /^\d{1,3}(\.\d{1,2})?$/ },
   hospitalName: T(150), country: T(100), stateProvince: T(100), city: T(100),

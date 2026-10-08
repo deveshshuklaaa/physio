@@ -83,29 +83,27 @@ const splitTokens = (t) =>
     console.log(`  assessments: decrypt patientId on ${asmToDecrypt.length}`);
     console.log(`  patientprofiles: delete fullName on ${profFullName}`);
     console.log(`  loginotps: delete userData.fullName on ${otpFullName}`);
-    if (U.split.length && mononyms !== 4) console.warn(`WARN: ${mononyms} mononym users (plan measured 4); LEGACY_INVALID_IDS also covers Ayush, who is not a mononym`);
+    if (U.split.length) console.warn(`NOTE: ${mononyms} mononym users (no lastName to parse); prod measured 4`);
 
     // ---------------- writes ----------------
     const uc = db.collection("users"), dc = db.collection("doctorregistrationrequests"), ac = db.collection("assessments");
 
-    // Rows that legitimately fail schema validation for PRE-EXISTING reasons, and may
-    // therefore be saved with validation off. Measured on prod 2026-10-08:
-    //   3 admins + 1 patient  -> mononym, no lastName, schema requires one
-    //   6aa176bdbb076d281b03f7b7 (Ayush) -> recreated by Phase 1 with NO email and NO
-    //     passwordHash on purpose, so his 486 physiosessions survive while the account
-    //     stays unloggable. 3-token name, so "mononym" does not describe him.
-    //
-    // `validateBeforeSave: false` disables EVERY validator, so it is never applied
-    // speculatively: each row is saved WITH validation first, and the bypass is used
-    // only after a ValidationError on a row that is on this list. A new violation on
-    // any other row therefore still aborts the migration.
-    const LEGACY_INVALID_IDS = new Set([
-      "6aa190e7434d07476b7f4114", // admin, mononym
-      "6aa196c88d097a3a7574516d", // admin, mononym
-      "6aa2cc1eb80bb37a4f10ed86", // admin, mononym
-      "6ab97a6c26c262d4ede9dbee", // patient, mononym
-      "6aa176bdbb076d281b03f7b7", // Ayush: no email, no passwordHash (Phase 1, by design)
-    ]);
+    // Rows that legitimately fail schema validation for PRE-EXISTING reasons may be saved
+    // with validation off. The criterion is DERIVED, not a list of ids: a row qualifies only
+    // if every failing path is one the row could not satisfy before this migration either --
+    //   - a name path we parsed nothing into (a mononym has no lastName), or
+    //   - a field that was already absent/empty on the stored row (Ayush: Phase 1 recreated
+    //     him with no email and no passwordHash on purpose, so his 486 physiosessions
+    //     survive while the account stays unloggable).
+    // Anything else means THIS migration broke the row, and it still aborts. An id list was
+    // used here before; it was measured on prod and so silently mis-gated every other
+    // database (staging has its own mononyms). `firstName` non-empty is post-asserted below,
+    // so a name path bypassed in error is still caught.
+    const empty = (v) => v === undefined || v === null || String(v).trim() === "";
+    const wasAlreadyInvalid = (e, r, parts) =>
+      e.name === "ValidationError" &&
+      Object.values(e.errors).every((err) =>
+        err.path in parts ? empty(parts[err.path]) : empty(r[err.path]));
 
     for (const { r, parts } of U.split) {
       const doc = await User.findById(r._id);
@@ -114,8 +112,8 @@ const splitTokens = (t) =>
       try {
         await doc.save();
       } catch (e) {
-        if (e.name !== "ValidationError" || !LEGACY_INVALID_IDS.has(String(r._id))) throw e;
-        console.warn(`  legacy-invalid ${r._id}: ${e.message} -- saving with validation off`);
+        if (!wasAlreadyInvalid(e, r, parts)) throw e;
+        console.warn(`  legacy-invalid ${r._id}: ${e.message} -- already invalid before this migration, saving with validation off`);
         await doc.save({ validateBeforeSave: false });
       }
       await uc.updateOne({ _id: r._id }, { $unset: { fullName: "" } });

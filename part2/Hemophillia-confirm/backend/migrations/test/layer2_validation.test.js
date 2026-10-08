@@ -97,7 +97,7 @@ for (const k of ["userId", "patientId", "consentTimestamp", "createdAt", "update
   });
 
 // ---------------- signup ----------------
-const regBase = () => ({ fullName: "Mig Reg", email: H.mail(), password: "Mig!Test9-" + H.uid() });
+const regBase = () => ({ firstName: "Mig", middleName: "", lastName: "Reg", email: H.mail(), password: "Mig!Test9-" + H.uid() });
 test("G13 signup: control, base body accepted", async () => {
   const r = await H.api("POST", "/api/auth/register", { json: regBase() });
   await adopt(r.body);
@@ -117,7 +117,7 @@ for (const [k, v] of Object.entries({ userId: "000000000000000000000001", patien
   });
 
 // ---------------- doctor registration (multipart) ----------------
-const DOC = () => ({ fullName: "Mig Doctor", email: H.mail(), mobileNumber: "9876543210", medicalRegistrationNumber: "MIG" + H.uid().slice(0, 8), medicalCouncil: "Test Council",
+const DOC = () => ({ firstName: "Mig", middleName: "", lastName: "Doctor", email: H.mail(), mobileNumber: "9876543210", medicalRegistrationNumber: "MIG" + H.uid().slice(0, 8), medicalCouncil: "Test Council",
   qualification: "MBBS", specialization: "Haematology", yearsOfExperience: "5", hospitalName: "Test Hospital", country: "India", stateProvince: "Maharashtra", city: "Pune", declarationAccepted: "true" });
 function docForm(fields) {
   const f = new FormData();

@@ -18,7 +18,7 @@ test("G2 doctor approval keeps mobileNumber in doctorprofiles, ciphertext on dis
   const f = new FormData();
   const email = H.mail();
   for (const [k, v] of Object.entries({
-    fullName: "Mig Doctor", email, mobileNumber: mobile, medicalRegistrationNumber: "MIG" + Date.now(), medicalCouncil: "Test Council",
+    firstName: "Mig", middleName: "", lastName: "Doctor", email, mobileNumber: mobile, medicalRegistrationNumber: "MIG" + Date.now(), medicalCouncil: "Test Council",
     qualification: "MBBS", specialization: "Haematology", yearsOfExperience: "5", hospitalName: "Test Hospital",
     country: "India", stateProvince: "Maharashtra", city: "Pune", declarationAccepted: "true",
   })) f.append(k, v);

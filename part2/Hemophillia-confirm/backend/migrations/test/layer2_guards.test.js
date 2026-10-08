@@ -58,6 +58,13 @@ async function expectRejected(method, url, { token, json, form }) {
   const r = await H.api(method, url, { token, json, form });
   await adopt(r.body);
   const dc = H.diffCounts(c0, await H.snapshot());
+  // The TTL sweeper deletes expired challenges at a time nothing here controls, so a
+  // SHRINKING otpchallenges is Mongo reaping, not this request writing. A GROWING one
+  // still fails: a rejected request must never mint a challenge.
+  for (const k of ["otpchallenges", "loginotps", "passwordresetotps"]) {
+    const m = /^(\d+) -> (\d+)$/.exec(dc[k] || "");
+    if (m && Number(m[2]) < Number(m[1])) delete dc[k];
+  }
   assert.deepStrictEqual(dc, {}, `${method} ${url} WROTE DATA (status ${r.status}): ${JSON.stringify(dc)}`);
   assert.strictEqual(await fingerprint(), f0, `${method} ${url} MODIFIED an existing fixture/victim doc (status ${r.status})`);
   assert(r.status >= 400 && r.status < 500, `${method} ${url} -> ${r.status} (expected 4xx; 5xx = unhandled bad input)`);
@@ -85,13 +92,13 @@ function run(group, method, url, tokenOf, variantList) {
 }
 
 // --- patient signup. Control first: the base body must be ACCEPTED, else the rejections below prove nothing.
-const regBase = () => ({ fullName: "Mig Reg", email: H.mail(), password: "Mig!Test9-" + H.uid() });
+const regBase = () => ({ firstName: "Mig", middleName: "", lastName: "Reg", email: H.mail(), password: "Mig!Test9-" + H.uid() });
 test("G11 signup: control, base body is accepted (so rejections below are meaningful)", async () => {
   const r = await H.api("POST", "/api/auth/register", { json: regBase() });
   await adopt(r.body);
   assert.strictEqual(r.status, 201, `${r.status} ${JSON.stringify(r.body).slice(0, 160)}`);
 });
-run("signup", "POST", "/api/auth/register", null, variants(regBase, { strKeys: ["fullName", "email", "password"] }));
+run("signup", "POST", "/api/auth/register", null, variants(regBase, { strKeys: ["firstName", "lastName", "email", "password"] }));
 test("G11 signup: smuggled role=admin never persists an admin even if accepted", async () => {
   const r = await H.api("POST", "/api/auth/register", { json: { ...regBase(), role: "admin", adminLevel: "SUPER_ADMIN" } });
   await adopt(r.body);
@@ -111,7 +118,7 @@ test("G11 patient-profile: control, base body is accepted (as a separate patient
   assert(r.status >= 200 && r.status < 300, `${r.status} ${JSON.stringify(r.body).slice(0, 160)}`);
 });
 run("patient-profile", "POST", "/api/profile/patient-profile", (c) => c.A.token,
-  variants(profBase, { strKeys: ["fullName", "gender", "bloodGroup", "mobile", "state", "city", "pinCode", "emergencyName", "emergencyRelationship", "emergencyPhone"], reqKeys: ["fullName", "gender", "dob", "bloodGroup", "mobile", "state", "city", "pinCode", "emergencyName", "emergencyRelationship", "emergencyPhone"] }));
+  variants(profBase, { strKeys: ["firstName", "lastName", "gender", "bloodGroup", "mobile", "state", "city", "pinCode", "emergencyName", "emergencyRelationship", "emergencyPhone"], reqKeys: ["firstName", "lastName", "gender", "dob", "bloodGroup", "mobile", "state", "city", "pinCode", "emergencyName", "emergencyRelationship", "emergencyPhone"] }));
 run("consent", "POST", "/api/profile/consent", (c) => c.A.token, [
   ["empty body", () => ({})], ["wrong type", () => ({ consent: { $ne: null } })], ["userId = other patient", (c) => ({ userId: c.V.id, consent: true })],
   ["over-long", () => ({ consent: LONG })], ["_id injection", () => ({ _id: OID })]]);
@@ -158,7 +165,7 @@ run("admin change-password", "POST", "/api/admin/change-password", (c) => c.P.to
   ["empty", () => ({})], ["wrong types", () => ({ currentPassword: { $ne: 1 }, newPassword: 12345 })], ["over-long", () => ({ currentPassword: "x", newPassword: LONG })]]);
 
 // --- doctor registration (multipart)
-const DOC = () => ({ fullName: "Mig Doctor", email: H.mail(), mobileNumber: "9876543210", medicalRegistrationNumber: "MIG" + H.uid().slice(0, 8), medicalCouncil: "Test Council",
+const DOC = () => ({ firstName: "Mig", middleName: "", lastName: "Doctor", email: H.mail(), mobileNumber: "9876543210", medicalRegistrationNumber: "MIG" + H.uid().slice(0, 8), medicalCouncil: "Test Council",
   qualification: "MBBS", specialization: "Haematology", yearsOfExperience: "5", hospitalName: "Test Hospital", country: "India", stateProvince: "Maharashtra", city: "Pune", declarationAccepted: "true" });
 function docForm(fields, { noCert = false, mime = "application/pdf", dup } = {}) {
   const f = new FormData();
@@ -174,12 +181,12 @@ test("G11 doctor-register: control, base form is accepted", async () => {
   assert.strictEqual(r.status, 201, `${r.status} ${JSON.stringify(r.body).slice(0, 160)}`);
 });
 const docCases = [];
-for (const k of Object.keys(DOC())) docCases.push([`missing ${k}`, () => { const d = DOC(); delete d[k]; return docForm(d); }]);
-for (const k of ["fullName", "email", "mobileNumber", "medicalRegistrationNumber", "hospitalName", "city", "qualification"]) docCases.push([`${k} over-long`, () => docForm({ ...DOC(), [k]: LONG })]);
+for (const k of Object.keys(DOC()).filter((k) => k !== "middleName")) docCases.push([`missing ${k}`, () => { const d = DOC(); delete d[k]; return docForm(d); }]);
+for (const k of ["firstName", "lastName", "email", "mobileNumber", "medicalRegistrationNumber", "hospitalName", "city", "qualification"]) docCases.push([`${k} over-long`, () => docForm({ ...DOC(), [k]: LONG })]);
 docCases.push(["mobile not digits", () => docForm({ ...DOC(), mobileNumber: "abcdefghij" })], ["email invalid", () => docForm({ ...DOC(), email: "not-an-email" })],
   ["years negative", () => docForm({ ...DOC(), yearsOfExperience: "-1" })], ["years NaN", () => docForm({ ...DOC(), yearsOfExperience: "abc" })],
   ["declaration false", () => docForm({ ...DOC(), declarationAccepted: "false" })], ["no certificate", () => docForm(DOC(), { noCert: true })],
-  ["certificate wrong mime", () => docForm(DOC(), { mime: "text/plain" })], ["duplicate key (array)", () => docForm(DOC(), { dup: "fullName" })],
+  ["certificate wrong mime", () => docForm(DOC(), { mime: "text/plain" })], ["duplicate key (array)", () => docForm(DOC(), { dup: "firstName" })],
   ["_id injection", () => docForm({ ...DOC(), _id: OID })], ["status=APPROVED smuggle", () => docForm({ ...DOC(), status: "APPROVED" })],
   ["role=admin smuggle", () => docForm({ ...DOC(), role: "admin" })], ["professionalId smuggle", () => docForm({ ...DOC(), professionalId: "DOC-HACK" })],
   ["reviewedBy smuggle", () => docForm({ ...DOC(), reviewedBy: ctx.S?.id || OID })], ["unexpected key", () => docForm({ ...DOC(), unexpected_key: "x" })]);

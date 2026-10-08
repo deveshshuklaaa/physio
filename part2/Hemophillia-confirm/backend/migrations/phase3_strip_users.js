@@ -17,7 +17,7 @@ const STRIP14 = ["mobile", "alternateMobile", "designation", "hospitalName", "de
   "city", "state", "pinCode", "employeeId", "createdBy", "adminLevel", "permissions", "registrationRequestId"];
 
 const KEEP = ["_id", "__v", "email", "passwordHash", "authProvider", "googleId", "professionalId", "role",
-  "accountStatus", "mustChangePassword", "fullName", "nameTranslations", "createdAt", "updatedAt"];
+  "accountStatus", "mustChangePassword", "firstName", "middleName", "lastName", "nameTranslations", "createdAt", "updatedAt"];
 
 (async () => {
   await connectDB();

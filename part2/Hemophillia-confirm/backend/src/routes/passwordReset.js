@@ -4,7 +4,12 @@ const crypto = require("crypto");
 
 const { check } = require("../utils/allow");
 const User = require("../models/User");
-const PasswordResetOTP = require("../models/PasswordResetOTP");
+// Phase 5: loginotps and passwordresetotps are merged into otpchallenges. EVERY filter
+// here carries `...RESET`, because challengeId is unique across both flows now: an
+// unscoped lookup would let a login challenge be redeemed on this route, and the
+// unscoped deleteMany would wipe a user's pending login challenge.
+const OtpChallenge = require("../models/OtpChallenge");
+const RESET = { purpose: "password_reset" };
 const {
   sendPasswordResetOTP,
 } = require("../services/passwordResetEmailService");
@@ -181,7 +186,8 @@ router.post("/request", async (req, res) => {
     const userId = String(user._id);
     const destinationEmail = user.email;
 
-    const recent = await PasswordResetOTP.findOne({
+    const recent = await OtpChallenge.findOne({
+      ...RESET,
       userId,
       verified: false,
       createdAt: {
@@ -213,7 +219,8 @@ router.post("/request", async (req, res) => {
       });
     }
 
-    await PasswordResetOTP.deleteMany({
+    await OtpChallenge.deleteMany({
+      ...RESET,
       userId,
       verified: false,
     });
@@ -232,7 +239,8 @@ router.post("/request", async (req, res) => {
         OTP_EXPIRY_SECONDS * 1000
     );
 
-    await PasswordResetOTP.create({
+    await OtpChallenge.create({
+      ...RESET,
       userId,
       email: destinationEmail,
       role: user.role,
@@ -250,7 +258,8 @@ router.post("/request", async (req, res) => {
         expiryMinutes: OTP_EXPIRY_MINUTES,
       });
     } catch (emailError) {
-      await PasswordResetOTP.deleteOne({
+      await OtpChallenge.deleteOne({
+        ...RESET,
         challengeId,
       });
 
@@ -344,7 +353,8 @@ router.post("/verify", async (req, res) => {
     }
 
     const record =
-      await PasswordResetOTP.findOne({
+      await OtpChallenge.findOne({
+        ...RESET,
         challengeId,
         verified: false,
       });
@@ -362,7 +372,7 @@ router.post("/verify", async (req, res) => {
       record.expiresAt.getTime() <
         Date.now()
     ) {
-      await PasswordResetOTP.deleteOne({
+      await OtpChallenge.deleteOne({
         _id: record._id,
       });
 
@@ -374,7 +384,7 @@ router.post("/verify", async (req, res) => {
     }
 
     if (record.attempts >= MAX_ATTEMPTS) {
-      await PasswordResetOTP.deleteOne({
+      await OtpChallenge.deleteOne({
         _id: record._id,
       });
 
@@ -505,7 +515,8 @@ router.post("/reset", async (req, res) => {
     }
 
     const record =
-      await PasswordResetOTP.findOne({
+      await OtpChallenge.findOne({
+        ...RESET,
         challengeId,
         verified: true,
       });
@@ -523,7 +534,7 @@ router.post("/reset", async (req, res) => {
       record.resetTokenExpiresAt.getTime() <
         Date.now()
     ) {
-      await PasswordResetOTP.deleteOne({
+      await OtpChallenge.deleteOne({
         _id: record._id,
       });
 
@@ -554,7 +565,7 @@ router.post("/reset", async (req, res) => {
       );
 
     if (!user) {
-      await PasswordResetOTP.deleteOne({
+      await OtpChallenge.deleteOne({
         _id: record._id,
       });
 
@@ -620,7 +631,7 @@ console.log(
   "🔐 PASSWORD HASH UPDATED WITHOUT FULL USER VALIDATION"
 );
 
-    await PasswordResetOTP.deleteOne({
+    await OtpChallenge.deleteOne({
       _id: record._id,
     });
 

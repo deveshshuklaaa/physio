@@ -65,7 +65,7 @@ router.post(
 
       // fullName is not stored in the OTP record; compose it fresh from users
       const nameUser = await User.findById(result.authPayload.userId).select("firstName middleName lastName").lean();
-      const userData = { ...userData, fullName: displayName(nameUser) };
+      const userData = { ...result.userData, fullName: displayName(nameUser) };
 
       // =================================================
       // CREATE FINAL JWT
@@ -92,7 +92,7 @@ router.post(
         user:
           result.role === "admin"
             ? {
-                ...result.userData,
+                ...userData,
                 // authz read fresh from adminprofiles at verify time, never from the OTP record
                 ...resolveAdminAuthz(
                   await AdminProfile.findOne({
