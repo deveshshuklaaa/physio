@@ -57,10 +57,9 @@ function masterKey() {
 // Registered BEFORE mongoose.connect() so CSFLE builds a schemaMap for each. A model
 // registered after connect gets no schemaMap entry, so its "encrypted" fields are
 // written in CLEARTEXT while the suite still reports green. Add every new model here.
-// ClinicalRecord joins this list at Phase 7.
 const models = ["User", "PatientProfile", "HemophiliaDetails", "Assessment", "DoctorRegistrationRequest",
   "DoctorChangeRequest", "PatientExerciseRecommendation", "LoginOTP", "PasswordResetOTP", "FHIRResource",
-  "AdminProfile", "DoctorProfile"];
+  "AdminProfile", "DoctorProfile", "ClinicalRecord"];
 
 async function connectEncrypted() {
   const mongoose = require("mongoose");

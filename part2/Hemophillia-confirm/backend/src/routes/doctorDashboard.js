@@ -4,7 +4,7 @@ const { displayName } = require("../utils/displayName");
 
 const User = require("../models/User");
 const PatientProfile = require("../models/PatientProfile");
-const HemophiliaDetails = require("../models/HemophiliaDetails");
+const ClinicalRecord = require("../models/ClinicalRecord");
 const Assessment = require("../models/Assessment");
 const DoctorChangeRequest = require("../models/DoctorChangeRequest");
 
@@ -41,8 +41,9 @@ router.get("/dashboard", staffAuth, async (req, res) => {
     // when consultingDoctorId === req.userId.
 
     const hemophiliaRecords =
-      await HemophiliaDetails.find({
+      await ClinicalRecord.find({
         consultingDoctorId: req.userId,
+        supersededBy: null,
       }).lean();
 
     const patientUserIds = hemophiliaRecords
@@ -138,20 +139,24 @@ router.get("/dashboard", staffAuth, async (req, res) => {
     // 7. SEVERITY DISTRIBUTION
     // =================================================
 
+    // Keys are the stored CODES ("severe"), not display labels. Codes live in the database
+    // and in the API; the frontend owns the labels. The previous version capitalised them
+    // here, which meant two vocabularies in one payload for no benefit.
     const severityDistribution = {
-      Mild: 0,
-      Moderate: 0,
-      Severe: 0,
-      Unknown: 0,
+      mild: 0,
+      moderate: 0,
+      severe: 0,
+      unknown: 0,
     };
 
     hemophiliaRecords.forEach((record) => {
-      const severity = record.severity || "Unknown";
+      const severity = String(record.severity || "unknown").trim().toLowerCase();
 
       if (severityDistribution[severity] !== undefined) {
         severityDistribution[severity]++;
       } else {
-        severityDistribution.Unknown++;
+        // an unrecognised code counts as unknown rather than vanishing from the chart
+        severityDistribution.unknown++;
       }
     });
 
@@ -256,9 +261,9 @@ router.get("/dashboard", staffAuth, async (req, res) => {
       }
 
       // Target joint -- multi-value. Older records hold a single string.
-      const targetJoints = Array.isArray(record.targetJoint)
-        ? record.targetJoint
-        : [record.targetJoint];
+      const targetJoints = Array.isArray(record.targetJoints)
+        ? record.targetJoints
+        : [record.targetJoints];
 
       targetJoints.forEach((joint) => {
         if (!joint) return;
@@ -441,7 +446,7 @@ router.get("/dashboard", staffAuth, async (req, res) => {
           bleedingPattern: record.bleedingPattern ?? null,
           bleedFrequency: record.bleedFrequency ?? null,
           lastBleedDate: record.lastBleedDate ?? null,
-          targetJoint: record.targetJoint ?? null,
+          targetJoint: record.targetJoints ?? null,
           jointsAffected: Array.isArray(record.jointsAffected)
             ? record.jointsAffected
             : [],
@@ -572,9 +577,9 @@ router.get("/dashboard", staffAuth, async (req, res) => {
 
     const patientsWithTargetJoint =
       hemophiliaRecords.filter((record) =>
-        (Array.isArray(record.targetJoint)
-          ? record.targetJoint
-          : [record.targetJoint]
+        (Array.isArray(record.targetJoints)
+          ? record.targetJoints
+          : [record.targetJoints]
         ).some(
           (joint) =>
             joint && String(joint).trim() !== ""

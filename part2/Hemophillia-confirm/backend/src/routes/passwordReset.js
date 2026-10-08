@@ -402,13 +402,21 @@ router.post("/verify", async (req, res) => {
       );
 
     if (!isMatch) {
-      record.attempts += 1;
-      await record.save();
+      // SECURITY: `attempts += 1` then `save()` is a read-modify-write, so N parallel wrong
+      // guesses all read the same count and overwrite each other -- MAX_ATTEMPTS never trips
+      // and the 6-digit code becomes brute-forceable. $inc is atomic in the server.
+      const bumped = await OtpChallenge.findOneAndUpdate(
+        { _id: record._id },
+        { $inc: { attempts: 1 } },
+        { new: true }
+      );
+
+      const attempts = bumped?.attempts ?? MAX_ATTEMPTS;
 
       const remainingAttempts =
         Math.max(
           MAX_ATTEMPTS -
-            record.attempts,
+            attempts,
           0
         );
 
@@ -601,6 +609,24 @@ router.post("/reset", async (req, res) => {
       });
     }
 
+    // SECURITY: consume the challenge BEFORE writing the password. The old order (write, then
+    // delete) left the reset token valid until the TTL swept it, so the same token could be
+    // replayed to set the password again -- and two parallel requests could both pass. This
+    // is atomic, so exactly one request owns the challenge. If the write below then fails the
+    // user simply requests a new code, which is the safe direction to fail in.
+    const consumed =
+      await OtpChallenge.findOneAndDelete({
+        _id: record._id,
+      });
+
+    if (!consumed) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Your password reset session is invalid. Please start again.",
+      });
+    }
+
     const newPasswordHash =
   await bcrypt.hash(
     newPassword,
@@ -631,9 +657,7 @@ console.log(
   "🔐 PASSWORD HASH UPDATED WITHOUT FULL USER VALIDATION"
 );
 
-    await OtpChallenge.deleteOne({
-      _id: record._id,
-    });
+    // (the challenge was already consumed atomically above)
 
     console.log(
       "================================="

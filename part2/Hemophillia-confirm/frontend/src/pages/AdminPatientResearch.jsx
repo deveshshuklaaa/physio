@@ -17,6 +17,8 @@ import { useNavigate } from "react-router-dom";
 import api from "../apiClient";
 
 
+const cap = (s) => (s ? s[0].toUpperCase() + s.slice(1) : s); // severity code -> label
+
 export default function AdminPatientResearch() {
 
   const navigate = useNavigate();
@@ -1203,7 +1205,7 @@ const SectionHeader = ({
 
                 <strong>
                   {value(
-                    hemophilia.severity
+                    cap(hemophilia.severity)
                   )}
                 </strong>
 
@@ -1420,7 +1422,7 @@ const SectionHeader = ({
                 <InfoCard
                   label="Severity"
                   value={
-                    hemophilia.severity
+                    cap(hemophilia.severity)
                   }
                 />
 

@@ -42,7 +42,13 @@ const hemophiliaDetailsSchema = new mongoose.Schema(
     // Basic hemophilia information
     type: encryptedString,
 
-    severity: encryptedString,
+    // Stored code is lowercase: mild | moderate | severe. Setter lowercases (so "Severe" from an
+    // old client still lands); blank -> absent (= unknown, never guessed); anything else fails enum.
+    severity: {
+      ...encryptedString,
+      set: (v) => (typeof v === "string" ? v.trim().toLowerCase() || undefined : v),
+      enum: ["mild", "moderate", "severe"],
+    },
 
     ageAtDiagnosis: {
       type: Number,

@@ -359,14 +359,22 @@ async function verifyLoginOTP({
     );
 
   if (!isMatch) {
-    loginOTP.attempts += 1;
+    // SECURITY: `attempts += 1` then `save()` is a read-modify-write, so N parallel wrong
+    // guesses all read the same count and overwrite each other -- the 5-attempt cap on a
+    // 6-digit code never trips and the code becomes brute-forceable. $inc is atomic in the
+    // server, and the returned document carries the post-increment value.
+    const bumped = await OtpChallenge.findOneAndUpdate(
+      { _id: loginOTP._id },
+      { $inc: { attempts: 1 } },
+      { new: true }
+    );
 
-    await loginOTP.save();
+    const attempts = bumped?.attempts ?? MAX_ATTEMPTS;
 
     const remainingAttempts =
       Math.max(
         MAX_ATTEMPTS -
-          loginOTP.attempts,
+          attempts,
         0
       );
 
@@ -401,21 +409,33 @@ async function verifyLoginOTP({
   // MARK VERIFIED
   // ===================================================
 
-  loginOTP.verified = true;
-
-  const authPayload =
-    loginOTP.authPayload;
-
-  const userData =
-    loginOTP.userData;
-
-  await OtpChallenge.deleteOne({
+  // SECURITY: redeeming must be single-use. find -> compare -> delete leaves a window where
+  // two parallel CORRECT submissions both pass the compare before either delete lands, so one
+  // OTP mints two tokens. findOneAndDelete is atomic: exactly one caller gets the document
+  // back, and whoever loses the race is treated as if the challenge had already gone.
+  const redeemed = await OtpChallenge.findOneAndDelete({
     _id: loginOTP._id,
   });
 
+  if (!redeemed) {
+    const error = new Error(
+      "OTP is invalid or has expired. Please login again."
+    );
+
+    error.code = "OTP_NOT_FOUND";
+
+    throw error;
+  }
+
+  const authPayload =
+    redeemed.authPayload;
+
+  const userData =
+    redeemed.userData;
+
   return {
-    userId: loginOTP.userId,
-    role: loginOTP.role,
+    userId: redeemed.userId,
+    role: redeemed.role,
     authPayload,
     userData,
   };

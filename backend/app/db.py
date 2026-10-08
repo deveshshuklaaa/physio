@@ -102,8 +102,10 @@ def make_lookup_doctor_id(db):
         oid = to_object_id(patient_user_id)
         if not isinstance(oid, ObjectId):
             return None
-        doc = await db.hemophiliadetails.find_one(
-            {"userId": oid}, {"consultingDoctorId": 1}
+        # Phase 7: clinicalrecords is append-only; the CURRENT row is the highest
+        # version. Sort is mandatory -- an old version can name a former doctor.
+        doc = await db.clinicalrecords.find_one(
+            {"userId": oid}, {"consultingDoctorId": 1}, sort=[("version", -1)]
         )
         doctor_id = doc.get("consultingDoctorId") if doc else None
         if not doctor_id:
@@ -180,7 +182,7 @@ if __name__ == "__main__":
 
     class _FakeDb:
         def __init__(self, hemo_docs, user_ids=()):
-            self.hemophiliadetails = _FakeCollection(hemo_docs)
+            self.clinicalrecords = _FakeCollection(hemo_docs)
             self.users = _FakeUsers(user_ids)
 
     async def _run():

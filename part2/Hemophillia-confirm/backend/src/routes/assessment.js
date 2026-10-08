@@ -5,7 +5,7 @@ const authMiddleware = require("../middleware/auth");
 const Assessment = require("../models/Assessment");
 const PatientProfile = require("../models/PatientProfile");
 const User = require("../models/User");
-const HemophiliaDetails = require("../models/HemophiliaDetails");
+const clinicalRecords = require("../services/clinicalRecords");
 
 const saveFHIRBundle = require("../utils/saveFHIRBundle");
 const { toFHIRBundle } = require("../fhir/bundleMapper");
@@ -1395,9 +1395,7 @@ router.post(
       // =================================================
 
       const hemophiliaDetails =
-        await HemophiliaDetails.findOne({
-          userId: req.userId,
-        });
+        await clinicalRecords.latest(req.userId);
 
 
       // =================================================

@@ -2370,15 +2370,15 @@ const handleDoctorChangeRequest =
                   {txt.selectSeverity}
                 </option>
 
-                <option value="Mild">
+                <option value="mild">
                   {txt.mild}
                 </option>
 
-                <option value="Moderate">
+                <option value="moderate">
                   {txt.moderate}
                 </option>
 
-                <option value="Severe">
+                <option value="severe">
                   {txt.severe}
                 </option>
 

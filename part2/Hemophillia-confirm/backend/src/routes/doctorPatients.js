@@ -11,8 +11,11 @@ const User =
 const PatientProfile =
   require("../models/PatientProfile");
 
-const HemophiliaDetails =
-  require("../models/HemophiliaDetails");
+const ClinicalRecord =
+  require("../models/ClinicalRecord");
+
+const clinicalRecords =
+  require("../services/clinicalRecords");
 
 const Assessment =
   require("../models/Assessment");
@@ -44,12 +47,13 @@ router.get(
         req.userId;
 
       const records =
-        await HemophiliaDetails.find({
+        await ClinicalRecord.find({
           consultingDoctorId:
             doctorId,
+          supersededBy: null,
         })
           .select(
-            "userId patientId type severity bleedingPattern bleedFrequency lastBleedDate targetJoint jointsAffected underPhysiotherapy mobilityLimitation"
+            "userId patientId type severity bleedingPattern bleedFrequency lastBleedDate targetJoints jointsAffected underPhysiotherapy mobilityLimitation"
           )
           .lean();
 
@@ -138,7 +142,7 @@ router.get(
                 null,
 
               targetJoint:
-                record.targetJoint ??
+                record.targetJoints ??
                 null,
 
               jointsAffected:
@@ -210,11 +214,12 @@ router.get(
         req.userId;
 
       const hemophilia =
-        await HemophiliaDetails.findOne(
+        await ClinicalRecord.findOne(
           {
             patientId,
             consultingDoctorId:
               doctorId,
+            supersededBy: null,
           }
         ).lean();
 
@@ -385,15 +390,15 @@ router.post(
       // -----------------------------------------------
 
       const details =
-        await HemophiliaDetails.findOne({
-          userId:
-            request.patientUserId,
+        await clinicalRecords.latest(
+          request.patientUserId
+        );
 
-          consultingDoctorId:
-            doctorId,
-        });
-
-      if (!details) {
+      if (
+        !details ||
+        String(details.consultingDoctorId) !==
+          String(doctorId)
+      ) {
         return res.status(409).json({
           success: false,
           message:
@@ -405,10 +410,17 @@ router.post(
       // RELEASE PATIENT
       // -----------------------------------------------
 
-      details.consultingDoctorId =
-        null;
+      // Append-only: release is a new version, not an overwrite.
+      const {
+        _id, __v, version, recordedAt, recordedBy,
+        supersededBy, createdAt, updatedAt, ...prior
+      } = details.toObject();
 
-      await details.save();
+      await clinicalRecords.append(
+        request.patientUserId,
+        { ...prior, consultingDoctorId: null },
+        doctorId
+      );
 
       // -----------------------------------------------
       // UPDATE REQUEST
@@ -441,6 +453,12 @@ router.post(
         "RELEASE PATIENT ERROR:",
         error
       );
+
+      if ((error.code ?? error.cause?.code ?? error.errorResponse?.code) === 11000)
+        return res.status(409).json({
+          success: false,
+          message: "Patient record changed concurrently. Reload and retry.",
+        });
 
       return res.status(500).json({
         success: false,

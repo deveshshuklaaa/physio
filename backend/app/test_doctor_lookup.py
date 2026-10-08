@@ -54,7 +54,7 @@ class _FakeDetails:
         self.rows = rows
         self.calls = []
 
-    async def find_one(self, query, projection=None):
+    async def find_one(self, query, projection=None, **_kw):
         self.calls.append(query)
         return self.rows.get(query.get("userId"))
 
@@ -75,7 +75,7 @@ class _FakeUsers:
 
 class _FakeDB:
     def __init__(self, rows, user_ids=(DOC_A, DOC_B)):
-        self.hemophiliadetails = _FakeDetails(rows)
+        self.clinicalrecords = _FakeDetails(rows)
         self.users = _FakeUsers(user_ids)
 
 
@@ -151,7 +151,7 @@ def demo():
 
     # The lookup must key off the patient id it was given.
     check(
-        all(q.get("userId") is not None for q in db.hemophiliadetails.calls),
+        all(q.get("userId") is not None for q in db.clinicalrecords.calls),
         "every find_one filters by userId",
     )
 

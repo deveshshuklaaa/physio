@@ -9,8 +9,8 @@ const { displayName } = require("../utils/displayName");
 const authMiddleware =
   require("../middleware/auth");
 
-const HemophiliaDetails =
-  require("../models/HemophiliaDetails");
+const clinicalRecords =
+  require("../services/clinicalRecords");
 
 const PatientProfile =
   require("../models/PatientProfile");
@@ -37,7 +37,7 @@ const {
 const HEMOPHILIA_FIELDS = [
   "type", "severity", "ageAtDiagnosis", "familyHistory", "geneticTestingDone",
   "currentFactorTherapy", "otherCurrentTreatment", "otherMedications", "otherMedicationDetails",
-  "bleedingPattern", "jointsAffected", "targetJoint", "bleedFrequency", "lastBleedDate", "otherBleedingDetails",
+  "bleedingPattern", "jointsAffected", "targetJoint", "targetJoints", "bleedFrequency", "lastBleedDate", "otherBleedingDetails",
   "underPhysiotherapy", "physiotherapyLocation", "physiotherapySessions", "physiotherapyDuration",
   "physiotherapyBodyPart", "physiotherapyTreatment", "physiotherapyEquipment", "physiotherapyHelping",
   "physiotherapyProblems", "previousPhysiotherapy", "physiotherapyStoppedDate", "physiotherapyStoppedReason",
@@ -51,7 +51,7 @@ const HEMOPHILIA_SPEC = {
   type: T(100), severity: T(100), ageAtDiagnosis: { type: "string", max: 3, re: /^\d*$/ },
   familyHistory: T(100), geneticTestingDone: T(100),
   currentFactorTherapy: L, otherCurrentTreatment: T(500), otherMedications: L, otherMedicationDetails: T(500),
-  bleedingPattern: T(100), jointsAffected: L, targetJoint: L, bleedFrequency: T(100), lastBleedDate: T(40), otherBleedingDetails: T(500),
+  bleedingPattern: T(100), jointsAffected: L, targetJoint: L, targetJoints: L, bleedFrequency: T(100), lastBleedDate: T(40), otherBleedingDetails: T(500),
   underPhysiotherapy: B, physiotherapyLocation: T(200), physiotherapySessions: T(100), physiotherapyDuration: T(100),
   physiotherapyBodyPart: T(200), physiotherapyTreatment: T(500), physiotherapyEquipment: T(500), physiotherapyHelping: T(500),
   physiotherapyProblems: L, previousPhysiotherapy: B, physiotherapyStoppedDate: T(40), physiotherapyStoppedReason: T(500),
@@ -194,6 +194,9 @@ router.post(
         allow(req.body, HEMOPHILIA_FIELDS);
 
       // legacy clients send one string; wrap it so the list check applies
+      // Phase 7: field renamed targetJoints; the client may still send either name.
+      if (data.targetJoint === undefined) data.targetJoint = data.targetJoints;
+      delete data.targetJoints;
       if (typeof data.targetJoint === "string") data.targetJoint = [data.targetJoint];
       check(data, HEMOPHILIA_SPEC);
 
@@ -235,9 +238,7 @@ router.post(
       // =====================================================
 
       const existingDetails =
-        await HemophiliaDetails.findOne({
-          userId: req.userId,
-        });
+        await clinicalRecords.latest(req.userId);
 
       const existingDoctorId =
         existingDetails?.consultingDoctorId
@@ -335,24 +336,12 @@ router.post(
 
 
       // ===============================================
-      // REMOVE OLD DETAILS
-      // ===============================================
-
-      // await HemophiliaDetails.deleteOne({
-      //   userId: req.userId,
-      // });
-      // ===============================================
-// REMOVE OLD DETAILS
-// ===============================================
-
-
-
-      // ===============================================
       // CLEAN DATA
       // ===============================================
 
+      const { targetJoint: _legacy, ...rest } = data;
       const cleanData = {
-  ...data,
+  ...rest,
 
   userId: req.userId,
 
@@ -362,7 +351,7 @@ router.post(
     ? consultingDoctor._id
     : null,
 
-  targetJoint: uniqueTargetJoint,
+  targetJoints: uniqueTargetJoint,
 
   // ---------------------------------------------
   // PHYSIOTHERAPY BOOLEAN VALUES
@@ -389,34 +378,14 @@ router.post(
       // CREATE DETAILS
       // ===============================================
 
-      let details;
-
-if (existingDetails) {
-  // -----------------------------------------------
-  // UPDATE EXISTING RECORD
-  // -----------------------------------------------
-
-  Object.assign(
-    existingDetails,
-    cleanData
-  );
-
-  details =
-    await existingDetails.save();
-
-} else {
-
-  // -----------------------------------------------
-  // FIRST SUBMISSION
-  // -----------------------------------------------
-
-  details =
-    new HemophiliaDetails(
-      cleanData
-    );
-
-  await details.save();
-}
+      // Append-only: first submission and edit are the same call. A concurrent
+      // append loses on the (userId, version) unique index -> 409 below.
+      const details =
+        await clinicalRecords.append(
+          req.userId,
+          cleanData,
+          req.userId
+        );
 
 
       console.log(
@@ -553,6 +522,14 @@ if (existingDetails) {
 
       if (err.status === 400) return res.status(400).json({ message: err.message });
 
+      // Lost the version race (E11000 on userId+version): client reloads and retries.
+      if ((err.code ?? err.cause?.code ?? err.errorResponse?.code) === 11000)
+        return res.status(409).json({
+          success: false,
+          code: "RECORD_VERSION_CONFLICT",
+          message: "Your record changed while saving. Reload and try again.",
+        });
+
       console.error(
         "❌ Hemophilia details save error:"
       );
@@ -587,10 +564,9 @@ router.get(
     try {
 
       const details =
-        await HemophiliaDetails.findOne({
-          userId:
-            req.userId,
-        });
+        await clinicalRecords.latest(
+          req.userId
+        );
 
 
       if (!details) {
@@ -650,7 +626,10 @@ router.get(
           details.jointsAffected,
 
         targetJoint:
-          details.targetJoint,
+          details.targetJoints,
+
+        targetJoints:
+          details.targetJoints,
 
         bleedFrequency:
           details.bleedFrequency,
@@ -779,9 +758,7 @@ router.get(
       const patientUserId = req.userId;
 
       const details =
-        await HemophiliaDetails.findOne({
-          userId: patientUserId,
-        }).lean();
+        (await clinicalRecords.latest(patientUserId))?.toObject();
 
       if (!details) {
         return res.json({
@@ -875,10 +852,9 @@ router.post(
         req.userId;
 
       const details =
-        await HemophiliaDetails.findOne({
-          userId:
-            patientUserId,
-        });
+        await clinicalRecords.latest(
+          patientUserId
+        );
 
       if (!details) {
         return res.status(404).json({

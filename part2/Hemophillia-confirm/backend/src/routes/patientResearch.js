@@ -6,7 +6,7 @@ const { staffAuth, allowRoles } = require("../middleware/roleMiddleware");
 const PatientProfile = require("../models/PatientProfile");
 const User = require("../models/User");
 const { displayName } = require("../utils/displayName");
-const HemophiliaDetails = require("../models/HemophiliaDetails");
+const ClinicalRecord = require("../models/ClinicalRecord");
 const Assessment = require("../models/Assessment");
 const PatientExerciseRecommendation = require("../models/PatientExerciseRecommendation");
 
@@ -416,7 +416,7 @@ function buildBleedingHistory(
 
     targetJoint:
       firstAvailable(
-        h.targetJoint
+        h.targetJoints
       ),
 
     muscleSwelling:
@@ -807,7 +807,7 @@ function buildInsights({
           "clinical",
 
         value:
-          hemophilia.severity,
+          hemophilia.severity.replace(/^./, (c) => c.toUpperCase()), // code -> label
       });
 
     }
@@ -959,9 +959,10 @@ router.get(
       // =====================================================
 
       const hemophilia =
-        await HemophiliaDetails.findOne({
+        await ClinicalRecord.findOne({
           userId,
           patientId,
+          supersededBy: null,
         }).lean();
 
       // =====================================================
@@ -1298,7 +1299,7 @@ router.get(
             : latestFactors.jointsList,
 
         targetJoint:
-          hemophilia?.targetJoint ??
+          hemophilia?.targetJoints ??
           null,
 
         bleedingAfterMinorCuts:
@@ -1696,9 +1697,10 @@ router.get(
       // Only the currently assigned consulting doctor can open
       // this patient research record.
       const assignedDoctor =
-        await HemophiliaDetails.findOne({
+        await ClinicalRecord.findOne({
           userId,
           patientId,
+          supersededBy: null,
           consultingDoctorId: req.userId,
         }).lean();
 
@@ -1725,11 +1727,13 @@ router.get(
       // =====================================================
 
       const hemophilia =
-        await HemophiliaDetails.findOne({
+        await ClinicalRecord.findOne({
 
           userId,
 
           patientId,
+
+          supersededBy: null,
 
         }).lean();
 

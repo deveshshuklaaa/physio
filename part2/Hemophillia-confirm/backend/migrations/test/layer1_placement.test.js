@@ -39,6 +39,10 @@ before(async () => {
     pinCode: "411001", emergencyName: "E", emergencyPhone: "9333333333", hospitalName: "H" });
   await M("HemophiliaDetails").create({ userId: u, patientId: PID, type: "A", severity: "Severe", jointsAffected: ["Knee"],
     targetJoint: ["Knee"], patientNotes: "n", ageAtDiagnosis: 3, underPhysiotherapy: true });
+  // Phase 7: clinicalrecords is the live clinical collection, so G7 needs a row to classify.
+  await M("ClinicalRecord").create({ userId: u, patientId: PID, type: "A", severity: "Severe", jointsAffected: ["Knee"],
+    targetJoints: ["Knee"], patientNotes: "n", ageAtDiagnosis: 3, underPhysiotherapy: true,
+    version: 1, recordedAt: new Date(), recordedBy: u, supersededBy: null });
   await M("Assessment").create({ userId: u, patientId: PID, riskLevel: "HIGH", summaryText: "s", recommendation: "r",
     answers: [{ question: "q", answer: "a" }], q1EmergencySymptoms: ["x"], q2BleedMinorCuts: "no",
     mlProbabilitiesJson: "{}", mlFeaturesJson: "{}", factors: { bruises: "no" } });
@@ -103,10 +107,16 @@ const MATRIX = [
   ...["mobile", "address", "alternateContact", "emergencyName", "emergencyPhone"].map((f) => ["patientprofiles", f, "CT"]),
   ...["patientId", "underPhysiotherapy", "ageAtDiagnosis"].map((f) => ["hemophiliadetails", f, "PT"]),
   ...["type", "severity", "jointsAffected", "targetJoint", "patientNotes"].map((f) => ["hemophiliadetails", f, "CT"]),
-  ["hemophiliadetails", "targetJoints", "CT", "EXPECTED-FAIL until Phase 7 (field absent; targetJoint is the old name)"],
+  // Phase 7 moved this field: `clinicalrecords.targetJoints` is the live location, while
+  // `hemophiliadetails` is kept as the rollback copy and still holds the old `targetJoint`.
+  ...["type", "severity", "jointsAffected", "targetJoints", "patientNotes"].map((f) => ["clinicalrecords", f, "CT"]),
+  ...["patientId", "version", "underPhysiotherapy", "ageAtDiagnosis"].map((f) => ["clinicalrecords", f, "PT"]),
   ["assessments", "patientId", "PT"],
-  ...["summaryText", "recommendation", "answers", "factors"].map((f) => ["assessments", f, "PT"]),
-  ...["riskLevel", "q1EmergencySymptoms", "q2BleedMinorCuts", "mlProbabilitiesJson", "mlFeaturesJson"].map((f) => ["assessments", f, "CT"]),
+  // Phase 6 removed factors / the 14 q* keys / recommendation / suggestedTests from assessments;
+  // they are derived at read time now (src/utils/assessmentDerive.js), so there is nothing on disk
+  // to classify. A PT row for an absent field passes vacuously, so they are dropped, not kept.
+  ...["summaryText", "answers"].map((f) => ["assessments", f, "PT"]),
+  ...["riskLevel", "mlProbabilitiesJson", "mlFeaturesJson"].map((f) => ["assessments", f, "CT"]),
   ...["professionalId", "status"].map((f) => ["doctorregistrationrequests", f, "PT"]),
   ...["firstName", "lastName", "email", "mobileNumber", "medicalRegistrationNumber", "hospitalName", "city"].map((f) => ["doctorregistrationrequests", f, "CT"]),
   ["physiosessions", "patientId", "PT"], ["physiosessions", "sessionId", "PT"],

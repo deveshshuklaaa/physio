@@ -2058,7 +2058,7 @@ const { verifyEmailConnection } =
 
 require("./models/User");
 require("./models/PatientProfile");
-require("./models/HemophiliaDetails");
+require("./models/ClinicalRecord"); // Phase 7: replaces HemophiliaDetails
 require("./models/Assessment");
 require("./models/FHIRResource");
 require("./models/ScreeningSession");

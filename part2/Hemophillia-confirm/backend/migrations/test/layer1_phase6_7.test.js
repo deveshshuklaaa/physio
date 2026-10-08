@@ -6,14 +6,14 @@
 //   src/services/clinicalRecords.js     EXACTLY two exports: latest(userId), append(userId, data, recordedBy)
 // Phase 6 contract (G10):
 //   src/utils/assessmentDerive.js       deriveFromAnswers(answers) -> { factors, ...14 q* keys } via explicit QUESTION_MAP
-// NOTE: helpers.js `models` list has no ClinicalRecord; it must be added there at Phase 7 or the model is
-// registered after mongoose.connect() and may not be CSFLE-encrypted.
+// helpers.js `models` list carries ClinicalRecord (registered BEFORE mongoose.connect() so CSFLE applies; a G9 test asserts it
+// and another asserts the fields are ciphertext on disk).
 const { test, before, after } = require("node:test");
 const assert = require("node:assert");
 const fs = require("fs");
 const path = require("path");
 const { EJSON } = require("mongodb").BSON;
-const { connectEncrypted, raw, prodCounts, readProdOne, teardown } = require("./helpers");
+const { connectEncrypted, raw, prodCounts, readProdOne, teardown, isCiphertext } = require("./helpers");
 
 const src = (p) => path.join(__dirname, "..", "..", "src", p);
 const need = (p, why) => {
@@ -50,92 +50,361 @@ after(async () => {
 
 // ---- G9: Phase 7 (EXPECTED-FAIL until Phase 7) --------------------------------------------------
 const P7 = "[EXPECTED-FAIL until Phase 7]";
+// Laterality codes (knee_left) are DEFERRED to Phase 8: no stored value has a side -- prod holds
+// "Knee"/"Ankle"/"Hip"/"Elbow" and 26 "knee" rows -- and the side was never collected, so a migration
+// cannot derive it and must not invent which joint bleeds. Phase 7 is append-only + the
+// targetJoint -> targetJoints rename and array coercion ONLY.
+const P8 = "[EXPECTED-FAIL until Phase 8 (laterality deferred)]";
 const { ObjectId } = require("mongodb");
 const uid = () => new ObjectId();
-const seed = (extra = {}) => ({ patientId: "PATTEST9", type: "A", severity: "Severe", targetJoints: ["knee_left"], ...extra });
+const seed = (extra = {}) => ({ patientId: "PATTEST9", type: "A", severity: "Severe", jointsAffected: ["Knee", "Ankle"],
+  targetJoints: ["Knee"], patientNotes: "n9", currentFactorTherapy: ["FVIII"], ...extra });
 const svcOf = () => need("services/clinicalRecords.js", "Phase 7 service");
+const crOf = () => need("models/ClinicalRecord.js", "Phase 7 model");
 const rowsOf = (u) => db.collection("clinicalrecords").find({ userId: u }).sort({ version: 1 }).toArray();
+const codeOf = (e) => e?.code ?? e?.cause?.code ?? e?.errorResponse?.code;
+// Phase 7 accepts the vocabulary that exists today. Phase 8 introduces laterality and the rejection rules.
+const VALID_JOINTS = ["Knee", "Ankle", "Hip", "Elbow"];
+const LAT_JOINTS = ["knee_left", "knee_right", "ankle_left", "ankle_right"];
+
+test(`G9 helpers.js registers ClinicalRecord before connect (CSFLE schemaMap prerequisite)`, () => {
+  const h = fs.readFileSync(path.join(__dirname, "helpers.js"), "utf8");
+  const list = h.match(/const models = \[([\s\S]*?)\];/);
+  assert.ok(list && /"ClinicalRecord"/.test(list[1]), 'helpers.js `models` list lacks "ClinicalRecord"');
+});
 
 test(`G9 ${P7} service exports exactly latest + append (no create/edit split)`, () => {
-  need("models/ClinicalRecord.js", "Phase 7 model");
-  assert.deepStrictEqual(Object.keys(svcOf()).sort(), ["append", "latest"]);
+  crOf();
+  const s = svcOf();
+  assert.deepStrictEqual(Object.keys(s).sort(), ["append", "latest"]);
+  assert.strictEqual(typeof s.latest, "function");
+  assert.strictEqual(typeof s.append, "function");
+});
+
+test(`G9 ${P7} ClinicalRecord schema: all hemophiliadetails fields + version/recordedAt/recordedBy/supersededBy; targetJoint renamed`, () => {
+  const p = Object.keys(crOf().schema.paths);
+  const old = Object.keys(mg.model("HemophiliaDetails").schema.paths).filter((k) => !["_id", "__v", "createdAt", "updatedAt", "targetJoint"].includes(k));
+  const missing = [...old, "targetJoints", "version", "recordedAt", "recordedBy", "supersededBy"].filter((k) => !p.includes(k));
+  assert.deepStrictEqual(missing, [], "ClinicalRecord schema lacks fields");
+  assert.ok(!p.includes("targetJoint"), "old singular targetJoint still in schema");
+  const s = crOf().schema.paths;
+  assert.strictEqual(s.version.instance, "Number");
+  assert.strictEqual(s.recordedAt.instance, "Date");
+  assert.strictEqual(s.recordedBy.instance, "ObjectId");
+  assert.strictEqual(s.supersededBy.instance, "ObjectId");
+  assert.strictEqual(crOf().collection.name, "clinicalrecords");
+});
+
+test(`G9 ${P7} unique index {userId:1, version:1} exists; userId alone is NOT unique (it would block v2)`, async () => {
+  const CR = crOf();
+  await CR.init(); // builds declared indexes in hemophilia_test
+  const ixs = await db.collection("clinicalrecords").indexes();
+  const ix = ixs.find((i) => JSON.stringify(i.key) === JSON.stringify({ userId: 1, version: 1 }));
+  assert.ok(ix, "no {userId:1, version:1} index");
+  assert.strictEqual(ix.unique, true, "index is not unique");
+  const bad = ixs.find((i) => Object.keys(i.key).length === 1 && i.key.userId && i.unique);
+  assert.ok(!bad, "unique index on userId alone (copied from hemophiliadetails) makes every second version fail");
+});
+
+test(`G9 ${P7} first append is v1 with recordedAt/recordedBy/supersededBy:null; latest() of unknown user is null`, async () => {
+  const svc = svcOf(), u = uid(), by = uid();
+  assert.strictEqual(await svc.latest(u), null);
+  const before = Date.now();
+  const r1 = await svc.append(u, seed(), by);
+  assert.strictEqual(r1.version, 1);
+  const [row] = await rowsOf(u);
+  assert.strictEqual(row.version, 1);
+  assert.ok(row.recordedAt instanceof Date && row.recordedAt.getTime() >= before - 1000, "recordedAt not a fresh Date");
+  assert.strictEqual(String(row.recordedBy), String(by));
+  assert.strictEqual(row.supersededBy, null);
+  assert.strictEqual(String(row.userId), String(u));
+});
+
+test(`G9 ${P7} append ignores caller-supplied version/supersededBy/recordedBy/recordedAt in data`, async () => {
+  const svc = svcOf(), u = uid(), by = uid();
+  await svc.append(u, seed({ version: 99, supersededBy: uid(), recordedBy: uid(), recordedAt: new Date(0), userId: uid() }), by);
+  const [row] = await rowsOf(u);
+  assert.strictEqual(row?.version, 1, "caller version leaked");
+  assert.strictEqual(row.supersededBy, null);
+  assert.strictEqual(String(row.recordedBy), String(by));
+  assert.ok(row.recordedAt.getTime() > 1e12, "caller recordedAt leaked");
 });
 
 test(`G9 ${P7} append twice -> v1,v2; v1 unchanged except supersededBy`, async () => {
-  need("models/ClinicalRecord.js", "Phase 7 model");
   const svc = svcOf(), u = uid(), by = uid();
   await svc.append(u, seed(), by);
   const v1before = await db.collection("clinicalrecords").findOne({ userId: u, version: 1 });
   await svc.append(u, seed({ severity: "Mild" }), by);
   const rows = await rowsOf(u);
   assert.deepStrictEqual(rows.map((r) => r.version), [1, 2]);
-  // updatedAt excluded: a timestamps bump from stamping supersededBy is tolerated; any other drift is not.
+  // updatedAt excluded: a timestamps bump from stamping supersededBy is tolerated; any other drift (incl. ciphertext bytes) is not.
   const strip = ({ supersededBy, updatedAt, ...r }) => EJSON.stringify(r);
   assert.strictEqual(strip(rows[0]), strip(v1before), "v1 mutated by the second append");
+  assert.strictEqual(v1before.supersededBy, null, "precondition: v1 starts unsuperseded");
 });
 
-test(`G9 ${P7} v1.supersededBy -> v2, v2.supersededBy null`, async () => {
+test(`G9 ${P7} three appends: chain v1->v2->v3->null, earlier links not rewritten, latest() is v3`, async () => {
   const svc = svcOf(), u = uid();
-  await svc.append(u, seed(), uid()); await svc.append(u, seed({ severity: "Mild" }), uid());
-  const [v1, v2] = await rowsOf(u);
+  for (const s of ["Mild", "Moderate", "Severe"]) await svc.append(u, seed({ severity: s }), uid());
+  const [v1, v2, v3] = await rowsOf(u);
+  assert.deepStrictEqual([v1, v2, v3].map((r) => r.version), [1, 2, 3]);
   assert.strictEqual(String(v1.supersededBy), String(v2._id));
-  assert.strictEqual(v2.supersededBy, null);
+  assert.strictEqual(String(v2.supersededBy), String(v3._id));
+  assert.strictEqual(v3.supersededBy, null);
+  const l = await svc.latest(u);
+  assert.strictEqual(l.version, 3);
+  assert.strictEqual(String(l._id), String(v3._id));
 });
 
-test(`G9 ${P7} latest(userId) returns v2; first append is v1`, async () => {
-  const svc = svcOf(), u = uid();
-  assert.strictEqual(await svc.latest(u), null);
-  const r1 = await svc.append(u, seed(), uid());
-  assert.strictEqual(r1.version, 1);
-  await svc.append(u, seed({ severity: "Mild" }), uid());
-  assert.strictEqual((await svc.latest(u)).version, 2);
+test(`G9 ${P7} latest() is per-user: another user's higher version does not leak`, async () => {
+  const svc = svcOf(), a = uid(), b = uid();
+  await svc.append(a, seed(), uid());
+  for (let i = 0; i < 3; i++) await svc.append(b, seed(), uid());
+  assert.strictEqual((await svc.latest(a)).version, 1);
+  assert.strictEqual((await svc.latest(b)).version, 3);
 });
 
-test(`G9 ${P7} unique index {userId:1, version:1} exists`, async () => {
-  const CR = need("models/ClinicalRecord.js", "Phase 7 model");
-  await CR.init(); // builds declared indexes in hemophilia_test
-  const ix = (await db.collection("clinicalrecords").indexes()).find((i) => JSON.stringify(i.key) === JSON.stringify({ userId: 1, version: 1 }));
-  assert.ok(ix, "no {userId:1, version:1} index");
-  assert.strictEqual(ix.unique, true, "index is not unique");
-});
-
+// Two concurrent appends both read the same predecessor, so both try the same version. A bare Promise.allSettled
+// only interleaves that way MOST of the time (a fast first append can finish before the second reads), so a
+// single trial would be flaky. Each trial asserts the invariants; the test additionally demands that at least
+// one trial was truly contested, else it did not exercise the race and fails rather than passing vacuously.
 for (const [label, preSeed] of [["from an existing v1", true], ["first submission (no predecessor)", false]])
   test(`G9 ${P7} race ${label}: exactly one append wins, loser fails 11000, chain has no fork`, async () => {
-    const CR = need("models/ClinicalRecord.js", "Phase 7 model"), svc = svcOf(), u = uid();
+    const CR = crOf(), svc = svcOf();
     await CR.init();
-    if (preSeed) await svc.append(u, seed(), uid());
-    const target = preSeed ? 2 : 1;
-    const res = await Promise.allSettled([svc.append(u, seed({ severity: "Mild" }), uid()), svc.append(u, seed({ severity: "Moderate" }), uid())]); // not awaited in sequence
-    const ok = res.filter((r) => r.status === "fulfilled"), bad = res.filter((r) => r.status === "rejected");
-    assert.strictEqual(ok.length, 1, `expected one winner, got ${ok.length}`);
-    assert.strictEqual(bad.length, 1);
-    const code = bad[0].reason?.code ?? bad[0].reason?.cause?.code ?? bad[0].reason?.errorResponse?.code;
-    assert.strictEqual(code, 11000, `loser must fail with duplicate-key 11000 (route maps to 409), got ${code}: ${bad[0].reason?.message}`);
-    const rows = await rowsOf(u);
-    assert.deepStrictEqual(rows.map((r) => r.version), preSeed ? [1, 2] : [1], "version chain forked or has a gap");
-    assert.strictEqual(rows.filter((r) => r.version === target).length, 1);
+    let contested = 0;
+    for (let t = 0; t < 25 && contested < 3; t++) {
+      const u = uid();
+      let v1;
+      if (preSeed) { await svc.append(u, seed(), uid()); v1 = (await rowsOf(u))[0]; }
+      const res = await Promise.allSettled([svc.append(u, seed({ severity: "Mild" }), uid()), svc.append(u, seed({ severity: "Moderate" }), uid())]);
+      const ok = res.filter((r) => r.status === "fulfilled"), bad = res.filter((r) => r.status === "rejected");
+      const rows = await rowsOf(u);
+      const versions = rows.map((r) => r.version);
+      assert.strictEqual(new Set(versions).size, versions.length, `trial ${t}: duplicate versions, chain forked: ${versions}`);
+      assert.deepStrictEqual(versions, versions.map((_, i) => i + 1), `trial ${t}: version gap`);
+      assert.strictEqual(rows.length, (preSeed ? 1 : 0) + ok.length, `trial ${t}: rows != winners`);
+      for (const b of bad) assert.strictEqual(codeOf(b.reason), 11000, `loser must fail with duplicate-key 11000 (route maps to 409), got ${codeOf(b.reason)}: ${b.reason?.message}`);
+      if (bad.length) {
+        contested++;
+        assert.strictEqual(ok.length, 1, "contested trial must have exactly one winner");
+        if (preSeed) {
+          assert.deepStrictEqual(versions, [1, 2]);
+          assert.strictEqual(String(rows[0].supersededBy), String(rows[1]._id), "v1.supersededBy must point at the single v2");
+          assert.strictEqual(EJSON.stringify({ ...rows[0], supersededBy: 0, updatedAt: 0 }), EJSON.stringify({ ...v1, supersededBy: 0, updatedAt: 0 }), "v1 mutated by a losing append");
+        } else assert.deepStrictEqual(versions, [1]);
+        assert.strictEqual(rows[rows.length - 1].supersededBy, null);
+      }
+    }
+    assert.ok(contested >= 1, "never produced a contested race in 25 trials: concurrency not exercised (or append serialises, which would also hide a missing unique index)");
   });
 
-test(`G9 ${P7} route no longer overwrites in place: no Object.assign(existingDetails...) / existingDetails branch, uses append`, () => {
+// Behaviour, not naming: `clinicalrecords` REPLACES `hemophiliadetails`, so the route must not touch that
+// model at all -- for reads either. Banning the identifier `existingDetails` instead (an earlier draft) was
+// both too strict (it forces renaming the unrelated doctor-lock check, which legitimately reads prior state)
+// and too weak (a rename that still read the old collection would pass).
+test(`G9 ${P7} route uses clinicalRecords only: no read or write of the HemophiliaDetails model, no in-place overwrite, 11000 -> 409`, () => {
   const s = fs.readFileSync(src("routes/hemophiliaDetails.js"), "utf8");
-  assert.ok(!/Object\.assign\(\s*existingDetails/.test(s), "routes/hemophiliaDetails.js still does Object.assign(existingDetails, ...)");
-  assert.ok(!/\bexistingDetails\b/.test(s), "route still branches on existingDetails");
+  assert.ok(!/Object\.assign\(\s*\w*[Dd]etails/.test(s), "route still does Object.assign onto a loaded details doc (history-destroying write)");
+  assert.ok(!/new\s+HemophiliaDetails\s*\(/.test(s), "route still constructs HemophiliaDetails (first-submission branch)");
+  assert.ok(!/\bHemophiliaDetails\s*\.\s*\w+/.test(s), "route still uses the HemophiliaDetails model; clinicalrecords replaces it, reads included");
   assert.ok(/clinicalRecords/.test(s) && /\bappend\s*\(/.test(s), "route does not call clinicalRecords.append");
-  assert.ok(/11000/.test(s) && /409/.test(s), "route does not map duplicate-key 11000 to 409");
+  assert.ok(/\blatest\s*\(/.test(s), "route does not read prior state via clinicalRecords.latest()");
+  assert.ok(/11000[\s\S]{0,400}409/.test(s), "route does not map duplicate-key 11000 to 409");
 });
 
-test(`G9 ${P7} targetJoints is an array and holds laterality codes`, async () => {
+test(`G9 ${P7} on disk: PHI fields are ciphertext, version/supersededBy/patientId cleartext (catches an unregistered model)`, async () => {
+  crOf();
+  const svc = svcOf(), u = uid();
+  await svc.append(u, seed(), uid()); await svc.append(u, seed(), uid());
+  const [v1, v2] = await rowsOf(u);
+  for (const f of ["type", "severity", "targetJoints", "jointsAffected", "patientNotes", "currentFactorTherapy"])
+    assert.ok(isCiphertext(v1[f]), `clinicalrecords.${f} is NOT ciphertext on disk (model registered after connect, or no encrypt option): ${JSON.stringify(v1[f])}`);
+  assert.strictEqual(typeof v1.version, "number", "version must stay cleartext (unique index + sort)");
+  assert.ok(v1.supersededBy instanceof ObjectId, "supersededBy must stay cleartext");
+  assert.strictEqual(v2.supersededBy, null);
+  assert.strictEqual(v1.patientId, "PATTEST9", "patientId stays cleartext (FastAPI reads it)");
+  // and the app path decrypts it back
+  const d = await crOf().findOne({ userId: u, version: 1 }).lean();
+  assert.deepStrictEqual(d.targetJoints, ["Knee"]);
+  assert.strictEqual(d.severity, "severe");
+});
+
+test(`G9 ${P7} targetJoints and jointsAffected are stored as ARRAYS and round-trip intact`, async () => {
+  const svc = svcOf(), u = uid();
+  await svc.append(u, seed({ jointsAffected: VALID_JOINTS, targetJoints: ["Knee", "Ankle"] }), uid());
+  const d = await crOf().findOne({ userId: u }).lean(); // decrypted read
+  assert.ok(Array.isArray(d.targetJoints), "targetJoints not an array");
+  assert.ok(Array.isArray(d.jointsAffected), "jointsAffected not an array");
+  assert.deepStrictEqual(d.targetJoints, ["Knee", "Ankle"]);
+  assert.deepStrictEqual(d.jointsAffected, VALID_JOINTS);
+});
+
+// Phase 8, not Phase 7. Kept here so the vocabulary change is not forgotten.
+test(`G9 ${P8} joint codes carry laterality and free text is rejected`, async () => {
+  const svc = svcOf();
+  for (const ok of LAT_JOINTS) await svc.append(uid(), seed({ targetJoints: [ok] }), uid());
+  await assert.rejects(svc.append(uid(), seed({ targetJoints: ["Knee"] }), uid()), undefined, 'free-text "Knee" still accepted');
+  await assert.rejects(svc.append(uid(), seed({ jointsAffected: ["Knee"] }), uid()), undefined, 'free-text "Knee" still accepted in jointsAffected');
+});
+
+test(`G9 ${P7} missing targetJoints is stored as [] (never absent/undefined/[undefined]), and every stored targetJoints is an array`, async () => {
+  const svc = svcOf(), u = uid();
+  const { targetJoints, ...noJoints } = seed();
+  await svc.append(u, noJoints, uid()).catch(() => {}); // rejecting a missing value outright is also tolerable...
+  const rows = await crOf().find({ userId: u }).lean();
+  for (const r of rows) { // ...but if it was stored, it must be []
+    assert.ok(Array.isArray(r.targetJoints), `stored targetJoints is ${JSON.stringify(r.targetJoints)}, not an array`);
+    assert.deepStrictEqual(r.targetJoints, []);
+  }
+  // global invariant over everything this suite wrote so far
+  for (const r of await crOf().find({}).lean()) assert.ok(Array.isArray(r.targetJoints), `a clinicalrecords.targetJoints is a ${typeof r.targetJoints}`);
+});
+
+// Phase 8: the malformed-code matrix. Phase 7 keeps today's vocabulary, so only the ARRAY shape is enforced
+// above -- but a bare string must never be stored as a scalar, which is Phase 7's own invariant.
+for (const field of ["targetJoints", "jointsAffected"]) {
+  test(`G9 ${P8} malformed joint codes in ${field} are rejected and nothing is written`, async () => {
+    const svc = svcOf();
+    for (const bad of ["Knee_left", "knee_up", "knee left", "_left", "knee_", ""]) {
+      for (const v of [[bad], ["knee_left", bad]]) {
+        const u = uid();
+        await assert.rejects(svc.append(u, seed({ [field]: v }), uid()), undefined, `${field}=${JSON.stringify(v)} accepted`);
+        assert.strictEqual((await rowsOf(u)).length, 0, `${field}=${JSON.stringify(v)} left a row behind`);
+      }
+    }
+  });
+
+  // NOTE: these fields are CSFLE Random, which encrypts the WHOLE array into a single Binary, so the
+  // on-disk value is never an Array -- the shape only exists after decryption. Read it back through the
+  // model (which decrypts) rather than asserting on raw bytes.
+  test(`G9 ${P7} a bare string in ${field} round-trips as an ARRAY, never a scalar (array coercion is the whole point)`, async () => {
+    const u = uid();
+    await svcOf().append(u, seed({ [field]: "Knee" }), uid()).catch(() => {}); // rejecting it is fine too
+    for (const r of await crOf().find({ userId: u }).lean())
+      assert.ok(Array.isArray(r[field]) || r[field] === undefined,
+        `${field} decrypts to a scalar ${JSON.stringify(r[field])}; every $in/$elemMatch read site breaks on this`);
+  });
+}
+
+test(`G9 ${P7} a rejected append does not burn a version or touch the predecessor`, async () => {
   const svc = svcOf(), u = uid();
   await svc.append(u, seed(), uid());
-  const d = await need("models/ClinicalRecord.js", "Phase 7 model").findOne({ userId: u }).lean(); // decrypted read
-  assert.ok(Array.isArray(d.targetJoints), "targetJoints not an array");
-  for (const j of d.targetJoints) assert.match(j, /^[a-z]+_(left|right)$/);
+  const v1 = (await rowsOf(u))[0];
+  // ageAtDiagnosis is a Number, so a non-numeric value is a CastError -- a validation failure that does
+  // not depend on the joint vocabulary. (severity now has an enum, covered by its own tests.)
+  await assert.rejects(svc.append(u, seed({ ageAtDiagnosis: "not-a-number" }), uid()));
+  const rows = await rowsOf(u);
+  assert.strictEqual(rows.length, 1);
+  assert.strictEqual(EJSON.stringify(rows[0]), EJSON.stringify(v1), "predecessor changed by a rejected append");
+  assert.strictEqual((await svc.append(u, seed(), uid())).version, 2, "version burned by the rejected append");
 });
 
-test(`G9 ${P7} free-text joint "Knee" (string) is rejected`, async () => {
+test(`G9 ${P8} patientexerciserecommendations: joint -> joints[] of laterality codes`, async () => {
+  const M = mg.model("PatientExerciseRecommendation");
+  const p = Object.keys(M.schema.paths);
+  assert.ok(!p.includes("joint"), "old singular `joint` still in schema");
+  assert.ok(p.includes("joints"), "`joints` missing");
+  assert.strictEqual(M.schema.paths.joints.instance, "Array", "`joints` must be an array");
+  const base = { patientUserId: uid(), patientId: "PATTEST9", exerciseId: "e1", exerciseName: "n", type: "JOINT", category: "c", source: "RULE" };
+  const err = (joints) => new M({ ...base, joints }).validate().then(() => null, (e) => e.errors?.joints);
+  assert.ok(!(await err(["knee_left", "ankle_right"])), "valid codes rejected");
+  for (const bad of ["Knee", ["Knee"], ["knee"], ["knee_up"], ["knee_left", "Ankle"]]) assert.ok(await err(bad), `joints=${JSON.stringify(bad)} accepted`);
+  // (Phase 7 leaves `joint` alone: all 26 prod rows hold the sideless "knee".)
+});
+
+// Migration coercion. The phase script is run-only today, so Layer 1 only imports it if it is import-safe
+// (require.main guard); otherwise this fails instead of executing a migration. Contract: migrations/phase7_clinicalrecords.js
+// exports coerceToArray(v) === (Array.isArray(v) ? v : (v == null || v === "" ? [] : [v])), used for targetJoint ONLY.
+test(`G9 ${P7} migration coerceToArray: string -> [string], missing -> [], array passes through (not [undefined])`, () => {
+  const f = path.join(__dirname, "..", "phase7_clinicalrecords.js");
+  assert.ok(fs.existsSync(f), "migrations/phase7_clinicalrecords.js does not exist yet");
+  assert.ok(/require\.main\s*===\s*module/.test(fs.readFileSync(f, "utf8")), "phase7 script must guard its run with `if (require.main === module)` so it can be imported without executing");
+  const { coerceToArray } = require(f);
+  assert.strictEqual(typeof coerceToArray, "function", "phase7 script must export coerceToArray");
+  const same = (a, b) => assert.deepStrictEqual(a, b);
+  same(coerceToArray("Knee"), ["Knee"]);
+  same(coerceToArray(["Knee"]), ["Knee"]);
+  same(coerceToArray(["a", "b"]), ["a", "b"]);
+  same(coerceToArray(undefined), []);
+  same(coerceToArray(null), []);
+  same(coerceToArray(""), []);
+  same(coerceToArray([]), []);
+  for (const v of ["Knee", undefined, null, "", ["x"]]) assert.ok(Array.isArray(coerceToArray(v)));
+});
+
+// ---- G9: severity is a lowercase enumerated code (mild | moderate | severe) -----------------------
+// Enforced at the schema (setter + enum) so no write site can bypass it. Blank -> absent (unknown), never guessed.
+test(`G9 ${P7} severity: any case/whitespace is stored as the lowercase code`, async () => {
   const svc = svcOf();
-  await assert.rejects(svc.append(uid(), seed({ targetJoints: "Knee" }), uid()));
-  await assert.rejects(svc.append(uid(), seed({ targetJoints: ["Knee"] }), uid()));
+  for (const [given, want] of [["Severe", "severe"], ["SEVERE", "severe"], [" Moderate ", "moderate"], ["mild", "mild"]]) {
+    const u = uid();
+    await svc.append(u, seed({ severity: given }), uid());
+    const [r] = await crOf().find({ userId: u }).lean(); // decrypted read
+    assert.strictEqual(r.severity, want, `severity ${JSON.stringify(given)} stored as ${JSON.stringify(r.severity)}`);
+  }
+});
+
+test(`G9 ${P7} severity: unknown value is rejected and nothing is written; blank/missing is stored as absent`, async () => {
+  const svc = svcOf();
+  for (const bad of ["banana", "severe!", "3", "mildmoderate"]) {
+    const u = uid();
+    await assert.rejects(svc.append(u, seed({ severity: bad }), uid()), undefined, `severity=${bad} accepted`);
+    assert.strictEqual((await rowsOf(u)).length, 0, `severity=${bad} left a row behind`);
+  }
+  for (const blank of ["", "   ", undefined]) {
+    const u = uid();
+    await svc.append(u, seed({ severity: blank }), uid());
+    const [r] = await crOf().find({ userId: u }).lean();
+    assert.strictEqual(r.severity, undefined, `blank severity ${JSON.stringify(blank)} stored as ${JSON.stringify(r.severity)}`);
+  }
+});
+
+test(`G9 ${P7} severity: HemophiliaDetails (rollback copy) has the same setter + enum`, () => {
+  const M = need("models/HemophiliaDetails.js", "legacy model");
+  const v = (severity) => new M({ userId: uid(), severity });
+  assert.strictEqual(v("Severe").severity, "severe");
+  assert.strictEqual(v("").severity, undefined);
+  assert.ok(v("banana").validateSync()?.errors?.severity, "banana accepted by HemophiliaDetails");
+  assert.ok(!v("MILD").validateSync(), "MILD rejected by HemophiliaDetails");
+});
+
+test(`G9 ${P7} severity normalization script: guarded, exports norm, lowercases/trims and leaves non-strings alone`, () => {
+  const f = path.join(__dirname, "..", "phase7b_severity_lowercase.js");
+  assert.ok(/require\.main\s*===\s*module/.test(fs.readFileSync(f, "utf8")), "script must guard its run with require.main === module");
+  const { norm } = require(f);
+  assert.strictEqual(norm(" Severe "), "severe");
+  assert.strictEqual(norm("mild"), "mild");
+  assert.strictEqual(norm(""), "");
+  assert.strictEqual(norm(undefined), undefined);
+});
+
+test(`G9 ${P7} every stored severity in clinicalrecords is canonical or absent`, async () => {
+  for (const r of await crOf().find({}).lean())
+    assert.ok(r.severity === undefined || ["mild", "moderate", "severe"].includes(r.severity), `stored severity ${JSON.stringify(r.severity)}`);
+});
+
+// ---- G9: array fields never decrypt to a scalar (currentFactorTherapy / otherMedications / physiotherapyProblems) ----
+// Prod holds a bare string in currentFactorTherapy on 6/8 docs. Mongoose casts string -> [string] on write and Phase 7's
+// migration wraps legacy scalars. Assert on DECRYPTED reads: a CSFLE-Random array is one Binary on disk.
+for (const field of ["currentFactorTherapy", "otherMedications", "physiotherapyProblems"]) {
+  test(`G9 ${P7} ${field}: bare string, array, and missing all decrypt to an ARRAY, never a scalar`, async () => {
+    const svc = svcOf();
+    const cases = [["Factor VIII", ["Factor VIII"]], [["a", "b"], ["a", "b"]], [undefined, []]];
+    for (const [given, want] of cases) {
+      const u = uid();
+      await svc.append(u, seed({ [field]: given }), uid());
+      const [r] = await crOf().find({ userId: u }).lean();
+      assert.ok(Array.isArray(r[field]), `${field}=${JSON.stringify(given)} decrypts to ${typeof r[field]} ${JSON.stringify(r[field])}`);
+      assert.deepStrictEqual(r[field], want);
+    }
+  });
+}
+
+test(`G9 ${P7} global invariant: every stored currentFactorTherapy/otherMedications/physiotherapyProblems is an array`, async () => {
+  for (const r of await crOf().find({}).lean())
+    for (const f of ["currentFactorTherapy", "otherMedications", "physiotherapyProblems"])
+      assert.ok(Array.isArray(r[f]), `clinicalrecords.${f} is ${typeof r[f]}`);
 });
 
 // ---- G10: Phase 6 (EXPECTED-FAIL until Phase 6) -------------------------------------------------

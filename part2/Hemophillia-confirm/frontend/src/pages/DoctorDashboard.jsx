@@ -530,29 +530,30 @@ const hemophiliaTypes = Array.isArray(
 // =====================================================
 // SEVERITY
 //
-// Backend:
+// Backend sends the stored CODES, not display labels:
 // {
-//   Mild: 0,
-//   Moderate: 2,
-//   Severe: 0,
-//   Unknown: 0
+//   mild: 0,
+//   moderate: 2,
+//   severe: 0,
+//   unknown: 0
 // }
+// The labels below ("Severe Cases" etc.) are this component's business.
 // =====================================================
 
 const severityObject =
   distributions.severity || {};
 
 const mildCases =
-  Number(severityObject.Mild) || 0;
+  Number(severityObject.mild) || 0;
 
 const moderateCases =
-  Number(severityObject.Moderate) || 0;
+  Number(severityObject.moderate) || 0;
 
 const severeCases =
-  Number(severityObject.Severe) || 0;
+  Number(severityObject.severe) || 0;
 
 const unknownSeverity =
-  Number(severityObject.Unknown) || 0;
+  Number(severityObject.unknown) || 0;
 
 const severity = Array.isArray(severityObject)
   ? severityObject
@@ -1938,7 +1939,7 @@ if (error) {
                         <td>{patient.type || "--"}</td>
                         <td>
                           <span className={`clinical-pill severity-${String(patient.severity || "unknown").toLowerCase()}`}>
-                            {patient.severity || "Unknown"}
+                            {patient.severity ? patient.severity[0].toUpperCase() + patient.severity.slice(1) : "Unknown"}
                           </span>
                         </td>
                         <td>{patient.lastBleedDate ? new Date(patient.lastBleedDate).toLocaleDateString() : "Not recorded"}</td>

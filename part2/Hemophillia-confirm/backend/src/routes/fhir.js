@@ -4,7 +4,7 @@ const authMiddleware = require("../middleware/auth");
 
 const PatientProfile = require("../models/PatientProfile");
 const User = require("../models/User");
-const HemophiliaDetails = require("../models/HemophiliaDetails");
+const clinicalRecords = require("../services/clinicalRecords");
 const ScreeningSession = require("../models/ScreeningSession");
 const Assessment = require("../models/Assessment");
 
@@ -40,9 +40,7 @@ router.post("/save-bundle", authMiddleware, async (req, res) => {
     // ================================================
 
     const hemophiliaDetails =
-      await HemophiliaDetails.findOne({
-        userId: req.userId,
-      });
+      await clinicalRecords.latest(req.userId);
 
     // ================================================
     // SCREENING SESSION

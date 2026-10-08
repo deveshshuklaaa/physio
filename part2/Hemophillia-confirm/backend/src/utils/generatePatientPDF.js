@@ -704,7 +704,7 @@ const generatePatientReport = (data, res) => {
     },
     {
       label: "Severity",
-      value: hemophilia.severity,
+      value: hemophilia.severity?.replace(/^./, (c) => c.toUpperCase()), // code -> label
     },
     {
       label: "Latest Risk",

@@ -7,7 +7,7 @@ const fs = require("fs");
 const authMiddleware = require("../middleware/auth");
 const { staffAuth } = require("../middleware/roleMiddleware");
 
-const HemophiliaDetails = require("../models/HemophiliaDetails");
+const ClinicalRecord = require("../models/ClinicalRecord");
 const PatientProfile = require("../models/PatientProfile");
 const ScreeningSession = require("../models/ScreeningSession");
 const Assessment = require("../models/Assessment");
@@ -531,10 +531,11 @@ async function generateForPatient(
     session
   ] = await Promise.all([
 
-    HemophiliaDetails
+    ClinicalRecord
       .findOne({
         userId: patientUserId
       })
+      .sort({ version: -1 })
       .lean(),
 
     PatientProfile
@@ -1256,10 +1257,11 @@ router.get(
     try {
 
       const assigned =
-        await HemophiliaDetails
+        await ClinicalRecord
           .find({
             consultingDoctorId:
               req.userId,
+            supersededBy: null,
           })
           .select(
             "userId patientId"
@@ -1463,10 +1465,11 @@ router.get(
     try {
 
       const assigned =
-        await HemophiliaDetails
+        await ClinicalRecord
           .find({
             consultingDoctorId:
               req.userId,
+            supersededBy: null,
           })
           .select(
             "userId patientId"
@@ -1612,7 +1615,7 @@ async function verifyAssignedDoctor(
 ) {
 
   const details =
-    await HemophiliaDetails
+    await ClinicalRecord
       .findOne({
 
         userId:
@@ -1620,6 +1623,8 @@ async function verifyAssignedDoctor(
 
         consultingDoctorId:
           req.userId,
+
+        supersededBy: null,
 
       })
       .lean();
