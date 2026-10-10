@@ -9,7 +9,7 @@ members: 11
 
 ## Members
 - [[dot-_assembleBlob()]] - code - frontend/src/lib/recorder.js
-- [[dot-constructor()_13]] - code - frontend/src/lib/recorder.js
+- [[dot-constructor()]] - code - frontend/src/lib/recorder.js
 - [[dot-isRecording()]] - code - frontend/src/lib/recorder.js
 - [[dot-pickMimeType()]] - code - frontend/src/lib/recorder.js
 - [[dot-start()]] - code - frontend/src/lib/recorder.js
@@ -28,12 +28,13 @@ SORT file.name ASC
 ```
 
 ## Connections to other communities
-- 3 edges to [[_COMMUNITY_startLiveSession]]
+- 2 edges to [[_COMMUNITY_startLiveSession]]
 - 2 edges to [[_COMMUNITY_RingBuffer]]
 - 1 edge to [[_COMMUNITY_session_orchestrator.js]]
+- 1 edge to [[_COMMUNITY_pose_engine.js]]
 
 ## Top bridge nodes
 - [[IsolatedRecorder]] - degree 11, connects to 3 communities
-- [[dot-constructor()_13]] - degree 3, connects to 1 community
+- [[dot-constructor()]] - degree 3, connects to 1 community
 - [[dot-start()]] - degree 2, connects to 1 community
 - [[FakePoseWorker]] - degree 2, connects to 1 community

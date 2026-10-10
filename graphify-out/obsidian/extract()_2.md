@@ -1,17 +1,17 @@
 ---
-source_file: "backend/ml/exercise_extractors/slr.py"
+source_file: "backend/ml/exercise_extractors/seated_knee_extension.py"
 type: "code"
-community: "slr.py"
-location: "L137"
+community: "seated_knee_extension.py"
+location: "L32"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/slrpy
+  - community/seated_knee_extensionpy
 ---
 
 # extract()
 
 ## Connections
-- [[slr.py]] - `contains` [EXTRACTED]
+- [[seated_knee_extension.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/slrpy
+#graphify/code #graphify/EXTRACTED #community/seated_knee_extensionpy

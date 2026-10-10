@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/logging_setup.py"
 type: "code"
-community: "logging_setup.py"
+community: "common_features.py"
 location: "L168"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/logging_setuppy
+  - community/common_featurespy
 ---
 
 # ._emit()
@@ -21,4 +21,4 @@ tags:
 - [[ValueError]] - `calls` [INFERRED]
 - [[is_valid_event()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/logging_setuppy
+#graphify/code #graphify/EXTRACTED #community/common_featurespy

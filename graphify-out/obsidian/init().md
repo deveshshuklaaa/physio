@@ -1,23 +1,21 @@
 ---
-source_file: "frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js"
+source_file: "frontend/src/workers/pose_worker.js"
 type: "code"
-community: "init"
-location: "L9"
+community: "pose_engine.js"
+location: "L71"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/init
+  - community/pose_enginejs
 ---
 
 # init()
 
 ## Connections
-- [[assert()]] - `calls` [EXTRACTED]
-- [[document()]] - `indirect_call` [INFERRED]
-- [[encode64()]] - `contains` [EXTRACTED]
-- [[finish()]] - `contains` [EXTRACTED]
-- [[pointerLockChange()]] - `indirect_call` [INFERRED]
-- [[safeSetTimeout()]] - `calls` [EXTRACTED]
-- [[vision_wasm_nosimd_internal.js]] - `contains` [EXTRACTED]
+- [[live_tuning.js]] - `imports_from` [EXTRACTED]
+- [[logger.js]] - `imports_from` [EXTRACTED]
+- [[pose_engine.js]] - `imports_from` [EXTRACTED]
+- [[pose_worker.js]] - `contains` [EXTRACTED]
+- [[smoother.js]] - `imports_from` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/init
+#graphify/code #graphify/EXTRACTED #community/pose_enginejs

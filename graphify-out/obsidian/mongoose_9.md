@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/package.json"
-type: "concept"
-community: "dependencies"
-location: "L21"
+source_file: "part2/Hemophillia-confirm/backend/migrations/phase4_fix_nametranslations.js"
+type: "code"
+community: "phase4_fix_nametranslations.js"
+location: "L13"
 tags:
-  - graphify/concept
+  - graphify/code
   - graphify/EXTRACTED
-  - community/dependencies
+  - community/phase4_fix_nametranslationsjs
 ---
 
 # mongoose
 
 ## Connections
-- [[mongoose_8]] - `imports` [EXTRACTED]
+- [[phase4_fix_nametranslations.js]] - `contains` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/dependencies
+#graphify/code #graphify/EXTRACTED #community/phase4_fix_nametranslationsjs

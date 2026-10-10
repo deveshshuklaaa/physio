@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/assessment.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/adminAuth.js"
 type: "rationale"
-community: "assessment.js"
-location: "L892"
+community: "otpService.js"
+location: "L173"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/assessmentjs
+  - community/otpServicejs
 ---
 
 # IMPORTANT:
 
 ## Connections
-- [[assessment.js]] - `rationale_for` [EXTRACTED]
+- [[routesadminAuth.js]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/assessmentjs
+#graphify/rationale #graphify/EXTRACTED #community/otpServicejs

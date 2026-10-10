@@ -13,9 +13,9 @@ tags:
 
 ## Connections
 - [[Collapse one clip's frames into a single feature row.]] - `rationale_for` [EXTRACTED]
-- [[Path_16]] - `references` [EXTRACTED]
+- [[Path_8]] - `references` [EXTRACTED]
 - [[Series]] - `references` [EXTRACTED]
 - [[aggregate_features.py]] - `contains` [EXTRACTED]
-- [[main()_13]] - `calls` [EXTRACTED]
+- [[main()_2]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/clip_features

@@ -17,5 +17,8 @@ tags:
 - [[get_emg_history()]] - `calls` [EXTRACTED]
 - [[get_emg_status()]] - `calls` [EXTRACTED]
 - [[get_live_emg_reading()]] - `calls` [EXTRACTED]
+- [[recalibrate()]] - `calls` [EXTRACTED]
+- [[start_capture()_1]] - `calls` [EXTRACTED]
+- [[stop_capture()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/app/mainpy

@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/routes/session.py"
 type: "code"
-community: "session.py"
-location: "L122"
+community: "history.py"
+location: "L138"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/sessionpy
+  - community/historypy
 ---
 
 # _no_doctor_lookup()
@@ -16,4 +16,4 @@ tags:
 - [[get_lookup_doctor_id()]] - `indirect_call` [INFERRED]
 - [[session.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/sessionpy
+#graphify/code #graphify/EXTRACTED #community/historypy

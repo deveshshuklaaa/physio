@@ -13,8 +13,8 @@ tags:
 
 ## Connections
 - [[H4, H5 — session lifecycle endpoints. G2-B3B6 — auth and authorization. No…]] - `rationale_for` [EXTRACTED]
-- [[_auth()_2]] - `contains` [EXTRACTED]
-- [[_lookup_docA_only_for_p1()_1]] - `contains` [EXTRACTED]
+- [[_auth()_1]] - `contains` [EXTRACTED]
+- [[_lookup_docA_only_for_p1()]] - `contains` [EXTRACTED]
 - [[_token()_3]] - `contains` [EXTRACTED]
 - [[_with_doctor_lookup()]] - `contains` [EXTRACTED]
 - [[appmain.py]] - `imports_from` [EXTRACTED]

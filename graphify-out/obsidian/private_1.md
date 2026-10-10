@@ -1,17 +1,17 @@
 ---
-source_file: "frontend/package.json"
+source_file: "part2/Hemophillia-confirm/frontend/package.json"
 type: "code"
-community: "frontend/package.json"
+community: "dependencies"
 location: "L4"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/frontend/packagejson
+  - community/dependencies
 ---
 
 # private
 
 ## Connections
-- [[frontendpackage.json]] - `contains` [EXTRACTED]
+- [[Hemophillia-confirmfrontendpackage.json]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/frontend/packagejson
+#graphify/code #graphify/EXTRACTED #community/dependencies

@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/auth.py"
 type: "rationale"
-community: "CurrentUser"
+community: "session_ws.py"
 location: "L80"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/CurrentUser
+  - community/session_wspy
 ---
 
 # Same decode path, for the WS handshake frame (D3/B4) -- there is no HTTP header…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[decode_ws_token()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/CurrentUser
+#graphify/rationale #graphify/EXTRACTED #community/session_wspy

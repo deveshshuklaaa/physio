@@ -1,19 +1,17 @@
 ---
-source_file: "frontend/src/lib/pose_engine.js"
+source_file: "frontend/src/lib/smoother.js"
 type: "code"
-community: "pose_engine_selfcheck.mjs"
-location: "L65"
+community: "smoothing_audio.test.mjs"
+location: "L97"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/pose_engine_selfcheckmjs
+  - community/smoothing_audiotestmjs
 ---
 
 # .constructor()
 
 ## Connections
-- [[dot-_resolveRepTrigger()]] - `calls` [EXTRACTED]
-- [[PoseEngine]] - `method` [EXTRACTED]
-- [[rulesForExercise()]] - `calls` [EXTRACTED]
+- [[OneEuroSmoother]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/pose_engine_selfcheckmjs
+#graphify/code #graphify/EXTRACTED #community/smoothing_audiotestmjs

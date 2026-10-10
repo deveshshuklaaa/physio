@@ -21,6 +21,6 @@ tags:
 - [[makeStubCtx()]] - `contains` [EXTRACTED]
 - [[pts]] - `contains` [EXTRACTED]
 - [[skeleton.js]] - `imports_from` [EXTRACTED]
-- [[src]] - `contains` [EXTRACTED]
+- [[src_1]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/skeleton_selfcheckmjs

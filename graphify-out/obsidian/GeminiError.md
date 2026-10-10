@@ -14,7 +14,7 @@ tags:
 ## Connections
 - [[Exception]] - `inherits` [EXTRACTED]
 - [[Raised on any failure to get report text back. Callers set…]] - `rationale_for` [EXTRACTED]
-- [[call_gemini()_1]] - `calls` [EXTRACTED]
+- [[call_gemini()]] - `calls` [EXTRACTED]
 - [[gemini_report.py]] - `contains` [EXTRACTED]
 - [[test_f4_gemini_failure_preserves_counts()]] - `calls` [EXTRACTED]
 - [[test_report.py]] - `imports` [EXTRACTED]

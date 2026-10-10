@@ -1,15 +1,16 @@
 ---
 type: community
-members: 9
+members: 10
 ---
 
 # ExercisePlan.jsx
 
-**Members:** 9 nodes
+**Members:** 10 nodes
 
 ## Members
 - [[EXERCISE_TRANSLATIONS]] - code - part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan.jsx
-- [[ExerciseCard()_1]] - code - part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan.jsx
+- [[EXERCISE_YOUTUBE_LINKS]] - code - part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan.jsx
+- [[ExerciseCard()_2]] - code - part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan.jsx
 - [[ExercisePlan()_1]] - code - part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan.jsx
 - [[ExercisePlan.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan.jsx
 - [[T]] - code - part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan.jsx
@@ -27,8 +28,9 @@ SORT file.name ASC
 
 ## Connections to other communities
 - 2 edges to [[_COMMUNITY_App.jsx]]
-- 2 edges to [[_COMMUNITY_apiClient.js]]
+- 1 edge to [[_COMMUNITY_api]]
+- 1 edge to [[_COMMUNITY_apiClient.js]]
 
 ## Top bridge nodes
-- [[ExercisePlan.jsx]] - degree 11, connects to 2 communities
+- [[ExercisePlan.jsx]] - degree 12, connects to 3 communities
 - [[ExercisePlan()_1]] - degree 4, connects to 1 community

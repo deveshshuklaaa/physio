@@ -1,18 +1,24 @@
 ---
-source_file: "frontend/tests/painter_interpolation.test.mjs"
+source_file: "part2/Hemophillia-confirm/backend/migrations/test/layer2_helpers.js"
 type: "code"
-community: "session_orchestrator.js"
-location: "L28"
+community: "db"
+location: "L109"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/session_orchestratorjs
+  - community/db
 ---
 
 # setup()
 
 ## Connections
-- [[makePainter()]] - `calls` [EXTRACTED]
-- [[painter_interpolation.test.mjs]] - `contains` [EXTRACTED]
+- [[assert_18]] - `calls` [EXTRACTED]
+- [[assertAppOnStaging()]] - `calls` [EXTRACTED]
+- [[assertTargets()]] - `calls` [EXTRACTED]
+- [[collNames()]] - `calls` [EXTRACTED]
+- [[db()]] - `calls` [EXTRACTED]
+- [[layer2_helpers.js]] - `indirect_call` [INFERRED]
+- [[snapshot()]] - `calls` [EXTRACTED]
+- [[stageUri()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/session_orchestratorjs
+#graphify/code #graphify/EXTRACTED #community/db

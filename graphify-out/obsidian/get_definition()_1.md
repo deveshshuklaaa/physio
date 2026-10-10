@@ -1,12 +1,12 @@
 ---
-source_file: "backend/_old_physio_reference/superseded_app_copies/exercises/squat.py"
+source_file: "backend/_old_physio_reference/exercises/seated_leg_extensions.py"
 type: "code"
-community: "detect_view"
-location: "L177"
+community: "ExerciseDefinition"
+location: "L14"
 tags:
   - graphify/code
-  - graphify/INFERRED
-  - community/detect_view
+  - graphify/EXTRACTED
+  - community/ExerciseDefinition
 ---
 
 # get_definition()
@@ -14,18 +14,8 @@ tags:
 ## Connections
 - [[ExerciseDefinition]] - `calls` [EXTRACTED]
 - [[ExerciseDefinition_3]] - `calls` [EXTRACTED]
-- [[ExerciseDefinition_1]] - `uses` [INFERRED]
+- [[IsometricTrigger]] - `calls` [EXTRACTED]
 - [[JointCheck]] - `calls` [EXTRACTED]
-- [[JointCheck_1]] - `uses` [INFERRED]
-- [[RepTrigger_1]] - `calls` [EXTRACTED]
-- [[RepTrigger]] - `uses` [INFERRED]
-- [[check_butt_wink()_2]] - `indirect_call` [INFERRED]
-- [[check_heel_lift()_2]] - `indirect_call` [INFERRED]
-- [[check_knee_cave()_1]] - `indirect_call` [INFERRED]
-- [[check_knee_past_toes()_1]] - `indirect_call` [INFERRED]
-- [[check_neck()_2]] - `indirect_call` [INFERRED]
-- [[check_torso_lean_front()_1]] - `indirect_call` [INFERRED]
-- [[check_torso_lean_side()_1]] - `indirect_call` [INFERRED]
-- [[superseded_app_copiesexercisessquat.py]] - `contains` [EXTRACTED]
+- [[_old_physio_referenceexercisesseated_leg_extensions.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/INFERRED #community/detect_view
+#graphify/code #graphify/EXTRACTED #community/ExerciseDefinition

@@ -12,7 +12,7 @@ tags:
 # tailwindcss
 
 ## Connections
-- [[devDependencies_1]] - `contains` [EXTRACTED]
+- [[devDependencies_2]] - `contains` [EXTRACTED]
 - [[tailwindcss_1]] - `imports` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

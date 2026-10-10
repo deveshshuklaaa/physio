@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[emg_imu_app.py]] - `contains` [EXTRACTED]
-- [[load_history()_1]] - `calls` [EXTRACTED]
-- [[route_1]] - `references` [EXTRACTED]
+- [[load_history()]] - `calls` [EXTRACTED]
+- [[route]] - `references` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/emg_imu_apppy

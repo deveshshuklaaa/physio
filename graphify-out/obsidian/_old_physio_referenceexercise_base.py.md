@@ -12,9 +12,9 @@ tags:
 # _old_physio_reference/exercise_base.py
 
 ## Connections
-- [[ExerciseDefinition_1]] - `contains` [EXTRACTED]
-- [[IsometricTrigger_1]] - `contains` [EXTRACTED]
-- [[JointCheck_1]] - `contains` [EXTRACTED]
+- [[ExerciseDefinition]] - `contains` [EXTRACTED]
+- [[IsometricTrigger]] - `contains` [EXTRACTED]
+- [[JointCheck]] - `contains` [EXTRACTED]
 - [[RepTrigger]] - `contains` [EXTRACTED]
 - [[exercise_config_legacy_loader.py]] - `imports_from` [EXTRACTED]
 

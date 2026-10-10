@@ -12,9 +12,9 @@ tags:
 # _drive()
 
 ## Connections
-- [[_frame()_1]] - `calls` [EXTRACTED]
+- [[_frame()]] - `calls` [EXTRACTED]
 - [[_post()]] - `calls` [EXTRACTED]
 - [[fake_session_client.py]] - `contains` [EXTRACTED]
-- [[main()_15]] - `calls` [EXTRACTED]
+- [[main()_8]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/fake_session_clientpy

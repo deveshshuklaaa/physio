@@ -1,18 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/package.json"
+source_file: "part2/Hemophillia-confirm/backend/scripts/resetStaffPassword.js"
 type: "code"
-community: "dependencies"
-location: "L21"
+community: "displayName"
+location: "L6"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/dependencies
+  - community/displayName
 ---
 
 # mongoose
 
 ## Connections
-- [[dependencies_1]] - `contains` [EXTRACTED]
-- [[mongoose_9]] - `imports` [EXTRACTED]
+- [[resetStaffPassword.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/dependencies
+#graphify/code #graphify/EXTRACTED #community/displayName

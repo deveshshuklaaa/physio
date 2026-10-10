@@ -1,8 +1,8 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/package.json"
+source_file: "frontend/app/package.json"
 type: "code"
 community: "dependencies"
-location: "L27"
+location: "L22"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,7 +12,10 @@ tags:
 # devDependencies
 
 ## Connections
-- [[backendpackage.json]] - `contains` [EXTRACTED]
-- [[nodemon]] - `contains` [EXTRACTED]
+- [[@tailwindcssvite]] - `contains` [EXTRACTED]
+- [[@vitejsplugin-react_2]] - `contains` [EXTRACTED]
+- [[apppackage.json]] - `contains` [EXTRACTED]
+- [[tailwindcss]] - `contains` [EXTRACTED]
+- [[vite_2]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

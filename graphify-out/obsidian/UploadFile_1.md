@@ -1,16 +1,16 @@
 ---
 source_file: ""
 type: "code"
-community: "admin_models.py"
+community: "session.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/admin_modelspy
+  - community/sessionpy
 ---
 
 # UploadFile
 
 ## Connections
-- [[upload_model_package()]] - `references` [EXTRACTED]
+- [[upload_video()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/admin_modelspy
+#graphify/code #graphify/EXTRACTED #community/sessionpy

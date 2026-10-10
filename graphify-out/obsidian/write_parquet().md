@@ -12,8 +12,8 @@ tags:
 # write_parquet()
 
 ## Connections
-- [[DataFrame]] - `references` [EXTRACTED]
-- [[Path_12]] - `references` [EXTRACTED]
+- [[DataFrame_1]] - `references` [EXTRACTED]
+- [[Path_16]] - `references` [EXTRACTED]
 - [[common_features.py]] - `contains` [EXTRACTED]
 - [[extract_common_file()]] - `calls` [EXTRACTED]
 

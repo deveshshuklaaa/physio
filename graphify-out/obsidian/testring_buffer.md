@@ -12,6 +12,6 @@ tags:
 # test:ring_buffer
 
 ## Connections
-- [[scripts_2]] - `contains` [EXTRACTED]
+- [[scripts]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/frontend/packagejson

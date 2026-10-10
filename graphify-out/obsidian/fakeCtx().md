@@ -13,6 +13,6 @@ tags:
 
 ## Connections
 - [[painter.test.mjs]] - `contains` [EXTRACTED]
-- [[setup()_1]] - `calls` [EXTRACTED]
+- [[setup()_2]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/session_orchestratorjs

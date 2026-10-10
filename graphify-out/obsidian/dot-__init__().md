@@ -1,17 +1,17 @@
 ---
-source_file: "backend/app/db.py"
+source_file: "backend/app/services/session_buffer.py"
 type: "code"
-community: "db.py"
-location: "L150"
+community: "SessionBuffer"
+location: "L34"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/dbpy
+  - community/SessionBuffer
 ---
 
 # .__init__()
 
 ## Connections
-- [[_FakeCollection]] - `method` [EXTRACTED]
+- [[SessionBuffer]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/dbpy
+#graphify/code #graphify/EXTRACTED #community/SessionBuffer

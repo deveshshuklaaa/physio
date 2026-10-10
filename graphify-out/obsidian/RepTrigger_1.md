@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[Defines what drives the rep state machine. The engine watches the angle of the…_1]] - `rationale_for` [EXTRACTED]
-- [[get_definition()_1]] - `calls` [EXTRACTED]
+- [[get_definition()_3]] - `calls` [EXTRACTED]
 - [[superseded_app_copiesexercise_base.py]] - `contains` [EXTRACTED]
 - [[superseded_app_copiesexercisessquat.py]] - `imports` [EXTRACTED]
 

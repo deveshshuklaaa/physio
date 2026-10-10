@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/ws/client.js"
 type: "code"
-community: "RingBuffer"
+community: "SessionWsClient"
 location: "L88"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/RingBuffer
+  - community/SessionWsClient
 ---
 
 # ._flush()
@@ -17,4 +17,4 @@ tags:
 - [[dot-sendEnd()]] - `calls` [EXTRACTED]
 - [[SessionWsClient]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/RingBuffer
+#graphify/code #graphify/EXTRACTED #community/SessionWsClient

@@ -1,11 +1,11 @@
 ---
 type: community
-members: 21
+members: 20
 ---
 
 # test_history.py
 
-**Members:** 21 nodes
+**Members:** 20 nodes
 
 ## Members
 - [[dot-__enter__()]] - code - backend/app/routes/test_history.py
@@ -15,12 +15,11 @@ members: 21
 - [[PATxxxxxx - patientUserId, via a real inserted patientprofiles row -- what the…]] - rationale - backend/app/routes/test_history.py
 - [[The load-bearing matrix. docA is p1's doctor; docB is nobody's. p2 has NO…]] - rationale - backend/app/routes/test_history.py
 - [[_WithDoctorLookup]] - code - backend/app/routes/test_history.py
-- [[_auth()]] - code - backend/app/routes/test_history.py
+- [[_auth()_2]] - code - backend/app/routes/test_history.py
 - [[_cleanup_sessions()]] - code - backend/app/routes/test_history.py
-- [[_lookup_docA_only_for_p1()]] - code - backend/app/routes/test_history.py
+- [[_lookup_docA_only_for_p1()_1]] - code - backend/app/routes/test_history.py
 - [[_start_session()]] - code - backend/app/routes/test_history.py
-- [[_to_oid_or_str()]] - code - backend/app/routes/test_history.py
-- [[_token()]] - code - backend/app/routes/test_history.py
+- [[_token()_5]] - code - backend/app/routes/test_history.py
 - [[test_history.py]] - code - backend/app/routes/test_history.py
 - [[test_history_doctor_authorization_matrix()]] - code - backend/app/routes/test_history.py
 - [[test_history_is_patient_scoped_by_literal_id()]] - code - backend/app/routes/test_history.py
@@ -40,11 +39,12 @@ SORT file.name ASC
 ## Connections to other communities
 - 7 edges to [[_COMMUNITY_TestClient]]
 - 2 edges to [[_COMMUNITY_db.py]]
-- 2 edges to [[_COMMUNITY_CurrentUser]]
+- 1 edge to [[_COMMUNITY_history.py]]
+- 1 edge to [[_COMMUNITY_session_ws.py]]
 - 1 edge to [[_COMMUNITY_appmain.py]]
 
 ## Top bridge nodes
-- [[test_history.py]] - degree 19, connects to 3 communities
+- [[test_history.py]] - degree 19, connects to 4 communities
 - [[test_history_doctor_authorization_matrix()]] - degree 7, connects to 1 community
 - [[test_history_is_patient_scoped_by_literal_id()]] - degree 6, connects to 1 community
 - [[test_history_resolves_display_patient_id_via_patientprofiles()]] - degree 6, connects to 1 community

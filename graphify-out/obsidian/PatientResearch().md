@@ -1,12 +1,12 @@
 ---
 source_file: "part2/Hemophillia-confirm/frontend/src/pages/PatientResearch.jsx"
 type: "code"
-community: "apiClient.js"
-location: "L8422"
+community: "PatientResearch.jsx"
+location: "L22"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/apiClientjs
+  - community/PatientResearchjsx
 ---
 
 # PatientResearch()
@@ -14,5 +14,7 @@ tags:
 ## Connections
 - [[App.jsx]] - `imports` [EXTRACTED]
 - [[PatientResearch.jsx]] - `contains` [EXTRACTED]
+- [[cap()]] - `calls` [EXTRACTED]
+- [[reportLink()_1]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/apiClientjs
+#graphify/code #graphify/EXTRACTED #community/PatientResearchjsx

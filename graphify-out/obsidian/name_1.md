@@ -1,5 +1,5 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/package.json"
+source_file: "part2/Hemophillia-confirm/frontend/package.json"
 type: "code"
 community: "dependencies"
 location: "L2"
@@ -12,6 +12,6 @@ tags:
 # name
 
 ## Connections
-- [[backendpackage.json]] - `contains` [EXTRACTED]
+- [[Hemophillia-confirmfrontendpackage.json]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

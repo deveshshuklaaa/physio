@@ -8,9 +8,9 @@ members: 7
 **Members:** 7 nodes
 
 ## Members
-- [[dot-addEventListener()_1]] - code - frontend/tests/helpers.mjs
-- [[dot-close()_1]] - code - frontend/tests/helpers.mjs
-- [[dot-constructor()_14]] - code - frontend/tests/helpers.mjs
+- [[dot-addEventListener()]] - code - frontend/tests/helpers.mjs
+- [[dot-close()]] - code - frontend/tests/helpers.mjs
+- [[dot-constructor()_1]] - code - frontend/tests/helpers.mjs
 - [[dot-emit()]] - code - frontend/tests/helpers.mjs
 - [[dot-send()]] - code - frontend/tests/helpers.mjs
 - [[dot-sentJson()]] - code - frontend/tests/helpers.mjs

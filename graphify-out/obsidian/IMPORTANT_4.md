@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/frontend/src/pages/Report.jsx"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/chatbot.js"
 type: "rationale"
-community: "App.jsx"
-location: "L1740"
+community: "chatbot.js"
+location: "L883"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Appjsx
+  - community/chatbotjs
 ---
 
 # IMPORTANT:
 
 ## Connections
-- [[frontendsrcpagesReport.jsx]] - `rationale_for` [EXTRACTED]
+- [[chatbot.js]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Appjsx
+#graphify/rationale #graphify/EXTRACTED #community/chatbotjs

@@ -1,58 +1,42 @@
 ---
 type: community
-members: 45
+members: 29
 ---
 
 # admin.js
 
-**Members:** 45 nodes
+**Members:** 29 nodes
 
 ## Members
-- [[DoctorRegistrationRequest_1]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
-- [[IMPORTANT_12]] - rationale - part2/Hemophillia-confirm/backend/src/routes/auth.js
-- [[IMPORTANT_13]] - rationale - part2/Hemophillia-confirm/backend/src/services/emailService.js
-- [[LoginOTP]] - code - part2/Hemophillia-confirm/backend/src/services/otpService.js
-- [[LoginOTP.js]] - code - part2/Hemophillia-confirm/backend/src/models/LoginOTP.js
-- [[User_8]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
-- [[User_9]] - code - part2/Hemophillia-confirm/backend/src/routes/auth.js
+- [[ADMIN_SPEC]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
+- [[AdminProfile_6]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
+- [[DoctorProfile_3]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
+- [[DoctorRegistrationRequest_2]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
+- [[IMPORTANT_22]] - rationale - part2/Hemophillia-confirm/backend/src/services/emailService.js
+- [[PERM_KEYS]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
+- [[RFC-5321_2]] - concept - part2/Hemophillia-confirm/backend/src/routes/admin.js
+- [[S()_1]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
+- [[User_19]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
 - [[admin.js]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
-- [[adminAuth_1]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
-- [[bcrypt_4]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
-- [[bcrypt_5]] - code - part2/Hemophillia-confirm/backend/src/routes/auth.js
-- [[bcrypt_6]] - code - part2/Hemophillia-confirm/backend/src/services/otpService.js
-- [[createLoginOTP()]] - code - part2/Hemophillia-confirm/backend/src/services/otpService.js
-- [[crypto_1]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
-- [[crypto_2]] - code - part2/Hemophillia-confirm/backend/src/services/otpService.js
+- [[adminAuth]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
+- [[badBody()]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
+- [[bcrypt_9]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
+- [[crypto_3]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
 - [[emailService.js]] - code - part2/Hemophillia-confirm/backend/src/services/emailService.js
-- [[express_9]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
-- [[express_10]] - code - part2/Hemophillia-confirm/backend/src/routes/auth.js
-- [[express_11]] - code - part2/Hemophillia-confirm/backend/src/routes/otpAuth.js
-- [[generateChallengeId()]] - code - part2/Hemophillia-confirm/backend/src/services/otpService.js
-- [[generateOTP()]] - code - part2/Hemophillia-confirm/backend/src/services/otpService.js
-- [[jwt_3]] - code - part2/Hemophillia-confirm/backend/src/routes/auth.js
-- [[jwt_4]] - code - part2/Hemophillia-confirm/backend/src/routes/otpAuth.js
-- [[loginOTPSchema]] - code - part2/Hemophillia-confirm/backend/src/models/LoginOTP.js
-- [[maskEmail()]] - code - part2/Hemophillia-confirm/backend/src/services/otpService.js
-- [[mongoose_7]] - code - part2/Hemophillia-confirm/backend/src/models/LoginOTP.js
-- [[nodemailer]] - code - part2/Hemophillia-confirm/backend/src/services/emailService.js
-- [[otpAuth.js]] - code - part2/Hemophillia-confirm/backend/src/routes/otpAuth.js
-- [[otpService.js]] - code - part2/Hemophillia-confirm/backend/src/services/otpService.js
-- [[router_8]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
-- [[router_9]] - code - part2/Hemophillia-confirm/backend/src/routes/auth.js
-- [[router_10]] - code - part2/Hemophillia-confirm/backend/src/routes/otpAuth.js
-- [[routesauth.js]] - code - part2/Hemophillia-confirm/backend/src/routes/auth.js
+- [[express_14]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
+- [[nodemailer_2]] - code - part2/Hemophillia-confirm/backend/src/services/emailService.js
+- [[router_12]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
 - [[sendAdminCredentials()]] - code - part2/Hemophillia-confirm/backend/src/services/emailService.js
 - [[sendDoctorCredentials()]] - code - part2/Hemophillia-confirm/backend/src/services/emailService.js
 - [[sendDoctorRejectionEmail()]] - code - part2/Hemophillia-confirm/backend/src/services/emailService.js
-- [[sendLoginOTP()]] - code - part2/Hemophillia-confirm/backend/src/services/emailService.js
-- [[transporter]] - code - part2/Hemophillia-confirm/backend/src/services/emailService.js
+- [[sendPatientProfileUpdateEmail()]] - code - part2/Hemophillia-confirm/backend/src/services/emailService.js
+- [[sendPatientRegistrationEmail()]] - code - part2/Hemophillia-confirm/backend/src/services/emailService.js
 - [[verifyEmailConnection()]] - code - part2/Hemophillia-confirm/backend/src/services/emailService.js
-- [[verifyLoginOTP()]] - code - part2/Hemophillia-confirm/backend/src/services/otpService.js
-- [[{   createLoginOTP, }_2]] - code - part2/Hemophillia-confirm/backend/src/routes/auth.js
 - [[{   sendDoctorCredentials,   sendDoctorRejectionEmail,   sendAdminCredentials, }]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
-- [[{   verifyLoginOTP, }]] - code - part2/Hemophillia-confirm/backend/src/routes/otpAuth.js
+- [[{ allow, check }_3]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
 - [[{ createLoginOTP, verifyLoginOTP }]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
-- [[{ sendLoginOTP }]] - code - part2/Hemophillia-confirm/backend/src/services/otpService.js
+- [[{ displayName, withFullName }]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
+- [[{ resolveAdminAuthz }_3]] - code - part2/Hemophillia-confirm/backend/src/routes/admin.js
 
 ## Live Query (requires Dataview plugin)
 
@@ -62,13 +46,14 @@ SORT file.name ASC
 ```
 
 ## Connections to other communities
-- 7 edges to [[_COMMUNITY_User.js]]
-- 5 edges to [[_COMMUNITY_srcindex.js]]
-- 1 edge to [[_COMMUNITY_DoctorRegistrationRequest.js]]
+- 4 edges to [[_COMMUNITY_otpAuth.js]]
+- 4 edges to [[_COMMUNITY_otpService.js]]
+- 3 edges to [[_COMMUNITY_routesauth.js]]
+- 3 edges to [[_COMMUNITY_displayName]]
+- 3 edges to [[_COMMUNITY_srcindex.js]]
+- 2 edges to [[_COMMUNITY_passwordReset.js]]
 
 ## Top bridge nodes
-- [[admin.js]] - degree 20, connects to 3 communities
-- [[routesauth.js]] - degree 11, connects to 2 communities
-- [[otpService.js]] - degree 17, connects to 1 community
-- [[emailService.js]] - degree 11, connects to 1 community
-- [[createLoginOTP()]] - degree 9, connects to 1 community
+- [[admin.js]] - degree 36, connects to 5 communities
+- [[emailService.js]] - degree 14, connects to 3 communities
+- [[verifyEmailConnection()]] - degree 2, connects to 1 community

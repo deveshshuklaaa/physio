@@ -13,6 +13,6 @@ tags:
 
 ## Connections
 - [[Seated Knee Extension exercise-specific feature extractor. Input …]] - `rationale_for` [EXTRACTED]
-- [[extract()_1]] - `contains` [EXTRACTED]
+- [[extract()_2]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/seated_knee_extensionpy

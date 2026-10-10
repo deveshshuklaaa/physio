@@ -12,6 +12,6 @@ tags:
 # Calls Gemini 2.5 Flash via REST API. Returns the coaching text, or a…
 
 ## Connections
-- [[call_gemini()]] - `rationale_for` [EXTRACTED]
+- [[call_gemini()_1]] - `rationale_for` [EXTRACTED]
 
 #graphify/rationale #graphify/EXTRACTED #community/geminipy

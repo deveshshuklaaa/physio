@@ -1,20 +1,19 @@
 ---
-source_file: "frontend/app/package.json"
+source_file: "frontend/package.json"
 type: "code"
-community: "dependencies"
+community: "frontend/package.json"
 location: "L7"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/dependencies
+  - community/frontend/packagejson
 ---
 
 # scripts
 
 ## Connections
-- [[apppackage.json]] - `contains` [EXTRACTED]
-- [[build]] - `contains` [EXTRACTED]
-- [[dev]] - `contains` [EXTRACTED]
-- [[preview]] - `contains` [EXTRACTED]
+- [[frontendpackage.json]] - `contains` [EXTRACTED]
+- [[testparity]] - `contains` [EXTRACTED]
+- [[testring_buffer]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/dependencies
+#graphify/code #graphify/EXTRACTED #community/frontend/packagejson

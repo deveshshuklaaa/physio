@@ -1,12 +1,12 @@
 ---
 source_file: "part2/Hemophillia-confirm/frontend/src/pages/ConsentScreen.jsx"
 type: "code"
-community: "apiClient.js"
-location: "L1325"
+community: "App.jsx"
+location: "L6"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/apiClientjs
+  - community/Appjsx
 ---
 
 # ConsentScreen()
@@ -15,4 +15,4 @@ tags:
 - [[App.jsx]] - `imports` [EXTRACTED]
 - [[ConsentScreen.jsx]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/apiClientjs
+#graphify/code #graphify/EXTRACTED #community/Appjsx

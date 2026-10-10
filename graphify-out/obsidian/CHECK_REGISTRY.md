@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/lib/rules.js"
 type: "code"
-community: "helpers.mjs"
-location: "L71"
+community: "rules.js"
+location: "L74"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/helpersmjs
+  - community/rulesjs
 ---
 
 # CHECK_REGISTRY
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[rules.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/helpersmjs
+#graphify/code #graphify/EXTRACTED #community/rulesjs

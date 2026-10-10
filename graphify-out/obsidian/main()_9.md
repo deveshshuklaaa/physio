@@ -1,20 +1,18 @@
 ---
-source_file: "backend/ml/train_model.py"
+source_file: "backend/ml/run_landmark_pipeline.py"
 type: "code"
-community: "common_features.py"
-location: "L147"
+community: "find_videos"
+location: "L31"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/common_featurespy
+  - community/find_videos
 ---
 
 # main()
 
 ## Connections
-- [[choose_grouping()]] - `calls` [EXTRACTED]
-- [[evaluate()]] - `calls` [EXTRACTED]
-- [[split_frame()]] - `calls` [EXTRACTED]
-- [[train_model.py]] - `contains` [EXTRACTED]
+- [[find_videos()]] - `calls` [EXTRACTED]
+- [[run_landmark_pipeline.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/common_featurespy
+#graphify/code #graphify/EXTRACTED #community/find_videos

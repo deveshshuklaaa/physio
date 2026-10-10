@@ -1,18 +1,20 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/scripts/createAdmin.js"
 type: "code"
-community: "createAdmin.js"
-location: "L37"
+community: "displayName"
+location: "L39"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/createAdminjs
+  - community/displayName
 ---
 
 # createAdmin()
 
 ## Connections
-- [[connectDB_1]] - `calls` [EXTRACTED]
+- [[connectDB_6]] - `calls` [EXTRACTED]
 - [[createAdmin.js]] - `contains` [EXTRACTED]
+- [[displayName()]] - `calls` [EXTRACTED]
+- [[splitName()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/createAdminjs
+#graphify/code #graphify/EXTRACTED #community/displayName

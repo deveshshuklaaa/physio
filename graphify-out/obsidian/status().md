@@ -1,18 +1,20 @@
 ---
-source_file: "emg-service/backend/app.py"
+source_file: "hardware/esp32_imu/backend/emg_imu_app.py"
 type: "code"
-community: "app.py"
-location: "L188"
+community: "emg_imu_app.py"
+location: "L403"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/apppy
+  - community/emg_imu_apppy
 ---
 
 # status()
 
 ## Connections
-- [[app.py]] - `contains` [EXTRACTED]
+- [[calibration_ok()]] - `indirect_call` [INFERRED]
+- [[emg_imu_app.py]] - `contains` [EXTRACTED]
+- [[get_local_ip()]] - `calls` [EXTRACTED]
 - [[route]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/apppy
+#graphify/code #graphify/EXTRACTED #community/emg_imu_apppy

@@ -1,17 +1,19 @@
 ---
-source_file: "backend/app/routes/history.py"
+source_file: "backend/app/test_doctor_lookup.py"
 type: "code"
-community: "CurrentUser"
-location: "L129"
+community: "db.py"
+location: "L77"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/CurrentUser
+  - community/dbpy
 ---
 
 # .__init__()
 
 ## Connections
-- [[_FakeState]] - `method` [EXTRACTED]
+- [[_FakeDB_3]] - `method` [EXTRACTED]
+- [[_FakeDetails]] - `calls` [EXTRACTED]
+- [[_FakeUsers_1]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/CurrentUser
+#graphify/code #graphify/EXTRACTED #community/dbpy

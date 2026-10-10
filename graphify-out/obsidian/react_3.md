@@ -1,8 +1,8 @@
 ---
-source_file: "part2/Hemophillia-confirm/frontend/package.json"
+source_file: "frontend/app/package.json"
 type: "concept"
 community: "dependencies"
-location: "L16"
+location: "L18"
 tags:
   - graphify/concept
   - graphify/EXTRACTED

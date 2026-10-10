@@ -12,10 +12,10 @@ tags:
 # add_angle_2d()
 
 ## Connections
-- [[DataFrame]] - `references` [EXTRACTED]
+- [[DataFrame_1]] - `references` [EXTRACTED]
 - [[common_features.py]] - `contains` [EXTRACTED]
 - [[extract_common_features()]] - `calls` [EXTRACTED]
 - [[ndarray]] - `references` [EXTRACTED]
-- [[p2()_1]] - `calls` [EXTRACTED]
+- [[p2()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/common_featurespy

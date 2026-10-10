@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[Exercise configuration loader. Loads all exercise definitions from the…]] - `rationale_for` [EXTRACTED]
-- [[ExerciseDefinition_1]] - `imports` [EXTRACTED]
+- [[ExerciseDefinition]] - `imports` [EXTRACTED]
 - [[_old_physio_referenceexercise_base.py]] - `imports_from` [EXTRACTED]
 - [[get_all_exercise_definitions()]] - `contains` [EXTRACTED]
 - [[get_exercise_definition()]] - `contains` [EXTRACTED]

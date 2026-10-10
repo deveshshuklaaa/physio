@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[dot-_assembleBlob()]] - `method` [EXTRACTED]
-- [[dot-constructor()_13]] - `method` [EXTRACTED]
+- [[dot-constructor()]] - `method` [EXTRACTED]
 - [[dot-isRecording()]] - `method` [EXTRACTED]
 - [[dot-pickMimeType()]] - `method` [EXTRACTED]
 - [[dot-start()]] - `method` [EXTRACTED]

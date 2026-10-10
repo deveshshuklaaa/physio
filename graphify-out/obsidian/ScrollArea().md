@@ -12,7 +12,7 @@ tags:
 # ScrollArea()
 
 ## Connections
-- [[cn()_2]] - `calls` [EXTRACTED]
+- [[cn()]] - `calls` [EXTRACTED]
 - [[scroll-area.jsx]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/cn

@@ -1,12 +1,12 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/src/utils/saveFHIRBundle.js"
 type: "code"
-community: "assessment.js"
+community: "fhir.js"
 location: "L3"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/assessmentjs
+  - community/fhirjs
 ---
 
 # saveFHIRBundle()
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[saveFHIRBundle.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/assessmentjs
+#graphify/code #graphify/EXTRACTED #community/fhirjs

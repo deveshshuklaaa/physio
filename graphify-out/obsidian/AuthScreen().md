@@ -1,12 +1,12 @@
 ---
 source_file: "part2/Hemophillia-confirm/frontend/src/pages/AuthScreen.jsx"
 type: "code"
-community: "App.jsx"
-location: "L7"
+community: "apiClient.js"
+location: "L1743"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Appjsx
+  - community/apiClientjs
 ---
 
 # AuthScreen()
@@ -15,4 +15,4 @@ tags:
 - [[App.jsx]] - `imports` [EXTRACTED]
 - [[AuthScreen.jsx]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Appjsx
+#graphify/code #graphify/EXTRACTED #community/apiClientjs

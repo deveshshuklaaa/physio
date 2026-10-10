@@ -1,36 +1,27 @@
 ---
 type: community
-members: 23
+members: 14
 ---
 
 # ExerciseDefinition
 
-**Members:** 23 nodes
+**Members:** 14 nodes
 
 ## Members
-- [[dot-__post_init__()]] - code - backend/_old_physio_reference/superseded_app_copies/exercise_base.py
-- [[Complete specification of an exercise. Pass this to…]] - rationale - backend/_old_physio_reference/superseded_app_copies/exercise_base.py
-- [[Defines an angle-based check for a single joint. The angle is measured at…]] - rationale - backend/_old_physio_reference/superseded_app_copies/exercise_base.py
-- [[Defines the hold logic for isometric  static exercises. Instead of counting…]] - rationale - backend/_old_physio_reference/superseded_app_copies/exercise_base.py
-- [[Exercise configuration loader. Loads all exercise definitions from the…]] - rationale - backend/_old_physio_reference/superseded_app_copies/exercise_config_legacy_loader.py
-- [[ExerciseDefinition]] - code - backend/_old_physio_reference/superseded_app_copies/exercise_base.py
-- [[ExerciseDefinition_5]] - code
-- [[ExerciseDefinition_6]] - code
-- [[ExerciseDefinition_7]] - code
-- [[Get all exercise definitions.]] - rationale - backend/_old_physio_reference/superseded_app_copies/exercise_config_legacy_loader.py
-- [[Get an exercise definition by name. Returns None if not found.]] - rationale - backend/_old_physio_reference/superseded_app_copies/exercise_config_legacy_loader.py
-- [[IsometricTrigger]] - code - backend/_old_physio_reference/superseded_app_copies/exercise_base.py
-- [[JointCheck]] - code - backend/_old_physio_reference/superseded_app_copies/exercise_base.py
-- [[Load all exercise definitions from the exercises package. Returns a dictionary…]] - rationale - backend/_old_physio_reference/superseded_app_copies/exercise_config_legacy_loader.py
-- [[exercise_config_legacy_loader.py]] - code - backend/_old_physio_reference/superseded_app_copies/exercise_config_legacy_loader.py
-- [[get_all_exercise_definitions()]] - code - backend/_old_physio_reference/superseded_app_copies/exercise_config_legacy_loader.py
-- [[get_definition()_2]] - code - backend/_old_physio_reference/superseded_app_copies/exercises/isometric_quadriceps.py
-- [[get_definition()_3]] - code - backend/_old_physio_reference/superseded_app_copies/exercises/seated_leg_extensions.py
-- [[get_exercise_definition()]] - code - backend/_old_physio_reference/superseded_app_copies/exercise_config_legacy_loader.py
-- [[load_exercises()_1]] - code - backend/_old_physio_reference/superseded_app_copies/exercise_config_legacy_loader.py
-- [[superseded_app_copiesexercise_base.py]] - code - backend/_old_physio_reference/superseded_app_copies/exercise_base.py
-- [[superseded_app_copiesexercisesisometric_quadriceps.py]] - code - backend/_old_physio_reference/superseded_app_copies/exercises/isometric_quadriceps.py
-- [[superseded_app_copiesexercisesseated_leg_extensions.py]] - code - backend/_old_physio_reference/superseded_app_copies/exercises/seated_leg_extensions.py
+- [[dot-__post_init__()]] - code - backend/_old_physio_reference/exercise_base.py
+- [[Complete specification of an exercise. Pass this to…]] - rationale - backend/_old_physio_reference/exercise_base.py
+- [[Defines an angle-based check for a single joint. The angle is measured at…]] - rationale - backend/_old_physio_reference/exercise_base.py
+- [[Defines the hold logic for isometric  static exercises. Instead of counting…]] - rationale - backend/_old_physio_reference/exercise_base.py
+- [[ExerciseDefinition]] - code - backend/_old_physio_reference/exercise_base.py
+- [[ExerciseDefinition_2]] - code
+- [[ExerciseDefinition_3]] - code
+- [[IsometricTrigger]] - code - backend/_old_physio_reference/exercise_base.py
+- [[JointCheck]] - code - backend/_old_physio_reference/exercise_base.py
+- [[_old_physio_referenceexercise_base.py]] - code - backend/_old_physio_reference/exercise_base.py
+- [[_old_physio_referenceexercisesisometric_quadriceps.py]] - code - backend/_old_physio_reference/exercises/isometric_quadriceps.py
+- [[_old_physio_referenceexercisesseated_leg_extensions.py]] - code - backend/_old_physio_reference/exercises/seated_leg_extensions.py
+- [[get_definition()]] - code - backend/_old_physio_reference/exercises/isometric_quadriceps.py
+- [[get_definition()_1]] - code - backend/_old_physio_reference/exercises/seated_leg_extensions.py
 
 ## Live Query (requires Dataview plugin)
 
@@ -41,12 +32,12 @@ SORT file.name ASC
 
 ## Connections to other communities
 - 8 edges to [[_COMMUNITY_ExerciseDefinition_1]]
-- 5 edges to [[_COMMUNITY_detect_view]]
-- 2 edges to [[_COMMUNITY_exercise_runner.py]]
+- 7 edges to [[_COMMUNITY_detect_view]]
+- 6 edges to [[_COMMUNITY_exercise_runner.py]]
 
 ## Top bridge nodes
-- [[ExerciseDefinition]] - degree 12, connects to 1 community
-- [[JointCheck]] - degree 8, connects to 1 community
-- [[get_definition()_2]] - degree 8, connects to 1 community
-- [[get_definition()_3]] - degree 8, connects to 1 community
-- [[exercise_config_legacy_loader.py]] - degree 6, connects to 1 community
+- [[ExerciseDefinition]] - degree 15, connects to 3 communities
+- [[JointCheck]] - degree 11, connects to 2 communities
+- [[_old_physio_referenceexercise_base.py]] - degree 5, connects to 2 communities
+- [[IsometricTrigger]] - degree 8, connects to 1 community
+- [[_old_physio_referenceexercisesisometric_quadriceps.py]] - degree 6, connects to 1 community

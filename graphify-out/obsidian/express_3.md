@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/reports.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/auth.js"
 type: "code"
-community: "src/index.js"
+community: "routes/auth.js"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/src/indexjs
+  - community/routes/authjs
 ---
 
 # express
 
 ## Connections
-- [[reports.js]] - `contains` [EXTRACTED]
+- [[routesauth.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/src/indexjs
+#graphify/code #graphify/EXTRACTED #community/routes/authjs

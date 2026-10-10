@@ -1,12 +1,12 @@
 ---
 source_file: "part2/Hemophillia-confirm/frontend/src/apiClient.js"
 type: "code"
-community: "apiClient.js"
-location: "L30"
+community: "api"
+location: "L8"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/apiClientjs
+  - community/api
 ---
 
 # api
@@ -28,10 +28,12 @@ tags:
 - [[DoctorChangePassword.jsx]] - `imports` [EXTRACTED]
 - [[DoctorDashboard.jsx]] - `imports` [EXTRACTED]
 - [[DoctorLogin.jsx]] - `imports` [EXTRACTED]
+- [[DoctorProfile.jsx]] - `imports` [EXTRACTED]
 - [[DoctorRegistration.jsx]] - `imports` [EXTRACTED]
 - [[ExercisePlan.jsx]] - `imports` [EXTRACTED]
 - [[ExercisePlan_BASE.jsx]] - `imports` [EXTRACTED]
 - [[ExerciseReviewPanel.jsx]] - `imports` [EXTRACTED]
+- [[ForgotPassword.jsx]] - `imports` [EXTRACTED]
 - [[HemophiliaChatbot.jsx]] - `imports` [EXTRACTED]
 - [[HemophiliaDetailsScreen.jsx]] - `imports` [EXTRACTED]
 - [[Layout.jsx]] - `imports` [EXTRACTED]
@@ -41,4 +43,4 @@ tags:
 - [[ScreeningResultScreen.jsx]] - `imports` [EXTRACTED]
 - [[apiClient.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/apiClientjs
+#graphify/code #graphify/EXTRACTED #community/api

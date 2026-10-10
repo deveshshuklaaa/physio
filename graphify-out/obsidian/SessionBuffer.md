@@ -12,7 +12,7 @@ tags:
 # SessionBuffer
 
 ## Connections
-- [[dot-__init__()_9]] - `method` [EXTRACTED]
+- [[dot-__init__()]] - `method` [EXTRACTED]
 - [[dot-append()]] - `method` [EXTRACTED]
 - [[dot-extend()]] - `method` [EXTRACTED]
 - [[dot-flush()]] - `method` [EXTRACTED]

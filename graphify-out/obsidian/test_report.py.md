@@ -14,9 +14,9 @@ tags:
 ## Connections
 - [[G2-F -- report generation, video upload, retention. No framework. Run from…]] - `rationale_for` [EXTRACTED]
 - [[GeminiError]] - `imports` [EXTRACTED]
-- [[_auth()_1]] - `contains` [EXTRACTED]
+- [[_auth()]] - `contains` [EXTRACTED]
 - [[_cleanup()]] - `contains` [EXTRACTED]
-- [[_token()_1]] - `contains` [EXTRACTED]
+- [[_token()]] - `contains` [EXTRACTED]
 - [[appmain.py]] - `imports_from` [EXTRACTED]
 - [[auth.py]] - `imports_from` [EXTRACTED]
 - [[gemini_report.py]] - `imports_from` [EXTRACTED]

@@ -1,17 +1,18 @@
 ---
-source_file: "backend/app/models/session_doc.py"
+source_file: "backend/app/routes/history.py"
 type: "code"
-community: "session_doc.py"
-location: "L126"
+community: "history.py"
+location: "L125"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/session_docpy
+  - community/historypy
 ---
 
 # .__init__()
 
 ## Connections
-- [[_FakeCollection_1]] - `method` [EXTRACTED]
+- [[_FakeCollection]] - `calls` [EXTRACTED]
+- [[_FakeDb]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/session_docpy
+#graphify/code #graphify/EXTRACTED #community/historypy

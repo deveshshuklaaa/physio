@@ -1,18 +1,17 @@
 ---
 source_file: "part2/Hemophillia-confirm/frontend/src/pages/DoctorLogin.jsx"
 type: "code"
-community: "App.jsx"
-location: "L5"
+community: "apiClient.js"
+location: "L6"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Appjsx
+  - community/apiClientjs
 ---
 
 # DoctorLogin()
 
 ## Connections
-- [[App.jsx]] - `imports` [EXTRACTED]
 - [[DoctorLogin.jsx]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Appjsx
+#graphify/code #graphify/EXTRACTED #community/apiClientjs

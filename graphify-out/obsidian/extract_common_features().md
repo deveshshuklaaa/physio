@@ -13,13 +13,13 @@ tags:
 
 ## Connections
 - [[Build only the shared feature layer. No legacy error flags are copied into the…]] - `rationale_for` [EXTRACTED]
-- [[DataFrame]] - `references` [EXTRACTED]
+- [[DataFrame_1]] - `references` [EXTRACTED]
 - [[add_angle_2d()]] - `calls` [EXTRACTED]
 - [[add_angle_3d()]] - `calls` [EXTRACTED]
 - [[add_derivative_features()]] - `calls` [EXTRACTED]
 - [[add_distance_3d()]] - `calls` [EXTRACTED]
 - [[common_features.py]] - `contains` [EXTRACTED]
 - [[extract_common_file()]] - `calls` [EXTRACTED]
-- [[p3()_1]] - `calls` [EXTRACTED]
+- [[p3()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/common_featurespy

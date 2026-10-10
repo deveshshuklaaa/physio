@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/config/db.js"
+source_file: "part2/Hemophillia-confirm/backend/config/dataKey.js"
 type: "code"
-community: "db.js"
-location: "L6"
+community: "dataKey.js"
+location: "L8"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/dbjs
+  - community/dataKeyjs
 ---
 
 # { Binary }
 
 ## Connections
-- [[db.js]] - `contains` [EXTRACTED]
+- [[dataKey.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/dbjs
+#graphify/code #graphify/EXTRACTED #community/dataKeyjs

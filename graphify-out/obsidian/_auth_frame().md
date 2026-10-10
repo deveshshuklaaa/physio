@@ -2,7 +2,7 @@
 source_file: "backend/app/ws/test_session_ws.py"
 type: "code"
 community: "test_session_ws.py"
-location: "L98"
+location: "L109"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[D3B4 send this as the first message on every socket under test, or the server…]] - `rationale_for` [EXTRACTED]
-- [[_token()_2]] - `calls` [EXTRACTED]
+- [[_token()_4]] - `calls` [EXTRACTED]
 - [[test_g2b_ws_matching_user_token_is_accepted()]] - `calls` [EXTRACTED]
 - [[test_h2_ws_accepts_pose_batch_into_buffer()]] - `calls` [EXTRACTED]
 - [[test_h2_ws_handler_never_awaits_disk()]] - `calls` [EXTRACTED]

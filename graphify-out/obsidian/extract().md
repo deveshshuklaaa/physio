@@ -1,17 +1,18 @@
 ---
-source_file: "backend/ml/exercise_extractors/heel_slide.py"
+source_file: "backend/ml/exercise_extractors/mini_squat.py"
 type: "code"
-community: "heel_slide.py"
-location: "L74"
+community: "mini_squat.py"
+location: "L33"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/heel_slidepy
+  - community/mini_squatpy
 ---
 
 # extract()
 
 ## Connections
-- [[heel_slide.py]] - `contains` [EXTRACTED]
+- [[mini_squat.py]] - `contains` [EXTRACTED]
+- [[select_columns()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/heel_slidepy
+#graphify/code #graphify/EXTRACTED #community/mini_squatpy

@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/services/video_retention.py"
 type: "code"
-community: "video_retention.py"
+community: "db.py"
 location: "L86"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/video_retentionpy
+  - community/dbpy
 ---
 
 # .__aiter__()
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[_FakeCursor]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/video_retentionpy
+#graphify/code #graphify/EXTRACTED #community/dbpy

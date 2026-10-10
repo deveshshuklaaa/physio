@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/lib/rules.js"
 type: "code"
-community: "helpers.mjs"
+community: "rules.js"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/helpersmjs
+  - community/rulesjs
 ---
 
 # rules.js
@@ -22,6 +22,7 @@ tags:
 - [[depthAlert()]] - `contains` [EXTRACTED]
 - [[detectView()]] - `imports` [EXTRACTED]
 - [[exercise_checks.test.mjs]] - `imports_from` [EXTRACTED]
+- [[hs_tke_checks.test.mjs]] - `imports_from` [EXTRACTED]
 - [[landmarks.js]] - `imports_from` [EXTRACTED]
 - [[pose_engine.js]] - `imports_from` [EXTRACTED]
 - [[rules.test.mjs]] - `imports_from` [EXTRACTED]
@@ -30,4 +31,4 @@ tags:
 - [[thresholdValue()]] - `contains` [EXTRACTED]
 - [[torsoLean()]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/helpersmjs
+#graphify/code #graphify/EXTRACTED #community/rulesjs

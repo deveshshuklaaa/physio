@@ -16,6 +16,7 @@ tags:
 - [[appsrcmain.jsx]] - `imports` [EXTRACTED]
 - [[classifyDeepLink()]] - `calls` [EXTRACTED]
 - [[parseDeepLink()]] - `calls` [EXTRACTED]
+- [[runCalibrationGate()]] - `contains` [EXTRACTED]
 - [[startFromDeepLink()]] - `contains` [EXTRACTED]
 - [[startSession()]] - `contains` [EXTRACTED]
 

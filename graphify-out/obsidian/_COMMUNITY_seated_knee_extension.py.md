@@ -9,7 +9,7 @@ members: 3
 
 ## Members
 - [[Seated Knee Extension exercise-specific feature extractor. Input …]] - rationale - backend/ml/exercise_extractors/seated_knee_extension.py
-- [[extract()_1]] - code - backend/ml/exercise_extractors/seated_knee_extension.py
+- [[extract()_2]] - code - backend/ml/exercise_extractors/seated_knee_extension.py
 - [[seated_knee_extension.py]] - code - backend/ml/exercise_extractors/seated_knee_extension.py
 
 ## Live Query (requires Dataview plugin)

@@ -12,8 +12,8 @@ tags:
 # get_exercise_definition()
 
 ## Connections
-- [[ExerciseDefinition_5]] - `references` [EXTRACTED]
-- [[ExerciseDefinition]] - `uses` [INFERRED]
+- [[ExerciseDefinition_7]] - `references` [EXTRACTED]
+- [[ExerciseDefinition_1]] - `uses` [INFERRED]
 - [[Get an exercise definition by name. Returns None if not found.]] - `rationale_for` [EXTRACTED]
 - [[exercise_config_legacy_loader.py]] - `contains` [EXTRACTED]
 - [[load_exercises()_1]] - `calls` [EXTRACTED]

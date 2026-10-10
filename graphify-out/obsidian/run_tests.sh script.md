@@ -1,18 +1,18 @@
 ---
-source_file: "frontend/run_tests.sh"
+source_file: "backend/run_tests.sh"
 type: "code"
-community: "frontend/run_tests.sh"
+community: "backend/run_tests.sh"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/frontend/run_testssh
+  - community/backend/run_testssh
 ---
 
 # run_tests.sh script
 
 ## Connections
-- [[frontendrun_tests.sh]] - `contains` [EXTRACTED]
-- [[run()_2]] - `calls` [EXTRACTED]
+- [[backendrun_tests.sh]] - `contains` [EXTRACTED]
+- [[run()_3]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/frontend/run_testssh
+#graphify/code #graphify/EXTRACTED #community/backend/run_testssh

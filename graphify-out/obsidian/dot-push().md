@@ -1,19 +1,20 @@
 ---
-source_file: "frontend/src/lib/ring_buffer.js"
+source_file: "backend/app/logging_setup.py"
 type: "code"
-community: "RingBuffer"
-location: "L21"
+community: "common_features.py"
+location: "L242"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/RingBuffer
+  - community/common_featurespy
 ---
 
 # .push()
 
 ## Connections
-- [[dot-drain()]] - `calls` [EXTRACTED]
-- [[dot-toArray()]] - `calls` [EXTRACTED]
-- [[RingBuffer]] - `method` [EXTRACTED]
+- [[ComponentLogger]] - `references` [EXTRACTED]
+- [[Queue a log line. `sample_every=N` keeps 1-in-N calls for this event (anomalies…]] - `rationale_for` [EXTRACTED]
+- [[_RingBuffer]] - `method` [EXTRACTED]
+- [[_next_seq()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/RingBuffer
+#graphify/code #graphify/EXTRACTED #community/common_featurespy

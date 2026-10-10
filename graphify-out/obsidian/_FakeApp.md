@@ -1,19 +1,19 @@
 ---
 source_file: "backend/app/routes/history.py"
 type: "code"
-community: "CurrentUser"
+community: "history.py"
 location: "L132"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/CurrentUser
+  - community/historypy
 ---
 
 # _FakeApp
 
 ## Connections
-- [[dot-__init__()_11]] - `method` [EXTRACTED]
-- [[_run()_4]] - `calls` [EXTRACTED]
+- [[dot-__init__()_1]] - `method` [EXTRACTED]
+- [[_run()]] - `calls` [EXTRACTED]
 - [[history.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/CurrentUser
+#graphify/code #graphify/EXTRACTED #community/historypy

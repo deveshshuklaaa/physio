@@ -22,6 +22,7 @@ tags:
 - [[ctxFor()]] - `contains` [EXTRACTED]
 - [[exerciseByName()]] - `contains` [EXTRACTED]
 - [[exercise_checks.test.mjs]] - `imports_from` [EXTRACTED]
+- [[hs_tke_checks.test.mjs]] - `imports_from` [EXTRACTED]
 - [[landmarks.js]] - `imports_from` [EXTRACTED]
 - [[loadRealConfig()]] - `contains` [EXTRACTED]
 - [[makeLms()]] - `contains` [EXTRACTED]

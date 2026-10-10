@@ -14,6 +14,7 @@ tags:
 ## Connections
 - [[exercise_checks.test.mjs]] - `imports` [EXTRACTED]
 - [[helpers.mjs]] - `contains` [EXTRACTED]
+- [[hs_tke_checks.test.mjs]] - `imports` [EXTRACTED]
 - [[loadRealConfig()]] - `calls` [EXTRACTED]
 - [[squatConfig()]] - `calls` [EXTRACTED]
 

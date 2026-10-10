@@ -13,8 +13,8 @@ members: 24
 - [[Converts each legacy `_rf.pkl` bundle in `paths` into the E1 package layout…]] - rationale - backend/ml/repackage_legacy_bundle.py
 - [[E5 validates, then extracts every PASSING exercise into dest_rootexercise,…]] - rationale - backend/ml/validate_model_package.py
 - [[Model package contract + gate — MASTER_BUILD_PLAN_v3.md Phase E (E1-E5, E10,…]] - rationale - backend/ml/validate_model_package.py
-- [[Path_9]] - code
-- [[Path_10]] - code
+- [[Path_18]] - code
+- [[Path_19]] - code
 - [[Read-only check -- does not write anything. `known_exercises` (from…]] - rationale - backend/ml/validate_model_package.py
 - [[Runs E3 checks 3-13 for a single exercise. Returns {ok bool, errors…]] - rationale - backend/ml/validate_model_package.py
 - [[The ONE definition of feature_hash, shared by whatever writes a model card and…]] - rationale - backend/ml/validate_model_package.py

@@ -1,8 +1,8 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/package.json"
+source_file: "frontend/app/package.json"
 type: "code"
 community: "dependencies"
-location: "L10"
+location: "L12"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,21 +12,14 @@ tags:
 # dependencies
 
 ## Connections
-- [[@cloudrumblesindic-transliterate]] - `contains` [EXTRACTED]
-- [[@googlegenai]] - `contains` [EXTRACTED]
-- [[axios]] - `contains` [EXTRACTED]
-- [[backendpackage.json]] - `contains` [EXTRACTED]
-- [[bcryptjs]] - `contains` [EXTRACTED]
-- [[cors]] - `contains` [EXTRACTED]
-- [[dotenv]] - `contains` [EXTRACTED]
-- [[express_12]] - `contains` [EXTRACTED]
-- [[jsonwebtoken]] - `contains` [EXTRACTED]
-- [[mongodb]] - `contains` [EXTRACTED]
-- [[mongodb-client-encryption]] - `contains` [EXTRACTED]
-- [[mongoose_8]] - `contains` [EXTRACTED]
-- [[multer_1]] - `contains` [EXTRACTED]
-- [[nodemailer_1]] - `contains` [EXTRACTED]
-- [[pdfkit]] - `contains` [EXTRACTED]
-- [[uuid]] - `contains` [EXTRACTED]
+- [[apppackage.json]] - `contains` [EXTRACTED]
+- [[class-variance-authority]] - `contains` [EXTRACTED]
+- [[clsx]] - `contains` [EXTRACTED]
+- [[lucide-react]] - `contains` [EXTRACTED]
+- [[motion]] - `contains` [EXTRACTED]
+- [[radix-ui]] - `contains` [EXTRACTED]
+- [[react_2]] - `contains` [EXTRACTED]
+- [[react-dom_2]] - `contains` [EXTRACTED]
+- [[tailwind-merge]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

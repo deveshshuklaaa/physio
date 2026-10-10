@@ -1,21 +1,20 @@
 ---
-source_file: "frontend/tools/g6_g10_test/run_g6_g10_test.mjs"
+source_file: "backend/ml/train_model.py"
 type: "code"
-community: "run_g6_g10_test.mjs"
-location: "L254"
+community: "train_model.py"
+location: "L147"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/run_g6_g10_testmjs
+  - community/train_modelpy
 ---
 
 # main()
 
 ## Connections
-- [[attach()_1]] - `calls` [EXTRACTED]
-- [[runLivePageChecks()]] - `calls` [EXTRACTED]
-- [[runProbeChecks()]] - `calls` [EXTRACTED]
-- [[run_g6_g10_test.mjs]] - `contains` [EXTRACTED]
-- [[sleep()]] - `calls` [EXTRACTED]
+- [[choose_grouping()]] - `calls` [EXTRACTED]
+- [[evaluate()]] - `calls` [EXTRACTED]
+- [[split_frame()]] - `calls` [EXTRACTED]
+- [[train_model.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/run_g6_g10_testmjs
+#graphify/code #graphify/EXTRACTED #community/train_modelpy

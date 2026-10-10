@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/models/ScreeningSession.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/phase3_role_split.js"
 type: "code"
-community: "fhir.js"
-location: "L1"
+community: "phase3_role_split.js"
+location: "L10"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/fhirjs
+  - community/phase3_role_splitjs
 ---
 
 # mongoose
 
 ## Connections
-- [[ScreeningSession.js]] - `contains` [EXTRACTED]
+- [[phase3_role_split.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/fhirjs
+#graphify/code #graphify/EXTRACTED #community/phase3_role_splitjs

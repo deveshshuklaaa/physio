@@ -1,17 +1,18 @@
 ---
 source_file: ""
 type: "code"
-community: "clip_features"
+community: "common_features.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/clip_features
+  - community/common_featurespy
 ---
 
 # Path
 
 ## Connections
-- [[clip_features()]] - `references` [EXTRACTED]
-- [[main()_13]] - `calls` [EXTRACTED]
+- [[extract_common_file()]] - `references` [EXTRACTED]
+- [[read_table()]] - `references` [EXTRACTED]
+- [[write_parquet()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/clip_features
+#graphify/code #graphify/EXTRACTED #community/common_featurespy

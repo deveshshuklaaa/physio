@@ -1,12 +1,12 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/src/routes/doctorAuth.js"
 type: "code"
-community: "User.js"
+community: "doctorAuth.js"
 location: "L7"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Userjs
+  - community/doctorAuthjs
 ---
 
 # User
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[doctorAuth.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Userjs
+#graphify/code #graphify/EXTRACTED #community/doctorAuthjs

@@ -1,18 +1,18 @@
 ---
 source_file: "backend/app/main.py"
 type: "code"
-community: "app/main.py"
+community: "_get"
 location: "L74"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/app/mainpy
+  - community/_get
 ---
 
 # health()
 
 ## Connections
+- [[_get()]] - `references` [EXTRACTED]
 - [[appmain.py]] - `contains` [EXTRACTED]
-- [[get_4]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/app/mainpy
+#graphify/code #graphify/EXTRACTED #community/_get

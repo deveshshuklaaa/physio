@@ -14,6 +14,6 @@ tags:
 ## Connections
 - [[SESSION_DATA_DIR]] - `defines` [EXTRACTED]
 - [[run()_3]] - `defines` [EXTRACTED]
-- [[run_tests.sh script_1]] - `contains` [EXTRACTED]
+- [[run_tests.sh script]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/backend/run_testssh

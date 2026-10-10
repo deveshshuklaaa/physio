@@ -1,18 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/scripts/createStaffAccount.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/phase4_name_split.js"
 type: "code"
-community: "createStaffAccount.js"
-location: "L6"
+community: "phase4_name_split.js"
+location: "L21"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/createStaffAccountjs
+  - community/phase4_name_splitjs
 ---
 
 # connectDB
 
 ## Connections
-- [[createStaffAccount()]] - `calls` [EXTRACTED]
-- [[createStaffAccount.js]] - `contains` [EXTRACTED]
+- [[phase4_name_split.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/createStaffAccountjs
+#graphify/code #graphify/EXTRACTED #community/phase4_name_splitjs

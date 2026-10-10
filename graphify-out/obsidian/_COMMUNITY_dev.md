@@ -8,7 +8,7 @@ members: 3
 **Members:** 3 nodes
 
 ## Members
-- [[dev_1]] - code - dev
+- [[dev]] - code - dev
 - [[dev script]] - code - dev
 - [[usage()]] - code - dev
 

@@ -13,10 +13,10 @@ tags:
 
 ## Connections
 - [[FRONTEND_ROOT]] - `contains` [EXTRACTED]
-- [[HERE_3]] - `contains` [EXTRACTED]
+- [[HERE_1]] - `contains` [EXTRACTED]
 - [[MOCKUP_VALUES]] - `contains` [EXTRACTED]
-- [[attach()_1]] - `contains` [EXTRACTED]
-- [[main()_14]] - `contains` [EXTRACTED]
+- [[attach()]] - `contains` [EXTRACTED]
+- [[main()_3]] - `contains` [EXTRACTED]
 - [[runLivePageChecks()]] - `contains` [EXTRACTED]
 - [[runProbeChecks()]] - `contains` [EXTRACTED]
 - [[sleep()]] - `contains` [EXTRACTED]

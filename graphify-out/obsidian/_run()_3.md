@@ -1,21 +1,19 @@
 ---
-source_file: "backend/app/auth.py"
+source_file: "backend/app/services/video_retention.py"
 type: "code"
-community: "CurrentUser"
-location: "L135"
+community: "db.py"
+location: "L122"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/CurrentUser
+  - community/dbpy
 ---
 
 # _run()
 
 ## Connections
-- [[CurrentUser]] - `calls` [EXTRACTED]
-- [[_token()_4]] - `calls` [EXTRACTED]
-- [[auth.py]] - `contains` [EXTRACTED]
-- [[authorize_patient_access()]] - `calls` [EXTRACTED]
-- [[decode_ws_token()]] - `calls` [EXTRACTED]
+- [[_FakeDb_2]] - `calls` [EXTRACTED]
+- [[sweep_expired_videos()]] - `calls` [EXTRACTED]
+- [[video_retention.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/CurrentUser
+#graphify/code #graphify/EXTRACTED #community/dbpy

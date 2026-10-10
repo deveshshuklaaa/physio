@@ -2,7 +2,7 @@
 source_file: "part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js"
 type: "code"
 community: "exerciseRecommendations.js"
-location: "L911"
+location: "L524"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,10 +12,10 @@ tags:
 # generateForPatient()
 
 ## Connections
-- [[buildSafetyPatient()]] - `calls` [EXTRACTED]
+- [[buildMlPatient()]] - `calls` [EXTRACTED]
 - [[exerciseRecommendations.js]] - `contains` [EXTRACTED]
-- [[ruleRecommendationsForJoint()]] - `calls` [EXTRACTED]
-- [[safetyEngine()]] - `calls` [EXTRACTED]
+- [[isEmergencyScreening()]] - `calls` [EXTRACTED]
+- [[runPython()]] - `calls` [EXTRACTED]
 - [[uniqueJoints()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/exerciseRecommendationsjs

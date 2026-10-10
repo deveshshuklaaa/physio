@@ -12,11 +12,11 @@ tags:
 # extract_common_file()
 
 ## Connections
-- [[DataFrame]] - `references` [EXTRACTED]
-- [[Path_12]] - `references` [EXTRACTED]
+- [[DataFrame_1]] - `references` [EXTRACTED]
+- [[Path_16]] - `references` [EXTRACTED]
 - [[common_features.py]] - `contains` [EXTRACTED]
 - [[extract_common_features()]] - `calls` [EXTRACTED]
-- [[main()_7]] - `calls` [EXTRACTED]
+- [[main()_11]] - `calls` [EXTRACTED]
 - [[read_table()]] - `calls` [EXTRACTED]
 - [[write_parquet()]] - `calls` [EXTRACTED]
 

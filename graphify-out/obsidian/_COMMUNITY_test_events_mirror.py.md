@@ -9,7 +9,7 @@ members: 5
 
 ## Members
 - [[Checks backendappevents.py and frontendsrclibevents.js declare the same…]] - rationale - backend/app/test_events_mirror.py
-- [[Path_17]] - code
+- [[Path_11]] - code
 - [[parse_js_events()]] - code - backend/app/test_events_mirror.py
 - [[test_events_mirror.py]] - code - backend/app/test_events_mirror.py
 - [[test_mirror()]] - code - backend/app/test_events_mirror.py

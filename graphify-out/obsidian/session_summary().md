@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/session.py"
 type: "code"
 community: "session.py"
-location: "L289"
+location: "L321"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -14,7 +14,7 @@ tags:
 ## Connections
 - [[CurrentUser]] - `uses` [INFERRED]
 - [[D6 the client's own count of what happened, written at session end. This is a…]] - `rationale_for` [EXTRACTED]
-- [[Request_2]] - `references` [EXTRACTED]
+- [[Request_3]] - `references` [EXTRACTED]
 - [[SessionSummary]] - `references` [EXTRACTED]
 - [[_authorize_or_403()]] - `calls` [EXTRACTED]
 - [[_load_or_404()]] - `calls` [EXTRACTED]

@@ -1,5 +1,5 @@
 ---
-source_file: "backend/_old_physio_reference/exercise_base.py"
+source_file: "backend/_old_physio_reference/superseded_app_copies/exercise_base.py"
 type: "rationale"
 community: "ExerciseDefinition"
 location: "L113"

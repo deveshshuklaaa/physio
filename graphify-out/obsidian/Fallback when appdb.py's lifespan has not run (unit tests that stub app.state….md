@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/routes/session.py"
 type: "rationale"
-community: "session.py"
-location: "L123"
+community: "history.py"
+location: "L139"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/sessionpy
+  - community/historypy
 ---
 
 # Fallback when app/db.py's lifespan has not run (unit tests that stub app.state…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[_no_doctor_lookup()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/sessionpy
+#graphify/rationale #graphify/EXTRACTED #community/historypy

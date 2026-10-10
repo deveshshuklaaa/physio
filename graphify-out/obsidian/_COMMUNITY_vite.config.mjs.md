@@ -1,13 +1,14 @@
 ---
 type: community
-members: 1
+members: 2
 ---
 
 # vite.config.mjs
 
-**Members:** 1 nodes
+**Members:** 2 nodes
 
 ## Members
+- [[__dirname]] - code - part2/Hemophillia-confirm/frontend/vite.config.mjs
 - [[vite.config.mjs]] - code - part2/Hemophillia-confirm/frontend/vite.config.mjs
 
 ## Live Query (requires Dataview plugin)

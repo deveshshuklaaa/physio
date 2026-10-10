@@ -1,18 +1,18 @@
 ---
 source_file: "backend/app/services/gemini_report.py"
 type: "code"
-community: "session_ws.py"
+community: "gemini_report.py"
 location: "L67"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/session_wspy
+  - community/gemini_reportpy
 ---
 
 # _api_key()
 
 ## Connections
-- [[call_gemini()_1]] - `calls` [EXTRACTED]
+- [[call_gemini()]] - `calls` [EXTRACTED]
 - [[gemini_report.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/session_wspy
+#graphify/code #graphify/EXTRACTED #community/gemini_reportpy

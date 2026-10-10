@@ -14,7 +14,7 @@ tags:
 ## Connections
 - [[ExerciseSelect.jsx]] - `imports` [EXTRACTED]
 - [[appsrcpagesReport.jsx]] - `imports` [EXTRACTED]
-- [[cn()_2]] - `calls` [EXTRACTED]
+- [[cn()]] - `calls` [EXTRACTED]
 - [[skeleton.jsx]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/cn

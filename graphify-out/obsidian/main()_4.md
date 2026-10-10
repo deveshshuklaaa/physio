@@ -1,19 +1,20 @@
 ---
-source_file: "backend/_old_physio_reference/main.py"
+source_file: "hardware/esp32_imu/tests/test_handshake.py"
 type: "code"
-community: "exercise_runner.py"
+community: "emg_imu_app.py"
 location: "L54"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exercise_runnerpy
+  - community/emg_imu_apppy
 ---
 
 # main()
 
 ## Connections
-- [[_old_physio_referencemain.py]] - `contains` [EXTRACTED]
-- [[discover_exercises()]] - `calls` [EXTRACTED]
-- [[run_exercise()]] - `calls` [EXTRACTED]
+- [[drain_data_queue()]] - `calls` [EXTRACTED]
+- [[send_data_packet()]] - `calls` [EXTRACTED]
+- [[test_handshake.py]] - `contains` [EXTRACTED]
+- [[wait_until()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exercise_runnerpy
+#graphify/code #graphify/EXTRACTED #community/emg_imu_apppy

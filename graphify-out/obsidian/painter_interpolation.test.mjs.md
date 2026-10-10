@@ -15,7 +15,7 @@ tags:
 - [[STALE_POSE_MS]] - `imports` [EXTRACTED]
 - [[makePainter()]] - `imports` [EXTRACTED]
 - [[session_orchestrator.js]] - `imports_from` [EXTRACTED]
-- [[setup()]] - `contains` [EXTRACTED]
+- [[setup()_1]] - `contains` [EXTRACTED]
 - [[twoPoses()]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/session_orchestratorjs

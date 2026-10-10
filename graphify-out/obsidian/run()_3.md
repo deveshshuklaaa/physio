@@ -13,6 +13,6 @@ tags:
 
 ## Connections
 - [[backendrun_tests.sh]] - `defines` [EXTRACTED]
-- [[run_tests.sh script_1]] - `calls` [EXTRACTED]
+- [[run_tests.sh script]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/backend/run_testssh

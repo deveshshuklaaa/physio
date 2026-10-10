@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/logging_setup.py"
 type: "code"
-community: "logging_setup.py"
+community: "common_features.py"
 location: "L189"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/logging_setuppy
+  - community/common_featurespy
 ---
 
 # .debug()
@@ -15,4 +15,4 @@ tags:
 - [[dot-_emit()]] - `calls` [EXTRACTED]
 - [[ComponentLogger]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/logging_setuppy
+#graphify/code #graphify/EXTRACTED #community/common_featurespy

@@ -12,8 +12,8 @@ tags:
 # superseded_app_copies/exercises/squat.py
 
 ## Connections
-- [[ExerciseDefinition]] - `imports` [EXTRACTED]
-- [[JointCheck]] - `imports` [EXTRACTED]
+- [[ExerciseDefinition_1]] - `imports` [EXTRACTED]
+- [[JointCheck_1]] - `imports` [EXTRACTED]
 - [[RepTrigger_1]] - `imports` [EXTRACTED]
 - [[angle_3d()]] - `imports` [EXTRACTED]
 - [[check_butt_wink()_2]] - `contains` [EXTRACTED]
@@ -25,7 +25,7 @@ tags:
 - [[check_torso_lean_side()_1]] - `contains` [EXTRACTED]
 - [[detect_view()]] - `imports` [EXTRACTED]
 - [[exercise_runner.py]] - `imports_from` [EXTRACTED]
-- [[get_definition()_1]] - `contains` [EXTRACTED]
+- [[get_definition()_3]] - `contains` [EXTRACTED]
 - [[math_utils.py]] - `imports_from` [EXTRACTED]
 - [[run_exercise()]] - `imports` [EXTRACTED]
 - [[torso_lean()]] - `imports` [EXTRACTED]

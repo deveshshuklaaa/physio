@@ -1,18 +1,21 @@
 ---
-source_file: "tools/build_obsidian_vault.py"
+source_file: "frontend/tools/g6_g10_test/run_g6_g10_test.mjs"
 type: "code"
-community: "build_obsidian_vault.py"
-location: "L90"
+community: "run_g6_g10_test.mjs"
+location: "L254"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/build_obsidian_vaultpy
+  - community/run_g6_g10_testmjs
 ---
 
 # main()
 
 ## Connections
-- [[build_obsidian_vault.py]] - `contains` [EXTRACTED]
-- [[name_for()]] - `calls` [EXTRACTED]
+- [[attach()]] - `calls` [EXTRACTED]
+- [[runLivePageChecks()]] - `calls` [EXTRACTED]
+- [[runProbeChecks()]] - `calls` [EXTRACTED]
+- [[run_g6_g10_test.mjs]] - `contains` [EXTRACTED]
+- [[sleep()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/build_obsidian_vaultpy
+#graphify/code #graphify/EXTRACTED #community/run_g6_g10_testmjs

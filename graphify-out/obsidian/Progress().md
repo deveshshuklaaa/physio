@@ -12,7 +12,7 @@ tags:
 # Progress()
 
 ## Connections
-- [[cn()_2]] - `calls` [EXTRACTED]
+- [[cn()]] - `calls` [EXTRACTED]
 - [[progress.jsx]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/cn

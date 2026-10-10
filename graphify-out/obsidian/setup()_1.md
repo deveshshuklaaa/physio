@@ -1,8 +1,8 @@
 ---
-source_file: "frontend/tests/painter.test.mjs"
+source_file: "frontend/tests/painter_interpolation.test.mjs"
 type: "code"
 community: "session_orchestrator.js"
-location: "L35"
+location: "L28"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,8 +12,7 @@ tags:
 # setup()
 
 ## Connections
-- [[fakeCtx()]] - `calls` [EXTRACTED]
 - [[makePainter()]] - `calls` [EXTRACTED]
-- [[painter.test.mjs]] - `contains` [EXTRACTED]
+- [[painter_interpolation.test.mjs]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/session_orchestratorjs

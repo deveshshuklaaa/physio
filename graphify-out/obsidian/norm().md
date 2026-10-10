@@ -1,18 +1,19 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js"
+source_file: "part2/Hemophillia-confirm/backend/ml/recommendation_inference.py"
 type: "code"
-community: "exerciseRecommendations.js"
-location: "L710"
+community: "recommendation_inference.py"
+location: "L101"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exerciseRecommendationsjs
+  - community/recommendation_inferencepy
 ---
 
 # norm()
 
 ## Connections
-- [[exerciseRecommendations.js]] - `contains` [EXTRACTED]
-- [[safetyEngine()]] - `calls` [EXTRACTED]
+- [[recommend()]] - `calls` [EXTRACTED]
+- [[recommendation_inference.py]] - `contains` [EXTRACTED]
+- [[safety_engine()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exerciseRecommendationsjs
+#graphify/code #graphify/EXTRACTED #community/recommendation_inferencepy

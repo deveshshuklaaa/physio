@@ -1,18 +1,17 @@
 ---
-source_file: "backend/ml/exercise_extractors/mini_squat.py"
+source_file: "backend/ml/exercise_extractors/tke.py"
 type: "code"
-community: "mini_squat.py"
-location: "L33"
+community: "tke.py"
+location: "L121"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/mini_squatpy
+  - community/tkepy
 ---
 
 # extract()
 
 ## Connections
-- [[mini_squat.py]] - `contains` [EXTRACTED]
-- [[select_columns()]] - `calls` [EXTRACTED]
+- [[tke.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/mini_squatpy
+#graphify/code #graphify/EXTRACTED #community/tkepy

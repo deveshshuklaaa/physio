@@ -1,18 +1,18 @@
 ---
-source_file: "emg-service/emg_review.py"
+source_file: "part2/Hemophillia-confirm/backend/ml/recommendation_inference.py"
 type: "code"
-community: "emg_review.py"
-location: "L28"
+community: "recommendation_inference.py"
+location: "L762"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/emg_reviewpy
+  - community/recommendation_inferencepy
 ---
 
 # main()
 
 ## Connections
-- [[emg_review.py]] - `contains` [EXTRACTED]
-- [[load()]] - `calls` [EXTRACTED]
+- [[recommend()]] - `calls` [EXTRACTED]
+- [[recommendation_inference.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/emg_reviewpy
+#graphify/code #graphify/EXTRACTED #community/recommendation_inferencepy

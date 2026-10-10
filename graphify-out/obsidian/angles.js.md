@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/lib/angles.js"
 type: "code"
-community: "pose_engine.js"
+community: "angles.js"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/pose_enginejs
+  - community/anglesjs
 ---
 
 # angles.js
@@ -22,6 +22,7 @@ tags:
 - [[pose_engine.js]] - `imports_from` [EXTRACTED]
 - [[rules.js]] - `imports_from` [EXTRACTED]
 - [[straight_leg_raise.js]] - `imports_from` [EXTRACTED]
+- [[terminal_knee_extension.js]] - `imports_from` [EXTRACTED]
 - [[torsoLean()]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/pose_enginejs
+#graphify/code #graphify/EXTRACTED #community/anglesjs

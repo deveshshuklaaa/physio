@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/auth.py"
 type: "code"
-community: "CurrentUser"
+community: "session_ws.py"
 location: "L45"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/CurrentUser
+  - community/session_wspy
 ---
 
 # _decode()
@@ -18,4 +18,4 @@ tags:
 - [[decode_ws_token()]] - `calls` [EXTRACTED]
 - [[get_current_user()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/CurrentUser
+#graphify/code #graphify/EXTRACTED #community/session_wspy

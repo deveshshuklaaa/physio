@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/models/HemophiliaDetails.js"
+source_file: "part2/Hemophillia-confirm/backend/config/db.js"
 type: "code"
-community: "fhir.js"
-location: "L4"
+community: "db.js"
+location: "L35"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/fhirjs
+  - community/dbjs
 ---
 
 # DATA_KEY_ID
 
 ## Connections
-- [[HemophiliaDetails.js]] - `contains` [EXTRACTED]
+- [[db.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/fhirjs
+#graphify/code #graphify/EXTRACTED #community/dbjs

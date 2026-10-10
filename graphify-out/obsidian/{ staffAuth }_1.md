@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/doctorDashboard.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js"
 type: "code"
-community: "doctorDashboard.js"
-location: "L730"
+community: "exerciseRecommendations.js"
+location: "L8"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/doctorDashboardjs
+  - community/exerciseRecommendationsjs
 ---
 
 # { staffAuth }
 
 ## Connections
-- [[doctorDashboard.js]] - `contains` [EXTRACTED]
+- [[exerciseRecommendations.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/doctorDashboardjs
+#graphify/code #graphify/EXTRACTED #community/exerciseRecommendationsjs

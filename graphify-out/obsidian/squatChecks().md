@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/tests/rules.test.mjs"
 type: "code"
-community: "helpers.mjs"
+community: "rules.js"
 location: "L20"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/helpersmjs
+  - community/rulesjs
 ---
 
 # squatChecks()
@@ -15,4 +15,4 @@ tags:
 - [[rules.test.mjs]] - `contains` [EXTRACTED]
 - [[rulesForExercise()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/helpersmjs
+#graphify/code #graphify/EXTRACTED #community/rulesjs

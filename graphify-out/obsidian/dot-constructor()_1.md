@@ -1,17 +1,17 @@
 ---
-source_file: "frontend/src/lib/ring_buffer.js"
+source_file: "frontend/tests/helpers.mjs"
 type: "code"
-community: "RingBuffer"
-location: "L7"
+community: "FakeWebSocket"
+location: "L73"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/RingBuffer
+  - community/FakeWebSocket
 ---
 
 # .constructor()
 
 ## Connections
-- [[RingBuffer]] - `method` [EXTRACTED]
+- [[FakeWebSocket]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/RingBuffer
+#graphify/code #graphify/EXTRACTED #community/FakeWebSocket

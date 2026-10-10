@@ -1,5 +1,5 @@
 ---
-source_file: "part2/Hemophillia-confirm/frontend/package.json"
+source_file: "frontend/app/package.json"
 type: "code"
 community: "dependencies"
 location: "L26"
@@ -12,7 +12,7 @@ tags:
 # vite
 
 ## Connections
-- [[devDependencies_3]] - `contains` [EXTRACTED]
+- [[devDependencies_2]] - `contains` [EXTRACTED]
 - [[vite_3]] - `imports` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

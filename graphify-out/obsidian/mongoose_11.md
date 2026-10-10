@@ -1,17 +1,18 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/models/PatientExerciseRecommendation.js"
+source_file: "part2/Hemophillia-confirm/backend/package.json"
 type: "code"
-community: "patientResearch.js"
-location: "L1"
+community: "dependencies"
+location: "L22"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/patientResearchjs
+  - community/dependencies
 ---
 
 # mongoose
 
 ## Connections
-- [[PatientExerciseRecommendation.js]] - `contains` [EXTRACTED]
+- [[dependencies_2]] - `contains` [EXTRACTED]
+- [[mongoose_12]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/patientResearchjs
+#graphify/code #graphify/EXTRACTED #community/dependencies

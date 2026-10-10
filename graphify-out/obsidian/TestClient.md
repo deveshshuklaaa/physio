@@ -12,6 +12,7 @@ tags:
 
 ## Connections
 - [[_client()]] - `calls` [EXTRACTED]
+- [[test_calibrate_route_requires_auth()]] - `calls` [INFERRED]
 - [[test_e6_corrupt_upload_is_handled()]] - `calls` [INFERRED]
 - [[test_e6_rejection_is_a_report_not_a_crash()]] - `calls` [INFERRED]
 - [[test_e6_upload_accepts_a_valid_package()]] - `calls` [INFERRED]

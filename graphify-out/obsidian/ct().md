@@ -1,19 +1,17 @@
 ---
-source_file: "frontend/src/assets/vendor/mediapipe/vision_bundle.mjs"
+source_file: "part2/Hemophillia-confirm/backend/migrations/phase4_name_split.js"
 type: "code"
-community: "vision_bundle.mjs"
-location: "L1"
+community: "phase4_name_split.js"
+location: "L23"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/vision_bundlemjs
+  - community/phase4_name_splitjs
 ---
 
 # ct()
 
 ## Connections
-- [[ht()]] - `calls` [EXTRACTED]
-- [[pr]] - `indirect_call` [INFERRED]
-- [[vision_bundle.mjs]] - `contains` [EXTRACTED]
+- [[phase4_name_split.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/vision_bundlemjs
+#graphify/code #graphify/EXTRACTED #community/phase4_name_splitjs

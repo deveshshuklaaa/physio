@@ -1,18 +1,20 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/scripts/createStaffAccount.js"
 type: "code"
-community: "createStaffAccount.js"
-location: "L14"
+community: "displayName"
+location: "L15"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/createStaffAccountjs
+  - community/displayName
 ---
 
 # createStaffAccount()
 
 ## Connections
-- [[connectDB_2]] - `calls` [EXTRACTED]
+- [[connectDB_7]] - `calls` [EXTRACTED]
 - [[createStaffAccount.js]] - `contains` [EXTRACTED]
+- [[displayName()]] - `calls` [EXTRACTED]
+- [[splitName()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/createStaffAccountjs
+#graphify/code #graphify/EXTRACTED #community/displayName

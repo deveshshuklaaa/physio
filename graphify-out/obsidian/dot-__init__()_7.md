@@ -1,18 +1,17 @@
 ---
-source_file: "backend/app/services/video_retention.py"
+source_file: "backend/app/db.py"
 type: "code"
-community: "video_retention.py"
-location: "L119"
+community: "db.py"
+location: "L168"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/video_retentionpy
+  - community/dbpy
 ---
 
 # .__init__()
 
 ## Connections
-- [[_FakeCollection_2]] - `calls` [EXTRACTED]
-- [[_FakeDb_2]] - `method` [EXTRACTED]
+- [[_FakeCollection_1]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/video_retentionpy
+#graphify/code #graphify/EXTRACTED #community/dbpy

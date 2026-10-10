@@ -13,8 +13,8 @@ tags:
 
 ## Connections
 - [[CompletedProcess]] - `references` [EXTRACTED]
-- [[Path_15]] - `references` [EXTRACTED]
-- [[main()_12]] - `calls` [EXTRACTED]
+- [[Path_7]] - `references` [EXTRACTED]
+- [[main()_1]] - `calls` [EXTRACTED]
 - [[run_feature_extractor.py]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/run_feature_extractorpy

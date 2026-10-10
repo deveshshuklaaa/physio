@@ -12,7 +12,7 @@ tags:
 # frontend/run_tests.sh
 
 ## Connections
-- [[run()_2]] - `defines` [EXTRACTED]
-- [[run_tests.sh script]] - `contains` [EXTRACTED]
+- [[run()_4]] - `defines` [EXTRACTED]
+- [[run_tests.sh script_1]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/frontend/run_testssh

@@ -1,18 +1,17 @@
 ---
-source_file: "backend/app/db.py"
+source_file: "backend/app/routes/history.py"
 type: "code"
-community: "db.py"
-location: "L158"
+community: "history.py"
+location: "L110"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/dbpy
+  - community/historypy
 ---
 
 # .__init__()
 
 ## Connections
-- [[_FakeCollection]] - `calls` [EXTRACTED]
-- [[_FakeDb]] - `method` [EXTRACTED]
+- [[_FakeCollection]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/dbpy
+#graphify/code #graphify/EXTRACTED #community/historypy

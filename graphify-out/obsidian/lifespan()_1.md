@@ -1,20 +1,20 @@
 ---
-source_file: "backend/app/main.py"
+source_file: "backend/app/db.py"
 type: "code"
-community: "admin_models.py"
-location: "L19"
+community: "db.py"
+location: "L125"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/admin_modelspy
+  - community/dbpy
 ---
 
 # lifespan()
 
 ## Connections
-- [[FastAPI]] - `references` [EXTRACTED]
-- [[appmain.py]] - `contains` [EXTRACTED]
-- [[build_model_registry()]] - `calls` [EXTRACTED]
-- [[load_exercises()]] - `calls` [EXTRACTED]
+- [[Merged into appmain.py's lifespan via include_router (see module docstring).…]] - `rationale_for` [EXTRACTED]
+- [[db.py]] - `contains` [EXTRACTED]
+- [[make_lookup_doctor_id()]] - `calls` [EXTRACTED]
+- [[retention_loop()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/admin_modelspy
+#graphify/code #graphify/EXTRACTED #community/dbpy

@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/middleware/adminAuthMiddleware.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/otpAuth.js"
 type: "code"
-community: "User.js"
-location: "L2"
+community: "otpAuth.js"
+location: "L10"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Userjs
+  - community/otpAuthjs
 ---
 
 # User
 
 ## Connections
-- [[adminAuthMiddleware.js]] - `contains` [EXTRACTED]
+- [[otpAuth.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Userjs
+#graphify/code #graphify/EXTRACTED #community/otpAuthjs

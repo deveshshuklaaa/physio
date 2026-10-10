@@ -1,17 +1,17 @@
 ---
-source_file: "frontend/src/assets/vendor/mediapipe/vision_bundle.mjs"
+source_file: "frontend/src/lib/ring_buffer.js"
 type: "code"
-community: "xe"
-location: "L1"
+community: "RingBuffer"
+location: "L53"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/xe
+  - community/RingBuffer
 ---
 
 # .clear()
 
 ## Connections
-- [[xe()]] - `method` [EXTRACTED]
+- [[RingBuffer]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/xe
+#graphify/code #graphify/EXTRACTED #community/RingBuffer

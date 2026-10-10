@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/services/session_buffer.py"
 type: "code"
-community: "test_session_ws.py"
+community: "get_buffer"
 location: "L160"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/test_session_wspy
+  - community/get_buffer
 ---
 
 # get_buffer()
@@ -27,4 +27,4 @@ tags:
 - [[test_h3_dead_emg_never_stalls_the_session()]] - `calls` [EXTRACTED]
 - [[test_h6_abrupt_disconnect_ends_session()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/test_session_wspy
+#graphify/code #graphify/EXTRACTED #community/get_buffer

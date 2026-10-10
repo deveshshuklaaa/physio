@@ -13,8 +13,10 @@ tags:
 
 ## Connections
 - [[The B6D14 seam consumed by appauth.py's authorize_patient_access and…]] - `rationale_for` [EXTRACTED]
-- [[_run()]] - `calls` [EXTRACTED]
+- [[_run()_2]] - `calls` [EXTRACTED]
 - [[db.py]] - `contains` [EXTRACTED]
-- [[lifespan()]] - `calls` [EXTRACTED]
+- [[demo()_3]] - `calls` [EXTRACTED]
+- [[lifespan()_1]] - `calls` [EXTRACTED]
+- [[test_doctor_lookup.py]] - `imports` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dbpy

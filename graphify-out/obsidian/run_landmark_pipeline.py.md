@@ -12,7 +12,7 @@ tags:
 # run_landmark_pipeline.py
 
 ## Connections
-- [[find_videos()_1]] - `contains` [EXTRACTED]
-- [[main()_18]] - `contains` [EXTRACTED]
+- [[find_videos()]] - `contains` [EXTRACTED]
+- [[main()_9]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/find_videos

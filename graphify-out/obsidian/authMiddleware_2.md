@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/profile.js"
 type: "code"
-community: "exerciseRecommendations.js"
-location: "L692"
+community: "profile.js"
+location: "L2"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exerciseRecommendationsjs
+  - community/profilejs
 ---
 
 # authMiddleware
 
 ## Connections
-- [[exerciseRecommendations.js]] - `contains` [EXTRACTED]
+- [[profile.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exerciseRecommendationsjs
+#graphify/code #graphify/EXTRACTED #community/profilejs

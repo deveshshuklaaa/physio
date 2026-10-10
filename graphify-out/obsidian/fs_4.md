@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/scripts/generateMasterKey.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/test/layer2_authz.test.js"
 type: "code"
-community: "generateMasterKey.js"
-location: "L2"
+community: "layer2_authz.test.js"
+location: "L5"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/generateMasterKeyjs
+  - community/layer2_authztestjs
 ---
 
 # fs
 
 ## Connections
-- [[generateMasterKey.js]] - `contains` [EXTRACTED]
+- [[layer2_authz.test.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/generateMasterKeyjs
+#graphify/code #graphify/EXTRACTED #community/layer2_authztestjs

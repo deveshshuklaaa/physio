@@ -1,17 +1,17 @@
 ---
-source_file: "frontend/tools/parity_check.mjs"
+source_file: "frontend/tools/g6_g10_test/run_g6_g10_test.mjs"
 type: "code"
-community: "pose_engine.js"
-location: "L18"
+community: "run_g6_g10_test.mjs"
+location: "L42"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/pose_enginejs
+  - community/run_g6_g10_testmjs
 ---
 
 # HERE
 
 ## Connections
-- [[parity_check.mjs]] - `contains` [EXTRACTED]
+- [[run_g6_g10_test.mjs]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/pose_enginejs
+#graphify/code #graphify/EXTRACTED #community/run_g6_g10_testmjs

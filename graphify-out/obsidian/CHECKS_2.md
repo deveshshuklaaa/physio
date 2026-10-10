@@ -1,18 +1,18 @@
 ---
-source_file: "frontend/src/lib/checks/seated_knee_extension.js"
+source_file: "frontend/src/lib/checks/shared.js"
 type: "code"
-community: "pose_engine.js"
-location: "L11"
+community: "checks/index.js"
+location: "L13"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/pose_enginejs
+  - community/checks/indexjs
 ---
 
 # CHECKS
 
 ## Connections
 - [[checksindex.js]] - `imports` [EXTRACTED]
-- [[seated_knee_extension.js]] - `contains` [EXTRACTED]
+- [[shared.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/pose_enginejs
+#graphify/code #graphify/EXTRACTED #community/checks/indexjs

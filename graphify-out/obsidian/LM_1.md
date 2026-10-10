@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/lib/landmarks.js"
 type: "code"
-community: "pose_engine.js"
+community: "checks/index.js"
 location: "L8"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/pose_enginejs
+  - community/checks/indexjs
 ---
 
 # LM
@@ -19,9 +19,10 @@ tags:
 - [[parity_check.mjs]] - `imports` [EXTRACTED]
 - [[pose_engine.js]] - `imports` [EXTRACTED]
 - [[pose_engine_selfcheck.mjs]] - `imports` [EXTRACTED]
+- [[rep_guards.test.mjs]] - `imports` [EXTRACTED]
 - [[rules.js]] - `imports` [EXTRACTED]
 - [[seated_knee_extension.js]] - `imports` [EXTRACTED]
 - [[shared.js]] - `imports` [EXTRACTED]
 - [[straight_leg_raise.js]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/pose_enginejs
+#graphify/code #graphify/EXTRACTED #community/checks/indexjs

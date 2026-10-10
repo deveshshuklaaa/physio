@@ -1,20 +1,18 @@
 ---
-source_file: "backend/ml/write_model_card.py"
+source_file: "tools/build_obsidian_vault.py"
 type: "code"
-community: "common_features.py"
-location: "L53"
+community: "build_obsidian_vault.py"
+location: "L90"
 tags:
   - graphify/code
-  - graphify/INFERRED
-  - community/common_featurespy
+  - graphify/EXTRACTED
+  - community/build_obsidian_vaultpy
 ---
 
 # main()
 
 ## Connections
-- [[choose_grouping()]] - `calls` [INFERRED]
-- [[evaluate()]] - `calls` [INFERRED]
-- [[split_frame()]] - `calls` [INFERRED]
-- [[write_model_card.py]] - `contains` [EXTRACTED]
+- [[build_obsidian_vault.py]] - `contains` [EXTRACTED]
+- [[name_for()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/INFERRED #community/common_featurespy
+#graphify/code #graphify/EXTRACTED #community/build_obsidian_vaultpy

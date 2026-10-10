@@ -11,7 +11,6 @@ tags:
 # Any Alert Turns Whole Skeleton Red
 
 ## Connections
-- [[Live Session Page]] - `conceptually_related_to` [INFERRED]
 - [[drawSkeleton()]] - `implements` [EXTRACTED]
 
 #graphify/concept #graphify/EXTRACTED #community/skeleton_selfcheckmjs

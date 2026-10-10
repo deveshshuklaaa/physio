@@ -13,6 +13,6 @@ tags:
 
 ## Connections
 - [[emg_imu_app.py]] - `contains` [EXTRACTED]
-- [[start_capture()_1]] - `calls` [EXTRACTED]
+- [[start_capture()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/emg_imu_apppy

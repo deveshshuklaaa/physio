@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/admin.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/phase3_role_split.js"
 type: "code"
-community: "admin.js"
-location: "L4966"
+community: "phase3_role_split.js"
+location: "L16"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/adminjs
+  - community/phase3_role_splitjs
 ---
 
 # DoctorRegistrationRequest
 
 ## Connections
-- [[admin.js]] - `contains` [EXTRACTED]
+- [[phase3_role_split.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/adminjs
+#graphify/code #graphify/EXTRACTED #community/phase3_role_splitjs

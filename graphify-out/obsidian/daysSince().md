@@ -2,7 +2,7 @@
 source_file: "part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js"
 type: "code"
 community: "exerciseRecommendations.js"
-location: "L787"
+location: "L189"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,7 +12,7 @@ tags:
 # daysSince()
 
 ## Connections
+- [[buildMlPatient()]] - `calls` [EXTRACTED]
 - [[exerciseRecommendations.js]] - `contains` [EXTRACTED]
-- [[ruleRecommendationsForJoint()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/exerciseRecommendationsjs

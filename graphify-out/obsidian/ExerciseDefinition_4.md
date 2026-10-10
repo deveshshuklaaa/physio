@@ -1,16 +1,16 @@
 ---
 source_file: ""
 type: "code"
-community: "exercise_runner.py"
+community: "detect_view"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exercise_runnerpy
+  - community/detect_view
 ---
 
 # ExerciseDefinition
 
 ## Connections
-- [[run_exercise()]] - `references` [EXTRACTED]
+- [[get_definition()_2]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exercise_runnerpy
+#graphify/code #graphify/EXTRACTED #community/detect_view

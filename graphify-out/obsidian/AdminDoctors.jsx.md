@@ -1,12 +1,12 @@
 ---
 source_file: "part2/Hemophillia-confirm/frontend/src/pages/AdminDoctors.jsx"
 type: "code"
-community: "apiClient.js"
+community: "api"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/apiClientjs
+  - community/api
 ---
 
 # AdminDoctors.jsx
@@ -18,4 +18,4 @@ tags:
 - [[api]] - `imports` [EXTRACTED]
 - [[apiClient.js]] - `imports_from` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/apiClientjs
+#graphify/code #graphify/EXTRACTED #community/api

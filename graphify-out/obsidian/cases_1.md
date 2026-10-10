@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/safety_engine_equivalence.test.js"
+source_file: "frontend/tools/parity_check.mjs"
 type: "code"
-community: "exerciseRecommendations.js"
-location: "L35"
+community: "angles.js"
+location: "L39"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exerciseRecommendationsjs
+  - community/anglesjs
 ---
 
 # cases
 
 ## Connections
-- [[safety_engine_equivalence.test.js]] - `contains` [EXTRACTED]
+- [[parity_check.mjs]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exerciseRecommendationsjs
+#graphify/code #graphify/EXTRACTED #community/anglesjs

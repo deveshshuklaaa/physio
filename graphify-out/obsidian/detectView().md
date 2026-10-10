@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/lib/angles.js"
 type: "code"
-community: "pose_engine.js"
+community: "angles.js"
 location: "L70"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/pose_enginejs
+  - community/anglesjs
 ---
 
 # detectView()
@@ -20,4 +20,4 @@ tags:
 - [[rules.js]] - `imports` [EXTRACTED]
 - [[runCase()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/pose_enginejs
+#graphify/code #graphify/EXTRACTED #community/anglesjs

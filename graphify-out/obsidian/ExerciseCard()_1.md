@@ -1,19 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan.jsx"
+source_file: "part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan_BASE.jsx"
 type: "code"
-community: "ExercisePlan.jsx"
-location: "L1178"
+community: "api"
+location: "L131"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/ExercisePlanjsx
+  - community/api
 ---
 
 # ExerciseCard()
 
 ## Connections
-- [[ExercisePlan.jsx]] - `contains` [EXTRACTED]
-- [[translateExercisePurpose()]] - `calls` [EXTRACTED]
-- [[translateExerciseValue()]] - `calls` [EXTRACTED]
+- [[ExercisePlan_BASE.jsx]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/ExercisePlanjsx
+#graphify/code #graphify/EXTRACTED #community/api

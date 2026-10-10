@@ -1,20 +1,18 @@
 ---
-source_file: "hardware/esp32_imu/tests/test_handshake.py"
+source_file: "backend/ml/common_features.py"
 type: "code"
-community: "emg_imu_app.py"
-location: "L54"
+community: "common_features.py"
+location: "L469"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/emg_imu_apppy
+  - community/common_featurespy
 ---
 
 # main()
 
 ## Connections
-- [[drain_data_queue()]] - `calls` [EXTRACTED]
-- [[send_data_packet()]] - `calls` [EXTRACTED]
-- [[test_handshake.py]] - `contains` [EXTRACTED]
-- [[wait_until()]] - `calls` [EXTRACTED]
+- [[common_features.py]] - `contains` [EXTRACTED]
+- [[extract_common_file()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/emg_imu_apppy
+#graphify/code #graphify/EXTRACTED #community/common_featurespy

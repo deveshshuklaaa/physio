@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/models/HemophiliaDetails.js"
+source_file: "part2/Hemophillia-confirm/backend/db-test.js"
 type: "code"
-community: "fhir.js"
+community: "encryption.js"
 location: "L3"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/fhirjs
+  - community/encryptionjs
 ---
 
 # mongoose
 
 ## Connections
-- [[HemophiliaDetails.js]] - `contains` [EXTRACTED]
+- [[db-test.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/fhirjs
+#graphify/code #graphify/EXTRACTED #community/encryptionjs

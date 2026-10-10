@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/test_session.py"
 type: "code"
 community: "TestClient"
-location: "L389"
+location: "L400"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[TestClient]] - `calls` [INFERRED]
-- [[_auth()_2]] - `calls` [EXTRACTED]
+- [[_auth()_1]] - `calls` [EXTRACTED]
 - [[physiosessions is HISTORY. Their patientexerciserecommendations has a unique…]] - `rationale_for` [EXTRACTED]
 - [[test_session.py]] - `contains` [EXTRACTED]
 

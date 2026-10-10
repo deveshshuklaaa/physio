@@ -12,7 +12,7 @@ tags:
 # exercise_runner.py
 
 ## Connections
-- [[ExerciseDefinition_1]] - `imports` [EXTRACTED]
+- [[ExerciseDefinition]] - `imports` [EXTRACTED]
 - [[_compute_joint_angle()]] - `contains` [EXTRACTED]
 - [[_draw_hud()]] - `contains` [EXTRACTED]
 - [[_old_physio_referenceexercisesisometric_quadriceps.py]] - `imports_from` [EXTRACTED]

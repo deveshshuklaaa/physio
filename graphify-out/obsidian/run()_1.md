@@ -1,19 +1,19 @@
 ---
-source_file: "frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js"
+source_file: "frontend/tests/rep_guards.test.mjs"
 type: "code"
-community: "postRun"
-location: "L9"
+community: "pose_engine.js"
+location: "L48"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/postRun
+  - community/pose_enginejs
 ---
 
 # run()
 
 ## Connections
-- [[doRun()_1]] - `contains` [EXTRACTED]
-- [[preRun()_1]] - `calls` [EXTRACTED]
-- [[vision_wasm_nosimd_internal.js]] - `contains` [EXTRACTED]
+- [[dot-processFrame()]] - `calls` [INFERRED]
+- [[frame()]] - `calls` [EXTRACTED]
+- [[rep_guards.test.mjs]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/postRun
+#graphify/code #graphify/EXTRACTED #community/pose_enginejs

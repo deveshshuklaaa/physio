@@ -14,6 +14,6 @@ tags:
 ## Connections
 - [[_stop_recording_locked()]] - `calls` [EXTRACTED]
 - [[emg_imu_app.py]] - `contains` [EXTRACTED]
-- [[route_1]] - `references` [EXTRACTED]
+- [[route]] - `references` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/emg_imu_apppy

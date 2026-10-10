@@ -13,6 +13,6 @@ tags:
 
 ## Connections
 - [[Heel Slide exercise-specific feature extractor. Input  common_feature.parquet…]] - `rationale_for` [EXTRACTED]
-- [[extract()]] - `contains` [EXTRACTED]
+- [[extract()_1]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/heel_slidepy

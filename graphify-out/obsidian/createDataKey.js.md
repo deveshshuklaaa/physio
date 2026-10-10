@@ -14,7 +14,7 @@ tags:
 ## Connections
 - [[createKey()]] - `contains` [EXTRACTED]
 - [[encryption.js]] - `imports_from` [EXTRACTED]
-- [[kmsProviders]] - `imports` [EXTRACTED]
+- [[kmsProviders_1]] - `imports` [EXTRACTED]
 - [[{   kmsProviders,   keyVaultNamespace,   keyAltName, }]] - `contains` [EXTRACTED]
 - [[{ MongoClient, ClientEncryption }]] - `contains` [EXTRACTED]
 

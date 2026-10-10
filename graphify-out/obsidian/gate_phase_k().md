@@ -1,12 +1,12 @@
 ---
 source_file: "backend/tools/test_k_gate.py"
 type: "code"
-community: "test_k_gate.py"
+community: "_get"
 location: "L237"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/test_k_gatepy
+  - community/_get
 ---
 
 # gate_phase_k()
@@ -20,4 +20,4 @@ tags:
 - [[clause_k4_three_concurrent_sessions()]] - `calls` [EXTRACTED]
 - [[test_k_gate.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/test_k_gatepy
+#graphify/code #graphify/EXTRACTED #community/_get

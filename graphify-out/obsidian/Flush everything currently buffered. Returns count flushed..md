@@ -1,17 +1,17 @@
 ---
 source_file: "backend/app/logging_setup.py"
 type: "rationale"
-community: "logging_setup.py"
+community: "common_features.py"
 location: "L256"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/logging_setuppy
+  - community/common_featurespy
 ---
 
 # Flush everything currently buffered. Returns count flushed.
 
 ## Connections
-- [[dot-drain()_1]] - `rationale_for` [EXTRACTED]
+- [[dot-drain()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/logging_setuppy
+#graphify/rationale #graphify/EXTRACTED #community/common_featurespy

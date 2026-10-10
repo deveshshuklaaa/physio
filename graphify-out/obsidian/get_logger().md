@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/logging_setup.py"
 type: "code"
-community: "exercise_config.py"
+community: "session_ws.py"
 location: "L219"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exercise_configpy
+  - community/session_wspy
 ---
 
 # get_logger()
@@ -23,4 +23,4 @@ tags:
 - [[session_ws.py]] - `imports` [EXTRACTED]
 - [[video_retention.py]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exercise_configpy
+#graphify/code #graphify/EXTRACTED #community/session_wspy

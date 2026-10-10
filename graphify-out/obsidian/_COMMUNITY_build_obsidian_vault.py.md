@@ -10,7 +10,7 @@ members: 4
 ## Members
 - [[Vault-only view project code, re-clustered, coloured. Reads graphify-…]] - rationale - tools/build_obsidian_vault.py
 - [[build_obsidian_vault.py]] - code - tools/build_obsidian_vault.py
-- [[main()_3]] - code - tools/build_obsidian_vault.py
+- [[main()_10]] - code - tools/build_obsidian_vault.py
 - [[name_for()]] - code - tools/build_obsidian_vault.py
 
 ## Live Query (requires Dataview plugin)

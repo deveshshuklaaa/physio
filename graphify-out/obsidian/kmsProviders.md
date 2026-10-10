@@ -1,8 +1,8 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/config/encryption.js"
+source_file: "part2/Hemophillia-confirm/backend/config/cryptoConfig.js"
 type: "code"
 community: "encryption.js"
-location: "L34"
+location: "L14"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,8 +12,6 @@ tags:
 # kmsProviders
 
 ## Connections
-- [[createDataKey.js]] - `imports` [EXTRACTED]
-- [[db-test.js]] - `imports` [EXTRACTED]
-- [[encryption.js]] - `contains` [EXTRACTED]
+- [[cryptoConfig.js]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/encryptionjs

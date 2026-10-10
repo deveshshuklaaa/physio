@@ -13,8 +13,8 @@ tags:
 
 ## Connections
 - [[FRONTEND_ROOT_2]] - `contains` [EXTRACTED]
-- [[HERE_5]] - `contains` [EXTRACTED]
-- [[main()_17]] - `contains` [EXTRACTED]
+- [[HERE_3]] - `contains` [EXTRACTED]
+- [[main()_6]] - `contains` [EXTRACTED]
 - [[sleep()_2]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/run_g5_testmjs

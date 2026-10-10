@@ -1,17 +1,19 @@
 ---
-source_file: "frontend/src/assets/vendor/mediapipe/vision_bundle.mjs"
+source_file: "frontend/src/lib/recorder.js"
 type: "code"
-community: "xe"
-location: "L1"
+community: "IsolatedRecorder"
+location: "L40"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/xe
+  - community/IsolatedRecorder
 ---
 
 # .constructor()
 
 ## Connections
-- [[xe()]] - `method` [EXTRACTED]
+- [[dot-pickMimeType()]] - `calls` [EXTRACTED]
+- [[IsolatedRecorder]] - `method` [EXTRACTED]
+- [[RingBuffer]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/xe
+#graphify/code #graphify/EXTRACTED #community/IsolatedRecorder

@@ -1,11 +1,11 @@
 ---
 source_file: ""
 type: "code"
-community: "exercise_config.py"
+community: "session_ws.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exercise_configpy
+  - community/session_wspy
 ---
 
 # FastAPI
@@ -18,11 +18,11 @@ tags:
 - [[capabilities.py]] - `imports_from` [EXTRACTED]
 - [[exercises.py]] - `imports_from` [EXTRACTED]
 - [[history.py]] - `imports_from` [EXTRACTED]
-- [[lifespan()_1]] - `references` [EXTRACTED]
+- [[lifespan()]] - `references` [EXTRACTED]
 - [[report.py]] - `imports_from` [EXTRACTED]
 - [[session.py]] - `imports_from` [EXTRACTED]
 - [[session_ws.py]] - `imports_from` [EXTRACTED]
 - [[test_capabilities.py]] - `imports_from` [EXTRACTED]
 - [[test_session_ws.py]] - `imports_from` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exercise_configpy
+#graphify/code #graphify/EXTRACTED #community/session_wspy

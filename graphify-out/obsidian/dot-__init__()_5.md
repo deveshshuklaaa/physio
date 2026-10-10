@@ -1,17 +1,17 @@
 ---
-source_file: "backend/app/services/video_retention.py"
+source_file: "frontend/tools/parity_python.py"
 type: "code"
-community: "video_retention.py"
-location: "L97"
+community: "run_case"
+location: "L22"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/video_retentionpy
+  - community/run_case
 ---
 
 # .__init__()
 
 ## Connections
-- [[_FakeCollection_2]] - `method` [EXTRACTED]
+- [[Lm]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/video_retentionpy
+#graphify/code #graphify/EXTRACTED #community/run_case

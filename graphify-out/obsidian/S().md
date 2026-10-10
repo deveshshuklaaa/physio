@@ -1,35 +1,17 @@
 ---
-source_file: "frontend/src/vendor/tailwind/tailwind.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/profile.js"
 type: "code"
-community: "remove"
-location: "L23"
+community: "profile.js"
+location: "L25"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/remove
+  - community/profilejs
 ---
 
 # S()
 
 ## Connections
-- [[Bf()]] - `calls` [EXTRACTED]
-- [[Dl()]] - `calls` [EXTRACTED]
-- [[J()]] - `indirect_call` [INFERRED]
-- [[Kl()]] - `calls` [EXTRACTED]
-- [[Nl()]] - `calls` [EXTRACTED]
-- [[Xl()]] - `calls` [EXTRACTED]
-- [[Zl()]] - `calls` [EXTRACTED]
-- [[append()]] - `calls` [EXTRACTED]
-- [[e()_1]] - `indirect_call` [INFERRED]
-- [[error()]] - `calls` [EXTRACTED]
-- [[i()]] - `indirect_call` [INFERRED]
-- [[ky()]] - `calls` [EXTRACTED]
-- [[r()_1]] - `calls` [EXTRACTED]
-- [[r()_2]] - `indirect_call` [INFERRED]
-- [[removeAll()]] - `calls` [EXTRACTED]
-- [[rl()]] - `indirect_call` [INFERRED]
-- [[s()_1]] - `indirect_call` [INFERRED]
-- [[tailwind.js]] - `contains` [EXTRACTED]
-- [[vy()]] - `calls` [EXTRACTED]
+- [[profile.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/remove
+#graphify/code #graphify/EXTRACTED #community/profilejs

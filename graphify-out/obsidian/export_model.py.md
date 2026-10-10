@@ -1,19 +1,19 @@
 ---
 source_file: "backend/ml/export_model.py"
 type: "code"
-community: "common_features.py"
+community: "train_model.py"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/common_featurespy
+  - community/train_modelpy
 ---
 
 # export_model.py
 
 ## Connections
 - [[export_exercise()]] - `contains` [EXTRACTED]
-- [[main()_8]] - `contains` [EXTRACTED]
+- [[main()_13]] - `contains` [EXTRACTED]
 - [[train_model.py]] - `imports_from` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/common_featurespy
+#graphify/code #graphify/EXTRACTED #community/train_modelpy

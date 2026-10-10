@@ -1,21 +1,19 @@
 ---
-source_file: "requirements.txt"
-type: "document"
-community: "requirements.txt (root)"
+source_file: ""
+type: "concept"
+community: "emg-service"
+location: "requirements.txt"
 tags:
-  - graphify/document
+  - graphify/concept
   - graphify/EXTRACTED
-  - community/requirementstxt_root
+  - community/emg-service
 ---
 
 # requirements.txt (root)
 
 ## Connections
-- [[fastapi 0.115.6 (root)]] - `declares_dependency` [EXTRACTED]
-- [[graphifyy (root, knowledge-graph tool dep)]] - `declares_dependency` [EXTRACTED]
-- [[litellm (LLM proxy, root)]] - `declares_dependency` [EXTRACTED]
-- [[mcp 1.29.0 (root)]] - `declares_dependency` [EXTRACTED]
-- [[openai SDK (root)]] - `declares_dependency` [EXTRACTED]
-- [[tree-sitter language parser set (root)]] - `declares_dependency` [EXTRACTED]
+- [[Flask]] - `depends_on` [EXTRACTED]
+- [[MediaPipe]] - `depends_on` [EXTRACTED]
+- [[OpenCV]] - `depends_on` [EXTRACTED]
 
-#graphify/document #graphify/EXTRACTED #community/requirementstxt_root
+#graphify/concept #graphify/EXTRACTED #community/emg-service

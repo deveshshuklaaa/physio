@@ -1,19 +1,19 @@
 ---
 source_file: "backend/app/routes/capabilities.py"
 type: "code"
-community: "exercise_config.py"
+community: "_get"
 location: "L37"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exercise_configpy
+  - community/_get
 ---
 
 # get_capabilities()
 
 ## Connections
-- [[Request]] - `references` [EXTRACTED]
+- [[Request_4]] - `references` [EXTRACTED]
+- [[_get()]] - `references` [EXTRACTED]
 - [[capabilities.py]] - `contains` [EXTRACTED]
-- [[get]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exercise_configpy
+#graphify/code #graphify/EXTRACTED #community/_get

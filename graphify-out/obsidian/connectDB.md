@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/index.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/phase3_role_split.js"
 type: "code"
-community: "src/index.js"
-location: "L2049"
+community: "phase3_role_split.js"
+location: "L17"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/src/indexjs
+  - community/phase3_role_splitjs
 ---
 
 # connectDB
 
 ## Connections
-- [[srcindex.js]] - `contains` [EXTRACTED]
+- [[phase3_role_split.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/src/indexjs
+#graphify/code #graphify/EXTRACTED #community/phase3_role_splitjs

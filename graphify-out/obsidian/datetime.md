@@ -1,17 +1,17 @@
 ---
 source_file: ""
 type: "code"
-community: "video_retention.py"
+community: "session.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/video_retentionpy
+  - community/sessionpy
 ---
 
 # datetime
 
 ## Connections
-- [[sweep_expired_videos()]] - `references` [EXTRACTED]
-- [[video_retention.py]] - `imports_from` [EXTRACTED]
+- [[_now()]] - `references` [EXTRACTED]
+- [[session.py]] - `imports_from` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/video_retentionpy
+#graphify/code #graphify/EXTRACTED #community/sessionpy

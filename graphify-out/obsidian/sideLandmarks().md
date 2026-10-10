@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/tests/exercise_checks.test.mjs"
 type: "code"
-community: "helpers.mjs"
+community: "checks/index.js"
 location: "L43"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/helpersmjs
+  - community/checks/indexjs
 ---
 
 # sideLandmarks()
@@ -15,4 +15,4 @@ tags:
 - [[baseLandmarks()]] - `calls` [EXTRACTED]
 - [[exercise_checks.test.mjs]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/helpersmjs
+#graphify/code #graphify/EXTRACTED #community/checks/indexjs

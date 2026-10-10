@@ -12,11 +12,11 @@ tags:
 # Hemophillia-confirm/frontend/package.json
 
 ## Connections
-- [[dependencies_2]] - `contains` [EXTRACTED]
-- [[devDependencies_3]] - `contains` [EXTRACTED]
-- [[name_3]] - `contains` [EXTRACTED]
-- [[private_2]] - `contains` [EXTRACTED]
-- [[scripts_3]] - `contains` [EXTRACTED]
-- [[version_3]] - `contains` [EXTRACTED]
+- [[dependencies]] - `contains` [EXTRACTED]
+- [[devDependencies_1]] - `contains` [EXTRACTED]
+- [[name_1]] - `contains` [EXTRACTED]
+- [[private_1]] - `contains` [EXTRACTED]
+- [[scripts_1]] - `contains` [EXTRACTED]
+- [[version_1]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

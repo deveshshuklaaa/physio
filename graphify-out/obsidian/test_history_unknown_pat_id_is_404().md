@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/test_history.py"
 type: "code"
 community: "test_history.py"
-location: "L205"
+location: "L216"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[TestClient]] - `calls` [INFERRED]
-- [[_auth()]] - `calls` [EXTRACTED]
+- [[_auth()_2]] - `calls` [EXTRACTED]
 - [[test_history.py]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/test_historypy

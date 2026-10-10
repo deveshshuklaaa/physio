@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/routes/test_admin_models.py"
 type: "code"
-community: "TestClient"
+community: "test_e7_status_lists_every_configured_exercise"
 location: "L101"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/TestClient
+  - community/test_e7_status_lists_every_configured_exercise
 ---
 
 # test_e7_status_lists_every_configured_exercise()
@@ -16,4 +16,4 @@ tags:
 - [[TestClient]] - `calls` [INFERRED]
 - [[test_admin_models.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/TestClient
+#graphify/code #graphify/EXTRACTED #community/test_e7_status_lists_every_configured_exercise

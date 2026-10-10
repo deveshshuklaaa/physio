@@ -1,20 +1,20 @@
 ---
-source_file: "backend/app/models/session_doc.py"
+source_file: "backend/app/db.py"
 type: "code"
-community: "session_doc.py"
-location: "L125"
+community: "db.py"
+location: "L167"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/session_docpy
+  - community/dbpy
 ---
 
 # _FakeCollection
 
 ## Connections
-- [[dot-__init__()_4]] - `calls` [EXTRACTED]
-- [[dot-__init__()_3]] - `method` [EXTRACTED]
-- [[dot-create_index()]] - `method` [EXTRACTED]
-- [[session_doc.py]] - `contains` [EXTRACTED]
+- [[dot-__init__()_9]] - `calls` [EXTRACTED]
+- [[dot-__init__()_7]] - `method` [EXTRACTED]
+- [[dot-find_one()_1]] - `method` [EXTRACTED]
+- [[db.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/session_docpy
+#graphify/code #graphify/EXTRACTED #community/dbpy

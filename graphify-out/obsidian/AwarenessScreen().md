@@ -2,7 +2,7 @@
 source_file: "part2/Hemophillia-confirm/frontend/src/pages/AwarenessScreen.jsx"
 type: "code"
 community: "App.jsx"
-location: "L3718"
+location: "L14"
 tags:
   - graphify/code
   - graphify/EXTRACTED

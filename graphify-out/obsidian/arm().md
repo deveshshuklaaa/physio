@@ -14,6 +14,6 @@ tags:
 ## Connections
 - [[Operator-triggered start responding to the ESP's HELLO broadcasts with an…]] - `rationale_for` [EXTRACTED]
 - [[emg_imu_app.py]] - `contains` [EXTRACTED]
-- [[route_1]] - `references` [EXTRACTED]
+- [[route]] - `references` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/emg_imu_apppy

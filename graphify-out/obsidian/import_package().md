@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[E5 validates, then extracts every PASSING exercise into dest_rootexercise,…]] - `rationale_for` [EXTRACTED]
-- [[Path_10]] - `calls` [EXTRACTED]
+- [[Path_19]] - `calls` [EXTRACTED]
 - [[ValidationReport]] - `references` [EXTRACTED]
 - [[_validate_into()]] - `calls` [EXTRACTED]
 - [[test_e5_failed_exercise_is_not_partially_imported()]] - `calls` [EXTRACTED]

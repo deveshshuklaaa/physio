@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/adminPatientResearch.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/doctorRegistration.js"
 type: "rationale"
-community: "adminPatientResearch.js"
-location: "L4944"
+community: "routes/auth.js"
+location: "L29"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/adminPatientResearchjs
+  - community/routes/authjs
 ---
 
 # IMPORTANT:
 
 ## Connections
-- [[adminPatientResearch.js]] - `rationale_for` [EXTRACTED]
+- [[doctorRegistration.js]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/adminPatientResearchjs
+#graphify/rationale #graphify/EXTRACTED #community/routes/authjs

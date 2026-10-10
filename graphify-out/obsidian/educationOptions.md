@@ -2,7 +2,7 @@
 source_file: "part2/Hemophillia-confirm/frontend/src/pages/ProfileStepper.jsx"
 type: "code"
 community: "ProfileStepper.jsx"
-location: "L5666"
+location: "L59"
 tags:
   - graphify/code
   - graphify/EXTRACTED

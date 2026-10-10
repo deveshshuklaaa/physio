@@ -1,43 +1,27 @@
 ---
 type: community
-members: 30
+members: 14
 ---
 
 # apiClient.js
 
-**Members:** 30 nodes
+**Members:** 14 nodes
 
 ## Members
-- [[AdminChangePassword()]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminChangePassword.jsx
-- [[AdminChangePassword.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminChangePassword.jsx
-- [[AdminDoctors()]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminDoctors.jsx
-- [[AdminDoctors.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminDoctors.jsx
-- [[AdminManagement()]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminManagement.jsx
-- [[AdminManagement.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminManagement.jsx
-- [[AskChatWidget()]] - code - part2/Hemophillia-confirm/frontend/src/components/AskChatWidget.jsx
-- [[AskChatWidget.jsx]] - code - part2/Hemophillia-confirm/frontend/src/components/AskChatWidget.jsx
-- [[Chatbot()]] - code - part2/Hemophillia-confirm/frontend/src/pages/HemophiliaChatbot.jsx
-- [[ConsentScreen()]] - code - part2/Hemophillia-confirm/frontend/src/pages/ConsentScreen.jsx
-- [[ConsentScreen.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/ConsentScreen.jsx
-- [[Detail()]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminDoctors.jsx
-- [[ExerciseCard()]] - code - part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan_BASE.jsx
-- [[ExercisePlan()]] - code - part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan_BASE.jsx
-- [[ExercisePlan_BASE.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/ExercisePlan_BASE.jsx
-- [[HemophiliaChatbot.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/HemophiliaChatbot.jsx
-- [[IMPORTANT]] - rationale - part2/Hemophillia-confirm/frontend/src/pages/PatientResearch.jsx
-- [[PatientResearch()]] - code - part2/Hemophillia-confirm/frontend/src/pages/PatientResearch.jsx
-- [[PatientResearch.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/PatientResearch.jsx
+- [[AuthScreen()]] - code - part2/Hemophillia-confirm/frontend/src/pages/AuthScreen.jsx
+- [[AuthScreen.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/AuthScreen.jsx
+- [[DoctorLogin()]] - code - part2/Hemophillia-confirm/frontend/src/pages/DoctorLogin.jsx
+- [[DoctorLogin.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/DoctorLogin.jsx
+- [[DoctorLoginScreen()]] - code - part2/Hemophillia-confirm/frontend/src/pages/DoctorLogin.jsx
+- [[NotFound()]] - code - part2/Hemophillia-confirm/frontend/src/pages/NotFound.jsx
+- [[NotFound.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/NotFound.jsx
+- [[PatientAuthScreen()]] - code - part2/Hemophillia-confirm/frontend/src/pages/AuthScreen.jsx
+- [[PermissionDenied()]] - code - part2/Hemophillia-confirm/frontend/src/pages/PermissionDenied.jsx
+- [[PermissionDenied.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/PermissionDenied.jsx
 - [[STAFF_PATH_PREFIXES]] - code - part2/Hemophillia-confirm/frontend/src/apiClient.js
-- [[ScreeningResultScreen()]] - code - part2/Hemophillia-confirm/frontend/src/pages/ScreeningResultScreen.jsx
-- [[ScreeningResultScreen.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/ScreeningResultScreen.jsx
-- [[SessionHistoryItem()]] - code - part2/Hemophillia-confirm/frontend/src/pages/PatientResearch.jsx
-- [[TEXT]] - code - part2/Hemophillia-confirm/frontend/src/pages/HemophiliaChatbot.jsx
-- [[api]] - code - part2/Hemophillia-confirm/frontend/src/apiClient.js
 - [[apiClient.js]] - code - part2/Hemophillia-confirm/frontend/src/apiClient.js
-- [[emptyForm]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminManagement.jsx
+- [[homePath()]] - code - part2/Hemophillia-confirm/frontend/src/apiClient.js
 - [[isStaffRequest()]] - code - part2/Hemophillia-confirm/frontend/src/apiClient.js
-- [[s]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminChangePassword.jsx
-- [[styles]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminManagement.jsx
 
 ## Live Query (requires Dataview plugin)
 
@@ -47,20 +31,25 @@ SORT file.name ASC
 ```
 
 ## Connections to other communities
-- 28 edges to [[_COMMUNITY_App.jsx]]
-- 4 edges to [[_COMMUNITY_DoctorDashboard.jsx]]
-- 2 edges to [[_COMMUNITY_Layout.jsx]]
-- 2 edges to [[_COMMUNITY_AdminDoctorRequestDetails.jsx]]
-- 2 edges to [[_COMMUNITY_AdminPatientResearch.jsx]]
-- 2 edges to [[_COMMUNITY_AdminProfile.jsx]]
-- 2 edges to [[_COMMUNITY_DoctorRegistration.jsx]]
-- 2 edges to [[_COMMUNITY_ExercisePlan.jsx]]
-- 2 edges to [[_COMMUNITY_HemophiliaDetailsScreen.jsx]]
-- 2 edges to [[_COMMUNITY_ProfileStepper.jsx]]
+- 16 edges to [[_COMMUNITY_App.jsx]]
+- 8 edges to [[_COMMUNITY_api]]
+- 2 edges to [[_COMMUNITY_DoctorDashboard.jsx]]
+- 1 edge to [[_COMMUNITY_Layout.jsx]]
+- 1 edge to [[_COMMUNITY_AdminChangePassword.jsx]]
+- 1 edge to [[_COMMUNITY_AdminDoctorRequestDetails.jsx]]
+- 1 edge to [[_COMMUNITY_AdminManagement.jsx]]
+- 1 edge to [[_COMMUNITY_AdminPatientResearch.jsx]]
+- 1 edge to [[_COMMUNITY_AdminProfile.jsx]]
+- 1 edge to [[_COMMUNITY_DoctorProfile.jsx]]
+- 1 edge to [[_COMMUNITY_ExercisePlan.jsx]]
+- 1 edge to [[_COMMUNITY_ForgotPassword.jsx]]
+- 1 edge to [[_COMMUNITY_HemophiliaDetailsScreen.jsx]]
+- 1 edge to [[_COMMUNITY_PatientResearch.jsx]]
+- 1 edge to [[_COMMUNITY_ProfileStepper.jsx]]
 
 ## Top bridge nodes
-- [[apiClient.js]] - degree 30, connects to 10 communities
-- [[api]] - degree 28, connects to 10 communities
-- [[AdminManagement.jsx]] - degree 6, connects to 1 community
-- [[PatientResearch.jsx]] - degree 6, connects to 1 community
-- [[AdminDoctors.jsx]] - degree 5, connects to 1 community
+- [[apiClient.js]] - degree 35, connects to 15 communities
+- [[AuthScreen.jsx]] - degree 5, connects to 2 communities
+- [[DoctorLogin.jsx]] - degree 5, connects to 2 communities
+- [[NotFound.jsx]] - degree 4, connects to 1 community
+- [[PermissionDenied.jsx]] - degree 4, connects to 1 community

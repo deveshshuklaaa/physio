@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/test_report.py"
 type: "code"
 community: "test_report.py"
-location: "L79"
+location: "L90"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -14,7 +14,7 @@ tags:
 ## Connections
 - [[GeminiError]] - `calls` [EXTRACTED]
 - [[TestClient]] - `calls` [INFERRED]
-- [[_auth()_1]] - `calls` [EXTRACTED]
+- [[_auth()]] - `calls` [EXTRACTED]
 - [[_cleanup()]] - `calls` [EXTRACTED]
 - [[generate_report()]] - `indirect_call` [INFERRED]
 - [[test_report.py]] - `contains` [EXTRACTED]

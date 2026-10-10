@@ -10,7 +10,7 @@ members: 5
 ## Members
 - [[AdminProfile()]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminProfile.jsx
 - [[AdminProfile.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminProfile.jsx
-- [[Field()]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminProfile.jsx
+- [[Field()_1]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminProfile.jsx
 - [[empty]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminProfile.jsx
 - [[s_1]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminProfile.jsx
 
@@ -23,8 +23,9 @@ SORT file.name ASC
 
 ## Connections to other communities
 - 2 edges to [[_COMMUNITY_App.jsx]]
-- 2 edges to [[_COMMUNITY_apiClient.js]]
+- 1 edge to [[_COMMUNITY_api]]
+- 1 edge to [[_COMMUNITY_apiClient.js]]
 
 ## Top bridge nodes
-- [[AdminProfile.jsx]] - degree 7, connects to 2 communities
+- [[AdminProfile.jsx]] - degree 7, connects to 3 communities
 - [[AdminProfile()]] - degree 2, connects to 1 community

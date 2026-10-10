@@ -1,18 +1,18 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/adminPatientResearch.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/patientResearch.js"
 type: "code"
-community: "adminPatientResearch.js"
-location: "L3498"
+community: "patientResearch.js"
+location: "L523"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/adminPatientResearchjs
+  - community/patientResearchjs
 ---
 
 # buildTreatment()
 
 ## Connections
-- [[adminPatientResearch.js]] - `contains` [EXTRACTED]
+- [[patientResearch.js]] - `contains` [EXTRACTED]
 - [[valueOrNull()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/adminPatientResearchjs
+#graphify/code #graphify/EXTRACTED #community/patientResearchjs

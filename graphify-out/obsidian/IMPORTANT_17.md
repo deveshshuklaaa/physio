@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/patientResearch.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/assessment.js"
 type: "rationale"
-community: "patientResearch.js"
-location: "L5300"
+community: "assessment.js"
+location: "L1173"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/patientResearchjs
+  - community/assessmentjs
 ---
 
 # IMPORTANT:
 
 ## Connections
-- [[patientResearch.js]] - `rationale_for` [EXTRACTED]
+- [[assessment.js]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/patientResearchjs
+#graphify/rationale #graphify/EXTRACTED #community/assessmentjs

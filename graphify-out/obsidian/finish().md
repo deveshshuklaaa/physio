@@ -1,18 +1,22 @@
 ---
-source_file: "frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_nosimd_internal.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/test/layer2_helpers.js"
 type: "code"
-community: "init"
-location: "L9"
+community: "layer2_helpers.js"
+location: "L177"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/init
+  - community/layer2_helpersjs
 ---
 
 # finish()
 
 ## Connections
-- [[init()]] - `contains` [EXTRACTED]
-- [[processData()]] - `indirect_call` [INFERRED]
+- [[collNames()]] - `calls` [EXTRACTED]
+- [[db()]] - `calls` [EXTRACTED]
+- [[diffCounts()]] - `calls` [EXTRACTED]
+- [[layer2_helpers.js]] - `indirect_call` [INFERRED]
+- [[snapshot()]] - `calls` [EXTRACTED]
+- [[tagUser()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/init
+#graphify/code #graphify/EXTRACTED #community/layer2_helpersjs

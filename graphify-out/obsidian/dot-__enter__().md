@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/test_history.py"
 type: "code"
 community: "test_history.py"
-location: "L77"
+location: "L88"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -13,6 +13,6 @@ tags:
 
 ## Connections
 - [[_WithDoctorLookup]] - `method` [EXTRACTED]
-- [[_lookup_docA_only_for_p1()]] - `indirect_call` [INFERRED]
+- [[_lookup_docA_only_for_p1()_1]] - `indirect_call` [INFERRED]
 
 #graphify/code #graphify/EXTRACTED #community/test_historypy

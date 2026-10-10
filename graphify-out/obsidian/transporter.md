@@ -1,17 +1,18 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/src/services/emailService.js"
 type: "code"
-community: "admin.js"
+community: "passwordReset.js"
 location: "L465"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/adminjs
+  - community/passwordResetjs
 ---
 
 # transporter
 
 ## Connections
 - [[emailService.js]] - `contains` [EXTRACTED]
+- [[servicespasswordResetEmailService.js]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/adminjs
+#graphify/code #graphify/EXTRACTED #community/passwordResetjs

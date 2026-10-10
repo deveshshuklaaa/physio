@@ -1,17 +1,17 @@
 ---
-source_file: "backend/_old_physio_reference/exercise_base.py"
+source_file: "backend/app/logging_setup.py"
 type: "code"
-community: "ExerciseDefinition"
-location: "L138"
+community: "common_features.py"
+location: "L239"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/ExerciseDefinition
+  - community/common_featurespy
 ---
 
 # .__post_init__()
 
 ## Connections
-- [[ExerciseDefinition_1]] - `method` [EXTRACTED]
+- [[_RingBuffer]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/ExerciseDefinition
+#graphify/code #graphify/EXTRACTED #community/common_featurespy

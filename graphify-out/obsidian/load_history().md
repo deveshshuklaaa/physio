@@ -1,19 +1,20 @@
 ---
-source_file: "emg-service/backend/app.py"
+source_file: "hardware/esp32_imu/backend/emg_imu_app.py"
 type: "code"
-community: "app.py"
-location: "L37"
+community: "emg_imu_app.py"
+location: "L90"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/apppy
+  - community/emg_imu_apppy
 ---
 
 # load_history()
 
 ## Connections
 - [[add_to_history()]] - `calls` [EXTRACTED]
-- [[app.py]] - `contains` [EXTRACTED]
+- [[emg_imu_app.py]] - `contains` [EXTRACTED]
+- [[get_recording_meta()]] - `calls` [EXTRACTED]
 - [[list_recordings()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/apppy
+#graphify/code #graphify/EXTRACTED #community/emg_imu_apppy

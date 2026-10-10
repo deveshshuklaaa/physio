@@ -1,11 +1,11 @@
 ---
 source_file: ""
 type: "code"
-community: "CurrentUser"
+community: "session_ws.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/CurrentUser
+  - community/session_wspy
 ---
 
 # LookupDoctorId
@@ -13,4 +13,4 @@ tags:
 ## Connections
 - [[authorize_patient_access()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/CurrentUser
+#graphify/code #graphify/EXTRACTED #community/session_wspy

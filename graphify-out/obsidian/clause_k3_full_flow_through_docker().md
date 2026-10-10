@@ -1,12 +1,12 @@
 ---
 source_file: "backend/tools/test_k_gate.py"
 type: "code"
-community: "test_k_gate.py"
+community: "_get"
 location: "L119"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/test_k_gatepy
+  - community/_get
 ---
 
 # clause_k3_full_flow_through_docker()
@@ -21,4 +21,4 @@ tags:
 - [[gate_phase_k()]] - `calls` [EXTRACTED]
 - [[test_k_gate.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/test_k_gatepy
+#graphify/code #graphify/EXTRACTED #community/_get

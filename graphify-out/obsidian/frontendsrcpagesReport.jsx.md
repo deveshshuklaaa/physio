@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[App.jsx]] - `imports_from` [EXTRACTED]
-- [[IMPORTANT_4]] - `rationale_for` [EXTRACTED]
-- [[Report()]] - `contains` [EXTRACTED]
+- [[IMPORTANT_26]] - `rationale_for` [EXTRACTED]
+- [[Report()_1]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/Appjsx

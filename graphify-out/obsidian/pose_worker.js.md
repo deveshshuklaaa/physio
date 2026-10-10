@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/workers/pose_worker.js"
 type: "code"
-community: "startLiveSession"
+community: "pose_engine.js"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/startLiveSession
+  - community/pose_enginejs
 ---
 
 # pose_worker.js
@@ -16,11 +16,11 @@ tags:
 - [[FakePoseWorker]] - `semantically_similar_to` [INFERRED]
 - [[G5 Pose Worker WiringLatency Harness]] - `references` [EXTRACTED]
 - [[handleFrame()]] - `contains` [EXTRACTED]
-- [[init()_3]] - `contains` [EXTRACTED]
+- [[init()]] - `contains` [EXTRACTED]
+- [[live_tuning.js]] - `dynamic_import` [EXTRACTED]
 - [[logger.js]] - `dynamic_import` [EXTRACTED]
 - [[pose_engine.js]] - `dynamic_import` [EXTRACTED]
 - [[sendOneFrame (synthetic frame producer)]] - `shares_data_with` [EXTRACTED]
 - [[smoother.js]] - `dynamic_import` [EXTRACTED]
-- [[startLiveSession()]] - `conceptually_related_to` [INFERRED]
 
-#graphify/code #graphify/EXTRACTED #community/startLiveSession
+#graphify/code #graphify/EXTRACTED #community/pose_enginejs

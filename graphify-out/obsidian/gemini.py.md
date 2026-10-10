@@ -16,7 +16,7 @@ tags:
 - [[_wrap_text()]] - `contains` [EXTRACTED]
 - [[build_gemini_prompt()]] - `contains` [EXTRACTED]
 - [[build_gemini_prompt_generic()]] - `contains` [EXTRACTED]
-- [[call_gemini()]] - `contains` [EXTRACTED]
+- [[call_gemini()_1]] - `contains` [EXTRACTED]
 - [[exercise_runner.py]] - `imports_from` [EXTRACTED]
 - [[show_report_window()]] - `contains` [EXTRACTED]
 

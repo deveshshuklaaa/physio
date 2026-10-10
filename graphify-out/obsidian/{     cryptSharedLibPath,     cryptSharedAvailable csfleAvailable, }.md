@@ -2,7 +2,7 @@
 source_file: "part2/Hemophillia-confirm/backend/config/db.js"
 type: "code"
 community: "db.js"
-location: "L87"
+location: "L67"
 tags:
   - graphify/code
   - graphify/EXTRACTED

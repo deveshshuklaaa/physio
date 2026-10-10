@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/services/session_buffer.py"
 type: "rationale"
-community: "test_session_buffer.py"
+community: "get_buffer"
 location: "L167"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/test_session_bufferpy
+  - community/get_buffer
 ---
 
 # Flush and drop from the registry. Returns frames flushed.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[close_buffer()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/test_session_bufferpy
+#graphify/rationale #graphify/EXTRACTED #community/get_buffer

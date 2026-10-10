@@ -12,10 +12,10 @@ tags:
 # db-test.js
 
 ## Connections
-- [[cryptSharedLibPath]] - `imports` [EXTRACTED]
+- [[cryptSharedLibPath_1]] - `imports` [EXTRACTED]
 - [[encryption.js]] - `imports_from` [EXTRACTED]
-- [[kmsProviders]] - `imports` [EXTRACTED]
-- [[mongoose_4]] - `contains` [EXTRACTED]
+- [[kmsProviders_1]] - `imports` [EXTRACTED]
+- [[mongoose]] - `contains` [EXTRACTED]
 - [[testCSFLE()]] - `contains` [EXTRACTED]
 - [[{   kmsProviders,   keyVaultNamespace,   cryptSharedLibPath, }]] - `contains` [EXTRACTED]
 

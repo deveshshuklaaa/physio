@@ -15,6 +15,6 @@ tags:
 - [[cleanDoctorName()]] - `calls` [EXTRACTED]
 - [[doctorNameTranslationService.js]] - `indirect_call` [INFERRED]
 - [[getTransliterator()]] - `calls` [EXTRACTED]
-- [[hemophiliaDetails.js_1]] - `imports` [EXTRACTED]
+- [[hemophiliaDetails.js]] - `imports` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/hemophiliaDetailsjs

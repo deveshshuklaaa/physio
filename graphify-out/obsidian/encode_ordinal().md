@@ -2,7 +2,7 @@
 source_file: "part2/Hemophillia-confirm/backend/ml/predict.py"
 type: "code"
 community: "predict.py"
-location: "L230"
+location: "L246"
 tags:
   - graphify/code
   - graphify/EXTRACTED

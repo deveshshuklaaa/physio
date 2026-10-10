@@ -1,10 +1,10 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/package.json"
-type: "code"
+type: "concept"
 community: "dependencies"
 location: "L17"
 tags:
-  - graphify/code
+  - graphify/concept
   - graphify/EXTRACTED
   - community/dependencies
 ---
@@ -12,7 +12,6 @@ tags:
 # express
 
 ## Connections
-- [[dependencies_1]] - `contains` [EXTRACTED]
-- [[express_13]] - `imports` [EXTRACTED]
+- [[express_11]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/dependencies
+#graphify/concept #graphify/EXTRACTED #community/dependencies

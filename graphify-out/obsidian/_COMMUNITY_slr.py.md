@@ -9,7 +9,7 @@ members: 3
 
 ## Members
 - [[Straight Leg Raise (SLR) — exercise-specific feature extractor. Input common…]] - rationale - backend/ml/exercise_extractors/slr.py
-- [[extract()_2]] - code - backend/ml/exercise_extractors/slr.py
+- [[extract()_3]] - code - backend/ml/exercise_extractors/slr.py
 - [[slr.py]] - code - backend/ml/exercise_extractors/slr.py
 
 ## Live Query (requires Dataview plugin)

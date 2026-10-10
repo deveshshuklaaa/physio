@@ -1,19 +1,19 @@
 ---
-source_file: "frontend/tools/g6_g10_test/run_g6_g10_test.mjs"
+source_file: "frontend/tools/j_pages_test/run_j_test.mjs"
 type: "code"
-community: "run_g6_g10_test.mjs"
-location: "L59"
+community: "run_j_test.mjs"
+location: "L47"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/run_g6_g10_testmjs
+  - community/run_j_testmjs
 ---
 
 # attach()
 
 ## Connections
-- [[main()_14]] - `calls` [EXTRACTED]
-- [[run_g6_g10_test.mjs]] - `contains` [EXTRACTED]
-- [[sleep()]] - `calls` [EXTRACTED]
+- [[connect()]] - `calls` [EXTRACTED]
+- [[main()_17]] - `calls` [EXTRACTED]
+- [[run_j_test.mjs]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/run_g6_g10_testmjs
+#graphify/code #graphify/EXTRACTED #community/run_j_testmjs

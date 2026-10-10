@@ -13,6 +13,6 @@ tags:
 
 ## Connections
 - [[bcryptjs_1]] - `imports` [EXTRACTED]
-- [[dependencies_1]] - `contains` [EXTRACTED]
+- [[dependencies_2]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

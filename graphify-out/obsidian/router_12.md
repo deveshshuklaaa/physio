@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/assessment.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/admin.js"
 type: "code"
-community: "assessment.js"
-location: "L885"
+community: "admin.js"
+location: "L37"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/assessmentjs
+  - community/adminjs
 ---
 
 # router
 
 ## Connections
-- [[assessment.js]] - `contains` [EXTRACTED]
+- [[admin.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/assessmentjs
+#graphify/code #graphify/EXTRACTED #community/adminjs

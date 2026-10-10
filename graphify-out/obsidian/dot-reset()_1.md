@@ -2,7 +2,7 @@
 source_file: "frontend/src/lib/smoother.js"
 type: "code"
 community: "smoothing_audio.test.mjs"
-location: "L118"
+location: "L51"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,6 +12,6 @@ tags:
 # .reset()
 
 ## Connections
-- [[OneEuroSmoother]] - `method` [EXTRACTED]
+- [[EmaSmoother]] - `method` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/smoothing_audiotestmjs

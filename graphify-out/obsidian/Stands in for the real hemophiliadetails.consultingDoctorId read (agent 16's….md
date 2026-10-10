@@ -1,17 +1,17 @@
 ---
 source_file: "backend/app/routes/test_session.py"
 type: "rationale"
-community: "TestClient"
-location: "L233"
+community: "_lookup_docA_only_for_p1"
+location: "L244"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/TestClient
+  - community/_lookup_docA_only_for_p1
 ---
 
 # Stands in for the real hemophiliadetails.consultingDoctorId read (agent 16's…
 
 ## Connections
-- [[_lookup_docA_only_for_p1()_1]] - `rationale_for` [EXTRACTED]
+- [[_lookup_docA_only_for_p1()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/TestClient
+#graphify/rationale #graphify/EXTRACTED #community/_lookup_docA_only_for_p1

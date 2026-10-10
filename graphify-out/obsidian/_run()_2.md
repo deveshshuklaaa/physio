@@ -1,19 +1,20 @@
 ---
-source_file: "backend/app/services/video_retention.py"
+source_file: "backend/app/db.py"
 type: "code"
-community: "video_retention.py"
-location: "L122"
+community: "db.py"
+location: "L188"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/video_retentionpy
+  - community/dbpy
 ---
 
 # _run()
 
 ## Connections
-- [[_FakeDb_2]] - `calls` [EXTRACTED]
-- [[sweep_expired_videos()]] - `calls` [EXTRACTED]
-- [[video_retention.py]] - `contains` [EXTRACTED]
+- [[_FakeDb_1]] - `calls` [EXTRACTED]
+- [[db.py]] - `contains` [EXTRACTED]
+- [[make_lookup_doctor_id()]] - `calls` [EXTRACTED]
+- [[to_object_id()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/video_retentionpy
+#graphify/code #graphify/EXTRACTED #community/dbpy

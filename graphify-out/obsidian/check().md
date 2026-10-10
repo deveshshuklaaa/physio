@@ -1,24 +1,25 @@
 ---
-source_file: "frontend/src/vendor/tailwind/tailwind.js"
+source_file: "part2/Hemophillia-confirm/backend/src/utils/allow.js"
 type: "code"
-community: "remove"
-location: "L36"
+community: "routes/auth.js"
+location: "L18"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/remove
+  - community/routes/authjs
 ---
 
 # check()
 
 ## Connections
-- [[isHack()]] - `calls` [EXTRACTED]
-- [[process()]] - `calls` [EXTRACTED]
-- [[regexp()]] - `calls` [EXTRACTED]
-- [[remove()_2]] - `calls` [EXTRACTED]
-- [[some()]] - `calls` [EXTRACTED]
-- [[split()]] - `calls` [EXTRACTED]
-- [[tailwind.js]] - `contains` [EXTRACTED]
-- [[toRemove()]] - `calls` [EXTRACTED]
+- [[admin.js]] - `imports` [EXTRACTED]
+- [[allow.js]] - `indirect_call` [INFERRED]
+- [[bad()]] - `calls` [EXTRACTED]
+- [[doctorRegistration.js]] - `imports` [EXTRACTED]
+- [[hemophiliaDetails.js]] - `imports` [EXTRACTED]
+- [[otpAuth.js]] - `imports` [EXTRACTED]
+- [[passwordReset.js]] - `imports` [EXTRACTED]
+- [[profile.js]] - `imports` [EXTRACTED]
+- [[routesauth.js]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/remove
+#graphify/code #graphify/EXTRACTED #community/routes/authjs

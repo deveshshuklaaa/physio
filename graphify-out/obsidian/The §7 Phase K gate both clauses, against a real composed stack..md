@@ -1,12 +1,12 @@
 ---
 source_file: "backend/tools/test_k_gate.py"
 type: "rationale"
-community: "test_k_gate.py"
+community: "_get"
 location: "L238"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/test_k_gatepy
+  - community/_get
 ---
 
 # The §7 Phase K gate: both clauses, against a real composed stack.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[gate_phase_k()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/test_k_gatepy
+#graphify/rationale #graphify/EXTRACTED #community/_get

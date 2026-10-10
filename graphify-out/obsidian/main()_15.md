@@ -1,18 +1,20 @@
 ---
-source_file: "backend/tools/fake_session_client.py"
+source_file: "backend/ml/write_model_card.py"
 type: "code"
-community: "fake_session_client.py"
-location: "L78"
+community: "train_model.py"
+location: "L53"
 tags:
   - graphify/code
-  - graphify/EXTRACTED
-  - community/fake_session_clientpy
+  - graphify/INFERRED
+  - community/train_modelpy
 ---
 
 # main()
 
 ## Connections
-- [[_drive()]] - `calls` [EXTRACTED]
-- [[fake_session_client.py]] - `contains` [EXTRACTED]
+- [[choose_grouping()]] - `calls` [INFERRED]
+- [[evaluate()]] - `calls` [INFERRED]
+- [[split_frame()]] - `calls` [INFERRED]
+- [[write_model_card.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/fake_session_clientpy
+#graphify/code #graphify/INFERRED #community/train_modelpy

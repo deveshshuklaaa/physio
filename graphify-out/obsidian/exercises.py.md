@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/routes/exercises.py"
 type: "code"
-community: "exercises.py"
+community: "_get"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exercisespy
+  - community/_get
 ---
 
 # exercises.py
@@ -17,4 +17,4 @@ tags:
 - [[appmain.py]] - `imports_from` [EXTRACTED]
 - [[list_exercises()_1]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exercisespy
+#graphify/code #graphify/EXTRACTED #community/_get

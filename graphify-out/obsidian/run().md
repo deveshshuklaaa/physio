@@ -1,19 +1,17 @@
 ---
-source_file: "frontend/src/assets/vendor/mediapipe/wasm/vision_wasm_internal.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/test/layer1_csfle_gate.test.js"
 type: "code"
-community: "postRun"
-location: "L9"
+community: "layer1_csfle_gate.test.js"
+location: "L35"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/postRun
+  - community/layer1_csfle_gatetestjs
 ---
 
 # run()
 
 ## Connections
-- [[doRun()]] - `contains` [EXTRACTED]
-- [[preRun()]] - `calls` [EXTRACTED]
-- [[vision_wasm_internal.js]] - `contains` [EXTRACTED]
+- [[layer1_csfle_gate.test.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/postRun
+#graphify/code #graphify/EXTRACTED #community/layer1_csfle_gatetestjs

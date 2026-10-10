@@ -1,16 +1,17 @@
 ---
 source_file: ""
 type: "code"
-community: "exercise_config.py"
+community: "admin_models.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exercise_configpy
+  - community/admin_modelspy
 ---
 
 # Request
 
 ## Connections
-- [[get_capabilities()]] - `references` [EXTRACTED]
+- [[model_status()]] - `references` [EXTRACTED]
+- [[upload_model_package()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exercise_configpy
+#graphify/code #graphify/EXTRACTED #community/admin_modelspy

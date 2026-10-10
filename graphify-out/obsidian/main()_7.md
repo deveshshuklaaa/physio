@@ -1,18 +1,18 @@
 ---
-source_file: "backend/ml/common_features.py"
+source_file: "frontend/tools/parity_python.py"
 type: "code"
-community: "common_features.py"
-location: "L469"
+community: "run_case"
+location: "L45"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/common_featurespy
+  - community/run_case
 ---
 
 # main()
 
 ## Connections
-- [[common_features.py]] - `contains` [EXTRACTED]
-- [[extract_common_file()]] - `calls` [EXTRACTED]
+- [[parity_python.py]] - `contains` [EXTRACTED]
+- [[run_case()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/common_featurespy
+#graphify/code #graphify/EXTRACTED #community/run_case

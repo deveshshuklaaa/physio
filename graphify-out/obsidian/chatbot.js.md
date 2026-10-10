@@ -12,14 +12,15 @@ tags:
 # chatbot.js
 
 ## Connections
+- [[IMPORTANT_4]] - `rationale_for` [EXTRACTED]
 - [[ai]] - `contains` [EXTRACTED]
-- [[express_8]] - `contains` [EXTRACTED]
+- [[express_5]] - `contains` [EXTRACTED]
 - [[getLanguageName()]] - `contains` [EXTRACTED]
 - [[getOutOfScopeMessage()]] - `contains` [EXTRACTED]
 - [[getPredictionLabel()]] - `contains` [EXTRACTED]
 - [[models]] - `contains` [EXTRACTED]
-- [[path_4]] - `contains` [EXTRACTED]
-- [[router_7]] - `contains` [EXTRACTED]
+- [[path_5]] - `contains` [EXTRACTED]
+- [[router_5]] - `contains` [EXTRACTED]
 - [[runMLPrediction()]] - `contains` [EXTRACTED]
 - [[srcindex.js]] - `imports_from` [EXTRACTED]
 - [[{ GoogleGenAI }]] - `contains` [EXTRACTED]

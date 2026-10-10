@@ -14,7 +14,7 @@ tags:
 ## Connections
 - [[drain_data_queue()]] - `contains` [EXTRACTED]
 - [[emg_imu_app.py]] - `imports` [EXTRACTED]
-- [[main()_11]] - `contains` [EXTRACTED]
+- [[main()_4]] - `contains` [EXTRACTED]
 - [[send_data_packet()]] - `contains` [EXTRACTED]
 - [[wait_until()]] - `contains` [EXTRACTED]
 

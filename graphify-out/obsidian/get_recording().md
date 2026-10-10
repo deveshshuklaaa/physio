@@ -1,18 +1,18 @@
 ---
-source_file: "emg-service/backend/app.py"
+source_file: "hardware/esp32_imu/backend/emg_imu_app.py"
 type: "code"
-community: "app.py"
-location: "L241"
+community: "emg_imu_app.py"
+location: "L440"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/apppy
+  - community/emg_imu_apppy
 ---
 
 # get_recording()
 
 ## Connections
-- [[app.py]] - `contains` [EXTRACTED]
+- [[emg_imu_app.py]] - `contains` [EXTRACTED]
 - [[route]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/apppy
+#graphify/code #graphify/EXTRACTED #community/emg_imu_apppy

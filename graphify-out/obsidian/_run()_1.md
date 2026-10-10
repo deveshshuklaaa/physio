@@ -1,19 +1,21 @@
 ---
-source_file: "backend/app/models/session_doc.py"
+source_file: "backend/app/auth.py"
 type: "code"
-community: "session_doc.py"
-location: "L140"
+community: "session_ws.py"
+location: "L135"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/session_docpy
+  - community/session_wspy
 ---
 
 # _run()
 
 ## Connections
-- [[_FakeDb_1]] - `calls` [EXTRACTED]
-- [[ensure_indexes()]] - `calls` [EXTRACTED]
-- [[session_doc.py]] - `contains` [EXTRACTED]
+- [[CurrentUser]] - `calls` [EXTRACTED]
+- [[_token()_2]] - `calls` [EXTRACTED]
+- [[auth.py]] - `contains` [EXTRACTED]
+- [[authorize_patient_access()]] - `calls` [EXTRACTED]
+- [[decode_ws_token()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/session_docpy
+#graphify/code #graphify/EXTRACTED #community/session_wspy

@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/tests/rules.test.mjs"
 type: "code"
-community: "helpers.mjs"
+community: "rules.js"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/helpersmjs
+  - community/rulesjs
 ---
 
 # rules.test.mjs
@@ -15,7 +15,7 @@ tags:
 - [[AUDIO_MAP]] - `imports` [EXTRACTED]
 - [[KNOWN_CHECKS]] - `imports` [EXTRACTED]
 - [[PLACEHOLDER_EXERCISE]] - `imports` [EXTRACTED]
-- [[SQUAT_1]] - `contains` [EXTRACTED]
+- [[SQUAT]] - `contains` [EXTRACTED]
 - [[T()]] - `contains` [EXTRACTED]
 - [[allConfiguredAlerts()]] - `imports` [EXTRACTED]
 - [[audio_cues.js]] - `imports_from` [EXTRACTED]
@@ -29,4 +29,4 @@ tags:
 - [[squatConfig()]] - `imports` [EXTRACTED]
 - [[thresholdValue()]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/helpersmjs
+#graphify/code #graphify/EXTRACTED #community/rulesjs

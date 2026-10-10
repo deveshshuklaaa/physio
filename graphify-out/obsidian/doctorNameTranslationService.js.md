@@ -12,10 +12,10 @@ tags:
 # doctorNameTranslationService.js
 
 ## Connections
-- [[IMPORTANT_6]] - `rationale_for` [EXTRACTED]
+- [[IMPORTANT_28]] - `rationale_for` [EXTRACTED]
 - [[cleanDoctorName()]] - `contains` [EXTRACTED]
 - [[getTransliterator()]] - `contains` [EXTRACTED]
-- [[hemophiliaDetails.js_1]] - `imports_from` [EXTRACTED]
+- [[hemophiliaDetails.js]] - `imports_from` [EXTRACTED]
 - [[transliterateDoctorName()]] - `indirect_call` [INFERRED]
 - [[{   IndicTransliterator, }]] - `contains` [EXTRACTED]
 

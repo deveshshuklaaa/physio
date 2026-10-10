@@ -2,7 +2,7 @@
 source_file: "backend/app/ws/test_session_ws.py"
 type: "code"
 community: "test_session_ws.py"
-location: "L246"
+location: "L257"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -18,7 +18,7 @@ tags:
 - [[_batch()]] - `calls` [EXTRACTED]
 - [[_http_auth()]] - `calls` [EXTRACTED]
 - [[_start()]] - `calls` [EXTRACTED]
-- [[_token()_2]] - `calls` [EXTRACTED]
+- [[_token()_4]] - `calls` [EXTRACTED]
 - [[_wait_for()]] - `calls` [EXTRACTED]
 - [[get_buffer()]] - `calls` [EXTRACTED]
 - [[test_session_ws.py]] - `contains` [EXTRACTED]

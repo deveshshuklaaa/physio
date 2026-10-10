@@ -12,7 +12,7 @@ tags:
 # report-main.jsx
 
 ## Connections
-- [[Report()_1]] - `imports` [EXTRACTED]
+- [[Report()]] - `imports` [EXTRACTED]
 - [[appsrcpagesReport.jsx]] - `imports_from` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/cn

@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/scripts/createStaffAccount.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/test/layer2_otp.test.js"
 type: "code"
-community: "createStaffAccount.js"
-location: "L3"
+community: "layer2_otp.test.js"
+location: "L6"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/createStaffAccountjs
+  - community/layer2_otptestjs
 ---
 
 # bcrypt
 
 ## Connections
-- [[createStaffAccount.js]] - `contains` [EXTRACTED]
+- [[layer2_otp.test.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/createStaffAccountjs
+#graphify/code #graphify/EXTRACTED #community/layer2_otptestjs

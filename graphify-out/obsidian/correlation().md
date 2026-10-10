@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/logging_setup.py"
 type: "code"
-community: "session_ws.py"
+community: "session.py"
 location: "L58"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/session_wspy
+  - community/sessionpy
 ---
 
 # correlation()
@@ -26,4 +26,4 @@ tags:
 - [[session_ws.py]] - `imports` [EXTRACTED]
 - [[upload_video()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/session_wspy
+#graphify/code #graphify/EXTRACTED #community/sessionpy

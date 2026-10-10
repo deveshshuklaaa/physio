@@ -12,6 +12,6 @@ tags:
 # Find videos recursively, preserving their paths relative to input_root.
 
 ## Connections
-- [[find_videos()_1]] - `rationale_for` [EXTRACTED]
+- [[find_videos()]] - `rationale_for` [EXTRACTED]
 
 #graphify/rationale #graphify/EXTRACTED #community/find_videos

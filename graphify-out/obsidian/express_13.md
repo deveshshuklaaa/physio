@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/package.json"
-type: "concept"
-community: "dependencies"
-location: "L17"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/patientResearch.js"
+type: "code"
+community: "patientResearch.js"
+location: "L2"
 tags:
-  - graphify/concept
+  - graphify/code
   - graphify/EXTRACTED
-  - community/dependencies
+  - community/patientResearchjs
 ---
 
 # express
 
 ## Connections
-- [[express_12]] - `imports` [EXTRACTED]
+- [[patientResearch.js]] - `contains` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/dependencies
+#graphify/code #graphify/EXTRACTED #community/patientResearchjs

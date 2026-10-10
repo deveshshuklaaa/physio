@@ -14,6 +14,6 @@ tags:
 ## Connections
 - [[alert.jsx]] - `contains` [EXTRACTED]
 - [[alertVariants]] - `calls` [EXTRACTED]
-- [[cn()_2]] - `calls` [EXTRACTED]
+- [[cn()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/cn

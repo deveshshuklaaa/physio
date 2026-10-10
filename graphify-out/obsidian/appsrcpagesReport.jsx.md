@@ -14,17 +14,22 @@ tags:
 ## Connections
 - [[Badge()]] - `imports` [EXTRACTED]
 - [[Button()]] - `imports` [EXTRACTED]
+- [[Inline()]] - `contains` [EXTRACTED]
+- [[Markdown()]] - `contains` [EXTRACTED]
 - [[PHASE_META]] - `contains` [EXTRACTED]
-- [[Report()_1]] - `contains` [EXTRACTED]
+- [[Report()]] - `contains` [EXTRACTED]
 - [[Skeleton()]] - `imports` [EXTRACTED]
 - [[StatePill()]] - `contains` [EXTRACTED]
 - [[badge.jsx]] - `imports_from` [EXTRACTED]
 - [[button.jsx]] - `imports_from` [EXTRACTED]
 - [[isTerminalPhase()]] - `imports` [EXTRACTED]
+- [[markdown.js]] - `imports_from` [EXTRACTED]
 - [[params]] - `contains` [EXTRACTED]
+- [[parseMarkdown()]] - `imports` [EXTRACTED]
 - [[report-main.jsx]] - `imports_from` [EXTRACTED]
 - [[reportPhase()]] - `imports` [EXTRACTED]
 - [[report_poll.js]] - `imports_from` [EXTRACTED]
 - [[skeleton.jsx]] - `imports_from` [EXTRACTED]
+- [[splitInline()]] - `imports` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/cn

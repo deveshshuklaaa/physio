@@ -12,9 +12,9 @@ tags:
 # label_cols()
 
 ## Connections
-- [[DataFrame_2]] - `references` [EXTRACTED]
+- [[DataFrame]] - `references` [EXTRACTED]
 - [[Everything in the manifest that isn't metadata is a label.]] - `rationale_for` [EXTRACTED]
 - [[aggregate_features.py]] - `contains` [EXTRACTED]
-- [[main()_13]] - `calls` [EXTRACTED]
+- [[main()_2]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/clip_features

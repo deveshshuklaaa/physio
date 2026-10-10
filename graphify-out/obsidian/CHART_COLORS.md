@@ -2,7 +2,7 @@
 source_file: "part2/Hemophillia-confirm/frontend/src/pages/DoctorDashboard.jsx"
 type: "code"
 community: "DoctorDashboard.jsx"
-location: "L5938"
+location: "L40"
 tags:
   - graphify/code
   - graphify/EXTRACTED

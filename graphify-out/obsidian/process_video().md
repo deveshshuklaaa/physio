@@ -12,7 +12,7 @@ tags:
 # process_video()
 
 ## Connections
-- [[Path_11]] - `references` [EXTRACTED]
+- [[Path_20]] - `references` [EXTRACTED]
 - [[Process exactly one video. One video = one fresh MediaPipe VIDEO session…]] - `rationale_for` [EXTRACTED]
 - [[_ema_smoothed_columns()]] - `calls` [EXTRACTED]
 - [[_worker()]] - `calls` [EXTRACTED]

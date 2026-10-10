@@ -15,6 +15,6 @@ tags:
 - [[_old_physio_referenceexercisessquat.py]] - `contains` [EXTRACTED]
 - [[angle_3d()]] - `calls` [EXTRACTED]
 - [[detect_view()]] - `calls` [EXTRACTED]
-- [[get_definition()]] - `indirect_call` [INFERRED]
+- [[get_definition()_2]] - `indirect_call` [INFERRED]
 
 #graphify/code #graphify/EXTRACTED #community/detect_view

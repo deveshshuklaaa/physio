@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/frontend/src/pages/HemophiliaDetailsScreen.jsx"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js"
 type: "rationale"
-community: "HemophiliaDetailsScreen.jsx"
-location: "L17051"
+community: "exerciseRecommendations.js"
+location: "L242"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/HemophiliaDetailsScreenjsx
+  - community/exerciseRecommendationsjs
 ---
 
 # IMPORTANT:
 
 ## Connections
-- [[HemophiliaDetailsScreen.jsx]] - `rationale_for` [EXTRACTED]
+- [[exerciseRecommendations.js]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/HemophiliaDetailsScreenjsx
+#graphify/rationale #graphify/EXTRACTED #community/exerciseRecommendationsjs

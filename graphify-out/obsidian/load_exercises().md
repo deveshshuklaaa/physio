@@ -14,14 +14,14 @@ tags:
 ## Connections
 - [[ExerciseConfigError]] - `calls` [EXTRACTED]
 - [[Load, validate, and return the exercise registry as {name record}. Not cached…]] - `rationale_for` [EXTRACTED]
-- [[Path]] - `references` [EXTRACTED]
+- [[Path_6]] - `references` [EXTRACTED]
 - [[_client()]] - `calls` [EXTRACTED]
 - [[_record_has_placeholder_thresholds()]] - `calls` [EXTRACTED]
 - [[_validate_record()]] - `calls` [EXTRACTED]
 - [[_write_and_load()]] - `calls` [EXTRACTED]
 - [[appmain.py]] - `imports` [EXTRACTED]
 - [[exercise_config.py]] - `contains` [EXTRACTED]
-- [[lifespan()_1]] - `calls` [EXTRACTED]
+- [[lifespan()]] - `calls` [EXTRACTED]
 - [[test_capabilities.py]] - `imports` [EXTRACTED]
 - [[test_capabilities_returns_engine_supported_map()]] - `calls` [EXTRACTED]
 

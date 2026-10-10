@@ -2,7 +2,7 @@
 source_file: "frontend/src/lib/audio_cues.js"
 type: "code"
 community: "smoothing_audio.test.mjs"
-location: "L48"
+location: "L51"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,8 +12,8 @@ tags:
 # AudioCuePlayer
 
 ## Connections
-- [[dot-constructor()_3]] - `method` [EXTRACTED]
-- [[dot-play()]] - `method` [EXTRACTED]
+- [[dot-constructor()_7]] - `method` [EXTRACTED]
+- [[dot-play()_1]] - `method` [EXTRACTED]
 - [[Per-Alert 4s Audio Cue Debounce]] - `implements` [EXTRACTED]
 - [[audio_cues.js]] - `contains` [EXTRACTED]
 - [[render_audio_probe main]] - `calls` [EXTRACTED]

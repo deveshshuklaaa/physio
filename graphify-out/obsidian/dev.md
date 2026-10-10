@@ -1,17 +1,18 @@
 ---
-source_file: "frontend/app/package.json"
+source_file: "dev"
 type: "code"
-community: "dependencies"
-location: "L8"
+community: "dev"
+location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/dependencies
+  - community/dev
 ---
 
 # dev
 
 ## Connections
-- [[scripts]] - `contains` [EXTRACTED]
+- [[dev script]] - `contains` [EXTRACTED]
+- [[usage()]] - `defines` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/dependencies
+#graphify/code #graphify/EXTRACTED #community/dev

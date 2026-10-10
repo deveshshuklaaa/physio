@@ -2,7 +2,7 @@
 source_file: "part2/Hemophillia-confirm/backend/src/routes/patientResearch.js"
 type: "code"
 community: "patientResearch.js"
-location: "L4852"
+location: "L11"
 tags:
   - graphify/code
   - graphify/EXTRACTED

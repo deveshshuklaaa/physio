@@ -2,7 +2,7 @@
 source_file: "backend/app/ws/test_session_ws.py"
 type: "rationale"
 community: "test_session_ws.py"
-location: "L226"
+location: "L237"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED

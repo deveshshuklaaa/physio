@@ -1,17 +1,19 @@
 ---
 source_file: ""
 type: "code"
-community: "admin_models.py"
+community: "session.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/admin_modelspy
+  - community/sessionpy
 ---
 
 # Request
 
 ## Connections
-- [[model_status()]] - `references` [EXTRACTED]
-- [[upload_model_package()]] - `references` [EXTRACTED]
+- [[session_end()]] - `references` [EXTRACTED]
+- [[session_start()]] - `references` [EXTRACTED]
+- [[session_status()]] - `references` [EXTRACTED]
+- [[session_summary()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/admin_modelspy
+#graphify/code #graphify/EXTRACTED #community/sessionpy

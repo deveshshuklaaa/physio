@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/routes/history.py"
 type: "rationale"
-community: "CurrentUser"
+community: "history.py"
 location: "L53"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/CurrentUser
+  - community/historypy
 ---
 
 # raw_id -> patientUserId (a string), or None if it can't be resolved. See module…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[_resolve_patient_user_id()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/CurrentUser
+#graphify/rationale #graphify/EXTRACTED #community/historypy

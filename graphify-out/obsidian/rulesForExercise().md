@@ -1,19 +1,20 @@
 ---
 source_file: "frontend/src/lib/rules.js"
 type: "code"
-community: "helpers.mjs"
-location: "L248"
+community: "rules.js"
+location: "L251"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/helpersmjs
+  - community/rulesjs
 ---
 
 # rulesForExercise()
 
 ## Connections
-- [[dot-constructor()_10]] - `calls` [EXTRACTED]
+- [[dot-constructor()_4]] - `calls` [EXTRACTED]
 - [[exercise_checks.test.mjs]] - `imports` [EXTRACTED]
+- [[hs_tke_checks.test.mjs]] - `imports` [EXTRACTED]
 - [[pose_engine.js]] - `imports` [EXTRACTED]
 - [[rules.js]] - `contains` [EXTRACTED]
 - [[rules.test.mjs]] - `imports` [EXTRACTED]
@@ -21,4 +22,4 @@ tags:
 - [[thresholdAlert()]] - `calls` [EXTRACTED]
 - [[thresholdValue()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/helpersmjs
+#graphify/code #graphify/EXTRACTED #community/rulesjs

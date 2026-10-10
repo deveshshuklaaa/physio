@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[Converts each legacy `_rf.pkl` bundle in `paths` into the E1 package layout…]] - `rationale_for` [EXTRACTED]
-- [[Path_9]] - `calls` [EXTRACTED]
+- [[Path_18]] - `calls` [EXTRACTED]
 - [[_assemble_multioutput()]] - `calls` [EXTRACTED]
 - [[_legacy_cv_scores()]] - `calls` [EXTRACTED]
 - [[feature_hash()]] - `calls` [EXTRACTED]

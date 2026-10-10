@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/tests/exercise_checks.test.mjs"
 type: "code"
-community: "helpers.mjs"
+community: "checks/index.js"
 location: "L25"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/helpersmjs
+  - community/checks/indexjs
 ---
 
 # rawSmoother
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[exercise_checks.test.mjs]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/helpersmjs
+#graphify/code #graphify/EXTRACTED #community/checks/indexjs

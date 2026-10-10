@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/doctorAuth.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/chatbot.js"
 type: "code"
-community: "User.js"
-location: "L1"
+community: "chatbot.js"
+location: "L3"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Userjs
+  - community/chatbotjs
 ---
 
 # express
 
 ## Connections
-- [[doctorAuth.js]] - `contains` [EXTRACTED]
+- [[chatbot.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Userjs
+#graphify/code #graphify/EXTRACTED #community/chatbotjs

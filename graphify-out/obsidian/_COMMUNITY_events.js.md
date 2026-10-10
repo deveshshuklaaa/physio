@@ -34,7 +34,7 @@ SORT file.name ASC
 
 ## Connections to other communities
 - 2 edges to [[_COMMUNITY_RingBuffer]]
-- 1 edge to [[_COMMUNITY_startLiveSession]]
+- 1 edge to [[_COMMUNITY_BrowserLogger]]
 
 ## Top bridge nodes
 - [[isValidEvent()]] - degree 3, connects to 2 communities

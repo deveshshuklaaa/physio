@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/services/doctorNameTranslationService.js"
+source_file: "part2/Hemophillia-confirm/frontend/src/pages/HemophiliaDetailsScreen.jsx"
 type: "rationale"
-community: "hemophiliaDetails.js"
-location: "L12"
+community: "HemophiliaDetailsScreen.jsx"
+location: "L1750"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/hemophiliaDetailsjs
+  - community/HemophiliaDetailsScreenjsx
 ---
 
 # IMPORTANT:
 
 ## Connections
-- [[doctorNameTranslationService.js]] - `rationale_for` [EXTRACTED]
+- [[HemophiliaDetailsScreen.jsx]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/hemophiliaDetailsjs
+#graphify/rationale #graphify/EXTRACTED #community/HemophiliaDetailsScreenjsx

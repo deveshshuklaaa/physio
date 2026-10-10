@@ -11,9 +11,7 @@ tags:
 # Request
 
 ## Connections
-- [[session_end()]] - `references` [EXTRACTED]
-- [[session_start()]] - `references` [EXTRACTED]
-- [[session_status()]] - `references` [EXTRACTED]
-- [[session_summary()]] - `references` [EXTRACTED]
+- [[get_video()]] - `references` [EXTRACTED]
+- [[upload_video()]] - `references` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/sessionpy

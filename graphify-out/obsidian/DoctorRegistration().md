@@ -1,12 +1,12 @@
 ---
 source_file: "part2/Hemophillia-confirm/frontend/src/pages/DoctorRegistration.jsx"
 type: "code"
-community: "DoctorRegistration.jsx"
-location: "L1571"
+community: "api"
+location: "L6"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/DoctorRegistrationjsx
+  - community/api
 ---
 
 # DoctorRegistration()
@@ -15,4 +15,4 @@ tags:
 - [[App.jsx]] - `imports` [EXTRACTED]
 - [[DoctorRegistration.jsx]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/DoctorRegistrationjsx
+#graphify/code #graphify/EXTRACTED #community/api

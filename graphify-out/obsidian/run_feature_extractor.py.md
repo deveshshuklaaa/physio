@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[find_parquets()]] - `contains` [EXTRACTED]
-- [[main()_12]] - `contains` [EXTRACTED]
+- [[main()_1]] - `contains` [EXTRACTED]
 - [[output_path_for()]] - `contains` [EXTRACTED]
 - [[parse_args()]] - `contains` [EXTRACTED]
 - [[run_extractor()]] - `contains` [EXTRACTED]

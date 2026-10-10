@@ -1,20 +1,17 @@
 ---
-source_file: "frontend/src/vendor/tailwind/tailwind.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/test/layer1_names.test.js"
 type: "code"
-community: "replace"
-location: "L20"
+community: "layer1_names.test.js"
+location: "L21"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/replace
+  - community/layer1_namestestjs
 ---
 
 # walk()
 
 ## Connections
-- [[dot-walk()]] - `calls` [EXTRACTED]
-- [[addToError()]] - `calls` [EXTRACTED]
-- [[each()]] - `calls` [EXTRACTED]
-- [[tailwind.js]] - `contains` [EXTRACTED]
+- [[layer1_names.test.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/replace
+#graphify/code #graphify/EXTRACTED #community/layer1_namestestjs

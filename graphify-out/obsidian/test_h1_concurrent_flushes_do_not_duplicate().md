@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/services/test_session_buffer.py"
 type: "code"
-community: "test_session_buffer.py"
+community: "get_buffer"
 location: "L198"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/test_session_bufferpy
+  - community/get_buffer
 ---
 
 # test_h1_concurrent_flushes_do_not_duplicate()
@@ -16,4 +16,4 @@ tags:
 - [[_fresh_tmp_root()]] - `calls` [EXTRACTED]
 - [[test_session_buffer.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/test_session_bufferpy
+#graphify/code #graphify/EXTRACTED #community/get_buffer

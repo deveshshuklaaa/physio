@@ -1,12 +1,12 @@
 ---
-source_file: "emg-service/backend/app.py"
+source_file: "hardware/esp32_imu/backend/emg_imu_app.py"
 type: "rationale"
-community: "app.py"
-location: "L227"
+community: "emg_imu_app.py"
+location: "L426"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/apppy
+  - community/emg_imu_apppy
 ---
 
 # Server-Sent Events endpoint for real-time data.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[stream()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/apppy
+#graphify/rationale #graphify/EXTRACTED #community/emg_imu_apppy

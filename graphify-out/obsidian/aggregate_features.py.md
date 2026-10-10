@@ -14,6 +14,6 @@ tags:
 ## Connections
 - [[clip_features()]] - `contains` [EXTRACTED]
 - [[label_cols()]] - `contains` [EXTRACTED]
-- [[main()_13]] - `contains` [EXTRACTED]
+- [[main()_2]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/clip_features

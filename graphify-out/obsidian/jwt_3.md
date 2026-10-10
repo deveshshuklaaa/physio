@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/auth.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/doctorAuth.js"
 type: "code"
-community: "admin.js"
+community: "doctorAuth.js"
 location: "L3"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/adminjs
+  - community/doctorAuthjs
 ---
 
 # jwt
 
 ## Connections
-- [[routesauth.js]] - `contains` [EXTRACTED]
+- [[doctorAuth.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/adminjs
+#graphify/code #graphify/EXTRACTED #community/doctorAuthjs

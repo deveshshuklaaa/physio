@@ -1,17 +1,17 @@
 ---
-source_file: "frontend/src/lib/audio_cues.js"
+source_file: "frontend/tests/helpers.mjs"
 type: "code"
-community: "smoothing_audio.test.mjs"
-location: "L57"
+community: "helpers.mjs"
+location: "L106"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/smoothing_audiotestmjs
+  - community/helpersmjs
 ---
 
 # .play()
 
 ## Connections
-- [[AudioCuePlayer]] - `method` [EXTRACTED]
+- [[FakeAudio]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/smoothing_audiotestmjs
+#graphify/code #graphify/EXTRACTED #community/helpersmjs

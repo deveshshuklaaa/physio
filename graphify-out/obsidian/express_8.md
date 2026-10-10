@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/chatbot.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/profile.js"
 type: "code"
-community: "chatbot.js"
-location: "L656"
+community: "profile.js"
+location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/chatbotjs
+  - community/profilejs
 ---
 
 # express
 
 ## Connections
-- [[chatbot.js]] - `contains` [EXTRACTED]
+- [[profile.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/chatbotjs
+#graphify/code #graphify/EXTRACTED #community/profilejs

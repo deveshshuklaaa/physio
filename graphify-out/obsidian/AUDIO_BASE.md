@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/lib/audio_cues.js"
 type: "code"
-community: "smoothing_audio.test.mjs"
+community: "rules.js"
 location: "L10"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/smoothing_audiotestmjs
+  - community/rulesjs
 ---
 
 # AUDIO_BASE
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[audio_cues.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/smoothing_audiotestmjs
+#graphify/code #graphify/EXTRACTED #community/rulesjs

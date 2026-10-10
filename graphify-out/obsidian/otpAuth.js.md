@@ -1,23 +1,36 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/src/routes/otpAuth.js"
 type: "code"
-community: "admin.js"
+community: "otpAuth.js"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/adminjs
+  - community/otpAuthjs
 ---
 
 # otpAuth.js
 
 ## Connections
-- [[express_11]] - `contains` [EXTRACTED]
-- [[jwt_4]] - `contains` [EXTRACTED]
+- [[AdminProfile_2]] - `contains` [EXTRACTED]
+- [[OTP_SPEC]] - `contains` [EXTRACTED]
+- [[User_2]] - `contains` [EXTRACTED]
+- [[adminAuthz.js]] - `imports_from` [EXTRACTED]
+- [[allow.js]] - `imports_from` [EXTRACTED]
+- [[check()]] - `imports` [EXTRACTED]
+- [[displayName()]] - `imports` [EXTRACTED]
+- [[displayName.js]] - `imports_from` [EXTRACTED]
+- [[express]] - `contains` [EXTRACTED]
+- [[jwt_2]] - `contains` [EXTRACTED]
 - [[otpService.js]] - `imports_from` [EXTRACTED]
-- [[router_10]] - `contains` [EXTRACTED]
+- [[resendLoginOTP()]] - `imports` [EXTRACTED]
+- [[resolveAdminAuthz()]] - `imports` [EXTRACTED]
+- [[router]] - `contains` [EXTRACTED]
 - [[srcindex.js]] - `imports_from` [EXTRACTED]
 - [[verifyLoginOTP()]] - `imports` [EXTRACTED]
-- [[{   verifyLoginOTP, }]] - `contains` [EXTRACTED]
+- [[{   resendLoginOTP,   verifyLoginOTP, }]] - `contains` [EXTRACTED]
+- [[{ check }]] - `contains` [EXTRACTED]
+- [[{ displayName }]] - `contains` [EXTRACTED]
+- [[{ resolveAdminAuthz }_2]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/adminjs
+#graphify/code #graphify/EXTRACTED #community/otpAuthjs

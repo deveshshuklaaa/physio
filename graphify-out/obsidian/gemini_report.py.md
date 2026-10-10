@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/services/gemini_report.py"
 type: "code"
-community: "session_ws.py"
+community: "gemini_report.py"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/session_wspy
+  - community/gemini_reportpy
 ---
 
 # gemini_report.py
@@ -23,7 +23,7 @@ tags:
 - [[_sessions()]] - `imports` [EXTRACTED]
 - [[_trend_summary()]] - `contains` [EXTRACTED]
 - [[build_prompt()]] - `contains` [EXTRACTED]
-- [[call_gemini()_1]] - `contains` [EXTRACTED]
+- [[call_gemini()]] - `contains` [EXTRACTED]
 - [[correlation()]] - `imports` [EXTRACTED]
 - [[generate_report()]] - `contains` [EXTRACTED]
 - [[get_logger()]] - `imports` [EXTRACTED]
@@ -32,4 +32,4 @@ tags:
 - [[logging_setup.py]] - `imports_from` [EXTRACTED]
 - [[test_report.py]] - `imports_from` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/session_wspy
+#graphify/code #graphify/EXTRACTED #community/gemini_reportpy

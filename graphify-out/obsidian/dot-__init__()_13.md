@@ -1,18 +1,18 @@
 ---
-source_file: "backend/app/routes/history.py"
+source_file: "backend/app/services/video_retention.py"
 type: "code"
-community: "CurrentUser"
-location: "L125"
+community: "db.py"
+location: "L119"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/CurrentUser
+  - community/dbpy
 ---
 
 # .__init__()
 
 ## Connections
-- [[_FakeCollection_3]] - `calls` [EXTRACTED]
-- [[_FakeDb_3]] - `method` [EXTRACTED]
+- [[_FakeCollection_2]] - `calls` [EXTRACTED]
+- [[_FakeDb_2]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/CurrentUser
+#graphify/code #graphify/EXTRACTED #community/dbpy

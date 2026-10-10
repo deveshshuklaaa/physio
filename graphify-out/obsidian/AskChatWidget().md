@@ -1,12 +1,12 @@
 ---
 source_file: "part2/Hemophillia-confirm/frontend/src/components/AskChatWidget.jsx"
 type: "code"
-community: "apiClient.js"
+community: "api"
 location: "L428"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/apiClientjs
+  - community/api
 ---
 
 # AskChatWidget()
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[AskChatWidget.jsx]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/apiClientjs
+#graphify/code #graphify/EXTRACTED #community/api

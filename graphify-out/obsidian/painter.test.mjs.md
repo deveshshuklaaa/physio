@@ -16,6 +16,6 @@ tags:
 - [[fakeCtx()]] - `contains` [EXTRACTED]
 - [[makePainter()]] - `imports` [EXTRACTED]
 - [[session_orchestrator.js]] - `imports_from` [EXTRACTED]
-- [[setup()_1]] - `contains` [EXTRACTED]
+- [[setup()_2]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/session_orchestratorjs

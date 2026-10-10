@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/test_cors.py"
 type: "rationale"
 community: "test_cors.py"
-location: "L66"
+location: "L73"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED

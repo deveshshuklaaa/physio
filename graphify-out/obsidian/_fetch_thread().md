@@ -12,7 +12,7 @@ tags:
 # _fetch_thread()
 
 ## Connections
-- [[call_gemini()]] - `calls` [EXTRACTED]
+- [[call_gemini()_1]] - `calls` [EXTRACTED]
 - [[gemini.py]] - `contains` [EXTRACTED]
 - [[show_report_window()]] - `indirect_call` [INFERRED]
 

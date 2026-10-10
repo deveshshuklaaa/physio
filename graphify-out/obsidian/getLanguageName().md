@@ -2,7 +2,7 @@
 source_file: "part2/Hemophillia-confirm/backend/src/routes/chatbot.js"
 type: "code"
 community: "chatbot.js"
-location: "L698"
+location: "L45"
 tags:
   - graphify/code
   - graphify/EXTRACTED

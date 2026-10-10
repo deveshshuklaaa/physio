@@ -12,7 +12,7 @@ tags:
 # .pickMimeType()
 
 ## Connections
-- [[dot-constructor()_13]] - `calls` [EXTRACTED]
+- [[dot-constructor()]] - `calls` [EXTRACTED]
 - [[IsolatedRecorder]] - `method` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/IsolatedRecorder

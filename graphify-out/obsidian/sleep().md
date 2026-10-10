@@ -12,8 +12,8 @@ tags:
 # sleep()
 
 ## Connections
-- [[attach()_1]] - `calls` [EXTRACTED]
-- [[main()_14]] - `calls` [EXTRACTED]
+- [[attach()]] - `calls` [EXTRACTED]
+- [[main()_3]] - `calls` [EXTRACTED]
 - [[runLivePageChecks()]] - `calls` [EXTRACTED]
 - [[runProbeChecks()]] - `calls` [EXTRACTED]
 - [[run_g6_g10_test.mjs]] - `contains` [EXTRACTED]

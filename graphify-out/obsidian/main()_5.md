@@ -1,19 +1,19 @@
 ---
-source_file: "backend/ml/extract_landmarks.py"
+source_file: "frontend/tools/g13_test/run_g13_test.mjs"
 type: "code"
-community: "extract_landmarks.py"
-location: "L467"
+community: "run_g13_test.mjs"
+location: "L24"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/extract_landmarkspy
+  - community/run_g13_testmjs
 ---
 
 # main()
 
 ## Connections
-- [[_worker()]] - `calls` [EXTRACTED]
-- [[batch_extract()]] - `calls` [EXTRACTED]
-- [[extract_landmarks.py]] - `contains` [EXTRACTED]
+- [[run_g13_test.mjs]] - `contains` [EXTRACTED]
+- [[send()]] - `contains` [EXTRACTED]
+- [[sleep()_1]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/extract_landmarkspy
+#graphify/code #graphify/EXTRACTED #community/run_g13_testmjs

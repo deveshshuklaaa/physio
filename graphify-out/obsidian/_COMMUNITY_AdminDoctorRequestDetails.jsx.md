@@ -23,8 +23,9 @@ SORT file.name ASC
 
 ## Connections to other communities
 - 2 edges to [[_COMMUNITY_App.jsx]]
-- 2 edges to [[_COMMUNITY_apiClient.js]]
+- 1 edge to [[_COMMUNITY_api]]
+- 1 edge to [[_COMMUNITY_apiClient.js]]
 
 ## Top bridge nodes
-- [[AdminDoctorRequestDetails.jsx]] - degree 7, connects to 2 communities
+- [[AdminDoctorRequestDetails.jsx]] - degree 7, connects to 3 communities
 - [[AdminDoctorRequestDetails()]] - degree 2, connects to 1 community

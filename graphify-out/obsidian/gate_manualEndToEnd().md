@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[goto()]] - `calls` [EXTRACTED]
-- [[main()_6]] - `calls` [EXTRACTED]
+- [[main()_17]] - `calls` [EXTRACTED]
 - [[ok()]] - `calls` [EXTRACTED]
 - [[run_j_test.mjs]] - `contains` [EXTRACTED]
 - [[settle()]] - `calls` [EXTRACTED]

@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[detect_view()]] - `calls` [EXTRACTED]
-- [[get_definition()_1]] - `indirect_call` [INFERRED]
+- [[get_definition()_3]] - `indirect_call` [INFERRED]
 - [[superseded_app_copiesexercisessquat.py]] - `contains` [EXTRACTED]
 - [[torso_lean()]] - `calls` [EXTRACTED]
 

@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[Namespace]] - `references` [EXTRACTED]
-- [[main()_12]] - `calls` [EXTRACTED]
+- [[main()_1]] - `calls` [EXTRACTED]
 - [[run_feature_extractor.py]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/run_feature_extractorpy

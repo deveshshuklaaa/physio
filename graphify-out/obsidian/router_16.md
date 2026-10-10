@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/doctorPatients.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/passwordReset.js"
 type: "code"
-community: "doctorDashboard.js"
-location: "L475"
+community: "passwordReset.js"
+location: "L17"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/doctorDashboardjs
+  - community/passwordResetjs
 ---
 
 # router
 
 ## Connections
-- [[doctorPatients.js]] - `contains` [EXTRACTED]
+- [[passwordReset.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/doctorDashboardjs
+#graphify/code #graphify/EXTRACTED #community/passwordResetjs

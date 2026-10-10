@@ -14,7 +14,7 @@ tags:
 ## Connections
 - [[Best-effort LAN IP of this machine - print this at boot so the ESP32 firmware's…]] - `rationale_for` [EXTRACTED]
 - [[emg_imu_app.py]] - `contains` [EXTRACTED]
-- [[status()_1]] - `calls` [EXTRACTED]
+- [[status()]] - `calls` [EXTRACTED]
 - [[udp_reader()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/emg_imu_apppy

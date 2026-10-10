@@ -12,7 +12,7 @@ tags:
 # .path()
 
 ## Connections
-- [[Path_14]] - `references` [EXTRACTED]
+- [[Path_1]] - `references` [EXTRACTED]
 - [[SessionBuffer]] - `method` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/SessionBuffer

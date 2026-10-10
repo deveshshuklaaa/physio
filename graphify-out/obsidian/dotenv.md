@@ -12,7 +12,7 @@ tags:
 # dotenv
 
 ## Connections
-- [[dependencies_1]] - `contains` [EXTRACTED]
+- [[dependencies_2]] - `contains` [EXTRACTED]
 - [[dotenv_1]] - `imports` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

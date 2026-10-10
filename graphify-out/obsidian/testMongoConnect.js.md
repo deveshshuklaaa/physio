@@ -14,6 +14,6 @@ tags:
 ## Connections
 - [[client]] - `contains` [EXTRACTED]
 - [[p]] - `contains` [EXTRACTED]
-- [[{ MongoClient }]] - `contains` [EXTRACTED]
+- [[{ MongoClient }_3]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/testMongoConnectjs

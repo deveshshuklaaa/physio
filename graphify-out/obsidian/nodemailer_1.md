@@ -1,10 +1,10 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/package.json"
-type: "code"
+type: "concept"
 community: "dependencies"
-location: "L23"
+location: "L24"
 tags:
-  - graphify/code
+  - graphify/concept
   - graphify/EXTRACTED
   - community/dependencies
 ---
@@ -12,7 +12,6 @@ tags:
 # nodemailer
 
 ## Connections
-- [[dependencies_1]] - `contains` [EXTRACTED]
-- [[nodemailer_2]] - `imports` [EXTRACTED]
+- [[nodemailer]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/dependencies
+#graphify/concept #graphify/EXTRACTED #community/dependencies

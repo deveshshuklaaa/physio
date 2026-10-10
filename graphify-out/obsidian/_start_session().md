@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/test_history.py"
 type: "code"
 community: "test_history.py"
-location: "L85"
+location: "L96"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,7 +12,7 @@ tags:
 # _start_session()
 
 ## Connections
-- [[_auth()]] - `calls` [EXTRACTED]
+- [[_auth()_2]] - `calls` [EXTRACTED]
 - [[test_history.py]] - `contains` [EXTRACTED]
 - [[test_history_doctor_authorization_matrix()]] - `calls` [EXTRACTED]
 - [[test_history_is_patient_scoped_by_literal_id()]] - `calls` [EXTRACTED]

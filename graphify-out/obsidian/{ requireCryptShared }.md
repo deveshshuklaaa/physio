@@ -1,8 +1,8 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/config/encryption.js"
+source_file: "part2/Hemophillia-confirm/backend/config/cryptoConfig.js"
 type: "code"
 community: "encryption.js"
-location: "L51"
+location: "L34"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,6 +12,6 @@ tags:
 # { requireCryptShared }
 
 ## Connections
-- [[encryption.js]] - `contains` [EXTRACTED]
+- [[cryptoConfig.js]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/encryptionjs

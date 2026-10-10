@@ -28,10 +28,11 @@ SORT file.name ASC
 ```
 
 ## Connections to other communities
-- 4 edges to [[_COMMUNITY_apiClient.js]]
 - 2 edges to [[_COMMUNITY_App.jsx]]
+- 2 edges to [[_COMMUNITY_api]]
+- 2 edges to [[_COMMUNITY_apiClient.js]]
 
 ## Top bridge nodes
-- [[DoctorDashboard.jsx]] - degree 13, connects to 2 communities
-- [[ExerciseReviewPanel.jsx]] - degree 4, connects to 1 community
+- [[DoctorDashboard.jsx]] - degree 13, connects to 3 communities
+- [[ExerciseReviewPanel.jsx]] - degree 4, connects to 2 communities
 - [[DoctorDashboard()]] - degree 2, connects to 1 community

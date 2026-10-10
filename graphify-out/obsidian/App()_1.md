@@ -2,7 +2,7 @@
 source_file: "part2/Hemophillia-confirm/frontend/src/pages/App_EXERCISE_INTEGRATED.jsx"
 type: "code"
 community: "App_EXERCISE_INTEGRATED.jsx"
-location: "L188"
+location: "L35"
 tags:
   - graphify/code
   - graphify/EXTRACTED

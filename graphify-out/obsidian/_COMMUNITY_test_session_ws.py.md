@@ -1,11 +1,11 @@
 ---
 type: community
-members: 37
+members: 36
 ---
 
 # test_session_ws.py
 
-**Members:** 37 nodes
+**Members:** 36 nodes
 
 ## Members
 - [[A batch in the client.js wire format lands in that session's buffer.]] - rationale - backend/app/ws/test_session_ws.py
@@ -26,9 +26,8 @@ members: 37
 - [[_frames()]] - code - backend/app/ws/test_session_ws.py
 - [[_http_auth()]] - code - backend/app/ws/test_session_ws.py
 - [[_start()]] - code - backend/app/ws/test_session_ws.py
-- [[_token()_2]] - code - backend/app/ws/test_session_ws.py
+- [[_token()_4]] - code - backend/app/ws/test_session_ws.py
 - [[_wait_for()]] - code - backend/app/ws/test_session_ws.py
-- [[get_buffer()]] - code - backend/app/services/session_buffer.py
 - [[test_g2b_ws_default_auth_timeout_is_five_seconds()]] - code - backend/app/ws/test_session_ws.py
 - [[test_g2b_ws_malformed_auth_frame_closes_4401()]] - code - backend/app/ws/test_session_ws.py
 - [[test_g2b_ws_matching_user_token_is_accepted()]] - code - backend/app/ws/test_session_ws.py
@@ -55,16 +54,13 @@ SORT file.name ASC
 
 ## Connections to other communities
 - 11 edges to [[_COMMUNITY_TestClient]]
-- 8 edges to [[_COMMUNITY_test_session_buffer.py]]
-- 6 edges to [[_COMMUNITY_session_ws.py]]
-- 1 edge to [[_COMMUNITY_SessionBuffer]]
-- 1 edge to [[_COMMUNITY_exercise_config.py]]
-- 1 edge to [[_COMMUNITY_CurrentUser]]
+- 8 edges to [[_COMMUNITY_get_buffer]]
+- 7 edges to [[_COMMUNITY_session_ws.py]]
 - 1 edge to [[_COMMUNITY_appmain.py]]
 
 ## Top bridge nodes
-- [[test_session_ws.py]] - degree 28, connects to 5 communities
-- [[get_buffer()]] - degree 14, connects to 3 communities
-- [[test_h3_dead_emg_never_stalls_the_session()]] - degree 9, connects to 2 communities
-- [[test_h3_emg_relay_pushes_emg_messages()]] - degree 6, connects to 2 communities
-- [[test_h6_abrupt_disconnect_ends_session()]] - degree 10, connects to 1 community
+- [[test_session_ws.py]] - degree 28, connects to 3 communities
+- [[test_h3_dead_emg_never_stalls_the_session()]] - degree 9, connects to 3 communities
+- [[test_h6_abrupt_disconnect_ends_session()]] - degree 10, connects to 2 communities
+- [[test_h2_ws_accepts_pose_batch_into_buffer()]] - degree 8, connects to 2 communities
+- [[test_h2_ws_handler_never_awaits_disk()]] - degree 8, connects to 2 communities

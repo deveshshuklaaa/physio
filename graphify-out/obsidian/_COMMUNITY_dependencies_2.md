@@ -1,51 +1,57 @@
 ---
 type: community
-members: 38
+members: 44
 ---
 
 # dependencies
 
-**Members:** 38 nodes
+**Members:** 44 nodes
 
 ## Members
-- [[@vitejsplugin-react_2]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[@vitejsplugin-react_3]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[Hemophillia-confirmfrontendpackage.json]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[axios_2]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[axios_3]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[build_1]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[country-state-city]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[country-state-city_1]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[dependencies_2]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[dev_3]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[devDependencies_3]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[html2canvas]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[html2canvas_1]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[i18next]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[i18next_1]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[jspdf]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[jspdf_1]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[name_3]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[preview_1]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[private_2]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[react_2]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[react_3]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[react-dom_2]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[react-dom_3]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[react-i18next]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[react-i18next_1]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[react-markdown]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[react-markdown_1]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[react-router-dom]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[react-router-dom_1]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[recharts]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[recharts_1]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[remark-gfm]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[remark-gfm_1]] - concept - part2/Hemophillia-confirm/frontend/package.json
-- [[scripts_3]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[version_3]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[vite_2]] - code - part2/Hemophillia-confirm/frontend/package.json
-- [[vite_3]] - concept - part2/Hemophillia-confirm/frontend/package.json
+- [[@cloudrumblesindic-transliterate]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[@cloudrumblesindic-transliterate_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[@googlegenai]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[@googlegenai_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[axios_2]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[axios_3]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[backendpackage.json]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[bcryptjs]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[bcryptjs_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[cors]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[cors_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[dependencies_2]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[description_2]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[dev_3]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[devDependencies_3]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[dotenv]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[dotenv_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[express_11]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[express_12]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[google-auth-library]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[google-auth-library_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[jsonwebtoken]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[jsonwebtoken_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[main]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[mongodb]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[mongodb_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[mongodb-client-encryption]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[mongodb-client-encryption_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[mongoose_11]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[mongoose_12]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[multer_1]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[multer_2]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[name_3]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[nodemailer]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[nodemailer_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[nodemon]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[nodemon_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[pdfkit]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[pdfkit_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[scripts_3]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[start]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[uuid]] - code - part2/Hemophillia-confirm/backend/package.json
+- [[uuid_1]] - concept - part2/Hemophillia-confirm/backend/package.json
+- [[version_3]] - code - part2/Hemophillia-confirm/backend/package.json
 
 ## Live Query (requires Dataview plugin)
 
@@ -53,3 +59,10 @@ members: 38
 TABLE source_file, type FROM #community/dependencies
 SORT file.name ASC
 ```
+
+## Connections to other communities
+- 1 edge to [[_COMMUNITY_emg_imu_app.py]]
+- 1 edge to [[_COMMUNITY_session.py]]
+
+## Top bridge nodes
+- [[uuid_1]] - degree 3, connects to 2 communities

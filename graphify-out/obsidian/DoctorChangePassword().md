@@ -2,7 +2,7 @@
 source_file: "part2/Hemophillia-confirm/frontend/src/pages/DoctorChangePassword.jsx"
 type: "code"
 community: "App.jsx"
-location: "L288"
+location: "L5"
 tags:
   - graphify/code
   - graphify/EXTRACTED

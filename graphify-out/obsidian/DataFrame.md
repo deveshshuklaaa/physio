@@ -1,24 +1,16 @@
 ---
 source_file: ""
 type: "code"
-community: "common_features.py"
+community: "clip_features"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/common_featurespy
+  - community/clip_features
 ---
 
 # DataFrame
 
 ## Connections
-- [[add_angle_2d()]] - `references` [EXTRACTED]
-- [[add_angle_3d()]] - `references` [EXTRACTED]
-- [[add_distance_3d()]] - `references` [EXTRACTED]
-- [[extract_common_features()]] - `references` [EXTRACTED]
-- [[extract_common_file()]] - `references` [EXTRACTED]
-- [[p2()_1]] - `references` [EXTRACTED]
-- [[p3()_1]] - `references` [EXTRACTED]
-- [[read_table()]] - `references` [EXTRACTED]
-- [[write_parquet()]] - `references` [EXTRACTED]
+- [[label_cols()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/common_featurespy
+#graphify/code #graphify/EXTRACTED #community/clip_features

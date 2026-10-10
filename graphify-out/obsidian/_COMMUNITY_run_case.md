@@ -8,10 +8,10 @@ members: 6
 **Members:** 6 nodes
 
 ## Members
-- [[dot-__init__()_8]] - code - frontend/tools/parity_python.py
+- [[dot-__init__()_5]] - code - frontend/tools/parity_python.py
 - [[Lm]] - code - frontend/tools/parity_python.py
 - [[Stand-in for a mediapipe landmark has .x .y .z attributes.]] - rationale - frontend/tools/parity_python.py
-- [[main()_2]] - code - frontend/tools/parity_python.py
+- [[main()_7]] - code - frontend/tools/parity_python.py
 - [[parity_python.py]] - code - frontend/tools/parity_python.py
 - [[run_case()]] - code - frontend/tools/parity_python.py
 

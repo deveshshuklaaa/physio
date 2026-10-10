@@ -11,8 +11,8 @@ members: 31
 - [[Angle at point B using normalised 3D coordinates (x, y, z) from MediaPipe. Most…]] - rationale - backend/_old_physio_reference/math_utils.py
 - [[Defines what drives the rep state machine. The engine watches the angle of the…]] - rationale - backend/_old_physio_reference/exercise_base.py
 - [[Defines what drives the rep state machine. The engine watches the angle of the…_1]] - rationale - backend/_old_physio_reference/superseded_app_copies/exercise_base.py
-- [[ExerciseDefinition_2]] - code
-- [[ExerciseDefinition_3]] - code
+- [[ExerciseDefinition_4]] - code
+- [[ExerciseDefinition_5]] - code
 - [[RepTrigger]] - code - backend/_old_physio_reference/exercise_base.py
 - [[RepTrigger_1]] - code - backend/_old_physio_reference/superseded_app_copies/exercise_base.py
 - [[Returns 'SIDE' if the person is turned sideways, 'FRONT' otherwise. Uses the…]] - rationale - backend/_old_physio_reference/math_utils.py
@@ -34,8 +34,8 @@ members: 31
 - [[check_torso_lean_side()]] - code - backend/_old_physio_reference/exercises/squat.py
 - [[check_torso_lean_side()_1]] - code - backend/_old_physio_reference/superseded_app_copies/exercises/squat.py
 - [[detect_view()]] - code - backend/_old_physio_reference/math_utils.py
-- [[get_definition()]] - code - backend/_old_physio_reference/exercises/squat.py
-- [[get_definition()_1]] - code - backend/_old_physio_reference/superseded_app_copies/exercises/squat.py
+- [[get_definition()_2]] - code - backend/_old_physio_reference/exercises/squat.py
+- [[get_definition()_3]] - code - backend/_old_physio_reference/superseded_app_copies/exercises/squat.py
 - [[math_utils.py]] - code - backend/_old_physio_reference/math_utils.py
 - [[superseded_app_copiesexercisessquat.py]] - code - backend/_old_physio_reference/superseded_app_copies/exercises/squat.py
 - [[torso_lean()]] - code - backend/_old_physio_reference/math_utils.py
@@ -50,8 +50,8 @@ SORT file.name ASC
 ## Connections to other communities
 - 11 edges to [[_COMMUNITY_exercise_runner.py]]
 - 9 edges to [[_COMMUNITY_posture_checks.py]]
-- 7 edges to [[_COMMUNITY_ExerciseDefinition_1]]
-- 5 edges to [[_COMMUNITY_ExerciseDefinition]]
+- 7 edges to [[_COMMUNITY_ExerciseDefinition]]
+- 5 edges to [[_COMMUNITY_ExerciseDefinition_1]]
 - 4 edges to [[_COMMUNITY_run_case]]
 
 ## Top bridge nodes

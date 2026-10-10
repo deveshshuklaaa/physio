@@ -1,12 +1,12 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/src/services/otpService.js"
 type: "code"
-community: "admin.js"
-location: "L230"
+community: "otpAuth.js"
+location: "L243"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/adminjs
+  - community/otpAuthjs
 ---
 
 # verifyLoginOTP()
@@ -16,4 +16,4 @@ tags:
 - [[otpAuth.js]] - `imports` [EXTRACTED]
 - [[otpService.js]] - `indirect_call` [INFERRED]
 
-#graphify/code #graphify/EXTRACTED #community/adminjs
+#graphify/code #graphify/EXTRACTED #community/otpAuthjs

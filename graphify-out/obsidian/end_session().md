@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/routes/session.py"
 type: "code"
-community: "session_ws.py"
-location: "L152"
+community: "session.py"
+location: "L168"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/session_wspy
+  - community/sessionpy
 ---
 
 # end_session()
@@ -16,11 +16,13 @@ tags:
 - [[_finalize()]] - `calls` [EXTRACTED]
 - [[_now()]] - `calls` [EXTRACTED]
 - [[_sessions()]] - `calls` [EXTRACTED]
+- [[_spawn()]] - `calls` [EXTRACTED]
 - [[correlation()]] - `calls` [EXTRACTED]
 - [[generate_report()]] - `calls` [EXTRACTED]
 - [[get_session()]] - `calls` [EXTRACTED]
 - [[session.py]] - `contains` [EXTRACTED]
 - [[session_end()]] - `calls` [EXTRACTED]
 - [[session_ws.py]] - `imports` [EXTRACTED]
+- [[stop_capture()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/session_wspy
+#graphify/code #graphify/EXTRACTED #community/sessionpy

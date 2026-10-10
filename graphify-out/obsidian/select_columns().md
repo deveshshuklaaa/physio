@@ -12,7 +12,7 @@ tags:
 # select_columns()
 
 ## Connections
-- [[extract()_4]] - `calls` [EXTRACTED]
+- [[extract()]] - `calls` [EXTRACTED]
 - [[mini_squat.py]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/mini_squatpy

@@ -13,8 +13,8 @@ tags:
 
 ## Connections
 - [[Get EMG recording history from Flask service.]] - `rationale_for` [EXTRACTED]
+- [[_get()]] - `references` [EXTRACTED]
 - [[appmain.py]] - `contains` [EXTRACTED]
-- [[get_4]] - `references` [EXTRACTED]
 - [[get_emg_history()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/app/mainpy

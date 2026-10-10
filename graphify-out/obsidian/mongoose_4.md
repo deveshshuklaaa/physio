@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/db-test.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/phase4_name_split.js"
 type: "code"
-community: "encryption.js"
-location: "L3"
+community: "phase4_name_split.js"
+location: "L13"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/encryptionjs
+  - community/phase4_name_splitjs
 ---
 
 # mongoose
 
 ## Connections
-- [[db-test.js]] - `contains` [EXTRACTED]
+- [[phase4_name_split.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/encryptionjs
+#graphify/code #graphify/EXTRACTED #community/phase4_name_splitjs

@@ -1,18 +1,20 @@
 ---
-source_file: "frontend/tools/parity_python.py"
+source_file: "backend/ml/aggregate_features.py"
 type: "code"
-community: "run_case"
-location: "L45"
+community: "clip_features"
+location: "L76"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/run_case
+  - community/clip_features
 ---
 
 # main()
 
 ## Connections
-- [[parity_python.py]] - `contains` [EXTRACTED]
-- [[run_case()]] - `calls` [EXTRACTED]
+- [[Path_8]] - `calls` [EXTRACTED]
+- [[aggregate_features.py]] - `contains` [EXTRACTED]
+- [[clip_features()]] - `calls` [EXTRACTED]
+- [[label_cols()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/run_case
+#graphify/code #graphify/EXTRACTED #community/clip_features

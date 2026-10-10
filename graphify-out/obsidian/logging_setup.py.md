@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/logging_setup.py"
 type: "code"
-community: "logging_setup.py"
+community: "session_ws.py"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/logging_setuppy
+  - community/session_wspy
 ---
 
 # logging_setup.py
@@ -33,4 +33,4 @@ tags:
 - [[set_component_level()]] - `contains` [EXTRACTED]
 - [[video_retention.py]] - `imports_from` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/logging_setuppy
+#graphify/code #graphify/EXTRACTED #community/session_wspy

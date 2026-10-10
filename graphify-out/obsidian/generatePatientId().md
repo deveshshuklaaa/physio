@@ -1,12 +1,12 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/src/routes/profile.js"
 type: "code"
-community: "assessment.js"
-location: "L15"
+community: "profile.js"
+location: "L55"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/assessmentjs
+  - community/profilejs
 ---
 
 # generatePatientId()
@@ -15,4 +15,4 @@ tags:
 - [[generateUniquePatientId()]] - `calls` [EXTRACTED]
 - [[profile.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/assessmentjs
+#graphify/code #graphify/EXTRACTED #community/profilejs

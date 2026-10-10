@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/lib/rules.js"
 type: "code"
-community: "helpers.mjs"
-location: "L224"
+community: "rules.js"
+location: "L227"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/helpersmjs
+  - community/rulesjs
 ---
 
 # depthAlert()
@@ -19,4 +19,4 @@ tags:
 - [[thresholdAlert()]] - `calls` [EXTRACTED]
 - [[thresholdValue()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/helpersmjs
+#graphify/code #graphify/EXTRACTED #community/rulesjs

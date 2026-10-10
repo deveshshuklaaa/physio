@@ -1,16 +1,17 @@
 ---
 type: community
-members: 3
+members: 4
 ---
 
 # AdminPatientResearch.jsx
 
-**Members:** 3 nodes
+**Members:** 4 nodes
 
 ## Members
 - [[AdminPatientResearch()]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminPatientResearch.jsx
 - [[AdminPatientResearch.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminPatientResearch.jsx
-- [[IMPORTANT_10]] - rationale - part2/Hemophillia-confirm/frontend/src/pages/AdminPatientResearch.jsx
+- [[IMPORTANT_16]] - rationale - part2/Hemophillia-confirm/frontend/src/pages/AdminPatientResearch.jsx
+- [[cap()_1]] - code - part2/Hemophillia-confirm/frontend/src/pages/AdminPatientResearch.jsx
 
 ## Live Query (requires Dataview plugin)
 
@@ -21,8 +22,9 @@ SORT file.name ASC
 
 ## Connections to other communities
 - 2 edges to [[_COMMUNITY_App.jsx]]
-- 2 edges to [[_COMMUNITY_apiClient.js]]
+- 1 edge to [[_COMMUNITY_api]]
+- 1 edge to [[_COMMUNITY_apiClient.js]]
 
 ## Top bridge nodes
-- [[AdminPatientResearch.jsx]] - degree 5, connects to 2 communities
-- [[AdminPatientResearch()]] - degree 2, connects to 1 community
+- [[AdminPatientResearch.jsx]] - degree 6, connects to 3 communities
+- [[AdminPatientResearch()]] - degree 3, connects to 1 community

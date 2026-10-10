@@ -1,25 +1,25 @@
 ---
-source_file: "backend/app/routes/test_history.py"
+source_file: "backend/app/routes/test_report.py"
 type: "code"
-community: "test_history.py"
-location: "L53"
+community: "test_report.py"
+location: "L72"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/test_historypy
+  - community/test_reportpy
 ---
 
 # _auth()
 
 ## Connections
-- [[_start_session()]] - `calls` [EXTRACTED]
 - [[_token()]] - `calls` [EXTRACTED]
-- [[test_history.py]] - `contains` [EXTRACTED]
-- [[test_history_doctor_authorization_matrix()]] - `calls` [EXTRACTED]
-- [[test_history_is_patient_scoped_by_literal_id()]] - `calls` [EXTRACTED]
-- [[test_history_pagination()]] - `calls` [EXTRACTED]
-- [[test_history_resolves_display_patient_id_via_patientprofiles()]] - `calls` [EXTRACTED]
-- [[test_history_unknown_pat_id_is_404()]] - `calls` [EXTRACTED]
-- [[test_patient_reads_own_history_via_me()]] - `calls` [EXTRACTED]
+- [[test_f4_gemini_failure_preserves_counts()]] - `calls` [EXTRACTED]
+- [[test_f4_gemini_success_sets_reported()]] - `calls` [EXTRACTED]
+- [[test_f6_consent_accepts_and_writes_file()]] - `calls` [EXTRACTED]
+- [[test_f6_no_consent_rejects_and_writes_no_file()]] - `calls` [EXTRACTED]
+- [[test_f6_rejects_unsupported_content_type()]] - `calls` [EXTRACTED]
+- [[test_f6_size_cap()]] - `calls` [EXTRACTED]
+- [[test_f8_sweep_against_real_db()]] - `calls` [EXTRACTED]
+- [[test_report.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/test_historypy
+#graphify/code #graphify/EXTRACTED #community/test_reportpy

@@ -1,18 +1,18 @@
 ---
-source_file: "backend/app/routes/test_history.py"
+source_file: "backend/app/routes/test_session.py"
 type: "code"
-community: "test_history.py"
-location: "L72"
+community: "_lookup_docA_only_for_p1"
+location: "L243"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/test_historypy
+  - community/_lookup_docA_only_for_p1
 ---
 
 # _lookup_docA_only_for_p1()
 
 ## Connections
-- [[dot-__enter__()]] - `indirect_call` [INFERRED]
-- [[test_history.py]] - `contains` [EXTRACTED]
+- [[Stands in for the real hemophiliadetails.consultingDoctorId read (agent 16's…]] - `rationale_for` [EXTRACTED]
+- [[test_session.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/test_historypy
+#graphify/code #graphify/EXTRACTED #community/_lookup_docA_only_for_p1

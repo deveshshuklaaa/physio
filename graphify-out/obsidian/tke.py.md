@@ -13,6 +13,6 @@ tags:
 
 ## Connections
 - [[Terminal Knee Extension (TKE) — exercise-specific feature extractor. Input…]] - `rationale_for` [EXTRACTED]
-- [[extract()_3]] - `contains` [EXTRACTED]
+- [[extract()_4]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/tkepy

@@ -14,7 +14,7 @@ tags:
 ## Connections
 - [[Runs sweep_expired_videos() forever. Start with…]] - `rationale_for` [EXTRACTED]
 - [[db.py]] - `imports` [EXTRACTED]
-- [[lifespan()]] - `calls` [EXTRACTED]
+- [[lifespan()_1]] - `calls` [EXTRACTED]
 - [[sweep_expired_videos()]] - `calls` [EXTRACTED]
 - [[video_retention.py]] - `contains` [EXTRACTED]
 

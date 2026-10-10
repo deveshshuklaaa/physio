@@ -1,12 +1,12 @@
 ---
-source_file: "emg-service/backend/app.py"
+source_file: "hardware/esp32_imu/backend/emg_imu_app.py"
 type: "rationale"
-community: "app.py"
-location: "L110"
+community: "emg_imu_app.py"
+location: "L272"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/apppy
+  - community/emg_imu_apppy
 ---
 
 # Generator for SSE that yields lines from the queue.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[event_stream()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/apppy
+#graphify/rationale #graphify/EXTRACTED #community/emg_imu_apppy

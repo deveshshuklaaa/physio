@@ -12,11 +12,11 @@ tags:
 # superseded_app_copies/exercises/isometric_quadriceps.py
 
 ## Connections
-- [[ExerciseDefinition]] - `imports` [EXTRACTED]
-- [[IsometricTrigger]] - `imports` [EXTRACTED]
-- [[JointCheck]] - `imports` [EXTRACTED]
+- [[ExerciseDefinition_1]] - `imports` [EXTRACTED]
+- [[IsometricTrigger_1]] - `imports` [EXTRACTED]
+- [[JointCheck_1]] - `imports` [EXTRACTED]
 - [[exercise_runner.py]] - `imports_from` [EXTRACTED]
-- [[get_definition()_2]] - `contains` [EXTRACTED]
+- [[get_definition()_4]] - `contains` [EXTRACTED]
 - [[run_exercise()]] - `imports` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/ExerciseDefinition

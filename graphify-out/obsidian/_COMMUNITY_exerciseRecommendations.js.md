@@ -1,51 +1,52 @@
 ---
 type: community
-members: 38
+members: 39
 ---
 
 # exerciseRecommendations.js
 
-**Members:** 38 nodes
+**Members:** 39 nodes
 
 ## Members
-- [[ACTIVE_BLEEDING_PROBLEMS]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[ACTIVE_BLEEDING_STATES]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[ACTIVE_BLEEDING_TYPES]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[ANKLE_EXERCISES]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[Assessment_3]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[BREATHING_EXERCISES]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[HemophiliaDetails_3]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[JOINT_EXERCISE_MAP]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[Assessment_1]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[ClinicalRecord_1]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[IMPORTANT_8]] - rationale - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[IMPORTANT_9]] - rationale - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[IMPORTANT_10]] - rationale - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[IMPORTANT_11]] - rationale - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[IMPORTANT_12]] - rationale - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
 - [[JOINT_NORMALIZE]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[KNEE_EXERCISES]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
 - [[MANUAL_EXERCISE_CATALOG]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[PYTHON_CANDIDATES]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
 - [[PatientExerciseRecommendation]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[PatientProfile_3]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[REVIEW_BLEEDING_TYPES]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[ScreeningSession_3]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[User_10]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[assert]] - code - part2/Hemophillia-confirm/backend/src/routes/safety_engine_equivalence.test.js
-- [[authMiddleware_2]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[buildSafetyPatient()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[cases_1]] - code - part2/Hemophillia-confirm/backend/src/routes/safety_engine_equivalence.test.js
+- [[PatientProfile_1]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[ScreeningSession_1]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[User_9]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[assert_14]] - code - part2/Hemophillia-confirm/backend/src/routes/safety_engine_equivalence.test.js
+- [[authMiddleware_1]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[buildMlPatient()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[cases]] - code - part2/Hemophillia-confirm/backend/src/routes/safety_engine_equivalence.test.js
 - [[daysSince()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[dosageFor()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
 - [[exerciseRecommendations.js]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[express_14]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[express_6]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[fs_5]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
 - [[generateForPatient()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[getPythonScript()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
 - [[isEmergencyScreening()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[norm()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[normalizeEquipment()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
 - [[normalizeJoint()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
 - [[normalizeProblem()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[parsePainLevel()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[router_11]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[ruleRecommendationsForJoint()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
-- [[safetyEngine()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[parseSessions()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[path_15]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[router_6]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[runPython()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
 - [[safety_engine_equivalence.test.js]] - code - part2/Hemophillia-confirm/backend/src/routes/safety_engine_equivalence.test.js
 - [[uniqueJoints()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
 - [[verifyAssignedDoctor()]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[{ displayName }_3]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
 - [[{ safetyEngine }]] - code - part2/Hemophillia-confirm/backend/src/routes/safety_engine_equivalence.test.js
-- [[{ staffAuth }]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[{ spawn }_1]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
+- [[{ staffAuth }_1]] - code - part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js
 
 ## Live Query (requires Dataview plugin)
 
@@ -55,12 +56,10 @@ SORT file.name ASC
 ```
 
 ## Connections to other communities
-- 3 edges to [[_COMMUNITY_patientResearch.js]]
-- 3 edges to [[_COMMUNITY_fhir.js]]
+- 2 edges to [[_COMMUNITY_displayName]]
+- 2 edges to [[_COMMUNITY_doctorPatients.js]]
 - 1 edge to [[_COMMUNITY_srcindex.js]]
-- 1 edge to [[_COMMUNITY_User.js]]
 - 1 edge to [[_COMMUNITY_assessment.js]]
-- 1 edge to [[_COMMUNITY_doctorDashboard.js]]
 
 ## Top bridge nodes
-- [[exerciseRecommendations.js]] - degree 44, connects to 6 communities
+- [[exerciseRecommendations.js]] - degree 41, connects to 4 communities

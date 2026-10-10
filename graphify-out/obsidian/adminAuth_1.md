@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/admin.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/adminPatientResearch.js"
 type: "code"
-community: "admin.js"
-location: "L4970"
+community: "adminPatientResearch.js"
+location: "L3"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/adminjs
+  - community/adminPatientResearchjs
 ---
 
 # adminAuth
 
 ## Connections
-- [[admin.js]] - `contains` [EXTRACTED]
+- [[adminPatientResearch.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/adminjs
+#graphify/code #graphify/EXTRACTED #community/adminPatientResearchjs

@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/frontend/src/pages/AdminProfile.jsx"
+source_file: "part2/Hemophillia-confirm/frontend/src/pages/AdminChangePassword.jsx"
 type: "code"
-community: "AdminProfile.jsx"
-location: "L156"
+community: "AdminChangePassword.jsx"
+location: "L19"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/AdminProfilejsx
+  - community/AdminChangePasswordjsx
 ---
 
 # Field()
 
 ## Connections
-- [[AdminProfile.jsx]] - `contains` [EXTRACTED]
+- [[AdminChangePassword.jsx]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/AdminProfilejsx
+#graphify/code #graphify/EXTRACTED #community/AdminChangePasswordjsx

@@ -18,10 +18,17 @@ tags:
 - [[_record_failure()]] - `contains` [EXTRACTED]
 - [[_record_success()]] - `contains` [EXTRACTED]
 - [[appmain.py]] - `imports_from` [EXTRACTED]
+- [[calibration_ok()]] - `contains` [EXTRACTED]
 - [[get_emg_history()]] - `contains` [EXTRACTED]
 - [[get_emg_status()]] - `contains` [EXTRACTED]
 - [[get_live_emg_reading()]] - `contains` [EXTRACTED]
+- [[recalibrate()]] - `contains` [EXTRACTED]
+- [[session.py]] - `imports_from` [EXTRACTED]
 - [[session_ws.py]] - `imports_from` [EXTRACTED]
+- [[start_capture()_1]] - `contains` [EXTRACTED]
+- [[stop_capture()]] - `contains` [EXTRACTED]
+- [[test_calibration_gate.py]] - `imports` [EXTRACTED]
+- [[test_emg_capture.py]] - `imports` [EXTRACTED]
 - [[test_emg_client.py]] - `imports` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/app/mainpy

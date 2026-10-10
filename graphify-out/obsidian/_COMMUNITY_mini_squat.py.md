@@ -9,7 +9,7 @@ members: 4
 
 ## Members
 - [[Mini Squat exercise-specific feature extractor. Input  common_feature.parquet…]] - rationale - backend/ml/exercise_extractors/mini_squat.py
-- [[extract()_4]] - code - backend/ml/exercise_extractors/mini_squat.py
+- [[extract()]] - code - backend/ml/exercise_extractors/mini_squat.py
 - [[mini_squat.py]] - code - backend/ml/exercise_extractors/mini_squat.py
 - [[select_columns()]] - code - backend/ml/exercise_extractors/mini_squat.py
 

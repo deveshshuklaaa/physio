@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/adminPatientResearch.js"
+source_file: "part2/Hemophillia-confirm/frontend/src/pages/HemophiliaChatbot.jsx"
 type: "rationale"
-community: "adminPatientResearch.js"
-location: "L3001"
+community: "api"
+location: "L1008"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/adminPatientResearchjs
+  - community/api
 ---
 
 # IMPORTANT:
 
 ## Connections
-- [[adminPatientResearch.js]] - `rationale_for` [EXTRACTED]
+- [[HemophiliaChatbot.jsx]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/adminPatientResearchjs
+#graphify/rationale #graphify/EXTRACTED #community/api

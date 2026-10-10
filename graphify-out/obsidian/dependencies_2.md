@@ -1,5 +1,5 @@
 ---
-source_file: "part2/Hemophillia-confirm/frontend/package.json"
+source_file: "part2/Hemophillia-confirm/backend/package.json"
 type: "code"
 community: "dependencies"
 location: "L10"
@@ -12,18 +12,22 @@ tags:
 # dependencies
 
 ## Connections
-- [[Hemophillia-confirmfrontendpackage.json]] - `contains` [EXTRACTED]
+- [[@cloudrumblesindic-transliterate]] - `contains` [EXTRACTED]
+- [[@googlegenai]] - `contains` [EXTRACTED]
 - [[axios_2]] - `contains` [EXTRACTED]
-- [[country-state-city]] - `contains` [EXTRACTED]
-- [[html2canvas]] - `contains` [EXTRACTED]
-- [[i18next]] - `contains` [EXTRACTED]
-- [[jspdf]] - `contains` [EXTRACTED]
-- [[react_2]] - `contains` [EXTRACTED]
-- [[react-dom_2]] - `contains` [EXTRACTED]
-- [[react-i18next]] - `contains` [EXTRACTED]
-- [[react-markdown]] - `contains` [EXTRACTED]
-- [[react-router-dom]] - `contains` [EXTRACTED]
-- [[recharts]] - `contains` [EXTRACTED]
-- [[remark-gfm]] - `contains` [EXTRACTED]
+- [[backendpackage.json]] - `contains` [EXTRACTED]
+- [[bcryptjs]] - `contains` [EXTRACTED]
+- [[cors]] - `contains` [EXTRACTED]
+- [[dotenv]] - `contains` [EXTRACTED]
+- [[express_11]] - `contains` [EXTRACTED]
+- [[google-auth-library]] - `contains` [EXTRACTED]
+- [[jsonwebtoken]] - `contains` [EXTRACTED]
+- [[mongodb]] - `contains` [EXTRACTED]
+- [[mongodb-client-encryption]] - `contains` [EXTRACTED]
+- [[mongoose_11]] - `contains` [EXTRACTED]
+- [[multer_1]] - `contains` [EXTRACTED]
+- [[nodemailer]] - `contains` [EXTRACTED]
+- [[pdfkit]] - `contains` [EXTRACTED]
+- [[uuid]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

@@ -12,11 +12,11 @@ tags:
 # _old_physio_reference/exercises/seated_leg_extensions.py
 
 ## Connections
-- [[ExerciseDefinition_1]] - `imports` [EXTRACTED]
-- [[IsometricTrigger_1]] - `imports` [EXTRACTED]
-- [[JointCheck_1]] - `imports` [EXTRACTED]
+- [[ExerciseDefinition]] - `imports` [EXTRACTED]
+- [[IsometricTrigger]] - `imports` [EXTRACTED]
+- [[JointCheck]] - `imports` [EXTRACTED]
 - [[exercise_runner.py]] - `imports_from` [EXTRACTED]
-- [[get_definition()_5]] - `contains` [EXTRACTED]
+- [[get_definition()_1]] - `contains` [EXTRACTED]
 - [[run_exercise()]] - `imports` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/ExerciseDefinition

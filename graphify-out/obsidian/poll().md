@@ -2,7 +2,7 @@
 source_file: "frontend/app/src/pages/Report.jsx"
 type: "code"
 community: "cn"
-location: "L84"
+location: "L185"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,7 +12,7 @@ tags:
 # poll()
 
 ## Connections
-- [[Report()_1]] - `contains` [EXTRACTED]
+- [[Report()]] - `contains` [EXTRACTED]
 - [[isTerminalPhase()]] - `calls` [EXTRACTED]
 - [[reportPhase()]] - `calls` [EXTRACTED]
 

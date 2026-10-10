@@ -42,16 +42,19 @@ SORT file.name ASC
 
 ## Connections to other communities
 - 14 edges to [[_COMMUNITY_test_validate_model_package.py]]
-- 9 edges to [[_COMMUNITY_TestClient]]
+- 6 edges to [[_COMMUNITY_TestClient]]
 - 5 edges to [[_COMMUNITY_validate_model_package.py]]
 - 4 edges to [[_COMMUNITY_test_e_gate.py]]
 - 3 edges to [[_COMMUNITY_check_data_sources]]
 - 1 edge to [[_COMMUNITY__fit_model]]
-- 1 edge to [[_COMMUNITY_appmain.py]]
+- 1 edge to [[_COMMUNITY_test_e7_status_lists_every_configured_exercise]]
+- 1 edge to [[_COMMUNITY_test_e8_missing_model_does_not_crash_startup]]
+- 1 edge to [[_COMMUNITY_test_e8_live_feedback_survives_a_missing_model]]
 - 1 edge to [[_COMMUNITY_admin_models.py]]
+- 1 edge to [[_COMMUNITY_appmain.py]]
 
 ## Top bridge nodes
-- [[test_admin_models.py]] - degree 21, connects to 5 communities
+- [[test_admin_models.py]] - degree 21, connects to 7 communities
 - [[_build_zip()]] - degree 16, connects to 3 communities
 - [[_tmp()]] - degree 15, connects to 2 communities
 - [[test_e7_status_reports_data_sources()]] - degree 7, connects to 2 communities

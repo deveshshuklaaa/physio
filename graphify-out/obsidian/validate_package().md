@@ -12,7 +12,7 @@ tags:
 # validate_package()
 
 ## Connections
-- [[Path_10]] - `calls` [EXTRACTED]
+- [[Path_19]] - `calls` [EXTRACTED]
 - [[Read-only check -- does not write anything. `known_exercises` (from…]] - `rationale_for` [EXTRACTED]
 - [[ValidationReport]] - `references` [EXTRACTED]
 - [[_validate()]] - `calls` [EXTRACTED]

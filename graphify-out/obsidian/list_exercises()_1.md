@@ -1,19 +1,19 @@
 ---
 source_file: "backend/app/routes/exercises.py"
 type: "code"
-community: "exercises.py"
+community: "_get"
 location: "L9"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exercisespy
+  - community/_get
 ---
 
 # list_exercises()
 
 ## Connections
 - [[Request_5]] - `references` [EXTRACTED]
+- [[_get()]] - `references` [EXTRACTED]
 - [[exercises.py]] - `contains` [EXTRACTED]
-- [[get_6]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exercisespy
+#graphify/code #graphify/EXTRACTED #community/_get

@@ -12,7 +12,7 @@ tags:
 # .toArray()
 
 ## Connections
-- [[dot-push()]] - `calls` [EXTRACTED]
+- [[dot-push()_1]] - `calls` [EXTRACTED]
 - [[RingBuffer]] - `method` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/RingBuffer

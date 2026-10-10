@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/services/session_buffer.py"
 type: "code"
-community: "test_session_buffer.py"
+community: "get_buffer"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/test_session_bufferpy
+  - community/get_buffer
 ---
 
 # session_buffer.py
@@ -21,4 +21,4 @@ tags:
 - [[test_session_buffer.py]] - `imports_from` [EXTRACTED]
 - [[test_session_ws.py]] - `imports_from` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/test_session_bufferpy
+#graphify/code #graphify/EXTRACTED #community/get_buffer

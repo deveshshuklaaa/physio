@@ -12,9 +12,9 @@ tags:
 # FakeWebSocket
 
 ## Connections
-- [[dot-addEventListener()_1]] - `method` [EXTRACTED]
-- [[dot-close()_1]] - `method` [EXTRACTED]
-- [[dot-constructor()_14]] - `method` [EXTRACTED]
+- [[dot-addEventListener()]] - `method` [EXTRACTED]
+- [[dot-close()]] - `method` [EXTRACTED]
+- [[dot-constructor()_1]] - `method` [EXTRACTED]
 - [[dot-emit()]] - `method` [EXTRACTED]
 - [[dot-send()]] - `method` [EXTRACTED]
 - [[dot-sentJson()]] - `method` [EXTRACTED]

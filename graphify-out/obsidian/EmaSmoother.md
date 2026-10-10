@@ -12,8 +12,8 @@ tags:
 # EmaSmoother
 
 ## Connections
-- [[dot-constructor()_4]] - `method` [EXTRACTED]
-- [[dot-reset()]] - `method` [EXTRACTED]
+- [[dot-constructor()_8]] - `method` [EXTRACTED]
+- [[dot-reset()_1]] - `method` [EXTRACTED]
 - [[dot-smooth()]] - `method` [EXTRACTED]
 - [[createSmoother()]] - `calls` [EXTRACTED]
 - [[pose_engine_selfcheck.mjs]] - `imports` [EXTRACTED]

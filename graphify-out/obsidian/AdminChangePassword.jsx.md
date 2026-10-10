@@ -1,20 +1,24 @@
 ---
 source_file: "part2/Hemophillia-confirm/frontend/src/pages/AdminChangePassword.jsx"
 type: "code"
-community: "apiClient.js"
+community: "AdminChangePassword.jsx"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/apiClientjs
+  - community/AdminChangePasswordjsx
 ---
 
 # AdminChangePassword.jsx
 
 ## Connections
 - [[AdminChangePassword()]] - `contains` [EXTRACTED]
+- [[App.jsx]] - `imports_from` [EXTRACTED]
+- [[Field()]] - `contains` [EXTRACTED]
+- [[RULES]] - `contains` [EXTRACTED]
+- [[S]] - `contains` [EXTRACTED]
 - [[api]] - `imports` [EXTRACTED]
 - [[apiClient.js]] - `imports_from` [EXTRACTED]
-- [[s]] - `contains` [EXTRACTED]
+- [[strong()]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/apiClientjs
+#graphify/code #graphify/EXTRACTED #community/AdminChangePasswordjsx

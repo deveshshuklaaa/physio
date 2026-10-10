@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/doctorRegistration.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/doctorDashboard.js"
 type: "code"
-community: "DoctorRegistrationRequest.js"
-location: "L420"
+community: "displayName"
+location: "L2"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/DoctorRegistrationRequestjs
+  - community/displayName
 ---
 
 # express
 
 ## Connections
-- [[doctorRegistration.js]] - `contains` [EXTRACTED]
+- [[doctorDashboard.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/DoctorRegistrationRequestjs
+#graphify/code #graphify/EXTRACTED #community/displayName

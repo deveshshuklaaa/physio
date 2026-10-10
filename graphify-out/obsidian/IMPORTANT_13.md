@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/services/emailService.js"
+source_file: "part2/Hemophillia-confirm/backend/scripts/createAdmin.js"
 type: "rationale"
-community: "admin.js"
-location: "L895"
+community: "displayName"
+location: "L45"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/adminjs
+  - community/displayName
 ---
 
 # IMPORTANT:
 
 ## Connections
-- [[emailService.js]] - `rationale_for` [EXTRACTED]
+- [[createAdmin.js]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/adminjs
+#graphify/rationale #graphify/EXTRACTED #community/displayName

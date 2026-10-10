@@ -2,7 +2,7 @@
 source_file: "frontend/app/src/pages/Report.jsx"
 type: "code"
 community: "cn"
-location: "L41"
+location: "L112"
 tags:
   - graphify/code
   - graphify/EXTRACTED

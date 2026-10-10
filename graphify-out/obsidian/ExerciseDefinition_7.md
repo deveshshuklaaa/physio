@@ -11,6 +11,8 @@ tags:
 # ExerciseDefinition
 
 ## Connections
-- [[get_definition()_3]] - `calls` [EXTRACTED]
+- [[get_all_exercise_definitions()]] - `references` [EXTRACTED]
+- [[get_exercise_definition()]] - `references` [EXTRACTED]
+- [[load_exercises()_1]] - `references` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/ExerciseDefinition

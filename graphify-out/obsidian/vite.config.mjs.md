@@ -11,4 +11,7 @@ tags:
 
 # vite.config.mjs
 
+## Connections
+- [[__dirname]] - `contains` [EXTRACTED]
+
 #graphify/code #graphify/EXTRACTED #community/viteconfigmjs

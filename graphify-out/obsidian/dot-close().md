@@ -1,17 +1,18 @@
 ---
-source_file: "frontend/src/ws/client.js"
+source_file: "frontend/tests/helpers.mjs"
 type: "code"
-community: "RingBuffer"
-location: "L120"
+community: "FakeWebSocket"
+location: "L89"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/RingBuffer
+  - community/FakeWebSocket
 ---
 
 # .close()
 
 ## Connections
-- [[SessionWsClient]] - `method` [EXTRACTED]
+- [[dot-emit()]] - `calls` [EXTRACTED]
+- [[FakeWebSocket]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/RingBuffer
+#graphify/code #graphify/EXTRACTED #community/FakeWebSocket

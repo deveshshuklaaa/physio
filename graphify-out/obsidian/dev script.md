@@ -12,7 +12,7 @@ tags:
 # dev script
 
 ## Connections
-- [[dev_1]] - `contains` [EXTRACTED]
+- [[dev]] - `contains` [EXTRACTED]
 - [[usage()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dev

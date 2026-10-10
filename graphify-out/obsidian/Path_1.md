@@ -1,16 +1,16 @@
 ---
 source_file: ""
 type: "code"
-community: "app/__init__.py"
+community: "SessionBuffer"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/app/__init__py
+  - community/SessionBuffer
 ---
 
 # Path
 
 ## Connections
-- [[_load_env()]] - `references` [EXTRACTED]
+- [[dot-path()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/app/__init__py
+#graphify/code #graphify/EXTRACTED #community/SessionBuffer

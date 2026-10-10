@@ -13,6 +13,6 @@ tags:
 
 ## Connections
 - [[Straight Leg Raise (SLR) — exercise-specific feature extractor. Input common…]] - `rationale_for` [EXTRACTED]
-- [[extract()_2]] - `contains` [EXTRACTED]
+- [[extract()_3]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/slrpy

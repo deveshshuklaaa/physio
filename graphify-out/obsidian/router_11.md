@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/patientResearch.js"
 type: "code"
-community: "exerciseRecommendations.js"
-location: "L701"
+community: "patientResearch.js"
+location: "L16"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exerciseRecommendationsjs
+  - community/patientResearchjs
 ---
 
 # router
 
 ## Connections
-- [[exerciseRecommendations.js]] - `contains` [EXTRACTED]
+- [[patientResearch.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exerciseRecommendationsjs
+#graphify/code #graphify/EXTRACTED #community/patientResearchjs

@@ -1,19 +1,19 @@
 ---
-source_file: "backend/ml/run_landmark_pipeline.py"
+source_file: "backend/ml/extract_landmarks.py"
 type: "code"
-community: "find_videos"
-location: "L18"
+community: "extract_landmarks.py"
+location: "L430"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/find_videos
+  - community/extract_landmarkspy
 ---
 
 # find_videos()
 
 ## Connections
-- [[Find videos recursively, preserving their paths relative to input_root.]] - `rationale_for` [EXTRACTED]
-- [[main()_18]] - `calls` [EXTRACTED]
-- [[run_landmark_pipeline.py]] - `contains` [EXTRACTED]
+- [[Path_20]] - `references` [EXTRACTED]
+- [[batch_extract()]] - `calls` [EXTRACTED]
+- [[extract_landmarks.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/find_videos
+#graphify/code #graphify/EXTRACTED #community/extract_landmarkspy

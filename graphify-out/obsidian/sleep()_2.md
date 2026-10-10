@@ -12,7 +12,7 @@ tags:
 # sleep()
 
 ## Connections
-- [[main()_17]] - `calls` [EXTRACTED]
+- [[main()_6]] - `calls` [EXTRACTED]
 - [[run_g5_test.mjs]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/run_g5_testmjs

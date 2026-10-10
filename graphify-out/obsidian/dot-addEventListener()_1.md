@@ -1,17 +1,17 @@
 ---
 source_file: "frontend/tests/helpers.mjs"
 type: "code"
-community: "FakeWebSocket"
-location: "L80"
+community: "helpers.mjs"
+location: "L105"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/FakeWebSocket
+  - community/helpersmjs
 ---
 
 # .addEventListener()
 
 ## Connections
-- [[FakeWebSocket]] - `method` [EXTRACTED]
+- [[FakeAudio]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/FakeWebSocket
+#graphify/code #graphify/EXTRACTED #community/helpersmjs

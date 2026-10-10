@@ -12,9 +12,9 @@ tags:
 # superseded_app_copies/exercise_base.py
 
 ## Connections
-- [[ExerciseDefinition]] - `contains` [EXTRACTED]
-- [[IsometricTrigger]] - `contains` [EXTRACTED]
-- [[JointCheck]] - `contains` [EXTRACTED]
+- [[ExerciseDefinition_1]] - `contains` [EXTRACTED]
+- [[IsometricTrigger_1]] - `contains` [EXTRACTED]
+- [[JointCheck_1]] - `contains` [EXTRACTED]
 - [[RepTrigger_1]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/ExerciseDefinition

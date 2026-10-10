@@ -13,8 +13,8 @@ tags:
 
 ## Connections
 - [[E7 which exercises have a loaded model, is_tree_based per exercise, and the…]] - `rationale_for` [EXTRACTED]
-- [[Request_3]] - `references` [EXTRACTED]
+- [[Request]] - `references` [EXTRACTED]
+- [[_get()]] - `references` [EXTRACTED]
 - [[admin_models.py]] - `contains` [EXTRACTED]
-- [[get_3]] - `references` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/admin_modelspy

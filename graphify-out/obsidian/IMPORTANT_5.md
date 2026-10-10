@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/adminAuth.js"
+source_file: "part2/Hemophillia-confirm/frontend/src/pages/ProfileStepper.jsx"
 type: "rationale"
-community: "User.js"
-location: "L438"
+community: "ProfileStepper.jsx"
+location: "L190"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Userjs
+  - community/ProfileStepperjsx
 ---
 
 # IMPORTANT:
 
 ## Connections
-- [[routesadminAuth.js]] - `rationale_for` [EXTRACTED]
+- [[ProfileStepper.jsx]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Userjs
+#graphify/rationale #graphify/EXTRACTED #community/ProfileStepperjsx

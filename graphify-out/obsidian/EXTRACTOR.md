@@ -2,7 +2,7 @@
 source_file: "frontend/src/lib/events.js"
 type: "code"
 community: "events.js"
-location: "L58"
+location: "L59"
 tags:
   - graphify/code
   - graphify/EXTRACTED

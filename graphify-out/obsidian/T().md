@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/tests/rules.test.mjs"
 type: "code"
-community: "helpers.mjs"
+community: "rules.js"
 location: "L21"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/helpersmjs
+  - community/rulesjs
 ---
 
 # T()
@@ -15,4 +15,4 @@ tags:
 - [[rules.test.mjs]] - `contains` [EXTRACTED]
 - [[thresholdValue()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/helpersmjs
+#graphify/code #graphify/EXTRACTED #community/rulesjs

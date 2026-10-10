@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/scripts/createAdmin.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/test/layer2_helpers.js"
 type: "code"
-community: "createAdmin.js"
-location: "L3"
+community: "layer2_helpers.js"
+location: "L23"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/createAdminjs
+  - community/layer2_helpersjs
 ---
 
 # bcrypt
 
 ## Connections
-- [[createAdmin.js]] - `contains` [EXTRACTED]
+- [[layer2_helpers.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/createAdminjs
+#graphify/code #graphify/EXTRACTED #community/layer2_helpersjs

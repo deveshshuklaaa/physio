@@ -22,8 +22,9 @@ SORT file.name ASC
 
 ## Connections to other communities
 - 2 edges to [[_COMMUNITY_App.jsx]]
-- 2 edges to [[_COMMUNITY_apiClient.js]]
+- 1 edge to [[_COMMUNITY_api]]
+- 1 edge to [[_COMMUNITY_apiClient.js]]
 
 ## Top bridge nodes
-- [[Layout.jsx]] - degree 6, connects to 2 communities
+- [[Layout.jsx]] - degree 6, connects to 3 communities
 - [[Layout()]] - degree 2, connects to 1 community

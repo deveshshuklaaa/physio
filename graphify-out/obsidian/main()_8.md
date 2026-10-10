@@ -1,19 +1,18 @@
 ---
-source_file: "backend/ml/export_model.py"
+source_file: "backend/tools/fake_session_client.py"
 type: "code"
-community: "common_features.py"
-location: "L101"
+community: "fake_session_client.py"
+location: "L78"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/common_featurespy
+  - community/fake_session_clientpy
 ---
 
 # main()
 
 ## Connections
-- [[Path_13]] - `calls` [EXTRACTED]
-- [[export_exercise()]] - `calls` [EXTRACTED]
-- [[export_model.py]] - `contains` [EXTRACTED]
+- [[_drive()]] - `calls` [EXTRACTED]
+- [[fake_session_client.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/common_featurespy
+#graphify/code #graphify/EXTRACTED #community/fake_session_clientpy

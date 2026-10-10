@@ -1,13 +1,15 @@
 ---
 type: community
-members: 10
+members: 12
 ---
 
 # ProfileStepper.jsx
 
-**Members:** 10 nodes
+**Members:** 12 nodes
 
 ## Members
+- [[IMPORTANT_5]] - rationale - part2/Hemophillia-confirm/frontend/src/pages/ProfileStepper.jsx
+- [[PROFILE_FIELDS_1]] - code - part2/Hemophillia-confirm/frontend/src/pages/ProfileStepper.jsx
 - [[ProfileStepper()]] - code - part2/Hemophillia-confirm/frontend/src/pages/ProfileStepper.jsx
 - [[ProfileStepper.jsx]] - code - part2/Hemophillia-confirm/frontend/src/pages/ProfileStepper.jsx
 - [[bloodGroupOptions]] - code - part2/Hemophillia-confirm/frontend/src/pages/ProfileStepper.jsx
@@ -28,8 +30,9 @@ SORT file.name ASC
 
 ## Connections to other communities
 - 2 edges to [[_COMMUNITY_App.jsx]]
-- 2 edges to [[_COMMUNITY_apiClient.js]]
+- 1 edge to [[_COMMUNITY_api]]
+- 1 edge to [[_COMMUNITY_apiClient.js]]
 
 ## Top bridge nodes
-- [[ProfileStepper.jsx]] - degree 12, connects to 2 communities
+- [[ProfileStepper.jsx]] - degree 14, connects to 3 communities
 - [[ProfileStepper()]] - degree 2, connects to 1 community

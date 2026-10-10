@@ -1,17 +1,17 @@
 ---
-source_file: "frontend/tools/pose_engine_selfcheck.mjs"
+source_file: "frontend/tools/g13_test/run_g13_test.mjs"
 type: "code"
-community: "pose_engine_selfcheck.mjs"
-location: "L18"
+community: "run_g13_test.mjs"
+location: "L17"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/pose_engine_selfcheckmjs
+  - community/run_g13_testmjs
 ---
 
 # HERE
 
 ## Connections
-- [[pose_engine_selfcheck.mjs]] - `contains` [EXTRACTED]
+- [[run_g13_test.mjs]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/pose_engine_selfcheckmjs
+#graphify/code #graphify/EXTRACTED #community/run_g13_testmjs

@@ -1,18 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/scripts/createAdmin.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/phase2_indexes.js"
 type: "code"
-community: "createAdmin.js"
-location: "L9"
+community: "cryptSharedPath.js"
+location: "L10"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/createAdminjs
+  - community/cryptSharedPathjs
 ---
 
 # connectDB
 
 ## Connections
-- [[createAdmin()]] - `calls` [EXTRACTED]
-- [[createAdmin.js]] - `contains` [EXTRACTED]
+- [[phase2_indexes.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/createAdminjs
+#graphify/code #graphify/EXTRACTED #community/cryptSharedPathjs

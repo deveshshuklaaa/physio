@@ -1,17 +1,17 @@
 ---
 source_file: "frontend/tests/helpers.mjs"
 type: "code"
-community: "smoothing_audio.test.mjs"
-location: "L105"
+community: "FakeWebSocket"
+location: "L80"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/smoothing_audiotestmjs
+  - community/FakeWebSocket
 ---
 
 # .addEventListener()
 
 ## Connections
-- [[FakeAudio]] - `method` [EXTRACTED]
+- [[FakeWebSocket]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/smoothing_audiotestmjs
+#graphify/code #graphify/EXTRACTED #community/FakeWebSocket

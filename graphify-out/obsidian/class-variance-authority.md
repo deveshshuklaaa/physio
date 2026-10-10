@@ -13,6 +13,6 @@ tags:
 
 ## Connections
 - [[class-variance-authority_1]] - `imports` [EXTRACTED]
-- [[dependencies]] - `contains` [EXTRACTED]
+- [[dependencies_1]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

@@ -12,7 +12,7 @@ tags:
 # Separator()
 
 ## Connections
-- [[cn()_2]] - `calls` [EXTRACTED]
+- [[cn()]] - `calls` [EXTRACTED]
 - [[separator.jsx]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/cn

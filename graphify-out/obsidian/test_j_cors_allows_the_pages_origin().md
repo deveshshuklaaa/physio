@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/test_cors.py"
 type: "code"
 community: "test_cors.py"
-location: "L28"
+location: "L35"
 tags:
   - graphify/code
   - graphify/EXTRACTED

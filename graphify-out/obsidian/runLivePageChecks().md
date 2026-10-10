@@ -12,7 +12,7 @@ tags:
 # runLivePageChecks()
 
 ## Connections
-- [[main()_14]] - `calls` [EXTRACTED]
+- [[main()_3]] - `calls` [EXTRACTED]
 - [[run_g6_g10_test.mjs]] - `contains` [EXTRACTED]
 - [[sleep()]] - `calls` [EXTRACTED]
 

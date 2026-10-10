@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/otpAuth.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/auth.js"
 type: "code"
-community: "admin.js"
-location: "L2"
+community: "routes/auth.js"
+location: "L3"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/adminjs
+  - community/routes/authjs
 ---
 
 # jwt
 
 ## Connections
-- [[otpAuth.js]] - `contains` [EXTRACTED]
+- [[routesauth.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/adminjs
+#graphify/code #graphify/EXTRACTED #community/routes/authjs

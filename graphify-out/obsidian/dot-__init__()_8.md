@@ -1,17 +1,17 @@
 ---
-source_file: "frontend/tools/parity_python.py"
+source_file: "backend/app/db.py"
 type: "code"
-community: "run_case"
-location: "L22"
+community: "db.py"
+location: "L159"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/run_case
+  - community/dbpy
 ---
 
 # .__init__()
 
 ## Connections
-- [[Lm]] - `method` [EXTRACTED]
+- [[_FakeCursorResult]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/run_case
+#graphify/code #graphify/EXTRACTED #community/dbpy

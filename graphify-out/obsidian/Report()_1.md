@@ -1,20 +1,18 @@
 ---
-source_file: "frontend/app/src/pages/Report.jsx"
+source_file: "part2/Hemophillia-confirm/frontend/src/pages/Report.jsx"
 type: "code"
-community: "cn"
-location: "L64"
+community: "App.jsx"
+location: "L7"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/cn
+  - community/Appjsx
 ---
 
 # Report()
 
 ## Connections
-- [[appsrcpagesReport.jsx]] - `contains` [EXTRACTED]
-- [[poll()]] - `contains` [EXTRACTED]
-- [[report-main.jsx]] - `imports` [EXTRACTED]
-- [[reportPhase()]] - `calls` [EXTRACTED]
+- [[App.jsx]] - `imports` [EXTRACTED]
+- [[frontendsrcpagesReport.jsx]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/cn
+#graphify/code #graphify/EXTRACTED #community/Appjsx

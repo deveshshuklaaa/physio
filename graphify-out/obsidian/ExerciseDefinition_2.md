@@ -1,11 +1,11 @@
 ---
 source_file: ""
 type: "code"
-community: "detect_view"
+community: "ExerciseDefinition"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/detect_view
+  - community/ExerciseDefinition
 ---
 
 # ExerciseDefinition
@@ -13,4 +13,4 @@ tags:
 ## Connections
 - [[get_definition()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/detect_view
+#graphify/code #graphify/EXTRACTED #community/ExerciseDefinition

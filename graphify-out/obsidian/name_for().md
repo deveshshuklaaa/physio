@@ -13,6 +13,6 @@ tags:
 
 ## Connections
 - [[build_obsidian_vault.py]] - `contains` [EXTRACTED]
-- [[main()_3]] - `calls` [EXTRACTED]
+- [[main()_10]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/build_obsidian_vaultpy

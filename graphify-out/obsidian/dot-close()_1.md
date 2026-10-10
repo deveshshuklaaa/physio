@@ -1,18 +1,17 @@
 ---
-source_file: "frontend/tests/helpers.mjs"
+source_file: "frontend/src/ws/client.js"
 type: "code"
-community: "FakeWebSocket"
-location: "L89"
+community: "SessionWsClient"
+location: "L120"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/FakeWebSocket
+  - community/SessionWsClient
 ---
 
 # .close()
 
 ## Connections
-- [[dot-emit()]] - `calls` [EXTRACTED]
-- [[FakeWebSocket]] - `method` [EXTRACTED]
+- [[SessionWsClient]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/FakeWebSocket
+#graphify/code #graphify/EXTRACTED #community/SessionWsClient

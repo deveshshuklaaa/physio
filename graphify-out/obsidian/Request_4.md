@@ -1,16 +1,16 @@
 ---
 source_file: ""
 type: "code"
-community: "CurrentUser"
+community: "_get"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/CurrentUser
+  - community/_get
 ---
 
 # Request
 
 ## Connections
-- [[patient_sessions()]] - `references` [EXTRACTED]
+- [[get_capabilities()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/CurrentUser
+#graphify/code #graphify/EXTRACTED #community/_get

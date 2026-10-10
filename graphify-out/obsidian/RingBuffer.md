@@ -12,14 +12,14 @@ tags:
 # RingBuffer
 
 ## Connections
-- [[dot-clear()_1]] - `method` [EXTRACTED]
-- [[dot-constructor()_11]] - `calls` [EXTRACTED]
-- [[dot-constructor()_13]] - `calls` [EXTRACTED]
+- [[dot-clear()]] - `method` [EXTRACTED]
+- [[dot-constructor()_5]] - `calls` [EXTRACTED]
+- [[dot-constructor()]] - `calls` [EXTRACTED]
 - [[dot-constructor()_2]] - `calls` [EXTRACTED]
-- [[dot-constructor()_1]] - `method` [EXTRACTED]
-- [[dot-drain()]] - `method` [EXTRACTED]
+- [[dot-constructor()_6]] - `method` [EXTRACTED]
+- [[dot-drain()_1]] - `method` [EXTRACTED]
 - [[dot-length()]] - `method` [EXTRACTED]
-- [[dot-push()]] - `method` [EXTRACTED]
+- [[dot-push()_1]] - `method` [EXTRACTED]
 - [[dot-toArray()]] - `method` [EXTRACTED]
 - [[client.js]] - `imports` [EXTRACTED]
 - [[logger.js]] - `imports` [EXTRACTED]

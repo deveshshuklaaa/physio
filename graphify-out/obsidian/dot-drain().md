@@ -1,18 +1,18 @@
 ---
-source_file: "frontend/src/lib/ring_buffer.js"
+source_file: "backend/app/logging_setup.py"
 type: "code"
-community: "RingBuffer"
-location: "L34"
+community: "common_features.py"
+location: "L255"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/RingBuffer
+  - community/common_featurespy
 ---
 
 # .drain()
 
 ## Connections
-- [[dot-push()]] - `calls` [EXTRACTED]
-- [[RingBuffer]] - `method` [EXTRACTED]
+- [[Flush everything currently buffered. Returns count flushed.]] - `rationale_for` [EXTRACTED]
+- [[_RingBuffer]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/RingBuffer
+#graphify/code #graphify/EXTRACTED #community/common_featurespy

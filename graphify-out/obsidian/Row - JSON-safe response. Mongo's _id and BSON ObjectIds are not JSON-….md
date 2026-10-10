@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/routes/session.py"
 type: "rationale"
-community: "CurrentUser"
-location: "L113"
+community: "history.py"
+location: "L129"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/CurrentUser
+  - community/historypy
 ---
 
 # Row -> JSON-safe response. Mongo's _id and BSON ObjectIds are not JSON-…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[_public()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/CurrentUser
+#graphify/rationale #graphify/EXTRACTED #community/historypy

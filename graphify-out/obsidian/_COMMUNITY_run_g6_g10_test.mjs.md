@@ -9,10 +9,10 @@ members: 9
 
 ## Members
 - [[FRONTEND_ROOT]] - code - frontend/tools/g6_g10_test/run_g6_g10_test.mjs
-- [[HERE_3]] - code - frontend/tools/g6_g10_test/run_g6_g10_test.mjs
+- [[HERE_1]] - code - frontend/tools/g6_g10_test/run_g6_g10_test.mjs
 - [[MOCKUP_VALUES]] - code - frontend/tools/g6_g10_test/run_g6_g10_test.mjs
-- [[attach()_1]] - code - frontend/tools/g6_g10_test/run_g6_g10_test.mjs
-- [[main()_14]] - code - frontend/tools/g6_g10_test/run_g6_g10_test.mjs
+- [[attach()]] - code - frontend/tools/g6_g10_test/run_g6_g10_test.mjs
+- [[main()_3]] - code - frontend/tools/g6_g10_test/run_g6_g10_test.mjs
 - [[runLivePageChecks()]] - code - frontend/tools/g6_g10_test/run_g6_g10_test.mjs
 - [[runProbeChecks()]] - code - frontend/tools/g6_g10_test/run_g6_g10_test.mjs
 - [[run_g6_g10_test.mjs]] - code - frontend/tools/g6_g10_test/run_g6_g10_test.mjs

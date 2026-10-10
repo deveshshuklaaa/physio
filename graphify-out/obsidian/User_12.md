@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/doctorDashboard.js"
+source_file: "part2/Hemophillia-confirm/backend/scripts/resetStaffPassword.js"
 type: "code"
-community: "doctorDashboard.js"
-location: "L724"
+community: "displayName"
+location: "L9"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/doctorDashboardjs
+  - community/displayName
 ---
 
 # User
 
 ## Connections
-- [[doctorDashboard.js]] - `contains` [EXTRACTED]
+- [[resetStaffPassword.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/doctorDashboardjs
+#graphify/code #graphify/EXTRACTED #community/displayName

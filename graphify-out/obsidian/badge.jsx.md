@@ -16,7 +16,7 @@ tags:
 - [[ExerciseSelect.jsx]] - `imports_from` [EXTRACTED]
 - [[appsrcpagesReport.jsx]] - `imports_from` [EXTRACTED]
 - [[badgeVariants]] - `contains` [EXTRACTED]
-- [[cn()_2]] - `imports` [EXTRACTED]
+- [[cn()]] - `imports` [EXTRACTED]
 - [[utils.js]] - `imports_from` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/cn

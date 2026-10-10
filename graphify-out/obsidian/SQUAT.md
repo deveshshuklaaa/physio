@@ -1,17 +1,17 @@
 ---
-source_file: "frontend/tests/smoothing_audio.test.mjs"
+source_file: "frontend/tests/rules.test.mjs"
 type: "code"
-community: "smoothing_audio.test.mjs"
-location: "L20"
+community: "rules.js"
+location: "L18"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/smoothing_audiotestmjs
+  - community/rulesjs
 ---
 
 # SQUAT
 
 ## Connections
-- [[smoothing_audio.test.mjs]] - `contains` [EXTRACTED]
+- [[rules.test.mjs]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/smoothing_audiotestmjs
+#graphify/code #graphify/EXTRACTED #community/rulesjs

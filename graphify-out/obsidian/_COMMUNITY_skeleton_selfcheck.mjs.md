@@ -24,7 +24,7 @@ members: 17
 - [[render_audio_probe main]] - code - frontend/tools/g6_g10_test/render_audio_probe.html
 - [[skeleton.js]] - code - frontend/src/render/skeleton.js
 - [[skeleton_selfcheck.mjs]] - code - frontend/tools/skeleton_selfcheck.mjs
-- [[src]] - code - frontend/tools/skeleton_selfcheck.mjs
+- [[src_1]] - code - frontend/tools/skeleton_selfcheck.mjs
 
 ## Live Query (requires Dataview plugin)
 
@@ -35,13 +35,11 @@ SORT file.name ASC
 
 ## Connections to other communities
 - 2 edges to [[_COMMUNITY_session_orchestrator.js]]
-- 2 edges to [[_COMMUNITY_pose_engine.js]]
+- 2 edges to [[_COMMUNITY_checksindex.js]]
 - 1 edge to [[_COMMUNITY_smoothing_audio.test.mjs]]
-- 1 edge to [[_COMMUNITY_startLiveSession]]
 
 ## Top bridge nodes
 - [[skeleton.js]] - degree 8, connects to 2 communities
 - [[drawSkeleton()]] - degree 5, connects to 1 community
 - [[render_audio_probe main]] - degree 3, connects to 1 community
 - [[SKELETON_CONNECTIONS]] - degree 2, connects to 1 community
-- [[Any Alert Turns Whole Skeleton Red]] - degree 2, connects to 1 community

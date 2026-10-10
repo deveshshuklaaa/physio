@@ -1,16 +1,17 @@
 ---
 source_file: ""
 type: "code"
-community: "test_events_mirror.py"
+community: "train_model.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/test_events_mirrorpy
+  - community/train_modelpy
 ---
 
 # Path
 
 ## Connections
-- [[parse_js_events()]] - `references` [EXTRACTED]
+- [[export_exercise()]] - `references` [EXTRACTED]
+- [[main()_13]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/test_events_mirrorpy
+#graphify/code #graphify/EXTRACTED #community/train_modelpy

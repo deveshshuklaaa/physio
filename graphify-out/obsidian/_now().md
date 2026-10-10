@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/session.py"
 type: "code"
 community: "session.py"
-location: "L98"
+location: "L114"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,7 +12,7 @@ tags:
 # _now()
 
 ## Connections
-- [[datetime_1]] - `references` [EXTRACTED]
+- [[datetime]] - `references` [EXTRACTED]
 - [[end_session()]] - `calls` [EXTRACTED]
 - [[session.py]] - `contains` [EXTRACTED]
 - [[session_start()]] - `calls` [EXTRACTED]

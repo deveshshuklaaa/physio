@@ -12,10 +12,10 @@ tags:
 # add_distance_3d()
 
 ## Connections
-- [[DataFrame]] - `references` [EXTRACTED]
+- [[DataFrame_1]] - `references` [EXTRACTED]
 - [[common_features.py]] - `contains` [EXTRACTED]
 - [[extract_common_features()]] - `calls` [EXTRACTED]
 - [[ndarray]] - `references` [EXTRACTED]
-- [[p3()_1]] - `calls` [EXTRACTED]
+- [[p3()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/common_featurespy

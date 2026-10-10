@@ -1,16 +1,17 @@
 ---
 source_file: ""
 type: "code"
-community: "clip_features"
+community: "train_model.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/clip_features
+  - community/train_modelpy
 ---
 
 # DataFrame
 
 ## Connections
-- [[label_cols()]] - `references` [EXTRACTED]
+- [[choose_grouping()]] - `references` [EXTRACTED]
+- [[split_frame()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/clip_features
+#graphify/code #graphify/EXTRACTED #community/train_modelpy

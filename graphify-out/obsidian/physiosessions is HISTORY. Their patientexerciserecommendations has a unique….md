@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/test_session.py"
 type: "rationale"
 community: "TestClient"
-location: "L390"
+location: "L401"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED

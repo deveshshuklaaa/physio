@@ -1,378 +1,378 @@
 {
   "colorGroups": [
     {
-      "query": "tag:#community/vision_wasm_internaljs",
+      "query": "tag:#community/layer1_phase6_7testjs",
       "color": {
         "a": 1,
         "rgb": 5142951
       }
     },
     {
-      "query": "tag:#community/vision_wasm_nosimd_internaljs",
+      "query": "tag:#community/otpAuthjs",
       "color": {
         "a": 1,
         "rgb": 15896107
       }
     },
     {
-      "query": "tag:#community/tailwindjs",
+      "query": "tag:#community/layer2_helpersjs",
       "color": {
         "a": 1,
         "rgb": 14767961
       }
     },
     {
-      "query": "tag:#community/has",
+      "query": "tag:#community/checks/indexjs",
       "color": {
         "a": 1,
         "rgb": 7780274
       }
     },
     {
-      "query": "tag:#community/decl",
+      "query": "tag:#community/profilejs",
       "color": {
         "a": 1,
         "rgb": 5873999
       }
     },
     {
-      "query": "tag:#community/vision_bundlemjs",
+      "query": "tag:#community/layer2_guardstestjs",
       "color": {
         "a": 1,
         "rgb": 15583560
       }
     },
     {
-      "query": "tag:#community/logging_setuppy",
+      "query": "tag:#community/train_modelpy",
       "color": {
         "a": 1,
         "rgb": 11565729
       }
     },
     {
-      "query": "tag:#community/push",
+      "query": "tag:#community/db",
       "color": {
         "a": 1,
         "rgb": 16752039
+      }
+    },
+    {
+      "query": "tag:#community/doctorPatientsjs",
+      "color": {
+        "a": 1,
+        "rgb": 10253663
+      }
+    },
+    {
+      "query": "tag:#community/layer2_validationtestjs",
+      "color": {
+        "a": 1,
+        "rgb": 12234924
       }
     },
     {
       "query": "tag:#community/cn",
       "color": {
         "a": 1,
-        "rgb": 10253663
-      }
-    },
-    {
-      "query": "tag:#community/e",
-      "color": {
-        "a": 1,
-        "rgb": 12234924
-      }
-    },
-    {
-      "query": "tag:#community/replace",
-      "color": {
-        "a": 1,
         "rgb": 5142951
       }
     },
     {
-      "query": "tag:#community/remove",
+      "query": "tag:#community/rulesjs",
       "color": {
         "a": 1,
         "rgb": 15896107
       }
     },
     {
-      "query": "tag:#community/ql",
+      "query": "tag:#community/layer1_namestestjs",
       "color": {
         "a": 1,
         "rgb": 14767961
       }
     },
     {
-      "query": "tag:#community/dependencies",
+      "query": "tag:#community/phase3_role_splitjs",
       "color": {
         "a": 1,
         "rgb": 7780274
       }
     },
     {
-      "query": "tag:#community/test_validate_model_packagepy",
+      "query": "tag:#community/exercise_configpy",
       "color": {
         "a": 1,
         "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/test_admin_modelspy",
-      "color": {
-        "a": 1,
-        "rgb": 15583560
-      }
-    },
-    {
-      "query": "tag:#community/EMG_Monitor_Pro_-_Clinical_Kinetic_live_page",
-      "color": {
-        "a": 1,
-        "rgb": 11565729
-      }
-    },
-    {
-      "query": "tag:#community/xe",
-      "color": {
-        "a": 1,
-        "rgb": 16752039
-      }
-    },
-    {
-      "query": "tag:#community/detect_view",
-      "color": {
-        "a": 1,
-        "rgb": 10253663
-      }
-    },
-    {
-      "query": "tag:#community/apppy",
-      "color": {
-        "a": 1,
-        "rgb": 12234924
-      }
-    },
-    {
-      "query": "tag:#community/exercise_runnerpy",
-      "color": {
-        "a": 1,
-        "rgb": 5142951
-      }
-    },
-    {
-      "query": "tag:#community/sessionpy",
-      "color": {
-        "a": 1,
-        "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/test_e_gatepy",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
-      }
-    },
-    {
-      "query": "tag:#community/admin_modelspy",
-      "color": {
-        "a": 1,
-        "rgb": 7780274
-      }
-    },
-    {
-      "query": "tag:#community/test_session_bufferpy",
-      "color": {
-        "a": 1,
-        "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/ExerciseDefinition",
-      "color": {
-        "a": 1,
-        "rgb": 15583560
-      }
-    },
-    {
-      "query": "tag:#community/validate_model_packagepy",
-      "color": {
-        "a": 1,
-        "rgb": 11565729
-      }
-    },
-    {
-      "query": "tag:#community/fn",
-      "color": {
-        "a": 1,
-        "rgb": 16752039
-      }
-    },
-    {
-      "query": "tag:#community/adminpy",
-      "color": {
-        "a": 1,
-        "rgb": 10253663
-      }
-    },
-    {
-      "query": "tag:#community/m",
-      "color": {
-        "a": 1,
-        "rgb": 12234924
-      }
-    },
-    {
-      "query": "tag:#community/test_session_wspy",
-      "color": {
-        "a": 1,
-        "rgb": 5142951
-      }
-    },
-    {
-      "query": "tag:#community/sync",
-      "color": {
-        "a": 1,
-        "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/add",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
-      }
-    },
-    {
-      "query": "tag:#community/extract_landmarkspy",
-      "color": {
-        "a": 1,
-        "rgb": 7780274
-      }
-    },
-    {
-      "query": "tag:#community/ExerciseDefinition",
-      "color": {
-        "a": 1,
-        "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/test_k_gatepy",
-      "color": {
-        "a": 1,
-        "rgb": 15583560
-      }
-    },
-    {
-      "query": "tag:#community/componentsjson",
-      "color": {
-        "a": 1,
-        "rgb": 11565729
-      }
-    },
-    {
-      "query": "tag:#community/get",
-      "color": {
-        "a": 1,
-        "rgb": 16752039
-      }
-    },
-    {
-      "query": "tag:#community/init",
-      "color": {
-        "a": 1,
-        "rgb": 10253663
-      }
-    },
-    {
-      "query": "tag:#community/get",
-      "color": {
-        "a": 1,
-        "rgb": 12234924
-      }
-    },
-    {
-      "query": "tag:#community/run_j_testmjs",
-      "color": {
-        "a": 1,
-        "rgb": 5142951
-      }
-    },
-    {
-      "query": "tag:#community/common_featurespy",
-      "color": {
-        "a": 1,
-        "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/app/mainpy",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
-      }
-    },
-    {
-      "query": "tag:#community/SessionBuffer",
-      "color": {
-        "a": 1,
-        "rgb": 7780274
       }
     },
     {
       "query": "tag:#community/emg_imu_apppy",
       "color": {
         "a": 1,
-        "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/pose_enginejs",
-      "color": {
-        "a": 1,
         "rgb": 15583560
       }
     },
     {
-      "query": "tag:#community/RingBuffer",
+      "query": "tag:#community/helpersjs",
       "color": {
         "a": 1,
         "rgb": 11565729
       }
     },
     {
-      "query": "tag:#community/smoothing_audiotestmjs",
+      "query": "tag:#community/session_wspy",
       "color": {
         "a": 1,
         "rgb": 16752039
       }
     },
     {
-      "query": "tag:#community/helpersmjs",
+      "query": "tag:#community/layer1_csfle_gatetestjs",
       "color": {
         "a": 1,
         "rgb": 10253663
       }
     },
     {
-      "query": "tag:#community/TestClient",
+      "query": "tag:#community/phase4_name_splitjs",
       "color": {
         "a": 1,
         "rgb": 12234924
       }
     },
     {
-      "query": "tag:#community/g",
+      "query": "tag:#community/layer2_otptestjs",
       "color": {
         "a": 1,
         "rgb": 5142951
       }
     },
     {
-      "query": "tag:#community/init",
+      "query": "tag:#community/phase1_cleanupjs",
       "color": {
         "a": 1,
         "rgb": 15896107
       }
     },
     {
-      "query": "tag:#community/skeleton_selfcheckmjs",
+      "query": "tag:#community/phase6_assessmentsjs",
       "color": {
         "a": 1,
         "rgb": 14767961
       }
     },
     {
-      "query": "tag:#community/ar",
+      "query": "tag:#community/layer2_authztestjs",
+      "color": {
+        "a": 1,
+        "rgb": 7780274
+      }
+    },
+    {
+      "query": "tag:#community/startLiveSession",
+      "color": {
+        "a": 1,
+        "rgb": 5873999
+      }
+    },
+    {
+      "query": "tag:#community/SessionWsClient",
+      "color": {
+        "a": 1,
+        "rgb": 15583560
+      }
+    },
+    {
+      "query": "tag:#community/hs_tke_checkstestmjs",
+      "color": {
+        "a": 1,
+        "rgb": 11565729
+      }
+    },
+    {
+      "query": "tag:#community/sessionpy",
+      "color": {
+        "a": 1,
+        "rgb": 16752039
+      }
+    },
+    {
+      "query": "tag:#community/layer1_placementtestjs",
+      "color": {
+        "a": 1,
+        "rgb": 10253663
+      }
+    },
+    {
+      "query": "tag:#community/dependencies",
+      "color": {
+        "a": 1,
+        "rgb": 12234924
+      }
+    },
+    {
+      "query": "tag:#community/phase3_strip_usersjs",
+      "color": {
+        "a": 1,
+        "rgb": 5142951
+      }
+    },
+    {
+      "query": "tag:#community/emg-service",
+      "color": {
+        "a": 1,
+        "rgb": 15896107
+      }
+    },
+    {
+      "query": "tag:#community/TestClient",
+      "color": {
+        "a": 1,
+        "rgb": 14767961
+      }
+    },
+    {
+      "query": "tag:#community/helpersmjs",
+      "color": {
+        "a": 1,
+        "rgb": 7780274
+      }
+    },
+    {
+      "query": "tag:#community/exerciseRecommendationsjs",
+      "color": {
+        "a": 1,
+        "rgb": 5873999
+      }
+    },
+    {
+      "query": "tag:#community/app/mainpy",
+      "color": {
+        "a": 1,
+        "rgb": 15583560
+      }
+    },
+    {
+      "query": "tag:#community/test_session_wspy",
+      "color": {
+        "a": 1,
+        "rgb": 11565729
+      }
+    },
+    {
+      "query": "tag:#community/displayName",
+      "color": {
+        "a": 1,
+        "rgb": 16752039
+      }
+    },
+    {
+      "query": "tag:#community/dependencies",
+      "color": {
+        "a": 1,
+        "rgb": 10253663
+      }
+    },
+    {
+      "query": "tag:#community/phase4_fix_nametranslationsjs",
+      "color": {
+        "a": 1,
+        "rgb": 12234924
+      }
+    },
+    {
+      "query": "tag:#community/otpServicejs",
+      "color": {
+        "a": 1,
+        "rgb": 5142951
+      }
+    },
+    {
+      "query": "tag:#community/phase5_otp_mergejs",
+      "color": {
+        "a": 1,
+        "rgb": 15896107
+      }
+    },
+    {
+      "query": "tag:#community/AdminPatientResearchjsx",
+      "color": {
+        "a": 1,
+        "rgb": 14767961
+      }
+    },
+    {
+      "query": "tag:#community/assessmentjs",
+      "color": {
+        "a": 1,
+        "rgb": 7780274
+      }
+    },
+    {
+      "query": "tag:#community/dependencies",
+      "color": {
+        "a": 1,
+        "rgb": 5873999
+      }
+    },
+    {
+      "query": "tag:#community/dataKeyjs",
+      "color": {
+        "a": 1,
+        "rgb": 15583560
+      }
+    },
+    {
+      "query": "tag:#community/pose_enginejs",
+      "color": {
+        "a": 1,
+        "rgb": 11565729
+      }
+    },
+    {
+      "query": "tag:#community/patientResearchjs",
+      "color": {
+        "a": 1,
+        "rgb": 16752039
+      }
+    },
+    {
+      "query": "tag:#community/common_featurespy",
+      "color": {
+        "a": 1,
+        "rgb": 10253663
+      }
+    },
+    {
+      "query": "tag:#community/l2_cleanjs",
+      "color": {
+        "a": 1,
+        "rgb": 12234924
+      }
+    },
+    {
+      "query": "tag:#community/dbpy",
+      "color": {
+        "a": 1,
+        "rgb": 5142951
+      }
+    },
+    {
+      "query": "tag:#community/test_validate_model_packagepy",
+      "color": {
+        "a": 1,
+        "rgb": 15896107
+      }
+    },
+    {
+      "query": "tag:#community/detect_view",
+      "color": {
+        "a": 1,
+        "rgb": 14767961
+      }
+    },
+    {
+      "query": "tag:#community/anglesjs",
       "color": {
         "a": 1,
         "rgb": 7780274
@@ -386,87 +386,346 @@
       }
     },
     {
-      "query": "tag:#community/ExceptionInfo",
+      "query": "tag:#community/saveFHIRResourcejs",
       "color": {
         "a": 1,
         "rgb": 15583560
       }
     },
     {
-      "query": "tag:#community/ExceptionInfo",
+      "query": "tag:#community/test_admin_modelspy",
       "color": {
         "a": 1,
         "rgb": 11565729
       }
     },
     {
-      "query": "tag:#community/eventsjs",
+      "query": "tag:#community/exercise_runnerpy",
       "color": {
         "a": 1,
         "rgb": 16752039
       }
     },
     {
-      "query": "tag:#community/Ax",
+      "query": "tag:#community/test_e7_status_lists_every_configured_exercise",
       "color": {
         "a": 1,
         "rgb": 10253663
       }
     },
     {
-      "query": "tag:#community/pose_engine_selfcheckmjs",
+      "query": "tag:#community/test_e8_missing_model_does_not_crash_startup",
       "color": {
         "a": 1,
         "rgb": 12234924
       }
     },
     {
-      "query": "tag:#community/test_k_composepy",
+      "query": "tag:#community/test_e8_live_feedback_survives_a_missing_model",
       "color": {
         "a": 1,
         "rgb": 5142951
       }
     },
     {
-      "query": "tag:#community/startLiveSession",
+      "query": "tag:#community/adminPatientResearchjs",
       "color": {
         "a": 1,
         "rgb": 15896107
       }
     },
     {
-      "query": "tag:#community/lE",
+      "query": "tag:#community/test_e_gatepy",
       "color": {
         "a": 1,
         "rgb": 14767961
       }
     },
     {
-      "query": "tag:#community/clone",
+      "query": "tag:#community/_lookup_docA_only_for_p1",
       "color": {
         "a": 1,
         "rgb": 7780274
       }
     },
     {
-      "query": "tag:#community/geminipy",
+      "query": "tag:#community/test_h5_does_not_cross_the_job_queue_ownership_line",
       "color": {
         "a": 1,
         "rgb": 5873999
       }
     },
     {
-      "query": "tag:#community/jn",
+      "query": "tag:#community/Appjsx",
+      "color": {
+        "a": 1,
+        "rgb": 16752039
+      }
+    },
+    {
+      "query": "tag:#community/get_buffer",
+      "color": {
+        "a": 1,
+        "rgb": 10253663
+      }
+    },
+    {
+      "query": "tag:#community/RingBuffer",
+      "color": {
+        "a": 1,
+        "rgb": 5142951
+      }
+    },
+    {
+      "query": "tag:#community/validate_model_packagepy",
+      "color": {
+        "a": 1,
+        "rgb": 15896107
+      }
+    },
+    {
+      "query": "tag:#community/ExerciseDefinition",
+      "color": {
+        "a": 1,
+        "rgb": 11565729
+      }
+    },
+    {
+      "query": "tag:#community/adminpy",
+      "color": {
+        "a": 1,
+        "rgb": 12234924
+      }
+    },
+    {
+      "query": "tag:#community/smoothing_audiotestmjs",
+      "color": {
+        "a": 1,
+        "rgb": 5142951
+      }
+    },
+    {
+      "query": "tag:#community/BrowserLogger",
+      "color": {
+        "a": 1,
+        "rgb": 15896107
+      }
+    },
+    {
+      "query": "tag:#community/src/indexjs",
+      "color": {
+        "a": 1,
+        "rgb": 7780274
+      }
+    },
+    {
+      "query": "tag:#community/passwordResetjs",
+      "color": {
+        "a": 1,
+        "rgb": 5873999
+      }
+    },
+    {
+      "query": "tag:#community/test_historypy",
       "color": {
         "a": 1,
         "rgb": 15583560
       }
     },
     {
-      "query": "tag:#community/dependencies",
+      "query": "tag:#community/session_orchestratorjs",
+      "color": {
+        "a": 1,
+        "rgb": 5142951
+      }
+    },
+    {
+      "query": "tag:#community/EMG_Live_Monitor",
+      "color": {
+        "a": 1,
+        "rgb": 15896107
+      }
+    },
+    {
+      "query": "tag:#community/extract_landmarkspy",
+      "color": {
+        "a": 1,
+        "rgb": 7780274
+      }
+    },
+    {
+      "query": "tag:#community/bundleMapperjs",
+      "color": {
+        "a": 1,
+        "rgb": 5873999
+      }
+    },
+    {
+      "query": "tag:#community/hemophiliaDetailsjs",
+      "color": {
+        "a": 1,
+        "rgb": 15583560
+      }
+    },
+    {
+      "query": "tag:#community/_get",
+      "color": {
+        "a": 1,
+        "rgb": 16752039
+      }
+    },
+    {
+      "query": "tag:#community/componentsjson",
+      "color": {
+        "a": 1,
+        "rgb": 10253663
+      }
+    },
+    {
+      "query": "tag:#community/run_j_testmjs",
+      "color": {
+        "a": 1,
+        "rgb": 12234924
+      }
+    },
+    {
+      "query": "tag:#community/fhirjs",
+      "color": {
+        "a": 1,
+        "rgb": 5142951
+      }
+    },
+    {
+      "query": "tag:#community/SessionBuffer",
+      "color": {
+        "a": 1,
+        "rgb": 15896107
+      }
+    },
+    {
+      "query": "tag:#community/skeleton_selfcheckmjs",
+      "color": {
+        "a": 1,
+        "rgb": 5873999
+      }
+    },
+    {
+      "query": "tag:#community/encryptionjs",
       "color": {
         "a": 1,
         "rgb": 11565729
+      }
+    },
+    {
+      "query": "tag:#community/gemini_reportpy",
+      "color": {
+        "a": 1,
+        "rgb": 16752039
+      }
+    },
+    {
+      "query": "tag:#community/eventsjs",
+      "color": {
+        "a": 1,
+        "rgb": 5142951
+      }
+    },
+    {
+      "query": "tag:#community/test_reportpy",
+      "color": {
+        "a": 1,
+        "rgb": 15896107
+      }
+    },
+    {
+      "query": "tag:#community/dbjs",
+      "color": {
+        "a": 1,
+        "rgb": 7780274
+      }
+    },
+    {
+      "query": "tag:#community/api",
+      "color": {
+        "a": 1,
+        "rgb": 5873999
+      }
+    },
+    {
+      "query": "tag:#community/admin_modelspy",
+      "color": {
+        "a": 1,
+        "rgb": 15583560
+      }
+    },
+    {
+      "query": "tag:#community/ExerciseDefinition",
+      "color": {
+        "a": 1,
+        "rgb": 11565729
+      }
+    },
+    {
+      "query": "tag:#community/doctorAuthjs",
+      "color": {
+        "a": 1,
+        "rgb": 10253663
+      }
+    },
+    {
+      "query": "tag:#community/apiClientjs",
+      "color": {
+        "a": 1,
+        "rgb": 12234924
+      }
+    },
+    {
+      "query": "tag:#community/historypy",
+      "color": {
+        "a": 1,
+        "rgb": 5142951
+      }
+    },
+    {
+      "query": "tag:#community/posture_checkspy",
+      "color": {
+        "a": 1,
+        "rgb": 15896107
+      }
+    },
+    {
+      "query": "tag:#community/pose_engine_selfcheckmjs",
+      "color": {
+        "a": 1,
+        "rgb": 11565729
+      }
+    },
+    {
+      "query": "tag:#community/routes/authjs",
+      "color": {
+        "a": 1,
+        "rgb": 16752039
+      }
+    },
+    {
+      "query": "tag:#community/chatbotjs",
+      "color": {
+        "a": 1,
+        "rgb": 10253663
+      }
+    },
+    {
+      "query": "tag:#community/test_k_composepy",
+      "color": {
+        "a": 1,
+        "rgb": 12234924
+      }
+    },
+    {
+      "query": "tag:#community/recommendation_inferencepy",
+      "color": {
+        "a": 1,
+        "rgb": 5873999
       }
     },
     {
@@ -477,192 +736,108 @@
       }
     },
     {
-      "query": "tag:#community/session_orchestratorjs",
+      "query": "tag:#community/DoctorDashboardjsx",
       "color": {
         "a": 1,
-        "rgb": 10253663
+        "rgb": 12234924
+      }
+    },
+    {
+      "query": "tag:#community/ProfileStepperjsx",
+      "color": {
+        "a": 1,
+        "rgb": 5142951
       }
     },
     {
       "query": "tag:#community/run_feature_extractorpy",
       "color": {
         "a": 1,
-        "rgb": 12234924
+        "rgb": 15896107
+      }
+    },
+    {
+      "query": "tag:#community/ExercisePlanjsx",
+      "color": {
+        "a": 1,
+        "rgb": 7780274
       }
     },
     {
       "query": "tag:#community/clip_features",
       "color": {
         "a": 1,
-        "rgb": 5142951
+        "rgb": 5873999
+      }
+    },
+    {
+      "query": "tag:#community/geminipy",
+      "color": {
+        "a": 1,
+        "rgb": 15583560
       }
     },
     {
       "query": "tag:#community/frontend/packagejson",
       "color": {
         "a": 1,
-        "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/dependencies",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
+        "rgb": 11565729
       }
     },
     {
       "query": "tag:#community/run_g6_g10_testmjs",
       "color": {
         "a": 1,
-        "rgb": 7780274
+        "rgb": 16752039
       }
     },
     {
       "query": "tag:#community/test_corspy",
       "color": {
         "a": 1,
-        "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/drawingpy",
-      "color": {
-        "a": 1,
-        "rgb": 15583560
-      }
-    },
-    {
-      "query": "tag:#community/backend_docker-compose_service",
-      "color": {
-        "a": 1,
-        "rgb": 11565729
-      }
-    },
-    {
-      "query": "tag:#community/exerciseRecommendationsjs",
-      "color": {
-        "a": 1,
-        "rgb": 16752039
+        "rgb": 5142951
       }
     },
     {
       "query": "tag:#community/FakeWebSocket",
       "color": {
         "a": 1,
-        "rgb": 10253663
-      }
-    },
-    {
-      "query": "tag:#community/requirementstxt_root",
-      "color": {
-        "a": 1,
-        "rgb": 12234924
-      }
-    },
-    {
-      "query": "tag:#community/check_data_sources",
-      "color": {
-        "a": 1,
-        "rgb": 5142951
-      }
-    },
-    {
-      "query": "tag:#community/session_wspy",
-      "color": {
-        "a": 1,
-        "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/_old_physio_reference/requirementstxt",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
-      }
-    },
-    {
-      "query": "tag:#community/fake_session_clientpy",
-      "color": {
-        "a": 1,
-        "rgb": 7780274
-      }
-    },
-    {
-      "query": "tag:#community/postRun",
-      "color": {
-        "a": 1,
-        "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/postRun",
-      "color": {
-        "a": 1,
         "rgb": 15583560
       }
     },
     {
-      "query": "tag:#community/assessmentjs",
+      "query": "tag:#community/cryptSharedPathjs",
       "color": {
         "a": 1,
         "rgb": 11565729
       }
     },
     {
-      "query": "tag:#community/CurrentUser",
+      "query": "tag:#community/HemophiliaDetailsScreenjsx",
       "color": {
         "a": 1,
         "rgb": 16752039
       }
     },
     {
-      "query": "tag:#community/exercisespy",
+      "query": "tag:#community/check_data_sources",
       "color": {
         "a": 1,
         "rgb": 10253663
       }
     },
     {
-      "query": "tag:#community/test_events_mirrorpy",
+      "query": "tag:#community/test_calibration_gatepy",
       "color": {
         "a": 1,
         "rgb": 12234924
       }
     },
     {
-      "query": "tag:#community/_fit_model",
-      "color": {
-        "a": 1,
-        "rgb": 5142951
-      }
-    },
-    {
-      "query": "tag:#community/patientResearchjs",
+      "query": "tag:#community/_old_physio_reference/requirementstxt",
       "color": {
         "a": 1,
         "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/makeVertexAttributes",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
-      }
-    },
-    {
-      "query": "tag:#community/doctorDashboardjs",
-      "color": {
-        "a": 1,
-        "rgb": 7780274
-      }
-    },
-    {
-      "query": "tag:#community/makeVertexAttributes",
-      "color": {
-        "a": 1,
-        "rgb": 5873999
       }
     },
     {
@@ -674,6 +849,90 @@
     },
     {
       "query": "tag:#community/run_g5_testmjs",
+      "color": {
+        "a": 1,
+        "rgb": 11565729
+      }
+    },
+    {
+      "query": "tag:#community/run_case",
+      "color": {
+        "a": 1,
+        "rgb": 16752039
+      }
+    },
+    {
+      "query": "tag:#community/generateMasterKeyjs",
+      "color": {
+        "a": 1,
+        "rgb": 12234924
+      }
+    },
+    {
+      "query": "tag:#community/AdminChangePasswordjsx",
+      "color": {
+        "a": 1,
+        "rgb": 5142951
+      }
+    },
+    {
+      "query": "tag:#community/test_events_mirrorpy",
+      "color": {
+        "a": 1,
+        "rgb": 15896107
+      }
+    },
+    {
+      "query": "tag:#community/_fit_model",
+      "color": {
+        "a": 1,
+        "rgb": 14767961
+      }
+    },
+    {
+      "query": "tag:#community/drawingpy",
+      "color": {
+        "a": 1,
+        "rgb": 7780274
+      }
+    },
+    {
+      "query": "tag:#community/fake_session_clientpy",
+      "color": {
+        "a": 1,
+        "rgb": 5873999
+      }
+    },
+    {
+      "query": "tag:#community/predictpy",
+      "color": {
+        "a": 1,
+        "rgb": 5142951
+      }
+    },
+    {
+      "query": "tag:#community/test_targetJoint_normalizejs",
+      "color": {
+        "a": 1,
+        "rgb": 7780274
+      }
+    },
+    {
+      "query": "tag:#community/AdminDoctorRequestDetailsjsx",
+      "color": {
+        "a": 1,
+        "rgb": 5873999
+      }
+    },
+    {
+      "query": "tag:#community/AdminProfilejsx",
+      "color": {
+        "a": 1,
+        "rgb": 15583560
+      }
+    },
+    {
+      "query": "tag:#community/DoctorProfilejsx",
       "color": {
         "a": 1,
         "rgb": 11565729
@@ -704,322 +963,224 @@
       "query": "tag:#community/compilerOptions",
       "color": {
         "a": 1,
-        "rgb": 5142951
+        "rgb": 7780274
       }
     },
     {
-      "query": "tag:#community/___syscall_ioctl",
+      "query": "tag:#community/FIFO_Frame/Result_Latency_Correlation",
       "color": {
         "a": 1,
-        "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/___syscall_ioctl",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
+        "rgb": 10253663
       }
     },
     {
       "query": "tag:#community/devDependencies",
       "color": {
         "a": 1,
+        "rgb": 5142951
+      }
+    },
+    {
+      "query": "tag:#community/testMongoConnectjs",
+      "color": {
+        "a": 1,
+        "rgb": 15896107
+      }
+    },
+    {
+      "query": "tag:#community/frontend/src/mainjsx",
+      "color": {
+        "a": 1,
+        "rgb": 14767961
+      }
+    },
+    {
+      "query": "tag:#community/Layoutjsx",
+      "color": {
+        "a": 1,
         "rgb": 7780274
+      }
+    },
+    {
+      "query": "tag:#community/AdminManagementjsx",
+      "color": {
+        "a": 1,
+        "rgb": 5873999
+      }
+    },
+    {
+      "query": "tag:#community/ForgotPasswordjsx",
+      "color": {
+        "a": 1,
+        "rgb": 15583560
+      }
+    },
+    {
+      "query": "tag:#community/PatientResearchjsx",
+      "color": {
+        "a": 1,
+        "rgb": 16752039
+      }
+    },
+    {
+      "query": "tag:#community/build_obsidian_vaultpy",
+      "color": {
+        "a": 1,
+        "rgb": 10253663
       }
     },
     {
       "query": "tag:#community/heel_slidepy",
       "color": {
         "a": 1,
-        "rgb": 5873999
+        "rgb": 5142951
       }
     },
     {
       "query": "tag:#community/seated_knee_extensionpy",
       "color": {
         "a": 1,
-        "rgb": 15583560
+        "rgb": 15896107
       }
     },
     {
       "query": "tag:#community/slrpy",
       "color": {
         "a": 1,
-        "rgb": 11565729
+        "rgb": 14767961
       }
     },
     {
       "query": "tag:#community/tkepy",
       "color": {
         "a": 1,
-        "rgb": 16752039
-      }
-    },
-    {
-      "query": "tag:#community/docs/06_ml_pipelinemd_14",
-      "color": {
-        "a": 1,
-        "rgb": 10253663
+        "rgb": 7780274
       }
     },
     {
       "query": "tag:#community/p0_legacy_benchpy",
       "color": {
         "a": 1,
-        "rgb": 12234924
+        "rgb": 5873999
       }
     },
     {
-      "query": "tag:#community/emg_reviewpy",
+      "query": "tag:#community/dev",
       "color": {
         "a": 1,
-        "rgb": 5142951
+        "rgb": 15583560
       }
     },
     {
       "query": "tag:#community/AnimatedListjsx",
       "color": {
         "a": 1,
-        "rgb": 15896107
+        "rgb": 11565729
       }
     },
     {
       "query": "tag:#community/frontend/run_testssh",
       "color": {
         "a": 1,
-        "rgb": 14767961
-      }
-    },
-    {
-      "query": "tag:#community/compareByDay",
-      "color": {
-        "a": 1,
-        "rgb": 7780274
-      }
-    },
-    {
-      "query": "tag:#community/write",
-      "color": {
-        "a": 1,
-        "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/compareByDay",
-      "color": {
-        "a": 1,
-        "rgb": 15583560
-      }
-    },
-    {
-      "query": "tag:#community/write",
-      "color": {
-        "a": 1,
-        "rgb": 11565729
-      }
-    },
-    {
-      "query": "tag:#community/apiClientjs",
-      "color": {
-        "a": 1,
         "rgb": 16752039
-      }
-    },
-    {
-      "query": "tag:#community/exercise_configpy",
-      "color": {
-        "a": 1,
-        "rgb": 10253663
       }
     },
     {
       "query": "tag:#community/G13_Recording_Survives_Worker_Crash_Harness",
       "color": {
         "a": 1,
-        "rgb": 12234924
+        "rgb": 14767961
       }
     },
     {
       "query": "tag:#community/shadcn",
       "color": {
         "a": 1,
-        "rgb": 5142951
+        "rgb": 7780274
+      }
+    },
+    {
+      "query": "tag:#community/raw-testjs",
+      "color": {
+        "a": 1,
+        "rgb": 5873999
+      }
+    },
+    {
+      "query": "tag:#community/scripts/passwordResetEmailServicejs",
+      "color": {
+        "a": 1,
+        "rgb": 15583560
       }
     },
     {
       "query": "tag:#community/test_e9_converted_model_predicts",
       "color": {
         "a": 1,
-        "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/emg_serial_capturepy",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
+        "rgb": 11565729
       }
     },
     {
       "query": "tag:#community/CountUpjsx",
       "color": {
         "a": 1,
-        "rgb": 7780274
+        "rgb": 10253663
       }
     },
     {
       "query": "tag:#community/GlareHoverjsx",
       "color": {
         "a": 1,
-        "rgb": 5873999
+        "rgb": 12234924
       }
     },
     {
       "query": "tag:#community/viteconfigjs",
       "color": {
         "a": 1,
-        "rgb": 15583560
-      }
-    },
-    {
-      "query": "tag:#community/close",
-      "color": {
-        "a": 1,
-        "rgb": 11565729
-      }
-    },
-    {
-      "query": "tag:#community/convertReturnValue",
-      "color": {
-        "a": 1,
-        "rgb": 16752039
-      }
-    },
-    {
-      "query": "tag:#community/_emscripten_stack_snapshot",
-      "color": {
-        "a": 1,
-        "rgb": 10253663
-      }
-    },
-    {
-      "query": "tag:#community/createLazyFile",
-      "color": {
-        "a": 1,
-        "rgb": 12234924
-      }
-    },
-    {
-      "query": "tag:#community/leadingNulls",
-      "color": {
-        "a": 1,
         "rgb": 5142951
-      }
-    },
-    {
-      "query": "tag:#community/makeDepthStencilState",
-      "color": {
-        "a": 1,
-        "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/registerType",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
-      }
-    },
-    {
-      "query": "tag:#community/close",
-      "color": {
-        "a": 1,
-        "rgb": 7780274
-      }
-    },
-    {
-      "query": "tag:#community/convertReturnValue",
-      "color": {
-        "a": 1,
-        "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/_emscripten_stack_snapshot",
-      "color": {
-        "a": 1,
-        "rgb": 15583560
-      }
-    },
-    {
-      "query": "tag:#community/createLazyFile",
-      "color": {
-        "a": 1,
-        "rgb": 11565729
-      }
-    },
-    {
-      "query": "tag:#community/leadingNulls",
-      "color": {
-        "a": 1,
-        "rgb": 16752039
-      }
-    },
-    {
-      "query": "tag:#community/makeDepthStencilState",
-      "color": {
-        "a": 1,
-        "rgb": 10253663
-      }
-    },
-    {
-      "query": "tag:#community/registerType",
-      "color": {
-        "a": 1,
-        "rgb": 12234924
       }
     },
     {
       "query": "tag:#community/classic_probe_workerjs",
       "color": {
         "a": 1,
+        "rgb": 12234924
+      }
+    },
+    {
+      "query": "tag:#community/fhirEncryptionjs",
+      "color": {
+        "a": 1,
         "rgb": 5142951
       }
     },
     {
-      "query": "tag:#community/indexhtml_exercise_select_entry",
+      "query": "tag:#community/App_EXERCISE_INTEGRATEDjsx",
       "color": {
         "a": 1,
         "rgb": 15896107
       }
     },
     {
-      "query": "tag:#community/reporthtml_session_report_entry",
+      "query": "tag:#community/viteconfigmjs",
       "color": {
         "a": 1,
         "rgb": 14767961
       }
     },
     {
-      "query": "tag:#community/config/__init__py",
+      "query": "tag:#community//api/_Hemophilia_backend",
       "color": {
         "a": 1,
         "rgb": 7780274
       }
     },
     {
-      "query": "tag:#community/app/__init__py",
+      "query": "tag:#community/config/__init__py",
       "color": {
         "a": 1,
         "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/models/__init__py",
-      "color": {
-        "a": 1,
-        "rgb": 15583560
       }
     },
     {
@@ -1030,451 +1191,206 @@
       }
     },
     {
-      "query": "tag:#community/fhirjs",
-      "color": {
-        "a": 1,
-        "rgb": 16752039
-      }
-    },
-    {
-      "query": "tag:#community/adminPatientResearchjs",
-      "color": {
-        "a": 1,
-        "rgb": 10253663
-      }
-    },
-    {
       "query": "tag:#community/exercise_extractors/__init__py",
       "color": {
         "a": 1,
-        "rgb": 12234924
-      }
-    },
-    {
-      "query": "tag:#community/Appjsx",
-      "color": {
-        "a": 1,
-        "rgb": 5142951
+        "rgb": 16752039
       }
     },
     {
       "query": "tag:#community/landmarkspy",
       "color": {
         "a": 1,
-        "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/src/indexjs",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
+        "rgb": 10253663
       }
     },
     {
       "query": "tag:#community/exercises/__init__py",
       "color": {
         "a": 1,
-        "rgb": 7780274
-      }
-    },
-    {
-      "query": "tag:#community/Userjs",
-      "color": {
-        "a": 1,
-        "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/dbpy",
-      "color": {
-        "a": 1,
-        "rgb": 15583560
-      }
-    },
-    {
-      "query": "tag:#community/test_historypy",
-      "color": {
-        "a": 1,
-        "rgb": 11565729
-      }
-    },
-    {
-      "query": "tag:#community/joblib153",
-      "color": {
-        "a": 1,
-        "rgb": 16752039
-      }
-    },
-    {
-      "query": "tag:#community/numpy251",
-      "color": {
-        "a": 1,
-        "rgb": 10253663
-      }
-    },
-    {
-      "query": "tag:#community/opencv-python-headless50093",
-      "color": {
-        "a": 1,
         "rgb": 12234924
       }
     },
     {
-      "query": "tag:#community/pyarrow2501",
+      "query": "tag:#community/emg-nav_navigation",
       "color": {
         "a": 1,
         "rgb": 5142951
       }
     },
     {
-      "query": "tag:#community/pydantic2134",
-      "color": {
-        "a": 1,
-        "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/python-multipart0032",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
-      }
-    },
-    {
-      "query": "tag:#community/scikit-learn190",
-      "color": {
-        "a": 1,
-        "rgb": 7780274
-      }
-    },
-    {
-      "query": "tag:#community/starlette141",
-      "color": {
-        "a": 1,
-        "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/tqdm4700",
-      "color": {
-        "a": 1,
-        "rgb": 15583560
-      }
-    },
-    {
-      "query": "tag:#community/xgboost341",
-      "color": {
-        "a": 1,
-        "rgb": 11565729
-      }
-    },
-    {
-      "query": "tag:#community/bundleMapperjs",
-      "color": {
-        "a": 1,
-        "rgb": 16752039
-      }
-    },
-    {
-      "query": "tag:#community/hemophiliaDetailsjs",
+      "query": "tag:#community/emg-service/website/historyhtml",
       "color": {
         "a": 1,
         "rgb": 10253663
       }
     },
     {
-      "query": "tag:#community/encryptionjs",
+      "query": "tag:#community/emg-service/website/indexhtml",
       "color": {
         "a": 1,
         "rgb": 12234924
       }
     },
     {
-      "query": "tag:#community/session_docpy",
+      "query": "tag:#community/emg-service/website/livehtml",
       "color": {
         "a": 1,
         "rgb": 5142951
       }
     },
     {
-      "query": "tag:#community/video_retentionpy",
+      "query": "tag:#community/emg-service/website/playbackhtml",
       "color": {
         "a": 1,
         "rgb": 15896107
       }
     },
     {
-      "query": "tag:#community/test_reportpy",
+      "query": "tag:#community/emg-service/website/progresshtml",
       "color": {
         "a": 1,
         "rgb": 14767961
       }
     },
     {
-      "query": "tag:#community/dbjs",
+      "query": "tag:#community/frontend/src/pages/live_sessionhtml",
       "color": {
         "a": 1,
         "rgb": 7780274
       }
     },
     {
-      "query": "tag:#community/posture_checkspy",
+      "query": "tag:#community/anqpng",
       "color": {
         "a": 1,
         "rgb": 5873999
       }
     },
     {
-      "query": "tag:#community/DoctorRegistrationRequestjs",
+      "query": "tag:#community/ask-iconpng",
       "color": {
         "a": 1,
         "rgb": 15583560
       }
     },
     {
-      "query": "tag:#community/chatbotjs",
+      "query": "tag:#community/bannerpng",
       "color": {
         "a": 1,
         "rgb": 11565729
       }
     },
     {
-      "query": "tag:#community/DoctorDashboardjsx",
+      "query": "tag:#community/carepng",
       "color": {
         "a": 1,
         "rgb": 16752039
       }
     },
     {
-      "query": "tag:#community/ProfileStepperjsx",
+      "query": "tag:#community/expng",
       "color": {
         "a": 1,
         "rgb": 10253663
       }
     },
     {
-      "query": "tag:#community/cryptoConfigjs",
+      "query": "tag:#community/exercisepng",
       "color": {
         "a": 1,
         "rgb": 12234924
       }
     },
     {
-      "query": "tag:#community/ExercisePlanjsx",
+      "query": "tag:#community/grpng",
       "color": {
         "a": 1,
         "rgb": 5142951
       }
     },
     {
-      "query": "tag:#community/cryptSharedPathjs",
+      "query": "tag:#community/home-bgpng",
       "color": {
         "a": 1,
         "rgb": 15896107
       }
     },
     {
-      "query": "tag:#community/run_case",
+      "query": "tag:#community/ispng",
       "color": {
         "a": 1,
         "rgb": 14767961
       }
     },
     {
-      "query": "tag:#community/createAdminjs",
+      "query": "tag:#community/login-bgpng",
       "color": {
         "a": 1,
         "rgb": 7780274
       }
     },
     {
-      "query": "tag:#community/generateMasterKeyjs",
+      "query": "tag:#community/login-heropng",
       "color": {
         "a": 1,
         "rgb": 5873999
       }
     },
     {
-      "query": "tag:#community/HemophiliaDetailsScreenjsx",
+      "query": "tag:#community/medical-bgpng",
       "color": {
         "a": 1,
         "rgb": 15583560
       }
     },
     {
-      "query": "tag:#community/predictpy",
+      "query": "tag:#community/rapng",
       "color": {
         "a": 1,
         "rgb": 11565729
       }
     },
     {
-      "query": "tag:#community/createStaffAccountjs",
+      "query": "tag:#community/reg-bgpng",
       "color": {
         "a": 1,
         "rgb": 16752039
       }
     },
     {
-      "query": "tag:#community/AdminDoctorRequestDetailsjsx",
+      "query": "tag:#community/regpng",
       "color": {
         "a": 1,
         "rgb": 10253663
       }
     },
     {
-      "query": "tag:#community/AdminProfilejsx",
+      "query": "tag:#community/AI_Hemophilia_Support",
       "color": {
         "a": 1,
         "rgb": 12234924
       }
     },
     {
-      "query": "tag:#community/testMongoConnectjs",
+      "query": "tag:#community/Session_Report",
       "color": {
         "a": 1,
         "rgb": 5142951
-      }
-    },
-    {
-      "query": "tag:#community/frontend/src/mainjsx",
-      "color": {
-        "a": 1,
-        "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/Layoutjsx",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
-      }
-    },
-    {
-      "query": "tag:#community/build_obsidian_vaultpy",
-      "color": {
-        "a": 1,
-        "rgb": 7780274
-      }
-    },
-    {
-      "query": "tag:#community/dev",
-      "color": {
-        "a": 1,
-        "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/syncfs",
-      "color": {
-        "a": 1,
-        "rgb": 15583560
-      }
-    },
-    {
-      "query": "tag:#community/syncfs",
-      "color": {
-        "a": 1,
-        "rgb": 11565729
-      }
-    },
-    {
-      "query": "tag:#community/raw-testjs",
-      "color": {
-        "a": 1,
-        "rgb": 16752039
-      }
-    },
-    {
-      "query": "tag:#community/AdminPatientResearchjsx",
-      "color": {
-        "a": 1,
-        "rgb": 10253663
-      }
-    },
-    {
-      "query": "tag:#community/DoctorRegistrationjsx",
-      "color": {
-        "a": 1,
-        "rgb": 12234924
-      }
-    },
-    {
-      "query": "tag:#community/custom_emscripten_dbgn",
-      "color": {
-        "a": 1,
-        "rgb": 5142951
-      }
-    },
-    {
-      "query": "tag:#community/deferCall",
-      "color": {
-        "a": 1,
-        "rgb": 15896107
-      }
-    },
-    {
-      "query": "tag:#community/requestFullscreen",
-      "color": {
-        "a": 1,
-        "rgb": 14767961
-      }
-    },
-    {
-      "query": "tag:#community/custom_emscripten_dbgn",
-      "color": {
-        "a": 1,
-        "rgb": 7780274
-      }
-    },
-    {
-      "query": "tag:#community/deferCall",
-      "color": {
-        "a": 1,
-        "rgb": 5873999
-      }
-    },
-    {
-      "query": "tag:#community/requestFullscreen",
-      "color": {
-        "a": 1,
-        "rgb": 15583560
-      }
-    },
-    {
-      "query": "tag:#community/fhirEncryptionjs",
-      "color": {
-        "a": 1,
-        "rgb": 11565729
-      }
-    },
-    {
-      "query": "tag:#community/App_EXERCISE_INTEGRATEDjsx",
-      "color": {
-        "a": 1,
-        "rgb": 16752039
       }
     },
     {
       "query": "tag:#community/fhirConstantsjs",
       "color": {
         "a": 1,
-        "rgb": 10253663
+        "rgb": 15896107
       }
     },
     {
       "query": "tag:#community/ChatbotScreenjsx",
       "color": {
         "a": 1,
-        "rgb": 12234924
-      }
-    },
-    {
-      "query": "tag:#community/viteconfigmjs",
-      "color": {
-        "a": 1,
-        "rgb": 5142951
+        "rgb": 14767961
       }
     }
   ]

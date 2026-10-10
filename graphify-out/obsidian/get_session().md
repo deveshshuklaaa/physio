@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/routes/session.py"
 type: "code"
-community: "session_ws.py"
-location: "L108"
+community: "session.py"
+location: "L124"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/session_wspy
+  - community/sessionpy
 ---
 
 # get_session()
@@ -21,4 +21,4 @@ tags:
 - [[session.py]] - `contains` [EXTRACTED]
 - [[session_ws.py]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/session_wspy
+#graphify/code #graphify/EXTRACTED #community/sessionpy

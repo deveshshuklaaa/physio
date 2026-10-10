@@ -1,12 +1,12 @@
 ---
 source_file: "backend/ml/train_model.py"
 type: "rationale"
-community: "common_features.py"
+community: "train_model.py"
 location: "L116"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/common_featurespy
+  - community/train_modelpy
 ---
 
 # Out-of-fold predictions for every label, via GroupKFold.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[evaluate()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/common_featurespy
+#graphify/rationale #graphify/EXTRACTED #community/train_modelpy

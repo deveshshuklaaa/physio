@@ -12,8 +12,8 @@ tags:
 # _old_physio_reference/exercises/squat.py
 
 ## Connections
-- [[ExerciseDefinition_1]] - `imports` [EXTRACTED]
-- [[JointCheck_1]] - `imports` [EXTRACTED]
+- [[ExerciseDefinition]] - `imports` [EXTRACTED]
+- [[JointCheck]] - `imports` [EXTRACTED]
 - [[RepTrigger]] - `imports` [EXTRACTED]
 - [[angle_3d()]] - `imports` [EXTRACTED]
 - [[check_butt_wink()_1]] - `contains` [EXTRACTED]
@@ -25,7 +25,7 @@ tags:
 - [[check_torso_lean_side()]] - `contains` [EXTRACTED]
 - [[detect_view()]] - `imports` [EXTRACTED]
 - [[exercise_runner.py]] - `imports_from` [EXTRACTED]
-- [[get_definition()]] - `contains` [EXTRACTED]
+- [[get_definition()_2]] - `contains` [EXTRACTED]
 - [[math_utils.py]] - `imports_from` [EXTRACTED]
 - [[run_exercise()]] - `imports` [EXTRACTED]
 - [[torso_lean()]] - `imports` [EXTRACTED]

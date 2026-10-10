@@ -12,7 +12,7 @@ tags:
 # Lm
 
 ## Connections
-- [[dot-__init__()_8]] - `method` [EXTRACTED]
+- [[dot-__init__()_5]] - `method` [EXTRACTED]
 - [[Stand-in for a mediapipe landmark has .x .y .z attributes.]] - `rationale_for` [EXTRACTED]
 - [[parity_python.py]] - `contains` [EXTRACTED]
 - [[run_case()]] - `calls` [EXTRACTED]

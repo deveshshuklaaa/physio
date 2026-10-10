@@ -22,8 +22,8 @@ SORT file.name ASC
 ```
 
 ## Connections to other communities
-- 2 edges to [[_COMMUNITY_test_validate_model_package.py]]
 - 2 edges to [[_COMMUNITY_validate_model_package.py]]
+- 2 edges to [[_COMMUNITY_test_validate_model_package.py]]
 - 1 edge to [[_COMMUNITY_test_admin_models.py]]
 
 ## Top bridge nodes

@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/routes/report.py"
 type: "code"
-community: "session.py"
+community: "session_ws.py"
 location: "L54"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/sessionpy
+  - community/session_wspy
 ---
 
 # _consent()
@@ -17,4 +17,4 @@ tags:
 - [[to_object_id()]] - `calls` [EXTRACTED]
 - [[upload_video()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/sessionpy
+#graphify/code #graphify/EXTRACTED #community/session_wspy

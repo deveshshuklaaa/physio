@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/routes/session.py"
 type: "rationale"
-community: "session_ws.py"
-location: "L153"
+community: "session.py"
+location: "L169"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/session_wspy
+  - community/sessionpy
 ---
 
 # Idempotent: the End Session button, the WS {"type":"end"} message, and the H6…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[end_session()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/session_wspy
+#graphify/rationale #graphify/EXTRACTED #community/sessionpy

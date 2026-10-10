@@ -1,17 +1,18 @@
 ---
-source_file: "frontend/src/lib/smoother.js"
+source_file: "frontend/src/lib/logger.js"
 type: "code"
-community: "smoothing_audio.test.mjs"
-location: "L61"
+community: "RingBuffer"
+location: "L20"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/smoothing_audiotestmjs
+  - community/RingBuffer
 ---
 
 # .constructor()
 
 ## Connections
-- [[OneEuroScalar]] - `method` [EXTRACTED]
+- [[BrowserLogger]] - `method` [EXTRACTED]
+- [[RingBuffer]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/smoothing_audiotestmjs
+#graphify/code #graphify/EXTRACTED #community/RingBuffer

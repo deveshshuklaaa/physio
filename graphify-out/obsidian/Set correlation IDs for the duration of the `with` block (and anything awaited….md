@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/logging_setup.py"
 type: "rationale"
-community: "session_ws.py"
+community: "session.py"
 location: "L59"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/session_wspy
+  - community/sessionpy
 ---
 
 # Set correlation IDs for the duration of the `with` block (and anything awaited…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[correlation()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/session_wspy
+#graphify/rationale #graphify/EXTRACTED #community/sessionpy

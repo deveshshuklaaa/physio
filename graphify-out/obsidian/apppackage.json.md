@@ -12,13 +12,13 @@ tags:
 # app/package.json
 
 ## Connections
-- [[dependencies]] - `contains` [EXTRACTED]
-- [[description]] - `contains` [EXTRACTED]
-- [[devDependencies_1]] - `contains` [EXTRACTED]
-- [[name]] - `contains` [EXTRACTED]
-- [[private]] - `contains` [EXTRACTED]
-- [[scripts]] - `contains` [EXTRACTED]
-- [[type]] - `contains` [EXTRACTED]
-- [[version]] - `contains` [EXTRACTED]
+- [[dependencies_1]] - `contains` [EXTRACTED]
+- [[description_1]] - `contains` [EXTRACTED]
+- [[devDependencies_2]] - `contains` [EXTRACTED]
+- [[name_2]] - `contains` [EXTRACTED]
+- [[private_2]] - `contains` [EXTRACTED]
+- [[scripts_2]] - `contains` [EXTRACTED]
+- [[type_1]] - `contains` [EXTRACTED]
+- [[version_2]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

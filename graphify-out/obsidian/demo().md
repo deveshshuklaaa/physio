@@ -1,17 +1,19 @@
 ---
-source_file: "backend/app/services/test_emg_client.py"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/test_targetJoint_normalize.js"
 type: "code"
-community: "app/main.py"
-location: "L11"
+community: "test_targetJoint_normalize.js"
+location: "L23"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/app/mainpy
+  - community/test_targetJoint_normalizejs
 ---
 
 # demo()
 
 ## Connections
-- [[test_emg_client.py]] - `contains` [EXTRACTED]
+- [[normalizeTargetJoint()]] - `calls` [EXTRACTED]
+- [[test_targetJoint_normalize.js]] - `contains` [EXTRACTED]
+- [[toJointList()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/app/mainpy
+#graphify/code #graphify/EXTRACTED #community/test_targetJoint_normalizejs

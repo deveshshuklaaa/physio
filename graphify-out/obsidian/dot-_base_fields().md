@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/logging_setup.py"
 type: "code"
-community: "logging_setup.py"
+community: "common_features.py"
 location: "L153"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/logging_setuppy
+  - community/common_featurespy
 ---
 
 # ._base_fields()
@@ -16,4 +16,4 @@ tags:
 - [[ComponentLogger]] - `method` [EXTRACTED]
 - [[_next_seq()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/logging_setuppy
+#graphify/code #graphify/EXTRACTED #community/common_featurespy

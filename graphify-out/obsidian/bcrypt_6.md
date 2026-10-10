@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/services/otpService.js"
+source_file: "part2/Hemophillia-confirm/backend/scripts/resetStaffPassword.js"
 type: "code"
-community: "admin.js"
-location: "L2"
+community: "displayName"
+location: "L7"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/adminjs
+  - community/displayName
 ---
 
 # bcrypt
 
 ## Connections
-- [[otpService.js]] - `contains` [EXTRACTED]
+- [[resetStaffPassword.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/adminjs
+#graphify/code #graphify/EXTRACTED #community/displayName

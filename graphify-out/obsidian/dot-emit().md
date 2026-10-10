@@ -12,7 +12,7 @@ tags:
 # .emit()
 
 ## Connections
-- [[dot-close()_1]] - `calls` [EXTRACTED]
+- [[dot-close()]] - `calls` [EXTRACTED]
 - [[FakeWebSocket]] - `method` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/FakeWebSocket

@@ -1,12 +1,12 @@
 ---
 source_file: "backend/tools/test_k_gate.py"
 type: "rationale"
-community: "test_k_gate.py"
+community: "_get"
 location: "L102"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/test_k_gatepy
+  - community/_get
 ---
 
 # Where the backend container writes session evidence, asked of the container…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[_container_session_dir()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/test_k_gatepy
+#graphify/rationale #graphify/EXTRACTED #community/_get

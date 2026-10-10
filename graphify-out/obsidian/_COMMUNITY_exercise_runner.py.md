@@ -15,7 +15,7 @@ members: 29
 - [[Draw the skeleton overlay on frame. Two-pass render (shadow + colour) for…]] - rationale - backend/_old_physio_reference/drawing.py
 - [[EMA-smooth a single MediaPipe landmark. Returns (x, y, z) smoothed normalised…]] - rationale - backend/_old_physio_reference/smoother.py
 - [[Entry point called by every exercise file. Handles both dynamic (rep-based) and…]] - rationale - backend/_old_physio_reference/exercise_runner.py
-- [[ExerciseDefinition_4]] - code
+- [[ExerciseDefinition_6]] - code
 - [[Run all JointChecks for current view. Returns (alerts, joint_angles,…]] - rationale - backend/_old_physio_reference/exercise_runner.py
 - [[Scan exercises and return (display_name, filepath) for every .py file that…]] - rationale - backend/_old_physio_reference/main.py
 - [[_compute_joint_angle()]] - code - backend/_old_physio_reference/exercise_runner.py
@@ -29,7 +29,7 @@ members: 29
 - [[draw_skeleton()]] - code - backend/_old_physio_reference/drawing.py
 - [[exercise_runner.py]] - code - backend/_old_physio_reference/exercise_runner.py
 - [[init_tts()]] - code - backend/_old_physio_reference/voice.py
-- [[main()_4]] - code - backend/_old_physio_reference/main.py
+- [[main()_12]] - code - backend/_old_physio_reference/main.py
 - [[reset_smoother()]] - code - backend/_old_physio_reference/smoother.py
 - [[run_exercise()]] - code - backend/_old_physio_reference/exercise_runner.py
 - [[smooth_landmark()]] - code - backend/_old_physio_reference/smoother.py
@@ -47,11 +47,11 @@ SORT file.name ASC
 
 ## Connections to other communities
 - 11 edges to [[_COMMUNITY_detect_view]]
-- 6 edges to [[_COMMUNITY_ExerciseDefinition_1]]
+- 6 edges to [[_COMMUNITY_ExerciseDefinition]]
 - 4 edges to [[_COMMUNITY_gemini.py]]
 - 2 edges to [[_COMMUNITY_posture_checks.py]]
 - 2 edges to [[_COMMUNITY_drawing.py]]
-- 2 edges to [[_COMMUNITY_ExerciseDefinition]]
+- 2 edges to [[_COMMUNITY_ExerciseDefinition_1]]
 
 ## Top bridge nodes
 - [[exercise_runner.py]] - degree 24, connects to 6 communities

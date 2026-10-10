@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/routes/report.py"
 type: "code"
-community: "session.py"
+community: "session_ws.py"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/sessionpy
+  - community/session_wspy
 ---
 
 # report.py
@@ -32,4 +32,4 @@ tags:
 - [[test_report.py]] - `imports_from` [EXTRACTED]
 - [[upload_video()]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/sessionpy
+#graphify/code #graphify/EXTRACTED #community/session_wspy

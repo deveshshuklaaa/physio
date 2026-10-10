@@ -12,9 +12,9 @@ tags:
 # superseded_app_copies/exercises/seated_leg_extensions.py
 
 ## Connections
-- [[ExerciseDefinition]] - `imports` [EXTRACTED]
-- [[IsometricTrigger]] - `imports` [EXTRACTED]
-- [[JointCheck]] - `imports` [EXTRACTED]
-- [[get_definition()_3]] - `contains` [EXTRACTED]
+- [[ExerciseDefinition_1]] - `imports` [EXTRACTED]
+- [[IsometricTrigger_1]] - `imports` [EXTRACTED]
+- [[JointCheck_1]] - `imports` [EXTRACTED]
+- [[get_definition()_5]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/ExerciseDefinition

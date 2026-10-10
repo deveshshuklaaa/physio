@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/scripts/createAdmin.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/exerciseRecommendations.js"
 type: "rationale"
-community: "createAdmin.js"
-location: "L43"
+community: "exerciseRecommendations.js"
+location: "L1086"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/createAdminjs
+  - community/exerciseRecommendationsjs
 ---
 
 # IMPORTANT:
 
 ## Connections
-- [[createAdmin.js]] - `rationale_for` [EXTRACTED]
+- [[exerciseRecommendations.js]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/createAdminjs
+#graphify/rationale #graphify/EXTRACTED #community/exerciseRecommendationsjs

@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/raw-test.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/test/helpers.js"
 type: "code"
-community: "raw-test.js"
-location: "L3"
+community: "helpers.js"
+location: "L23"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/raw-testjs
+  - community/helpersjs
 ---
 
 # { MongoClient }
 
 ## Connections
-- [[raw-test.js]] - `contains` [EXTRACTED]
+- [[helpers.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/raw-testjs
+#graphify/code #graphify/EXTRACTED #community/helpersjs

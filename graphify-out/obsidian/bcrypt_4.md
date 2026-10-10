@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/admin.js"
+source_file: "part2/Hemophillia-confirm/backend/scripts/createAdmin.js"
 type: "code"
-community: "admin.js"
-location: "L4961"
+community: "displayName"
+location: "L3"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/adminjs
+  - community/displayName
 ---
 
 # bcrypt
 
 ## Connections
-- [[admin.js]] - `contains` [EXTRACTED]
+- [[createAdmin.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/adminjs
+#graphify/code #graphify/EXTRACTED #community/displayName

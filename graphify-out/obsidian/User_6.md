@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/scripts/createAdmin.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/phase3_role_split.js"
 type: "code"
-community: "createAdmin.js"
-location: "L15"
+community: "phase3_role_split.js"
+location: "L13"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/createAdminjs
+  - community/phase3_role_splitjs
 ---
 
 # User
 
 ## Connections
-- [[createAdmin.js]] - `contains` [EXTRACTED]
+- [[phase3_role_split.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/createAdminjs
+#graphify/code #graphify/EXTRACTED #community/phase3_role_splitjs

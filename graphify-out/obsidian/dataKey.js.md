@@ -1,24 +1,18 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/config/dataKey.js"
 type: "code"
-community: "fhir.js"
+community: "dataKey.js"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/fhirjs
+  - community/dataKeyjs
 ---
 
 # dataKey.js
 
 ## Connections
-- [[DoctorChangeRequest.js]] - `imports_from` [EXTRACTED]
-- [[DoctorRegistrationRequest.js]] - `imports_from` [EXTRACTED]
-- [[HemophiliaDetails.js]] - `imports_from` [EXTRACTED]
-- [[PatientProfile.js]] - `imports_from` [EXTRACTED]
-- [[ScreeningSession.js]] - `imports_from` [EXTRACTED]
-- [[User.js]] - `imports_from` [EXTRACTED]
 - [[dataKeyId]] - `contains` [EXTRACTED]
-- [[{ Binary }]] - `contains` [EXTRACTED]
+- [[{ Binary }_1]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/fhirjs
+#graphify/code #graphify/EXTRACTED #community/dataKeyjs

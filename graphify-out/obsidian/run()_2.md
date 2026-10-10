@@ -1,18 +1,18 @@
 ---
-source_file: "frontend/run_tests.sh"
+source_file: "part2/Hemophillia-confirm/backend/migrations/test/layer2_guards.test.js"
 type: "code"
-community: "frontend/run_tests.sh"
-location: "L17"
+community: "layer2_guards.test.js"
+location: "L89"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/frontend/run_testssh
+  - community/layer2_guardstestjs
 ---
 
 # run()
 
 ## Connections
-- [[frontendrun_tests.sh]] - `defines` [EXTRACTED]
-- [[run_tests.sh script]] - `calls` [EXTRACTED]
+- [[expectRejected()]] - `calls` [EXTRACTED]
+- [[layer2_guards.test.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/frontend/run_testssh
+#graphify/code #graphify/EXTRACTED #community/layer2_guardstestjs

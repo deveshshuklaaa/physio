@@ -1,17 +1,18 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/services/emailService.js"
+source_file: "part2/Hemophillia-confirm/backend/package.json"
 type: "code"
-community: "admin.js"
-location: "L459"
+community: "dependencies"
+location: "L24"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/adminjs
+  - community/dependencies
 ---
 
 # nodemailer
 
 ## Connections
-- [[emailService.js]] - `contains` [EXTRACTED]
+- [[dependencies_2]] - `contains` [EXTRACTED]
+- [[nodemailer_1]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/adminjs
+#graphify/code #graphify/EXTRACTED #community/dependencies

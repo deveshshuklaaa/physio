@@ -1,11 +1,11 @@
 ---
 type: community
-members: 64
+members: 71
 ---
 
 # cn
 
-**Members:** 64 nodes
+**Members:** 71 nodes
 
 ## Members
 - [[Alert()]] - code - frontend/app/src/components/ui/alert.jsx
@@ -22,13 +22,15 @@ members: 64
 - [[CardTitle()]] - code - frontend/app/src/components/ui/card.jsx
 - [[DeepLinkNotice()]] - code - frontend/app/src/pages/ExerciseSelect.jsx
 - [[ENGINE_SUPPORTED]] - code - frontend/tests/deep_link.test.mjs
-- [[ExerciseCard()_2]] - code - frontend/app/src/pages/ExerciseSelect.jsx
+- [[ExerciseCard()]] - code - frontend/app/src/pages/ExerciseSelect.jsx
 - [[ExerciseSelect()]] - code - frontend/app/src/pages/ExerciseSelect.jsx
 - [[ExerciseSelect.jsx]] - code - frontend/app/src/pages/ExerciseSelect.jsx
+- [[Inline()]] - code - frontend/app/src/pages/Report.jsx
+- [[Markdown()]] - code - frontend/app/src/pages/Report.jsx
 - [[PHASE_META]] - code - frontend/app/src/pages/Report.jsx
-- [[PREVIEW_2]] - code - frontend/app/src/pages/ExerciseSelect.jsx
+- [[PREVIEW]] - code - frontend/app/src/pages/ExerciseSelect.jsx
 - [[Progress()]] - code - frontend/app/src/components/ui/progress.jsx
-- [[Report()_1]] - code - frontend/app/src/pages/Report.jsx
+- [[Report()]] - code - frontend/app/src/pages/Report.jsx
 - [[ScrollArea()]] - code - frontend/app/src/components/ui/scroll-area.jsx
 - [[ScrollBar()]] - code - frontend/app/src/components/ui/scroll-area.jsx
 - [[Separator()]] - code - frontend/app/src/components/ui/separator.jsx
@@ -50,13 +52,16 @@ members: 64
 - [[buttonVariants]] - code - frontend/app/src/components/ui/button.jsx
 - [[card.jsx]] - code - frontend/app/src/components/ui/card.jsx
 - [[classifyDeepLink()]] - code - frontend/app/src/lib/deep_link.js
-- [[cn()_2]] - code - frontend/app/src/lib/utils.js
+- [[cn()]] - code - frontend/app/src/lib/utils.js
 - [[deep_link.js]] - code - frontend/app/src/lib/deep_link.js
 - [[deep_link.test.mjs]] - code - frontend/tests/deep_link.test.mjs
 - [[getItem()]] - code - frontend/tests/deep_link.test.mjs
 - [[isTerminalPhase()]] - code - frontend/app/src/lib/report_poll.js
+- [[markdown.js]] - code - frontend/app/src/lib/markdown.js
+- [[markdown.test.mjs]] - code - frontend/app/src/lib/markdown.test.mjs
 - [[params]] - code - frontend/app/src/pages/Report.jsx
 - [[parseDeepLink()]] - code - frontend/app/src/lib/deep_link.js
+- [[parseMarkdown()]] - code - frontend/app/src/lib/markdown.js
 - [[poll()]] - code - frontend/app/src/pages/Report.jsx
 - [[progress.jsx]] - code - frontend/app/src/components/ui/progress.jsx
 - [[readSessionLanguage()]] - code - frontend/app/src/lib/deep_link.js
@@ -65,9 +70,11 @@ members: 64
 - [[report_poll.js]] - code - frontend/app/src/lib/report_poll.js
 - [[report_poll.test.mjs]] - code - frontend/tests/report_poll.test.mjs
 - [[resolveEngineExercise()]] - code - frontend/app/src/lib/deep_link.js
+- [[runCalibrationGate()]] - code - frontend/app/src/pages/ExerciseSelect.jsx
 - [[scroll-area.jsx]] - code - frontend/app/src/components/ui/scroll-area.jsx
 - [[separator.jsx]] - code - frontend/app/src/components/ui/separator.jsx
 - [[skeleton.jsx]] - code - frontend/app/src/components/ui/skeleton.jsx
+- [[splitInline()]] - code - frontend/app/src/lib/markdown.js
 - [[startFromDeepLink()]] - code - frontend/app/src/pages/ExerciseSelect.jsx
 - [[startSession()]] - code - frontend/app/src/pages/ExerciseSelect.jsx
 - [[titleise()]] - code - frontend/app/src/pages/ExerciseSelect.jsx

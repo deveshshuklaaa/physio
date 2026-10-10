@@ -14,7 +14,7 @@ tags:
 ## Connections
 - [[ScrollArea()]] - `contains` [EXTRACTED]
 - [[ScrollBar()]] - `contains` [EXTRACTED]
-- [[cn()_2]] - `imports` [EXTRACTED]
+- [[cn()]] - `imports` [EXTRACTED]
 - [[utils.js]] - `imports_from` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/cn

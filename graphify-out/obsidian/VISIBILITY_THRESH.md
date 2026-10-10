@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/lib/landmarks.js"
 type: "code"
-community: "pose_engine.js"
+community: "checks/index.js"
 location: "L43"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/pose_enginejs
+  - community/checks/indexjs
 ---
 
 # VISIBILITY_THRESH
@@ -15,4 +15,4 @@ tags:
 - [[landmarks.js]] - `contains` [EXTRACTED]
 - [[pose_engine.js]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/pose_enginejs
+#graphify/code #graphify/EXTRACTED #community/checks/indexjs

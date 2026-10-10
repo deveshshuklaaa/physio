@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/session.py"
 type: "code"
 community: "session.py"
-location: "L88"
+location: "L104"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,7 +12,7 @@ tags:
 # SessionSummary
 
 ## Connections
-- [[BaseModel_1]] - `inherits` [EXTRACTED]
+- [[BaseModel]] - `inherits` [EXTRACTED]
 - [[session.py]] - `contains` [EXTRACTED]
 - [[session_summary()]] - `references` [EXTRACTED]
 

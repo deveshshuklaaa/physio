@@ -14,7 +14,8 @@ tags:
 ## Connections
 - [[App.jsx]] - `imports_from` [EXTRACTED]
 - [[EXERCISE_TRANSLATIONS]] - `contains` [EXTRACTED]
-- [[ExerciseCard()_1]] - `contains` [EXTRACTED]
+- [[EXERCISE_YOUTUBE_LINKS]] - `contains` [EXTRACTED]
+- [[ExerciseCard()_2]] - `contains` [EXTRACTED]
 - [[ExercisePlan()_1]] - `contains` [EXTRACTED]
 - [[T]] - `contains` [EXTRACTED]
 - [[api]] - `imports` [EXTRACTED]

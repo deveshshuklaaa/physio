@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/auth.js"
+source_file: "part2/Hemophillia-confirm/backend/scripts/createStaffAccount.js"
 type: "code"
-community: "admin.js"
-location: "L2"
+community: "displayName"
+location: "L3"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/adminjs
+  - community/displayName
 ---
 
 # bcrypt
 
 ## Connections
-- [[routesauth.js]] - `contains` [EXTRACTED]
+- [[createStaffAccount.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/adminjs
+#graphify/code #graphify/EXTRACTED #community/displayName

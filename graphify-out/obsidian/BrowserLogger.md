@@ -1,19 +1,19 @@
 ---
 source_file: "frontend/src/lib/logger.js"
 type: "code"
-community: "startLiveSession"
+community: "BrowserLogger"
 location: "L19"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/startLiveSession
+  - community/BrowserLogger
 ---
 
 # BrowserLogger
 
 ## Connections
 - [[dot-_shouldLog()]] - `method` [EXTRACTED]
-- [[dot-constructor()_11]] - `method` [EXTRACTED]
+- [[dot-constructor()_5]] - `method` [EXTRACTED]
 - [[dot-debug()_1]] - `method` [EXTRACTED]
 - [[dot-drain()_2]] - `method` [EXTRACTED]
 - [[dot-droppedCount()]] - `method` [EXTRACTED]
@@ -29,4 +29,4 @@ tags:
 - [[startLiveSession()]] - `calls` [EXTRACTED]
 - [[transport.test.mjs]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/startLiveSession
+#graphify/code #graphify/EXTRACTED #community/BrowserLogger

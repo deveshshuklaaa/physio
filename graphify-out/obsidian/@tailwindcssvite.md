@@ -13,6 +13,6 @@ tags:
 
 ## Connections
 - [[@tailwindcssvite_1]] - `imports` [EXTRACTED]
-- [[devDependencies_1]] - `contains` [EXTRACTED]
+- [[devDependencies_2]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

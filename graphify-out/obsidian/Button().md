@@ -16,6 +16,6 @@ tags:
 - [[appsrcpagesReport.jsx]] - `imports` [EXTRACTED]
 - [[button.jsx]] - `contains` [EXTRACTED]
 - [[buttonVariants]] - `calls` [EXTRACTED]
-- [[cn()_2]] - `calls` [EXTRACTED]
+- [[cn()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/cn

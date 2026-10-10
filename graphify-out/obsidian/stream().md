@@ -1,20 +1,20 @@
 ---
-source_file: "emg-service/backend/app.py"
+source_file: "hardware/esp32_imu/backend/emg_imu_app.py"
 type: "code"
-community: "app.py"
-location: "L226"
+community: "emg_imu_app.py"
+location: "L425"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/apppy
+  - community/emg_imu_apppy
 ---
 
 # stream()
 
 ## Connections
 - [[Server-Sent Events endpoint for real-time data.]] - `rationale_for` [EXTRACTED]
-- [[app.py]] - `contains` [EXTRACTED]
+- [[emg_imu_app.py]] - `contains` [EXTRACTED]
 - [[event_stream()]] - `calls` [EXTRACTED]
 - [[route]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/apppy
+#graphify/code #graphify/EXTRACTED #community/emg_imu_apppy

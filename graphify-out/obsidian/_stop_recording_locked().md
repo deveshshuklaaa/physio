@@ -12,7 +12,7 @@ tags:
 # _stop_recording_locked()
 
 ## Connections
-- [[add_to_history()_1]] - `calls` [EXTRACTED]
+- [[add_to_history()]] - `calls` [EXTRACTED]
 - [[compress_capture_file()]] - `calls` [EXTRACTED]
 - [[emg_imu_app.py]] - `contains` [EXTRACTED]
 - [[stop_recording()]] - `calls` [EXTRACTED]

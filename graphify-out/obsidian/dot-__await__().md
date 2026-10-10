@@ -2,7 +2,7 @@
 source_file: "backend/app/db.py"
 type: "code"
 community: "db.py"
-location: "L144"
+location: "L162"
 tags:
   - graphify/code
   - graphify/EXTRACTED

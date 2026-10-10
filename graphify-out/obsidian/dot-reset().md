@@ -1,17 +1,17 @@
 ---
-source_file: "frontend/src/lib/smoother.js"
+source_file: "frontend/tests/helpers.mjs"
 type: "code"
-community: "smoothing_audio.test.mjs"
-location: "L51"
+community: "helpers.mjs"
+location: "L110"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/smoothing_audiotestmjs
+  - community/helpersmjs
 ---
 
 # .reset()
 
 ## Connections
-- [[EmaSmoother]] - `method` [EXTRACTED]
+- [[FakeAudio]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/smoothing_audiotestmjs
+#graphify/code #graphify/EXTRACTED #community/helpersmjs

@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/safety_engine_equivalence.test.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/test/layer1_phase6_7.test.js"
 type: "code"
-community: "exerciseRecommendations.js"
-location: "L31"
+community: "layer1_phase6_7.test.js"
+location: "L12"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exerciseRecommendationsjs
+  - community/layer1_phase6_7testjs
 ---
 
 # assert
 
 ## Connections
-- [[safety_engine_equivalence.test.js]] - `contains` [EXTRACTED]
+- [[layer1_phase6_7.test.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exerciseRecommendationsjs
+#graphify/code #graphify/EXTRACTED #community/layer1_phase6_7testjs

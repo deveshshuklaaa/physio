@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/lib/audio_cues.js"
 type: "code"
-community: "smoothing_audio.test.mjs"
+community: "rules.js"
 location: "L15"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/smoothing_audiotestmjs
+  - community/rulesjs
 ---
 
 # AUDIO_MAP
@@ -16,4 +16,4 @@ tags:
 - [[rules.test.mjs]] - `imports` [EXTRACTED]
 - [[smoothing_audio.test.mjs]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/smoothing_audiotestmjs
+#graphify/code #graphify/EXTRACTED #community/rulesjs

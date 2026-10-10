@@ -10,9 +10,9 @@ members: 5
 ## Members
 - [[H7 — fake session client. Drives a live session over a REAL WebSocket without a…]] - rationale - backend/tools/fake_session_client.py
 - [[_drive()]] - code - backend/tools/fake_session_client.py
-- [[_frame()_1]] - code - backend/tools/fake_session_client.py
+- [[_frame()]] - code - backend/tools/fake_session_client.py
 - [[fake_session_client.py]] - code - backend/tools/fake_session_client.py
-- [[main()_15]] - code - backend/tools/fake_session_client.py
+- [[main()_8]] - code - backend/tools/fake_session_client.py
 
 ## Live Query (requires Dataview plugin)
 

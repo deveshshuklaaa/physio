@@ -1,17 +1,17 @@
 ---
-source_file: "backend/ml/exercise_extractors/tke.py"
+source_file: "backend/ml/exercise_extractors/slr.py"
 type: "code"
-community: "tke.py"
-location: "L121"
+community: "slr.py"
+location: "L137"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/tkepy
+  - community/slrpy
 ---
 
 # extract()
 
 ## Connections
-- [[tke.py]] - `contains` [EXTRACTED]
+- [[slr.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/tkepy
+#graphify/code #graphify/EXTRACTED #community/slrpy

@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/models/DoctorRegistrationRequest.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/phase6_assessments.js"
 type: "code"
-community: "DoctorRegistrationRequest.js"
-location: "L1"
+community: "phase6_assessments.js"
+location: "L14"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/DoctorRegistrationRequestjs
+  - community/phase6_assessmentsjs
 ---
 
 # mongoose
 
 ## Connections
-- [[DoctorRegistrationRequest.js]] - `contains` [EXTRACTED]
+- [[phase6_assessments.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/DoctorRegistrationRequestjs
+#graphify/code #graphify/EXTRACTED #community/phase6_assessmentsjs

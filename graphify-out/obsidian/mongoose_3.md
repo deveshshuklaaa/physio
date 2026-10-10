@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/models/User.js"
+source_file: "part2/Hemophillia-confirm/backend/migrations/phase2_indexes.js"
 type: "code"
-community: "User.js"
-location: "L216"
+community: "cryptSharedPath.js"
+location: "L9"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Userjs
+  - community/cryptSharedPathjs
 ---
 
 # mongoose
 
 ## Connections
-- [[User.js]] - `contains` [EXTRACTED]
+- [[phase2_indexes.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Userjs
+#graphify/code #graphify/EXTRACTED #community/cryptSharedPathjs

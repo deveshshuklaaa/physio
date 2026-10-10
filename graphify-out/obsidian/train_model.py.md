@@ -1,12 +1,12 @@
 ---
 source_file: "backend/ml/train_model.py"
 type: "code"
-community: "common_features.py"
+community: "train_model.py"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/common_featurespy
+  - community/train_modelpy
 ---
 
 # train_model.py
@@ -15,9 +15,9 @@ tags:
 - [[choose_grouping()]] - `contains` [EXTRACTED]
 - [[evaluate()]] - `contains` [EXTRACTED]
 - [[export_model.py]] - `imports_from` [EXTRACTED]
-- [[main()_9]] - `contains` [EXTRACTED]
+- [[main()_14]] - `contains` [EXTRACTED]
 - [[make_model()]] - `contains` [EXTRACTED]
 - [[split_frame()]] - `contains` [EXTRACTED]
 - [[write_model_card.py]] - `imports_from` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/common_featurespy
+#graphify/code #graphify/EXTRACTED #community/train_modelpy

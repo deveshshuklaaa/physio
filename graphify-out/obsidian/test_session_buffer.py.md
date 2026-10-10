@@ -1,19 +1,19 @@
 ---
 source_file: "backend/app/services/test_session_buffer.py"
 type: "code"
-community: "test_session_buffer.py"
+community: "get_buffer"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/test_session_bufferpy
+  - community/get_buffer
 ---
 
 # test_session_buffer.py
 
 ## Connections
 - [[H1 — session_buffer.py self-checks. No framework. Run from backend…]] - `rationale_for` [EXTRACTED]
-- [[_frame()]] - `contains` [EXTRACTED]
+- [[_frame()_1]] - `contains` [EXTRACTED]
 - [[_fresh_tmp_root()]] - `contains` [EXTRACTED]
 - [[services__init__.py]] - `imports_from` [EXTRACTED]
 - [[session_buffer.py]] - `imports_from` [EXTRACTED]
@@ -26,4 +26,4 @@ tags:
 - [[test_h1_flush_task_runs_without_blocking_appends()]] - `contains` [EXTRACTED]
 - [[test_h1_flush_writes_real_frames_to_disk()]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/test_session_bufferpy
+#graphify/code #graphify/EXTRACTED #community/get_buffer

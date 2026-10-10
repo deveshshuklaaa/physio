@@ -16,7 +16,7 @@ tags:
 - [[add_derivative_features()]] - `references` [EXTRACTED]
 - [[add_distance_3d()]] - `references` [EXTRACTED]
 - [[derivative()]] - `references` [EXTRACTED]
-- [[p2()_1]] - `references` [EXTRACTED]
-- [[p3()_1]] - `references` [EXTRACTED]
+- [[p2()]] - `references` [EXTRACTED]
+- [[p3()]] - `references` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/common_featurespy

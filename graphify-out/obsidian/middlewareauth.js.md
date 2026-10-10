@@ -16,8 +16,8 @@ tags:
 - [[authMiddleware()]] - `contains` [EXTRACTED]
 - [[exerciseRecommendations.js]] - `imports_from` [EXTRACTED]
 - [[fhir.js]] - `imports_from` [EXTRACTED]
-- [[hemophiliaDetails.js_1]] - `imports_from` [EXTRACTED]
-- [[jwt_5]] - `contains` [EXTRACTED]
+- [[hemophiliaDetails.js]] - `imports_from` [EXTRACTED]
+- [[jwt_7]] - `contains` [EXTRACTED]
 - [[profile.js]] - `imports_from` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/assessmentjs

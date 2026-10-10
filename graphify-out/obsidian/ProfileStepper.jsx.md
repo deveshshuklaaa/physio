@@ -13,6 +13,8 @@ tags:
 
 ## Connections
 - [[App.jsx]] - `imports_from` [EXTRACTED]
+- [[IMPORTANT_5]] - `rationale_for` [EXTRACTED]
+- [[PROFILE_FIELDS_1]] - `contains` [EXTRACTED]
 - [[ProfileStepper()]] - `contains` [EXTRACTED]
 - [[api]] - `imports` [EXTRACTED]
 - [[apiClient.js]] - `imports_from` [EXTRACTED]

@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[Mini Squat exercise-specific feature extractor. Input  common_feature.parquet…]] - `rationale_for` [EXTRACTED]
-- [[extract()_4]] - `contains` [EXTRACTED]
+- [[extract()]] - `contains` [EXTRACTED]
 - [[select_columns()]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/mini_squatpy

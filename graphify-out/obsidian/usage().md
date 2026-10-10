@@ -12,7 +12,7 @@ tags:
 # usage()
 
 ## Connections
-- [[dev_1]] - `defines` [EXTRACTED]
+- [[dev]] - `defines` [EXTRACTED]
 - [[dev script]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dev

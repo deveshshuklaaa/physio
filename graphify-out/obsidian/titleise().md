@@ -12,7 +12,7 @@ tags:
 # titleise()
 
 ## Connections
-- [[ExerciseCard()_2]] - `calls` [EXTRACTED]
+- [[ExerciseCard()]] - `calls` [EXTRACTED]
 - [[ExerciseSelect.jsx]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/cn

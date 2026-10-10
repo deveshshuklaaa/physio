@@ -1,26 +1,25 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/src/routes/adminAuth.js"
 type: "code"
-community: "User.js"
+community: "otpService.js"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Userjs
+  - community/otpServicejs
 ---
 
 # routes/adminAuth.js
 
 ## Connections
-- [[IMPORTANT_5]] - `rationale_for` [EXTRACTED]
-- [[User_3]] - `contains` [EXTRACTED]
-- [[User.js]] - `imports_from` [EXTRACTED]
-- [[bcrypt]] - `contains` [EXTRACTED]
+- [[IMPORTANT_15]] - `rationale_for` [EXTRACTED]
+- [[User_16]] - `contains` [EXTRACTED]
+- [[bcrypt_7]] - `contains` [EXTRACTED]
 - [[createLoginOTP()]] - `imports` [EXTRACTED]
-- [[express_4]] - `contains` [EXTRACTED]
+- [[express_9]] - `contains` [EXTRACTED]
 - [[otpService.js]] - `imports_from` [EXTRACTED]
-- [[router_3]] - `contains` [EXTRACTED]
+- [[router_9]] - `contains` [EXTRACTED]
 - [[srcindex.js]] - `imports_from` [EXTRACTED]
-- [[{   createLoginOTP, }]] - `contains` [EXTRACTED]
+- [[{   createLoginOTP, }_2]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Userjs
+#graphify/code #graphify/EXTRACTED #community/otpServicejs

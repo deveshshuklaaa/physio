@@ -1,17 +1,16 @@
 ---
 source_file: ""
 type: "code"
-community: "session.py"
+community: "history.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/sessionpy
+  - community/historypy
 ---
 
 # Request
 
 ## Connections
-- [[get_video()]] - `references` [EXTRACTED]
-- [[upload_video()]] - `references` [EXTRACTED]
+- [[patient_sessions()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/sessionpy
+#graphify/code #graphify/EXTRACTED #community/historypy

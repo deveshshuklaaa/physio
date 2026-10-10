@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/tools/parity_check.mjs"
 type: "code"
-community: "pose_engine.js"
+community: "angles.js"
 location: "L61"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/pose_enginejs
+  - community/anglesjs
 ---
 
 # rows
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[parity_check.mjs]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/pose_enginejs
+#graphify/code #graphify/EXTRACTED #community/anglesjs

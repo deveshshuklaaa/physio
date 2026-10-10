@@ -1,17 +1,17 @@
 ---
-source_file: "frontend/tools/g13_test/run_g13_test.mjs"
+source_file: "frontend/tools/parity_check.mjs"
 type: "code"
-community: "run_g13_test.mjs"
-location: "L17"
+community: "angles.js"
+location: "L18"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/run_g13_testmjs
+  - community/anglesjs
 ---
 
 # HERE
 
 ## Connections
-- [[run_g13_test.mjs]] - `contains` [EXTRACTED]
+- [[parity_check.mjs]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/run_g13_testmjs
+#graphify/code #graphify/EXTRACTED #community/anglesjs

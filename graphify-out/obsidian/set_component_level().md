@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/logging_setup.py"
 type: "code"
-community: "logging_setup.py"
+community: "session_ws.py"
 location: "L108"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/logging_setuppy
+  - community/session_wspy
 ---
 
 # set_component_level()
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[logging_setup.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/logging_setuppy
+#graphify/code #graphify/EXTRACTED #community/session_wspy

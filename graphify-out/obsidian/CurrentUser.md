@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/auth.py"
 type: "code"
-community: "CurrentUser"
+community: "session_ws.py"
 location: "L40"
 tags:
   - graphify/code
-  - graphify/EXTRACTED
-  - community/CurrentUser
+  - graphify/INFERRED
+  - community/session_wspy
 ---
 
 # CurrentUser
@@ -16,8 +16,8 @@ tags:
 - [[_authorize_or_403()]] - `uses` [INFERRED]
 - [[_decode()]] - `calls` [EXTRACTED]
 - [[_resolve_patient_user_id()]] - `uses` [INFERRED]
-- [[_run()_3]] - `calls` [EXTRACTED]
-- [[_run()_4]] - `calls` [EXTRACTED]
+- [[_run()_1]] - `calls` [EXTRACTED]
+- [[_run()]] - `calls` [EXTRACTED]
 - [[auth.py]] - `contains` [EXTRACTED]
 - [[authorize_patient_access()]] - `references` [EXTRACTED]
 - [[decode_ws_token()]] - `references` [EXTRACTED]
@@ -27,6 +27,8 @@ tags:
 - [[patient_sessions()]] - `uses` [INFERRED]
 - [[report.py]] - `imports` [EXTRACTED]
 - [[session.py]] - `imports` [EXTRACTED]
+- [[session_calibrate()]] - `uses` [INFERRED]
+- [[session_calibration_status()]] - `uses` [INFERRED]
 - [[session_end()]] - `uses` [INFERRED]
 - [[session_start()]] - `uses` [INFERRED]
 - [[session_status()]] - `uses` [INFERRED]
@@ -34,4 +36,4 @@ tags:
 - [[session_ws.py]] - `imports` [EXTRACTED]
 - [[upload_video()]] - `uses` [INFERRED]
 
-#graphify/code #graphify/EXTRACTED #community/CurrentUser
+#graphify/code #graphify/INFERRED #community/session_wspy

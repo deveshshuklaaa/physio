@@ -12,7 +12,6 @@ tags:
 # displayedPts()
 
 ## Connections
-- [[from()]] - `indirect_call` [INFERRED]
 - [[lerpPts()]] - `calls` [EXTRACTED]
 - [[makePainter()]] - `contains` [EXTRACTED]
 

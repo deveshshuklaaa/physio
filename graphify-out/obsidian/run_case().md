@@ -17,7 +17,7 @@ tags:
 - [[angle_2d()]] - `calls` [INFERRED]
 - [[angle_3d()]] - `calls` [INFERRED]
 - [[detect_view()]] - `calls` [INFERRED]
-- [[main()_2]] - `calls` [EXTRACTED]
+- [[main()_7]] - `calls` [EXTRACTED]
 - [[parity_python.py]] - `contains` [EXTRACTED]
 - [[torso_lean()]] - `calls` [INFERRED]
 

@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/routes/doctorPatients.js"
+source_file: "part2/Hemophillia-confirm/backend/src/routes/hemophiliaDetails.js"
 type: "code"
-community: "doctorDashboard.js"
-location: "L463"
+community: "hemophiliaDetails.js"
+location: "L15"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/doctorDashboardjs
+  - community/hemophiliaDetailsjs
 ---
 
 # PatientProfile
 
 ## Connections
-- [[doctorPatients.js]] - `contains` [EXTRACTED]
+- [[hemophiliaDetails.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/doctorDashboardjs
+#graphify/code #graphify/EXTRACTED #community/hemophiliaDetailsjs

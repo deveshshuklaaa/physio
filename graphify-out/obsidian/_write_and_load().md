@@ -12,7 +12,7 @@ tags:
 # _write_and_load()
 
 ## Connections
-- [[Path]] - `calls` [EXTRACTED]
+- [[Path_6]] - `calls` [EXTRACTED]
 - [[exercise_config.py]] - `contains` [EXTRACTED]
 - [[load_exercises()]] - `calls` [EXTRACTED]
 

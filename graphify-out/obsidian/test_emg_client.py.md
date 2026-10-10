@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[Runnable self-check for the emg_client circuit breaker. No frameworks. Run…]] - `rationale_for` [EXTRACTED]
-- [[demo()]] - `contains` [EXTRACTED]
+- [[demo()_2]] - `contains` [EXTRACTED]
 - [[emg_client.py]] - `imports` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/app/mainpy

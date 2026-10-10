@@ -13,8 +13,8 @@ tags:
 
 ## Connections
 - [[Entry point called by every exercise file. Handles both dynamic (rep-based) and…]] - `rationale_for` [EXTRACTED]
-- [[ExerciseDefinition_4]] - `references` [EXTRACTED]
-- [[ExerciseDefinition_1]] - `uses` [INFERRED]
+- [[ExerciseDefinition_6]] - `references` [EXTRACTED]
+- [[ExerciseDefinition]] - `uses` [INFERRED]
 - [[_draw_hud()]] - `calls` [EXTRACTED]
 - [[_old_physio_referenceexercisesisometric_quadriceps.py]] - `imports` [EXTRACTED]
 - [[_old_physio_referenceexercisesseated_leg_extensions.py]] - `imports` [EXTRACTED]
@@ -27,7 +27,7 @@ tags:
 - [[draw_skeleton()]] - `calls` [EXTRACTED]
 - [[exercise_runner.py]] - `contains` [EXTRACTED]
 - [[init_tts()]] - `calls` [EXTRACTED]
-- [[main()_4]] - `calls` [EXTRACTED]
+- [[main()_12]] - `calls` [EXTRACTED]
 - [[reset_smoother()]] - `calls` [EXTRACTED]
 - [[show_report_window()]] - `calls` [EXTRACTED]
 - [[speak()]] - `calls` [EXTRACTED]

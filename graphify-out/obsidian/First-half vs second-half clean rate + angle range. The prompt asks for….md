@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/services/gemini_report.py"
 type: "rationale"
-community: "session_ws.py"
+community: "gemini_report.py"
 location: "L313"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/session_wspy
+  - community/gemini_reportpy
 ---
 
 # First-half vs second-half clean rate + angle range. The prompt asks for…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[_trend_summary()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/session_wspy
+#graphify/rationale #graphify/EXTRACTED #community/gemini_reportpy

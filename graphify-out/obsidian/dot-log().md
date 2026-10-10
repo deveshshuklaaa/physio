@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/lib/logger.js"
 type: "code"
-community: "startLiveSession"
+community: "BrowserLogger"
 location: "L40"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/startLiveSession
+  - community/BrowserLogger
 ---
 
 # .log()
@@ -21,4 +21,4 @@ tags:
 - [[BrowserLogger]] - `method` [EXTRACTED]
 - [[isValidEvent()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/startLiveSession
+#graphify/code #graphify/EXTRACTED #community/BrowserLogger

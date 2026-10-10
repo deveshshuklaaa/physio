@@ -12,7 +12,7 @@ tags:
 # parse_js_events()
 
 ## Connections
-- [[Path_17]] - `references` [EXTRACTED]
+- [[Path_11]] - `references` [EXTRACTED]
 - [[test_events_mirror.py]] - `contains` [EXTRACTED]
 - [[test_mirror()]] - `calls` [EXTRACTED]
 

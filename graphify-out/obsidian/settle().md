@@ -16,7 +16,7 @@ tags:
 - [[goto()]] - `calls` [EXTRACTED]
 - [[j2_j3_exerciseSelect()]] - `calls` [EXTRACTED]
 - [[j7_j8_report()]] - `calls` [EXTRACTED]
-- [[main()_6]] - `calls` [EXTRACTED]
+- [[main()_17]] - `calls` [EXTRACTED]
 - [[run_j_test.mjs]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/run_j_testmjs

@@ -1,19 +1,21 @@
 ---
-source_file: "backend/_old_physio_reference/gemini.py"
+source_file: "backend/app/services/gemini_report.py"
 type: "code"
-community: "gemini.py"
-location: "L99"
+community: "gemini_report.py"
+location: "L386"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/geminipy
+  - community/gemini_reportpy
 ---
 
 # call_gemini()
 
 ## Connections
-- [[Calls Gemini 2.5 Flash via REST API. Returns the coaching text, or a…]] - `rationale_for` [EXTRACTED]
-- [[_fetch_thread()]] - `calls` [EXTRACTED]
-- [[gemini.py]] - `contains` [EXTRACTED]
+- [[GeminiError]] - `calls` [EXTRACTED]
+- [[One HTTP call, one retry on failure. Raises GeminiError on both failing --…]] - `rationale_for` [EXTRACTED]
+- [[_api_key()]] - `calls` [EXTRACTED]
+- [[gemini_report.py]] - `contains` [EXTRACTED]
+- [[generate_report()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/geminipy
+#graphify/code #graphify/EXTRACTED #community/gemini_reportpy

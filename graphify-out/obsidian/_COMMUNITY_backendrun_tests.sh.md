@@ -11,7 +11,7 @@ members: 4
 - [[SESSION_DATA_DIR]] - code - backend/run_tests.sh
 - [[backendrun_tests.sh]] - code - backend/run_tests.sh
 - [[run()_3]] - code - backend/run_tests.sh
-- [[run_tests.sh script_1]] - code - backend/run_tests.sh
+- [[run_tests.sh script]] - code - backend/run_tests.sh
 
 ## Live Query (requires Dataview plugin)
 

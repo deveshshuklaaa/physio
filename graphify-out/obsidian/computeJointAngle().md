@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/lib/pose_engine.js"
 type: "code"
-community: "pose_engine.js"
-location: "L44"
+community: "angles.js"
+location: "L53"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/pose_enginejs
+  - community/anglesjs
 ---
 
 # computeJointAngle()
@@ -17,4 +17,4 @@ tags:
 - [[angle3d()]] - `calls` [EXTRACTED]
 - [[pose_engine.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/pose_enginejs
+#graphify/code #graphify/EXTRACTED #community/anglesjs

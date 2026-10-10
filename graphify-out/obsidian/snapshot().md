@@ -1,20 +1,21 @@
 ---
-source_file: "emg-service/backend/app.py"
+source_file: "part2/Hemophillia-confirm/backend/migrations/test/layer2_helpers.js"
 type: "code"
-community: "app.py"
-location: "L258"
+community: "layer2_helpers.js"
+location: "L98"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/apppy
+  - community/layer2_helpersjs
 ---
 
 # snapshot()
 
 ## Connections
-- [[Manual copy of the legacy shared bin file, if anything still uses it. Normal…]] - `rationale_for` [EXTRACTED]
-- [[add_to_history()]] - `calls` [EXTRACTED]
-- [[app.py]] - `contains` [EXTRACTED]
-- [[route]] - `references` [EXTRACTED]
+- [[collNames()]] - `calls` [EXTRACTED]
+- [[db()]] - `calls` [EXTRACTED]
+- [[finish()]] - `calls` [EXTRACTED]
+- [[layer2_helpers.js]] - `indirect_call` [INFERRED]
+- [[setup()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/apppy
+#graphify/code #graphify/EXTRACTED #community/layer2_helpersjs

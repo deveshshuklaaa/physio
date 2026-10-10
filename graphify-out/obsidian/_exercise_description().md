@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/services/gemini_report.py"
 type: "code"
-community: "session_ws.py"
+community: "gemini_report.py"
 location: "L337"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/session_wspy
+  - community/gemini_reportpy
 ---
 
 # _exercise_description()
@@ -15,4 +15,4 @@ tags:
 - [[build_prompt()]] - `calls` [EXTRACTED]
 - [[gemini_report.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/session_wspy
+#graphify/code #graphify/EXTRACTED #community/gemini_reportpy

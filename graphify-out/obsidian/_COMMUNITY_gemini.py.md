@@ -14,7 +14,7 @@ members: 9
 - [[_fetch_thread()]] - code - backend/_old_physio_reference/gemini.py
 - [[_wrap_text()]] - code - backend/_old_physio_reference/gemini.py
 - [[build_gemini_prompt()]] - code - backend/_old_physio_reference/gemini.py
-- [[call_gemini()]] - code - backend/_old_physio_reference/gemini.py
+- [[call_gemini()_1]] - code - backend/_old_physio_reference/gemini.py
 - [[gemini.py]] - code - backend/_old_physio_reference/gemini.py
 - [[show_report_window()]] - code - backend/_old_physio_reference/gemini.py
 

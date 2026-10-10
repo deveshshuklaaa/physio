@@ -1,12 +1,12 @@
 ---
 source_file: "part2/Hemophillia-confirm/backend/config/cryptSharedPath.js"
 type: "code"
-community: "cryptSharedPath.js"
+community: "encryption.js"
 location: "L46"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/cryptSharedPathjs
+  - community/encryptionjs
 ---
 
 # requireCryptShared()
@@ -16,4 +16,4 @@ tags:
 - [[cryptoConfig.js]] - `imports` [EXTRACTED]
 - [[encryption.js]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/cryptSharedPathjs
+#graphify/code #graphify/EXTRACTED #community/encryptionjs

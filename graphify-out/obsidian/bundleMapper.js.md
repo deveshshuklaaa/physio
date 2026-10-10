@@ -15,7 +15,7 @@ tags:
 - [[assessment.js]] - `imports_from` [EXTRACTED]
 - [[conditionMapper.js]] - `imports_from` [EXTRACTED]
 - [[fhir.js]] - `imports_from` [EXTRACTED]
-- [[hemophiliaDetails.js_1]] - `imports_from` [EXTRACTED]
+- [[hemophiliaDetails.js]] - `imports_from` [EXTRACTED]
 - [[medicationMapper.js]] - `imports_from` [EXTRACTED]
 - [[observationMapper.js]] - `imports_from` [EXTRACTED]
 - [[patientMapper.js]] - `imports_from` [EXTRACTED]
@@ -29,7 +29,7 @@ tags:
 - [[{ toFHIRCondition }]] - `contains` [EXTRACTED]
 - [[{ toFHIRMedicationStatement }]] - `contains` [EXTRACTED]
 - [[{ toFHIRObservations }]] - `contains` [EXTRACTED]
-- [[{ toFHIRPatient }]] - `contains` [EXTRACTED]
+- [[{ toFHIRPatient }_1]] - `contains` [EXTRACTED]
 - [[{ toFHIRQuestionnaireResponse }]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/bundleMapperjs

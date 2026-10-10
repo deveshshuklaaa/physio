@@ -12,6 +12,6 @@ tags:
 # preview
 
 ## Connections
-- [[scripts_3]] - `contains` [EXTRACTED]
+- [[scripts_1]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

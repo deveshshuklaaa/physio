@@ -2,7 +2,7 @@
 source_file: "backend/app/ws/test_session_ws.py"
 type: "code"
 community: "test_session_ws.py"
-location: "L334"
+location: "L345"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -15,7 +15,7 @@ tags:
 - [[Session belongs to p1; a socket authenticating as p2 must be refused -- this is…]] - `rationale_for` [EXTRACTED]
 - [[TestClient]] - `calls` [INFERRED]
 - [[_start()]] - `calls` [EXTRACTED]
-- [[_token()_2]] - `calls` [EXTRACTED]
+- [[_token()_4]] - `calls` [EXTRACTED]
 - [[test_session_ws.py]] - `contains` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/test_session_wspy

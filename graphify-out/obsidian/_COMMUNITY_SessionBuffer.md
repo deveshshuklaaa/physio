@@ -8,7 +8,7 @@ members: 17
 **Members:** 17 nodes
 
 ## Members
-- [[dot-__init__()_9]] - code - backend/app/services/session_buffer.py
+- [[dot-__init__()]] - code - backend/app/services/session_buffer.py
 - [[dot-append()]] - code - backend/app/services/session_buffer.py
 - [[dot-extend()]] - code - backend/app/services/session_buffer.py
 - [[dot-flush()]] - code - backend/app/services/session_buffer.py
@@ -19,7 +19,7 @@ members: 17
 - [[dot-stop_flush_task()]] - code - backend/app/services/session_buffer.py
 - [[Append everything pending to `path` as JSONL, then drop exactly what was…]] - rationale - backend/app/services/session_buffer.py
 - [[Idempotent calling twice does not spawn a second task. `interval_s=None` reads…]] - rationale - backend/app/services/session_buffer.py
-- [[Path_14]] - code
+- [[Path_1]] - code
 - [[SessionBuffer]] - code - backend/app/services/session_buffer.py
 - [[Snapshot of what's currently buffered, oldest first. Debugtest use.]] - rationale - backend/app/services/session_buffer.py
 - [[Stop the background task and flush whatever remains before returning, so…]] - rationale - backend/app/services/session_buffer.py
@@ -34,10 +34,9 @@ SORT file.name ASC
 ```
 
 ## Connections to other communities
-- 1 edge to [[_COMMUNITY_test_session_ws.py]]
-- 1 edge to [[_COMMUNITY_test_session_buffer.py]]
+- 2 edges to [[_COMMUNITY_get_buffer]]
 - 1 edge to [[_COMMUNITY_session_ws.py]]
 
 ## Top bridge nodes
-- [[SessionBuffer]] - degree 11, connects to 2 communities
+- [[SessionBuffer]] - degree 11, connects to 1 community
 - [[dot-pending()]] - degree 2, connects to 1 community

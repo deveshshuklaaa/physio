@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/routes/session.py"
 type: "code"
-community: "CurrentUser"
-location: "L112"
+community: "history.py"
+location: "L128"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/CurrentUser
+  - community/historypy
 ---
 
 # _public()
@@ -18,4 +18,4 @@ tags:
 - [[session.py]] - `contains` [EXTRACTED]
 - [[session_status()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/CurrentUser
+#graphify/code #graphify/EXTRACTED #community/historypy

@@ -1,16 +1,17 @@
 ---
 source_file: ""
 type: "code"
-community: "admin_models.py"
+community: "clip_features"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/admin_modelspy
+  - community/clip_features
 ---
 
 # Path
 
 ## Connections
-- [[build_model_registry()]] - `references` [EXTRACTED]
+- [[clip_features()]] - `references` [EXTRACTED]
+- [[main()_2]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/admin_modelspy
+#graphify/code #graphify/EXTRACTED #community/clip_features

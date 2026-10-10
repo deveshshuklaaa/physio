@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/session.py"
 type: "rationale"
 community: "session.py"
-location: "L295"
+location: "L327"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED

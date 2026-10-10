@@ -16,6 +16,6 @@ tags:
 - [[appsrcpagesReport.jsx]] - `imports` [EXTRACTED]
 - [[badge.jsx]] - `contains` [EXTRACTED]
 - [[badgeVariants]] - `calls` [EXTRACTED]
-- [[cn()_2]] - `calls` [EXTRACTED]
+- [[cn()]] - `calls` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/cn

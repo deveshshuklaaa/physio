@@ -1,18 +1,18 @@
 ---
 source_file: "frontend/src/lib/checks/mini_squat.js"
 type: "code"
-community: "pose_engine.js"
+community: "angles.js"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/pose_enginejs
+  - community/anglesjs
 ---
 
 # mini_squat.js
 
 ## Connections
-- [[CHECKS_1]] - `contains` [EXTRACTED]
+- [[CHECKS_5]] - `contains` [EXTRACTED]
 - [[LM_1]] - `imports` [EXTRACTED]
 - [[angle2d()]] - `imports` [EXTRACTED]
 - [[angles.js]] - `imports_from` [EXTRACTED]
@@ -21,4 +21,4 @@ tags:
 - [[knee_varus.test.mjs]] - `imports_from` [EXTRACTED]
 - [[landmarks.js]] - `imports_from` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/pose_enginejs
+#graphify/code #graphify/EXTRACTED #community/anglesjs

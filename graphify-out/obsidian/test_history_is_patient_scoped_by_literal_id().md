@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/test_history.py"
 type: "code"
 community: "test_history.py"
-location: "L110"
+location: "L121"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -14,7 +14,7 @@ tags:
 ## Connections
 - [[A raw literal id (not 'me', not PATxxx) is a patientUserId -- p2 reading it…]] - `rationale_for` [EXTRACTED]
 - [[TestClient]] - `calls` [INFERRED]
-- [[_auth()]] - `calls` [EXTRACTED]
+- [[_auth()_2]] - `calls` [EXTRACTED]
 - [[_cleanup_sessions()]] - `calls` [EXTRACTED]
 - [[_start_session()]] - `calls` [EXTRACTED]
 - [[test_history.py]] - `contains` [EXTRACTED]

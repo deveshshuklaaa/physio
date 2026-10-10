@@ -2,7 +2,7 @@
 source_file: "part2/Hemophillia-confirm/frontend/package.json"
 type: "code"
 community: "dependencies"
-location: "L14"
+location: "L15"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,7 +12,7 @@ tags:
 # i18next
 
 ## Connections
-- [[dependencies_2]] - `contains` [EXTRACTED]
+- [[dependencies]] - `contains` [EXTRACTED]
 - [[i18next_1]] - `imports` [EXTRACTED]
 
 #graphify/code #graphify/EXTRACTED #community/dependencies

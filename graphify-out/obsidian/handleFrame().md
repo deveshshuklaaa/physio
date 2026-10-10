@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/workers/pose_worker.js"
 type: "code"
-community: "startLiveSession"
-location: "L93"
+community: "BrowserLogger"
+location: "L100"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/startLiveSession
+  - community/BrowserLogger
 ---
 
 # handleFrame()
@@ -15,4 +15,4 @@ tags:
 - [[dot-droppedCount()]] - `indirect_call` [INFERRED]
 - [[pose_worker.js]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/startLiveSession
+#graphify/code #graphify/EXTRACTED #community/BrowserLogger

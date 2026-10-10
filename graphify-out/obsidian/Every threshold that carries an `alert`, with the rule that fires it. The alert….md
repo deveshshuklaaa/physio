@@ -1,12 +1,12 @@
 ---
 source_file: "backend/app/services/gemini_report.py"
 type: "rationale"
-community: "session_ws.py"
+community: "gemini_report.py"
 location: "L229"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/session_wspy
+  - community/gemini_reportpy
 ---
 
 # Every threshold that carries an `alert`, with the rule that fires it. The alert…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[_error_descriptions()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/session_wspy
+#graphify/rationale #graphify/EXTRACTED #community/gemini_reportpy

@@ -12,8 +12,8 @@ tags:
 # OneEuroSmoother
 
 ## Connections
-- [[dot-constructor()_6]] - `method` [EXTRACTED]
-- [[dot-reset()_1]] - `method` [EXTRACTED]
+- [[dot-constructor()_10]] - `method` [EXTRACTED]
+- [[dot-reset()_2]] - `method` [EXTRACTED]
 - [[dot-smooth()_1]] - `method` [EXTRACTED]
 - [[createSmoother()]] - `calls` [EXTRACTED]
 - [[smoother.js]] - `contains` [EXTRACTED]

@@ -1,11 +1,11 @@
 ---
 source_file: ""
 type: "code"
-community: "exercises.py"
+community: "_get"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/exercisespy
+  - community/_get
 ---
 
 # Request
@@ -13,4 +13,4 @@ tags:
 ## Connections
 - [[list_exercises()_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/exercisespy
+#graphify/code #graphify/EXTRACTED #community/_get

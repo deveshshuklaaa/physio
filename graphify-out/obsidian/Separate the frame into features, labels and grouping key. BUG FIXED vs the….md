@@ -1,12 +1,12 @@
 ---
 source_file: "backend/ml/train_model.py"
 type: "rationale"
-community: "common_features.py"
+community: "train_model.py"
 location: "L77"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/common_featurespy
+  - community/train_modelpy
 ---
 
 # Separate the frame into features, labels and grouping key. BUG FIXED vs the…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[split_frame()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/common_featurespy
+#graphify/rationale #graphify/EXTRACTED #community/train_modelpy

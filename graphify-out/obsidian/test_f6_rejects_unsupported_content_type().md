@@ -2,7 +2,7 @@
 source_file: "backend/app/routes/test_report.py"
 type: "code"
 community: "test_report.py"
-location: "L217"
+location: "L228"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -13,7 +13,7 @@ tags:
 
 ## Connections
 - [[TestClient]] - `calls` [INFERRED]
-- [[_auth()_1]] - `calls` [EXTRACTED]
+- [[_auth()]] - `calls` [EXTRACTED]
 - [[_cleanup()]] - `calls` [EXTRACTED]
 - [[test_report.py]] - `contains` [EXTRACTED]
 

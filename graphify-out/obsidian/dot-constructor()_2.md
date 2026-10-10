@@ -1,12 +1,12 @@
 ---
 source_file: "frontend/src/ws/client.js"
 type: "code"
-community: "RingBuffer"
+community: "SessionWsClient"
 location: "L27"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/RingBuffer
+  - community/SessionWsClient
 ---
 
 # .constructor()
@@ -15,4 +15,4 @@ tags:
 - [[RingBuffer]] - `calls` [EXTRACTED]
 - [[SessionWsClient]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/RingBuffer
+#graphify/code #graphify/EXTRACTED #community/SessionWsClient

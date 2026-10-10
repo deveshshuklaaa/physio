@@ -1,17 +1,18 @@
 ---
-source_file: "backend/app/services/video_retention.py"
+source_file: "backend/app/logging_setup.py"
 type: "code"
-community: "video_retention.py"
-location: "L83"
+community: "common_features.py"
+location: "L145"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/video_retentionpy
+  - community/common_featurespy
 ---
 
 # .__init__()
 
 ## Connections
-- [[_FakeCursor]] - `method` [EXTRACTED]
+- [[ComponentLogger]] - `method` [EXTRACTED]
+- [[_make_handler()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/video_retentionpy
+#graphify/code #graphify/EXTRACTED #community/common_featurespy

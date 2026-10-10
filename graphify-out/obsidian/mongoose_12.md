@@ -1,17 +1,17 @@
 ---
-source_file: "part2/Hemophillia-confirm/backend/src/models/Assessment.js"
-type: "code"
-community: "doctorDashboard.js"
-location: "L259"
+source_file: "part2/Hemophillia-confirm/backend/package.json"
+type: "concept"
+community: "dependencies"
+location: "L22"
 tags:
-  - graphify/code
+  - graphify/concept
   - graphify/EXTRACTED
-  - community/doctorDashboardjs
+  - community/dependencies
 ---
 
 # mongoose
 
 ## Connections
-- [[Assessment.js_1]] - `contains` [EXTRACTED]
+- [[mongoose_11]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/doctorDashboardjs
+#graphify/concept #graphify/EXTRACTED #community/dependencies

@@ -12,14 +12,17 @@ tags:
 # emailService.js
 
 ## Connections
-- [[IMPORTANT_13]] - `rationale_for` [EXTRACTED]
+- [[IMPORTANT_22]] - `rationale_for` [EXTRACTED]
 - [[admin.js]] - `imports_from` [EXTRACTED]
-- [[nodemailer]] - `contains` [EXTRACTED]
+- [[nodemailer_2]] - `contains` [EXTRACTED]
 - [[otpService.js]] - `imports_from` [EXTRACTED]
 - [[sendAdminCredentials()]] - `indirect_call` [INFERRED]
 - [[sendDoctorCredentials()]] - `indirect_call` [INFERRED]
 - [[sendDoctorRejectionEmail()]] - `indirect_call` [INFERRED]
 - [[sendLoginOTP()]] - `indirect_call` [INFERRED]
+- [[sendPatientProfileUpdateEmail()]] - `indirect_call` [INFERRED]
+- [[sendPatientRegistrationEmail()]] - `indirect_call` [INFERRED]
+- [[servicespasswordResetEmailService.js]] - `imports_from` [EXTRACTED]
 - [[srcindex.js]] - `imports_from` [EXTRACTED]
 - [[transporter]] - `contains` [EXTRACTED]
 - [[verifyEmailConnection()]] - `indirect_call` [INFERRED]

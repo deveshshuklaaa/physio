@@ -2,7 +2,7 @@
 source_file: "backend/app/ws/test_session_ws.py"
 type: "code"
 community: "test_session_ws.py"
-location: "L87"
+location: "L98"
 tags:
   - graphify/code
   - graphify/EXTRACTED
@@ -12,7 +12,7 @@ tags:
 # _start()
 
 ## Connections
-- [[_token()_2]] - `calls` [EXTRACTED]
+- [[_token()_4]] - `calls` [EXTRACTED]
 - [[test_g2b_ws_malformed_auth_frame_closes_4401()]] - `calls` [EXTRACTED]
 - [[test_g2b_ws_matching_user_token_is_accepted()]] - `calls` [EXTRACTED]
 - [[test_g2b_ws_no_auth_frame_closes_4401_within_timeout()]] - `calls` [EXTRACTED]

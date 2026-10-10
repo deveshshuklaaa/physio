@@ -1,18 +1,17 @@
 ---
-source_file: "backend/app/logging_setup.py"
+source_file: "backend/app/db.py"
 type: "code"
-community: "logging_setup.py"
-location: "L145"
+community: "db.py"
+location: "L176"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/logging_setuppy
+  - community/dbpy
 ---
 
 # .__init__()
 
 ## Connections
-- [[ComponentLogger]] - `method` [EXTRACTED]
-- [[_make_handler()]] - `calls` [EXTRACTED]
+- [[_FakeUsers]] - `method` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/logging_setuppy
+#graphify/code #graphify/EXTRACTED #community/dbpy

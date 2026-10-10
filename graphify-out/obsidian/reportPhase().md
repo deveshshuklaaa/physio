@@ -12,7 +12,7 @@ tags:
 # reportPhase()
 
 ## Connections
-- [[Report()_1]] - `calls` [EXTRACTED]
+- [[Report()]] - `calls` [EXTRACTED]
 - [[appsrcpagesReport.jsx]] - `imports` [EXTRACTED]
 - [[poll()]] - `calls` [EXTRACTED]
 - [[report_poll.js]] - `contains` [EXTRACTED]
