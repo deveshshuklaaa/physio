@@ -81,11 +81,13 @@ services:
       # aarch64 blocker is resolved).
       CRYPT_SHARED_LIB_PATH: /csfle/mongo_crypt_v1.so
     volumes:
-      # APP-T3: default is the committed x86_64 build, so nothing changes for an
-      # existing checkout. The aarch64 VPS sets CRYPT_SHARED_DIR in its env file.
+      # APP-T3: CRYPT_SHARED_LIB is the variable the `server` (deploy) branch already
+      # uses -- same name, same meaning, a full path to the .so. Reused rather than
+      # reinvented (§8 constraint 10). Default is the committed x86_64 build, so an
+      # existing x86_64 checkout needs no env file at all.
       # SECURITY.md 2.4: a library that cannot load does NOT fail the boot -- CSFLE
       # degrades to cleartext, so a wrong value here is silent. APP-T12 C5 checks it.
-      - ./${CRYPT_SHARED_DIR:-mongo_crypt_shared_v1-linux-x86_64-enterprise-amazon2023-8.3.9}/lib/mongo_crypt_v1.so:/csfle/mongo_crypt_v1.so:ro
+      - ${CRYPT_SHARED_LIB:-./mongo_crypt_shared_v1-linux-x86_64-enterprise-amazon2023-8.3.9/lib/mongo_crypt_v1.so}:/csfle/mongo_crypt_v1.so:ro
     # G2-0.1/G2-0.3: no local `mongo` service -- this project's data lives on
     # MongoDB Atlas (MONGO_URI in .env). A local container would be an empty
     # database nothing reads from. §1 of the plan lists mongo:27017; skipped
@@ -149,7 +151,7 @@ services:
       MONGO_URI: ${MONGO_URI_STAGE}
     volumes:
       # APP-T3: see hemo-backend above.
-      - ./${CRYPT_SHARED_DIR:-mongo_crypt_shared_v1-linux-x86_64-enterprise-amazon2023-8.3.9}/lib/mongo_crypt_v1.so:/csfle/mongo_crypt_v1.so:ro
+      - ${CRYPT_SHARED_LIB:-./mongo_crypt_shared_v1-linux-x86_64-enterprise-amazon2023-8.3.9/lib/mongo_crypt_v1.so}:/csfle/mongo_crypt_v1.so:ro
     ports:
       - "${STAGE_PORT:-5001}:5000"
     restart: unless-stopped

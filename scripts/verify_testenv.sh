@@ -96,13 +96,13 @@ else
 fi
 
 # ------------------------------------------------------ C5 CSFLE library + arch
-CRYPT=$(envget .env CRYPT_SHARED_DIR || true)
-CRYPT=${CRYPT:-mongo_crypt_shared_v1-linux-x86_64-enterprise-amazon2023-8.3.9}
-SO="$CRYPT/lib/mongo_crypt_v1.so"
+SO=$(envget .env CRYPT_SHARED_LIB || true)
+SO=${SO:-./mongo_crypt_shared_v1-linux-x86_64-enterprise-amazon2023-8.3.9/lib/mongo_crypt_v1.so}
 if [ ! -f "$SO" ]; then
   bad "C5  CSFLE shared library missing: $SO" \
-      "APP-T3: parameterise the compose volume as \${CRYPT_SHARED_DIR:-<x86_64 dir>} and
-           copy the aarch64 library in from the production checkout.  It is NOT in git (§14.11)."
+      "APP-T3: set CRYPT_SHARED_LIB in .env to the .so for THIS host's architecture.
+           The aarch64 build ships as a tarball tracked on the 'server' branch; the x86_64
+           build is extracted and tracked on this one."
 elif command -v file >/dev/null 2>&1; then
   LIBARCH=$(file -b "$SO" | grep -oE 'x86-64|aarch64|ARM aarch64' | head -1)
   HOST=$(uname -m)
@@ -113,7 +113,7 @@ elif command -v file >/dev/null 2>&1; then
       bad "C5  CSFLE library is '$LIBARCH' but the host is '$HOST'" \
           "SECURITY.md 2.4: CSFLE DEGRADES TO CLEARTEXT instead of refusing to start, so a
            library that cannot load gives you a healthy-looking stack writing patient fields
-           in plaintext.  Set CRYPT_SHARED_DIR to the matching build (APP-T3)." ;;
+           in plaintext.  Point CRYPT_SHARED_LIB at the matching build (APP-T3)." ;;
   esac
 else
   skip "C5  CSFLE library arch" "'file' not on PATH; library exists at $SO"
