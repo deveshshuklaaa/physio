@@ -14,8 +14,8 @@ const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const googleClient = GOOGLE_CLIENT_ID ? new OAuth2Client(GOOGLE_CLIENT_ID) : null;
 
 // Use env JWT secret if available, otherwise a safe fallback so login/register still work
-const JWT_SECRET =
-  process.env.JWT_SECRET || "hemo_fallback_secret_change_in_production";
+// JWT_SECRET: no fallback, by design. See config/secrets.js.
+const { JWT_SECRET } = require("../../config/secrets");
 
 // Maxes: email 254 (RFC 5321); name parts 100 and password 128 are chosen (bcrypt only reads 72 bytes).
 const SIGNUP_SPEC = {

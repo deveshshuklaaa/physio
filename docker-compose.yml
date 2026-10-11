@@ -2,6 +2,10 @@ services:
   emg-service:
     build:
       context: ./emg-service
+    # APP-010: profile-gated -- config stays, container does NOT start by default.
+    # Start deliberately with `docker compose --profile emg up -d emg-service`.
+    # Image layers cost disk; a stopped service costs no RAM, no CPU, no port.
+    profiles: ["emg"]
     # D27: internal only, NO http host port and no nginx location -- permanently
     # unreachable from a browser. Reached at http://emg-service:5000 from inside
     # the compose network. Bench access is `docker compose exec`, never an nginx
@@ -34,6 +38,7 @@ services:
     # the backend will not boot without this file.
     env_file:
       - ./.env
+      - ./.env.secrets
     environment:
       # K2 -- compose hostname, not localhost. localhost inside this
       # container is the backend itself.
@@ -41,8 +46,10 @@ services:
     volumes:
       - ./data/trained_models:/app/ml/trained_models
       - ./data/backend_logs:/app/logs
-    depends_on:
-      - emg-service
+    # APP-010: `depends_on: emg-service` removed -- emg-service is now profile-gated
+    # and depends_on would drag it up with every `compose up`. Ordering was never
+    # the real guarantee anyway: the backend reaches EMG over EMG_SERVICE_URL at
+    # request time and already has its own circuit breaker for an absent service.
     # G2-A3: no host port. Reached through nginx at /engine/* and /ws/*.
     restart: unless-stopped
     mem_limit: 2g
@@ -67,6 +74,7 @@ services:
       context: ./part2/Hemophillia-confirm/backend
     env_file:
       - ./.env
+      - ./.env.secrets
     environment:
       # G2-A CSFLE: mount path below must match this. Same tarball referenced
       # in docs/09g_g2_0_resolutions.md, now an x86_64 build (that doc's
@@ -122,8 +130,14 @@ services:
   hemo-backend-stage:
     build:
       context: ./part2/Hemophillia-confirm/backend
+    # APP-010: profile-gated -- config preserved, container does NOT start by
+    # default. Start deliberately with
+    # `docker compose --profile stage up -d hemo-backend-stage`.
+    # Needed for the DB_MIGRATION_PLAN Phase 9 dry run (APP-C9), not for serving.
+    profiles: ["stage"]
     env_file:
       - ./.env
+      - ./.env.secrets
     environment:
       CRYPT_SHARED_LIB_PATH: /csfle/mongo_crypt_v1.so
       MONGO_URI: ${MONGO_URI_STAGE}

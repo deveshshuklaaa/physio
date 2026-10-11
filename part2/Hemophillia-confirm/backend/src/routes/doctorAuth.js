@@ -22,9 +22,8 @@ const router = express.Router();
 // JWT SECRET
 // =====================================================
 
-const JWT_SECRET =
-  process.env.JWT_SECRET ||
-  "hemo_fallback_secret_change_in_production";
+// JWT_SECRET: no fallback, by design. See config/secrets.js.
+const { JWT_SECRET } = require("../../config/secrets");
 
 // =====================================================
 // POST /api/doctor/login

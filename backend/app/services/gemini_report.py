@@ -55,7 +55,7 @@ GEMINI_URL = (
 # clipping the note mid-section; 4096 leaves headroom and still fails fast on
 # a runaway generation instead of burning the timeout budget on it.
 REQUEST_TIMEOUT_S = 30.0
-MAX_OUTPUT_TOKENS = 100000
+MAX_OUTPUT_TOKENS = 10000
 TEMPERATURE = 0.4
 
 

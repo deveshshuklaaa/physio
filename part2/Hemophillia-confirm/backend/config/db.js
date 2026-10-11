@@ -7,7 +7,7 @@ const { Binary } = require("mongodb");
 // MASTER KEY
 // =====================================================
 
-const { localMasterKey } = require("./masterKey");
+const { localMasterKey, dataKeyId: DATA_KEY_ID } = require("./secrets");
 
 // =====================================================
 // LOCAL KMS
@@ -29,26 +29,10 @@ const keyVaultNamespace = "encryption.__keyVault";
 // DATA ENCRYPTION KEY
 // =====================================================
 
-const DATA_KEY_BASE64 =
-    "cK8aqOqVSBCJKGnAHZMimw==";
-
-const DATA_KEY_ID = new Binary(
-    Buffer.from(DATA_KEY_BASE64, "base64"),
-    Binary.SUBTYPE_UUID
-);
-
-// =====================================================
-// VERIFY DATA KEY
-// =====================================================
-
-console.log("=================================");
-console.log("🔑 DATA KEY DEBUG");
-console.log("Base64:", DATA_KEY_BASE64);
-console.log("Data Key:", DATA_KEY_ID);
-console.log("BSON Type:", DATA_KEY_ID._bsontype);
-console.log("Subtype:", DATA_KEY_ID.sub_type);
-console.log("Length:", DATA_KEY_ID.buffer.length);
-console.log("=================================");
+// DEK id comes from CSFLE_DATA_KEY_ID via config/secrets.js, which validates
+// it is a 16-byte UUID and throws otherwise. It is never logged: a wrong value
+// makes every encrypted field fail to decrypt, and the startup noise that used
+// to print it here also printed it into every container log.
 
 // =====================================================
 // CRYPT SHARED
@@ -269,32 +253,7 @@ console.log(
     "AEAD_AES_256_CBC_HMAC_SHA_512-Random"
 );
 
-console.log(
-    "keyId:",
-    DATA_KEY_ID
-);
-
-console.log(
-    "keyId constructor:",
-    DATA_KEY_ID.constructor.name
-);
-
-console.log(
-    "keyId BSON type:",
-    DATA_KEY_ID._bsontype
-);
-
-console.log(
-    "keyId subtype:",
-    DATA_KEY_ID.sub_type
-);
-
-console.log(
-    "keyId length:",
-    DATA_KEY_ID.buffer.length
-);
-
-console.log("========================================\n");
+// keyId deliberately not logged -- see the note at its definition.
 
 // =====================================================
 // CONNECT

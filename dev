@@ -5,14 +5,27 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-APP_SERVICES=(backend frontend hemo-backend hemo-frontend emg-service nginx)
+# APP-010: emg-service and hemo-backend-stage are profile-gated in
+# docker-compose.yml -- they keep their config but do not start by default.
+# They are OUT of APP_SERVICES, so `restart` with no argument cannot error on
+# a service compose has not been told about.
+APP_SERVICES=(backend frontend hemo-backend hemo-frontend nginx)
+
+# ALL_PROFILES is for commands that must see every container that exists, not
+# just the default set. `down` and `ps` need it: without the profiles, a `down`
+# removes the 5 default services and leaves a gated one holding the network,
+# which fails with "Resource is still in use". `up` deliberately does NOT use
+# it -- not starting them is the point.
+ALL_PROFILES=(--profile emg --profile stage)
 
 usage() {
   cat <<'USAGE'
 ./dev <command>
 
   up               start everything (build if images are missing)
-  down             stop everything
+  down             stop everything, gated services included
+  stage            start hemo-backend-stage (profile-gated, off by default)
+  emg              start emg-service       (profile-gated, off by default)
   restart [svc]    restart a service, or all of them
   rebuild [svc]    rebuild image(s) and restart -- USE THIS after editing code
   logs [svc]       follow logs (all services, or one)
@@ -26,12 +39,16 @@ usage() {
 
 Code changes need `rebuild`, not `restart`: the images COPY the source in, so
 a restart just runs the same baked code again.
+
+`emg-service` and `hemo-backend-stage` do not start with `up` -- they are
+profile-gated (APP-010). Start them with `./dev emg` / `./dev stage`. `down`
+and `ps` include them; `up`, `restart` and `rebuild` do not.
 USAGE
 }
 
 case "${1:-}" in
   up)      docker compose up -d --build; echo; echo "→ http://localhost"; docker compose ps --format '{{.Service}}\t{{.State}}\t{{.Ports}}' ;;
-  down)    docker compose down ;;
+  down)    docker compose "${ALL_PROFILES[@]}" down ;;
   restart) shift; docker compose restart "${@:-${APP_SERVICES[@]}}" ;;
   rebuild)
     shift
@@ -39,7 +56,9 @@ case "${1:-}" in
     else docker compose build "$@" && docker compose up -d "$@"; fi
     docker compose ps --format '{{.Service}}\t{{.State}}' ;;
   logs)    shift; docker compose logs -f --tail=80 "$@" ;;
-  ps)      docker compose ps --format '{{.Service}}\t{{.State}}\t{{.Ports}}' ;;
+  ps)      docker compose "${ALL_PROFILES[@]}" ps --format '{{.Service}}\t{{.State}}\t{{.Ports}}' ;;
+  stage)   docker compose --profile stage up -d hemo-backend-stage; echo '→ hemo-backend-stage on :5001' ;;
+  emg)     docker compose --profile emg up -d emg-service; echo '→ emg-service (internal only, UDP 8888)' ;;
   vite)    cd part2/Hemophillia-confirm/frontend && npm run dev ;;
   shell)   shift; docker compose exec "${1:?service name required}" sh ;;
   test)

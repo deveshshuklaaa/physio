@@ -2,7 +2,7 @@
 
 // // Use the same JWT secret strategy as auth routes
 // const JWT_SECRET =
-//   process.env.JWT_SECRET || "hemo_fallback_secret_change_in_production";
+//   process.env.JWT_SECRET || "<removed: see config/secrets.js>";
 
 // function authMiddleware(req, res, next) {
 //   const authHeader = req.headers.authorization;
@@ -31,9 +31,8 @@ const jwt = require("jsonwebtoken");
 // JWT SECRET
 // =====================================================
 
-const JWT_SECRET =
-  process.env.JWT_SECRET ||
-  "mySuperSecretHemophiliaAppKey123";
+// JWT_SECRET: no fallback, by design. See config/secrets.js.
+const { JWT_SECRET } = require("../../config/secrets");
 
 // =====================================================
 // AUTH MIDDLEWARE

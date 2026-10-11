@@ -1,8 +1,7 @@
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET =
-  process.env.JWT_SECRET ||
-  "mySuperSecretHemophiliaAppKey123";
+// JWT_SECRET: no fallback, by design. See config/secrets.js.
+const { JWT_SECRET } = require("../../config/secrets");
 
 // =====================================================
 // VERIFY STAFF JWT

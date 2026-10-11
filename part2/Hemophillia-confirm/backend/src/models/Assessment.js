@@ -8,7 +8,7 @@
 // // =====================================================
 
 // const DATA_KEY_ID = Binary.createFromBase64(
-//   "cK8aqOqVSBCJKGnAHZMimw==",
+//   <DEK id: now from config/secrets.js>,
 //   Binary.SUBTYPE_UUID
 // );
 
@@ -263,10 +263,8 @@ const { Binary } = require("mongodb");
 // CSFLE DATA KEY
 // =====================================================
 
-const DATA_KEY_ID = Binary.createFromBase64(
-  "cK8aqOqVSBCJKGnAHZMimw==",
-  Binary.SUBTYPE_UUID
-);
+// DEK id from CSFLE_DATA_KEY_ID, validated in config/secrets.js.
+const DATA_KEY_ID = require("../../config/secrets").dataKeyId;
 
 // =====================================================
 // ENCRYPTED STRING

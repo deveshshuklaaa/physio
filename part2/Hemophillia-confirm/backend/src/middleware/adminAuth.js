@@ -2,7 +2,7 @@
 
 // // const JWT_SECRET =
 // //   process.env.JWT_SECRET ||
-// //   "hemo_fallback_secret_change_in_production";
+// //   "<removed: see config/secrets.js>";
 
 // // // =====================================================
 // // // ADMIN AUTHENTICATION
@@ -348,9 +348,8 @@ const User = require("../models/User");
 const AdminProfile = require("../models/AdminProfile");
 const { resolveAdminAuthz } = require("../utils/adminAuthz");
 
-const JWT_SECRET =
-  process.env.JWT_SECRET ||
-  "hemo_fallback_secret_change_in_production";
+// JWT_SECRET: no fallback, by design. See config/secrets.js.
+const { JWT_SECRET } = require("../../config/secrets");
 
 // =====================================================
 // ADMIN AUTHENTICATION
