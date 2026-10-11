@@ -26,6 +26,8 @@ usage() {
   down             stop everything, gated services included
   stage            start hemo-backend-stage (profile-gated, off by default)
   emg              start emg-service       (profile-gated, off by default)
+  db-refresh       copy prod DB into this clone's *_test DB (APP-T7)
+  verify           run the APP-0.1 test-environment gate (APP-T12)
   restart [svc]    restart a service, or all of them
   rebuild [svc]    rebuild image(s) and restart -- USE THIS after editing code
   logs [svc]       follow logs (all services, or one)
@@ -59,6 +61,8 @@ case "${1:-}" in
   ps)      docker compose "${ALL_PROFILES[@]}" ps --format '{{.Service}}\t{{.State}}\t{{.Ports}}' ;;
   stage)   docker compose --profile stage up -d hemo-backend-stage; echo '→ hemo-backend-stage on :5001' ;;
   emg)     docker compose --profile emg up -d emg-service; echo '→ emg-service (internal only, UDP 8888)' ;;
+  db-refresh) shift; venv/bin/python scripts/db_refresh.py "$@" ;;
+  verify)  ./scripts/verify_testenv.sh ;;
   vite)    cd part2/Hemophillia-confirm/frontend && npm run dev ;;
   shell)   shift; docker compose exec "${1:?service name required}" sh ;;
   test)

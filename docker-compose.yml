@@ -25,7 +25,7 @@ services:
       # Q26: the band streams UDP to 8888. Without this the container receives
       # nothing -- this worked before only because Flask ran on the host, not in
       # compose. TCP 5000 stays unpublished (D27).
-      - "8888:8888/udp"
+      - "${EMG_UDP_PORT:-8888}:8888/udp"
     restart: unless-stopped
     mem_limit: 512m
 
@@ -81,7 +81,11 @@ services:
       # aarch64 blocker is resolved).
       CRYPT_SHARED_LIB_PATH: /csfle/mongo_crypt_v1.so
     volumes:
-      - ./mongo_crypt_shared_v1-linux-x86_64-enterprise-amazon2023-8.3.9/lib/mongo_crypt_v1.so:/csfle/mongo_crypt_v1.so:ro
+      # APP-T3: default is the committed x86_64 build, so nothing changes for an
+      # existing checkout. The aarch64 VPS sets CRYPT_SHARED_DIR in its env file.
+      # SECURITY.md 2.4: a library that cannot load does NOT fail the boot -- CSFLE
+      # degrades to cleartext, so a wrong value here is silent. APP-T12 C5 checks it.
+      - ./${CRYPT_SHARED_DIR:-mongo_crypt_shared_v1-linux-x86_64-enterprise-amazon2023-8.3.9}/lib/mongo_crypt_v1.so:/csfle/mongo_crypt_v1.so:ro
     # G2-0.1/G2-0.3: no local `mongo` service -- this project's data lives on
     # MongoDB Atlas (MONGO_URI in .env). A local container would be an empty
     # database nothing reads from. §1 of the plan lists mongo:27017; skipped
@@ -112,7 +116,9 @@ services:
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-      - "80:80"
+      # APP-T2: host port only. nginx still listens on 80 INSIDE the container,
+      # so nginx/default.conf is identical in prod and test (docs/20 §0).
+      - "${HTTP_PORT:-80}:80"
     depends_on:
       hemo-backend:
         condition: service_healthy
@@ -142,8 +148,9 @@ services:
       CRYPT_SHARED_LIB_PATH: /csfle/mongo_crypt_v1.so
       MONGO_URI: ${MONGO_URI_STAGE}
     volumes:
-      - ./mongo_crypt_shared_v1-linux-x86_64-enterprise-amazon2023-8.3.9/lib/mongo_crypt_v1.so:/csfle/mongo_crypt_v1.so:ro
+      # APP-T3: see hemo-backend above.
+      - ./${CRYPT_SHARED_DIR:-mongo_crypt_shared_v1-linux-x86_64-enterprise-amazon2023-8.3.9}/lib/mongo_crypt_v1.so:/csfle/mongo_crypt_v1.so:ro
     ports:
-      - "5001:5000"
+      - "${STAGE_PORT:-5001}:5000"
     restart: unless-stopped
     mem_limit: 4g
