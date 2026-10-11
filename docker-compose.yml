@@ -148,7 +148,10 @@ services:
       - ./.env.secrets
     environment:
       CRYPT_SHARED_LIB_PATH: /csfle/mongo_crypt_v1.so
-      MONGO_URI: ${MONGO_URI_STAGE}
+      # Default to empty so a stack whose env file omits it (the test env drops
+      # it -- APP-C9 reserves stage for the Phase 9 dry run) does not warn on every
+      # compose command. The service is profile-gated and will not start anyway.
+      MONGO_URI: ${MONGO_URI_STAGE:-}
     volumes:
       # APP-T3: see hemo-backend above.
       - ${CRYPT_SHARED_LIB:-./mongo_crypt_shared_v1-linux-x86_64-enterprise-amazon2023-8.3.9/lib/mongo_crypt_v1.so}:/csfle/mongo_crypt_v1.so:ro

@@ -199,6 +199,31 @@ else
            its own layer and every photo disappears on the next rebuild."
 fi
 
+# ------------------------------------------------- C11 nothing in a restart loop
+# Added after APP-010 put nginx in a crash loop: nginx resolves every proxy_pass
+# hostname at config load and EXITS if one is unresolvable, so profile-gating a
+# service that nginx proxied to took the whole front door down -- while every
+# other check still passed. A gate that says "met" while nginx is restarting is
+# not a gate.
+if command -v docker >/dev/null 2>&1; then
+  PSOUT=$(docker compose --profile emg --profile stage ps --format '{{.Service}} {{.State}}' 2>/dev/null)
+  if [ -z "$PSOUT" ]; then
+    skip "C11 container states" "nothing is running in this clone"
+  else
+    BADS=$(printf '%s\n' "$PSOUT" | awk '$2!="running" && $2!="exited" {print "             "$0}')
+    if [ -z "$BADS" ]; then
+      ok "C11 every started container is running -- none restarting or unhealthy"
+    else
+      bad "C11 a container is not running" \
+          "restarting usually means it exits at startup. For nginx that is almost always an
+           unresolvable proxy_pass upstream -- check './dev logs nginx'. States:
+$BADS"
+    fi
+  fi
+else
+  skip "C11 container states" "docker not on PATH"
+fi
+
 echo
 printf 'pass %d   fail %d   skip %d\n' "$PASS" "$FAIL" "$SKIP"
 if [ "$FAIL" -gt 0 ]; then
