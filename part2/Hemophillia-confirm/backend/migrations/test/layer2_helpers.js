@@ -1,7 +1,13 @@
-// Layer 2 helpers: live STAGING app (:5001) + STAGING db (hemophilia_stage). Never production.
+// Layer 2 helpers: a live NON-PRODUCTION app + a non-production db. Never production.
+//
+// RETARGETED 2026-10-12 (APP-B, docs/19 §13 item 49). Was hardwired to the abandoned staging
+// pair (app :5001 + db hemophilia_stage), which made the suite ABORT in the APP-0.1 VPS test
+// env, whose MONGO_URI ends /hemophilia_test. The guard is not weakened -- it is inverted:
+// it used to assert "I am on staging", it now asserts "I am NOT on production". Same
+// fail-closed property, satisfiable by any test target. Override with L2_DB / L2_BASE_URL.
 // Intentionally duplicates ideas from helpers.js (Layer 1 owns that file; do not import it).
 //
-//   BASE / STAGE_DB          targets. assertTargets() fails closed if either is wrong.
+//   BASE / STAGE_DB          targets. assertTargets() fails closed if either looks like production.
 //   RUN                      "<iso>-<pid>" __testRun tag carried by every fixture.
 //   isCiphertext(v)          Binary sub_type 6, nothing else.
 //   policy                   config/otpPolicy constants (never hardcode 185/180).
@@ -23,7 +29,26 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const root = path.join(__dirname, "..", "..");
-const STAGE_DB = "hemophilia_stage";
+const PROD_DB = "hemophilia";              // the one name that is never a legal target
+const TARGET_RE = /_(test|stage)$/;         // a test db must say so in its own name
+// db name from MONGO_URI's own path, NOT derived by rewriting it: deriving is how a prod URI
+// silently became a legal target. L2_DB overrides for an oddly-named clone.
+//
+// FIXED 2026-10-12 (APP-B, test-security-agent; found by layer2_guard_matrix.test.js). The old
+// /\/([^/?]+)(\?|$)/ matched the AUTHORITY of a path-less URI, so "mongodb://127.0.0.1:27017"
+// and "mongodb+srv://cluster.mongodb.net" resolved a "db name" of "127.0.0.1:27017" /
+// "cluster.mongodb.net". Still fail-closed -- they were refused -- but by the *_test/*_stage rule,
+// so the abort named the wrong guard and the "cannot determine" branch was unreachable except on
+// an empty MONGO_URI. Now: scheme off, authority off, path only. No path -> "" -> "cannot
+// determine the target db name". Every abort below is unchanged; the barrier is not one
+// millimetre looser.
+function dbNameFromUri(u) {
+  const s = String(u || "").replace(/^[a-z][a-z0-9+.-]*:\/\//i, ""); // drop scheme
+  const slash = s.indexOf("/");                                       // first / ends the authority
+  if (slash < 0) return "";                                           // no path component at all
+  return s.slice(slash + 1).split("?")[0];                            // path, minus any query
+}
+const STAGE_DB = process.env.L2_DB || dbNameFromUri(process.env.MONGO_URI);
 const BASE = (process.env.L2_BASE_URL || "http://localhost:5001").replace(/\/$/, "");
 const RUN = `${new Date().toISOString()}-${process.pid}`;
 const policy = require(path.join(root, "config/otpPolicy"));
@@ -37,12 +62,22 @@ const isCiphertext = (v) => v?._bsontype === "Binary" && v.sub_type === 6;
 // ---- The hard guards. First lines of setup(); also re-checked before every write helper.
 function stageUri() {
   const u = process.env.MONGO_URI;
-  assert(u && /\/hemophilia(\?|$)/.test(u), "ABORT: MONGO_URI missing or has no /hemophilia path segment");
-  return u.replace(/\/hemophilia(\?|$)/, `/${STAGE_DB}$1`);
+  assert(u, "ABORT: MONGO_URI is not set");
+  assertTargets();
+  return u;   // used as-is. the db name is asserted, never rewritten.
 }
+// Called in setup() AND before every write helper AND on every api() call.
 function assertTargets() {
-  assert(BASE.includes(":5001"), `ABORT: base URL "${BASE}" does not contain :5001 (port 80 is production)`);
-  assert(!/:80(\/|$)/.test(BASE), "ABORT: base URL points at :80");
+  // --- database: the only barrier between this suite and production patient data.
+  assert(STAGE_DB, "ABORT: cannot determine the target db name from MONGO_URI (set L2_DB)");
+  assert(STAGE_DB !== PROD_DB, `ABORT: target db is "${PROD_DB}" -- that is PRODUCTION`);
+  assert(TARGET_RE.test(STAGE_DB),
+    `ABORT: target db "${STAGE_DB}" is not named *_test or *_stage. Refusing to write to a db ` +
+    `that does not declare itself non-production. Override deliberately with L2_DB.`);
+  // --- app: production is nginx on 80/443. A test target is anything else on loopback.
+  assert(!/:(80|443)(\/|$)/.test(BASE), `ABORT: base URL "${BASE}" points at a production port`);
+  assert(/^https?:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/.test(BASE),
+    `ABORT: base URL "${BASE}" is not loopback. This suite never drives a remote host.`);
 }
 let client, mongoose, _db;
 function db() {
@@ -135,7 +170,7 @@ async function setup() {
   await assertAppOnStaging();
 }
 
-// Prove the APP is pointed at hemophilia_stage BEFORE any route writes anything.
+// Prove the APP is pointed at the target db BEFORE any route writes anything.
 //
 // The DB guards above only prove OUR client is on staging. The app reads its own
 // MONGO_URI independently, so a misconfigured staging app could be talking to
@@ -164,7 +199,7 @@ async function assertAppOnStaging() {
   const r = await api("POST", "/api/auth/login", { json: { email, password } });
   assert.notStrictEqual(
     r.status, 401,
-    `ABORT: the staging app does not know a user that exists in ${STAGE_DB}. ` +
+    `ABORT: the app under test does not know a user that exists in ${STAGE_DB}. ` +
     "It is NOT pointed at staging -- check MONGO_URI_STAGE. No route write was attempted."
   );
   // A successful login mints an OTP challenge the app did not tag. Drop it so the
@@ -198,7 +233,7 @@ const uid = () => crypto.randomUUID();
 const mail = () => `migtest+${uid()}@example.invalid`;
 const pw = () => `Mig!Test9-${uid()}`;
 
-// Real signup route. Canary: the user must land in hemophilia_stage, else the app is not wired to staging -> abort.
+// Real signup route. Canary: the user must land in STAGE_DB, else the app is wired elsewhere -> abort.
 async function mkPatient() {
   const email = mail(), password = pw();
   const r = await api("POST", "/api/auth/register", { json: { firstName: "Mig", middleName: "", lastName: "Test", email, password } });
@@ -206,7 +241,7 @@ async function mkPatient() {
   const id = r.body.user.id;
   await tagUser(id);
   const doc = await db().collection("users").findOne({ _id: new ObjectId(id) });
-  assert(doc, "ABORT: app-created user is not in hemophilia_stage. App is NOT pointed at staging.");
+  assert(doc, `ABORT: app-created user is not in ${STAGE_DB}. The app is NOT pointed at the target db.`);
   return { id, email, password, token: r.body.token, role: "patient" };
 }
 const profileBody = () => ({
