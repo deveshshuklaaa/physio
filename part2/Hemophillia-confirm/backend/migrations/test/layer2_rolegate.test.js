@@ -240,8 +240,14 @@ test("B18 change-password refuses an unauthenticated call", async () => {
   const res = await H.api("POST", "/api/doctor/change-password", {
     json: { professionalId: ctx.doctor.professionalId, currentPassword: "whatever", newPassword: H.uid() + "Aa1!" },
   });
+  // SPLIT from the enumeration test below (gate-2 review): both saw 404 and the two assertions
+  // disagreed about what a 404 meant there. This one owns ONE question — is the route gated at all.
+  // A 404 here is not "the gate answered"; it is the request reaching the handler AND the database
+  // lookup at doctorAuth.js `if (!user)` with no authentication whatsoever. That is the stronger
+  // reading of the same status, so the message states it instead of inferring it.
   assert.strictEqual(res.status, 401,
-    `got ${res.status}: the route has no middleware (doctorAuth.js:440) and is an authenticated action with no authentication`);
+    `got ${res.status} on an authenticated action sent with NO token. 404 means the body reached the ` +
+    "handler and the User lookup unauthenticated — the route mounts no middleware at all.");
 });
 
 test("B18 change-password mounts staffAuth in source", () => {
@@ -267,13 +273,20 @@ test("B18 change-password issues NO token on success — a password change is no
     "/change-password still mints a JWT: it hands out a 7-day staff token with NO OTP, defeating the PASSWORD -> OTP -> JWT gate (doctorAuth.js:34)");
 });
 
-test("B18 an unknown professionalId does not enumerate valid ids (401, not 404)", async () => {
+test("B18 an unknown professionalId answers 401, the same as a wrong password", async () => {
+  // Runs WITH a valid staff token, so a 404 cannot be blamed on the missing gate — that is the
+  // test above. This one owns the enumeration oracle only, and it needs no second real id to pin
+  // it, because the oracle is visible in the route's own ordering: `doctorAuth.js` answers 404 at
+  // `if (!user)` for an id that does not exist, and 401 for an id that exists with a wrong current
+  // password. Two statuses, two meanings, from one unauthenticated endpoint. The contract is that
+  // this endpoint never answers 404 — one status for "no", whatever the reason.
   const res = await H.api("POST", "/api/doctor/change-password", {
     token: ctx.doctor.token,
     json: { professionalId: "DOCNOSUCH999", currentPassword: "whatever", newPassword: H.uid() + "Aa1!" },
   });
-  assert.notStrictEqual(res.status, 404,
-    "404-vs-401 tells an attacker which professionalIds exist");
+  assert.strictEqual(res.status, 401,
+    `got ${res.status}. 404 for an unknown professionalId and 401 for a known one with a bad password ` +
+    "is an account-enumeration oracle: it tells an attacker which professional ids exist.");
 });
 
 test("B18 password strength is enforced server-side, not only in the browser", async () => {
@@ -351,6 +364,7 @@ test("item 47 /assessment/save ignores a client-supplied risk level and derives 
     token: ctx.patient.token,
     json: { riskLevel: "LOW", riskLabel: "No action needed", answers: {} },
   });
+  await H.tagUser(ctx.patient.id); // adopt before asserting: this route writes assessments + screeningsessions
   if (res.status === 400) return; // rejecting the forged key outright also satisfies this
   assert.ok([200, 201].includes(res.status), `unexpected status ${res.status}: ${JSON.stringify(res.body).slice(0, 160)}`);
   const row = await H.dec().collection("assessments").findOne(
@@ -365,6 +379,12 @@ test("item 47 hemophilia-details refuses a record with no consulting doctor", as
   const res = await H.api("POST", "/api/hemophilia-details", {
     token: ctx.patient.token, json: { targetJoint: ["Knee"] },
   });
+  // ADOPT BEFORE ASSERTING. The server accepts this body and writes a clinicalrecords row today —
+  // that is the defect this test reports — and an assertion that throws first would leave the row
+  // unadopted, so finish() would end the whole file in a hook failure instead of a clean red
+  // (measured in the gate-2 run: `count delta vs baseline: {"clinicalrecords":"9 -> 10"}`).
+  // Same shape as expect400() in layer2_validation.test.js. Harmless once the server refuses.
+  await H.tagUser(ctx.patient.id);
   assert.strictEqual(res.status, 400,
     `got ${res.status}: a clinical record saved with only targetJoint has no consulting doctor, and that version chain is the authorisation source for every later read (APP-J4)`);
   assert.deepStrictEqual(H.diffCounts(c0, await H.snapshot()), {}, "a doctorless clinical record was written");

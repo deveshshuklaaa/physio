@@ -104,7 +104,18 @@ async function api(method, p, { token, json, form, headers = {} } = {}) {
 const ownedUsers = new Set();
 const USER_REFS = [["users", "_id"], ["patientprofiles", "userId"], ["hemophiliadetails", "userId"], ["assessments", "userId"],
   ["doctorchangerequests", "patientUserId"], ["adminprofiles", "userId"], ["doctorprofiles", "userId"],
-  ["loginotps", "userId"], ["passwordresetotps", "userId"], ["otpchallenges", "userId"], ["physiosessions", "patientUserId"]];
+  ["loginotps", "userId"], ["passwordresetotps", "userId"], ["otpchallenges", "userId"], ["physiosessions", "patientUserId"],
+  // ADDED 2026-10-12 after the APP-B gate-2 run tripped `finish()` with
+  // `count delta vs baseline: {"clinicalrecords":"9 -> 10"}`. Three collections a patient route
+  // writes that no USER_REF reached, so nothing swept them:
+  //   clinicalrecords                 POST /api/hemophilia-details      (ClinicalRecord.js:145, explicit name)
+  //   screeningsessions               POST /api/assessment/save         (ScreeningSession.js:127, default plural)
+  //   patientexerciserecommendations  POST /api/exercise-recommendations/generate (default plural, keyed patientUserId)
+  // Fixed HERE rather than per test: every "the server must refuse X" test writes a row for as
+  // long as the server does not refuse, the APP-B16 gate loop alone posts to all 12 patient routes,
+  // and finish() re-sweeps ownedUsers through tagUser() — so one entry per collection covers every
+  // caller, including a test that threw before its own adoption line.
+  ["clinicalrecords", "userId"], ["screeningsessions", "userId"], ["patientexerciserecommendations", "patientUserId"]];
 
 async function tagWhere(coll, filter) {
   assert(filter && Object.keys(filter).length, "refusing to tag with an empty filter");
